@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>FluentPOS.Modules.Catalogs.Infrastructure</RootNamespace>
+    <AssemblyName>FluentPOS.Modules.Catalogs.Infrastructure</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules.Catalog.Core\Modules.Catalog.Core.csproj" />
+  </ItemGroup>
+
+</Project>

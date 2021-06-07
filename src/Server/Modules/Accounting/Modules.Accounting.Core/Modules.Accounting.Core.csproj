@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>FluentPOS.Modules.Accounting.Core</RootNamespace>
+    <AssemblyName>FluentPOS.Modules.Accounting.Core</AssemblyName>
+  </PropertyGroup>
+
+</Project>

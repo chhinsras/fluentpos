@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>FluentPOS.Modules.People.Infrastructure</RootNamespace>
+    <AssemblyName>FluentPOS.Modules.People.Infrastructure</AssemblyName>
+  </PropertyGroup>
+
+</Project>

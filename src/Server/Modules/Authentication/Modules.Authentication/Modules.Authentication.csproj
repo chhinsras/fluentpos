@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>FluentPOS.Modules.Authentication</RootNamespace>
+    <AssemblyName>FluentPOS.Modules.Authentication</AssemblyName>
+  </PropertyGroup>
+
+</Project>

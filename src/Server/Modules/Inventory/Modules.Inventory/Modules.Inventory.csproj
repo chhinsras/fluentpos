@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>FluentPOS.Modules.Inventory</RootNamespace>
+    <AssemblyName>FluentPOS.Modules.Inventory</AssemblyName>
+  </PropertyGroup>
+
+</Project>
