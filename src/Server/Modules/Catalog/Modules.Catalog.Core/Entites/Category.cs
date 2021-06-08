@@ -1,8 +1,8 @@
 ﻿using FluentPOS.Shared.Abstractions.Domain;
 
-namespace FluentPOS.Modules.Catalog.Core.Entites
+namespace FluentPOS.Modules.Catalogs.Core.Entites
 {
-    public class Brand : BaseEntity
+    public class Category : BaseEntity
     {
         public string Name { get; set; }
         public string ImageUrl { get; set; }
