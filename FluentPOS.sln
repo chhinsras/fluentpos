@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{4E4F6E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{767EDE15-73FE-4F79-B437-117CD1B0DD1D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{DFB1D59D-0238-4D55-9FA0-24A11F844F34}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{DFB1D59D-0238-4D55-9FA0-24A11F844F34}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{408A6296-CD34-4016-91F2-C81782724068}"
 EndProject
@@ -48,35 +48,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		add-migrations.md = add-migrations.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Authentication", "src\Server\Modules\Authentication\Modules.Authentication\Modules.Authentication.csproj", "{0EFFDA25-9FC1-4169-BA08-A8A5B5497996}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Identity", "src\Server\Modules\Identity\Modules.Identity\Modules.Identity.csproj", "{0EFFDA25-9FC1-4169-BA08-A8A5B5497996}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Authentication.Core", "src\Server\Modules\Authentication\Modules.Authentication.Core\Modules.Authentication.Core.csproj", "{DB7F8800-975F-414A-8322-2720B64945B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Identity.Core", "src\Server\Modules\Identity\Modules.Identity.Core\Modules.Identity.Core.csproj", "{DB7F8800-975F-414A-8322-2720B64945B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Authentication.Infrastructure", "src\Server\Modules\Authentication\Modules.Authentication.Infrastructure\Modules.Authentication.Infrastructure.csproj", "{EDCF1DCB-01ED-4042-8C9F-E267CD384FAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Identity.Infrastructure", "src\Server\Modules\Identity\Modules.Identity.Infrastructure\Modules.Identity.Infrastructure.csproj", "{EDCF1DCB-01ED-4042-8C9F-E267CD384FAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Inventory", "src\Server\Modules\Inventory\Modules.Inventory\Modules.Inventory.csproj", "{A12F1588-63A7-488D-A654-7713664B6AAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Inventory", "src\Server\Modules\Inventory\Modules.Inventory\Modules.Inventory.csproj", "{A12F1588-63A7-488D-A654-7713664B6AAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Inventory.Core", "src\Server\Modules\Inventory\Modules.Inventory.Core\Modules.Inventory.Core.csproj", "{B8C537A7-680D-4333-AE17-AF67B2E33E1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Inventory.Core", "src\Server\Modules\Inventory\Modules.Inventory.Core\Modules.Inventory.Core.csproj", "{B8C537A7-680D-4333-AE17-AF67B2E33E1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Inventory.Infrastructure", "src\Server\Modules\Inventory\Modules.Inventory.Infrastructure\Modules.Inventory.Infrastructure.csproj", "{9DD21FC1-934D-4419-ADA5-24B0A1817487}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Inventory.Infrastructure", "src\Server\Modules\Inventory\Modules.Inventory.Infrastructure\Modules.Inventory.Infrastructure.csproj", "{9DD21FC1-934D-4419-ADA5-24B0A1817487}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.People", "src\Server\Modules\People\Modules.People\Modules.People.csproj", "{A9ACE119-B64A-41B0-8A2F-F5F6AFAB2007}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.People", "src\Server\Modules\People\Modules.People\Modules.People.csproj", "{A9ACE119-B64A-41B0-8A2F-F5F6AFAB2007}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.People.Core", "src\Server\Modules\People\Modules.People.Core\Modules.People.Core.csproj", "{C3FB367E-9CD8-4D98-BA71-CD6CBCB114F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.People.Core", "src\Server\Modules\People\Modules.People.Core\Modules.People.Core.csproj", "{C3FB367E-9CD8-4D98-BA71-CD6CBCB114F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.People.Infrastructure", "src\Server\Modules\People\Modules.People.Infrastructure\Modules.People.Infrastructure.csproj", "{0F1C5782-2723-4D1E-B9EE-065F56453AF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.People.Infrastructure", "src\Server\Modules\People\Modules.People.Infrastructure\Modules.People.Infrastructure.csproj", "{0F1C5782-2723-4D1E-B9EE-065F56453AF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Sales", "src\Server\Modules\Sales\Modules.Sales\Modules.Sales.csproj", "{B8A4A54A-880A-453C-B374-EDFE4D9EEB2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Sales", "src\Server\Modules\Sales\Modules.Sales\Modules.Sales.csproj", "{B8A4A54A-880A-453C-B374-EDFE4D9EEB2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Sales.Core", "src\Server\Modules\Sales\Modules.Sales.Core\Modules.Sales.Core.csproj", "{A3C0007D-3F25-4F74-A9F0-46CE6043DB06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Sales.Core", "src\Server\Modules\Sales\Modules.Sales.Core\Modules.Sales.Core.csproj", "{A3C0007D-3F25-4F74-A9F0-46CE6043DB06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Sales.Infrastructure", "src\Server\Modules\Sales\Modules.Sales.Infrastructure\Modules.Sales.Infrastructure.csproj", "{BB029E74-D559-494F-B742-A8EBD3F9821E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Sales.Infrastructure", "src\Server\Modules\Sales\Modules.Sales.Infrastructure\Modules.Sales.Infrastructure.csproj", "{BB029E74-D559-494F-B742-A8EBD3F9821E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Accounting", "src\Server\Modules\Accounting\Modules.Accounting\Modules.Accounting.csproj", "{6DA1C2C7-1674-4F25-951E-EC6159D6DB38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Accounting", "src\Server\Modules\Accounting\Modules.Accounting\Modules.Accounting.csproj", "{6DA1C2C7-1674-4F25-951E-EC6159D6DB38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Accounting.Core", "src\Server\Modules\Accounting\Modules.Accounting.Core\Modules.Accounting.Core.csproj", "{B36795DB-3C7F-4FEE-B3E0-61CD3E7EE94D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Accounting.Core", "src\Server\Modules\Accounting\Modules.Accounting.Core\Modules.Accounting.Core.csproj", "{B36795DB-3C7F-4FEE-B3E0-61CD3E7EE94D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Accounting.Infrastructure", "src\Server\Modules\Accounting\Modules.Accounting.Infrastructure\Modules.Accounting.Infrastructure.csproj", "{01D65DCA-C543-430D-9373-7E87384427CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Accounting.Infrastructure", "src\Server\Modules\Accounting\Modules.Accounting.Infrastructure\Modules.Accounting.Infrastructure.csproj", "{01D65DCA-C543-430D-9373-7E87384427CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
