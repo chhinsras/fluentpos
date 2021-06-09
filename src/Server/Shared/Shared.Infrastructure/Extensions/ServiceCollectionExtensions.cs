@@ -1,6 +1,8 @@
-﻿using FluentPOS.Shared.Infrastructure.Controllers;
+﻿using FluentPOS.Shared.Abstractions.Interfaces.Services;
+using FluentPOS.Shared.Infrastructure.Controllers;
 using FluentPOS.Shared.Infrastructure.Middlewares;
 using FluentPOS.Shared.Infrastructure.Persistence.Postgres;
+using FluentPOS.Shared.Infrastructure.Services;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,10 +21,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
     {
         public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
         {
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddTransient<IUploadService, UploadService>();
             return services;
         }
 

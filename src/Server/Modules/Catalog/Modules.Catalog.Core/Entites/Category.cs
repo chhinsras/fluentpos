@@ -1,6 +1,6 @@
 ﻿using FluentPOS.Shared.Abstractions.Domain;
 
-namespace FluentPOS.Modules.Catalogs.Core.Entites
+namespace FluentPOS.Modules.Catalog.Core.Entites
 {
     public class Category : BaseEntity
     {

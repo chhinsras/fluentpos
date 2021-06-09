@@ -1,4 +1,4 @@
-﻿using FluentPOS.Modules.Catalog.Infrastructure.Persistence;
+﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Shared.Abstractions.Wrapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Commands.Delete
+namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands.Delete
 {
     public class DeleteBrandCommand : IRequest<Result<Guid>>
     {
@@ -16,10 +16,10 @@ namespace FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Commands.Del
 
     internal class DeleteBrandCommandHandler : IRequestHandler<DeleteBrandCommand, Result<Guid>>
     {
-        private readonly CatalogDbContext _context;
+        private readonly ICatalogDbContext _context;
         private readonly IStringLocalizer<DeleteBrandCommandHandler> _localizer;
 
-        public DeleteBrandCommandHandler(CatalogDbContext context, IStringLocalizer<DeleteBrandCommandHandler> localizer)
+        public DeleteBrandCommandHandler(ICatalogDbContext context, IStringLocalizer<DeleteBrandCommandHandler> localizer)
         {
             _context = context;
             _localizer = localizer;
@@ -40,6 +40,7 @@ namespace FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Commands.Del
                 return await Result<Guid>.FailAsync(_localizer["Deletion Not Allowed"]);
             }
         }
+
         public async Task<bool> IsBrandUsed(Guid brandId)
         {
             return await _context.Products.AnyAsync(b => b.BrandId == brandId);

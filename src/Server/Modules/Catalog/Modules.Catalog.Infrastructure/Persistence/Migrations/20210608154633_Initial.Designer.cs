@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace FluentPOS.Modules.Catalogs.Infrastructure.Persistence.Migrations
+namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
     [Migration("20210608154633_Initial")]
@@ -93,7 +93,7 @@ namespace FluentPOS.Modules.Catalogs.Infrastructure.Persistence.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("FluentPOS.Modules.Catalogs.Core.Entites.Category", b =>
+            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entites.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -118,7 +118,7 @@ namespace FluentPOS.Modules.Catalogs.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FluentPOS.Modules.Catalogs.Core.Entites.Category", "Category")
+                    b.HasOne("FluentPOS.Modules.Catalog.Core.Entites.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,5 +1,4 @@
-﻿using FluentPOS.Modules.Catalogs.Core.Entites;
-using FluentPOS.Shared.Abstractions.Domain;
+﻿using FluentPOS.Shared.Abstractions.Domain;
 using System;
 
 namespace FluentPOS.Modules.Catalog.Core.Entites

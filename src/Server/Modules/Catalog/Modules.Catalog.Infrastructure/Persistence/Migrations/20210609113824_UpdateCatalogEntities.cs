@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace FluentPOS.Modules.Catalogs.Infrastructure.Persistence.Migrations
+namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
 {
     public partial class UpdateCatalogEntities : Migration
     {

@@ -1,4 +1,4 @@
-﻿using FluentPOS.Modules.Catalog.Infrastructure.Persistence;
+﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Shared.Abstractions.Wrapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Queries.GetImage
+namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries.GetImage
 {
     public class GetBrandImageQuery : IRequest<Result<string>>
     {
@@ -21,9 +21,9 @@ namespace FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Queries.GetI
 
     internal class GetBrandImageQueryHandler : IRequestHandler<GetBrandImageQuery, Result<string>>
     {
-        private readonly CatalogDbContext _context;
+        private readonly ICatalogDbContext _context;
 
-        public GetBrandImageQueryHandler(CatalogDbContext context)
+        public GetBrandImageQueryHandler(ICatalogDbContext context)
         {
             _context = context;
         }

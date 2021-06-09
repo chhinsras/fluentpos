@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>FluentPOS.Modules.Catalogs.Infrastructure</RootNamespace>
-    <AssemblyName>FluentPOS.Modules.Catalogs.Infrastructure</AssemblyName>
+    <RootNamespace>FluentPOS.Modules.Catalog.Infrastructure</RootNamespace>
+    <AssemblyName>FluentPOS.Modules.Catalog.Infrastructure</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

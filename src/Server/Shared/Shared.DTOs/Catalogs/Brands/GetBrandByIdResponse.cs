@@ -1,4 +1,4 @@
-﻿namespace FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Queries.GetById
+﻿namespace FluentPOS.Shared.DTOs.Catalogs.Brands
 {
     public class GetBrandByIdResponse
     {

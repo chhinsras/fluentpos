@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace FluentPOS.Modules.Catalogs.Infrastructure.Persistence.Migrations
+namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
 {
     public partial class Initial : Migration
     {

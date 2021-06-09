@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Entites;
-using FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Commands.AddEdit;
-using FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Queries.GetAll;
-using FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Queries.GetById;
+using FluentPOS.Modules.Catalog.Core.Features.Brands.Commands.AddEdit;
+using FluentPOS.Shared.DTOs.Catalogs.Brands;
 
-namespace FluentPOS.Modules.Catalogs.Infrastructure.Mappings
+namespace FluentPOS.Modules.Catalog.Infrastructure.Mappings
 {
     public class BrandProfile : Profile
     {

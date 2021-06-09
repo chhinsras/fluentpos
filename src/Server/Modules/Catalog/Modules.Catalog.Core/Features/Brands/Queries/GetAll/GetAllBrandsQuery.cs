@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using FluentPOS.Modules.Catalog.Infrastructure.Persistence;
+using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Shared.Abstractions.Wrapper;
+using FluentPOS.Shared.DTOs.Catalogs.Brands;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Queries.GetAll
+namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries.GetAll
 {
     public class GetAllBrandsQuery : IRequest<Result<List<GetAllBrandsResponse>>>
     {
@@ -19,11 +20,11 @@ namespace FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Queries.GetA
 
     internal class GetAllBrandsCachedQueryHandler : IRequestHandler<GetAllBrandsQuery, Result<List<GetAllBrandsResponse>>>
     {
-        private readonly CatalogDbContext _context;
+        private readonly ICatalogDbContext _context;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<GetAllBrandsCachedQueryHandler> _localizer;
 
-        public GetAllBrandsCachedQueryHandler(CatalogDbContext context, IMapper mapper, IStringLocalizer<GetAllBrandsCachedQueryHandler> localizer)
+        public GetAllBrandsCachedQueryHandler(ICatalogDbContext context, IMapper mapper, IStringLocalizer<GetAllBrandsCachedQueryHandler> localizer)
         {
             _context = context;
             _mapper = mapper;

@@ -2,12 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>FluentPOS.Modules.Catalogs.Core</RootNamespace>
-    <AssemblyName>FluentPOS.Modules.Catalogs.Core</AssemblyName>
+    <RootNamespace>FluentPOS.Modules.Catalog.Core</RootNamespace>
+    <AssemblyName>FluentPOS.Modules.Catalog.Core</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstractions\" />
     <Folder Include="Mappings\" />
   </ItemGroup>
 
