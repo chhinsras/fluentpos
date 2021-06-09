@@ -6,5 +6,6 @@ namespace FluentPOS.Modules.Catalog.Core.Entites
     {
         public string Name { get; set; }
         public string ImageUrl { get; set; }
+        public string Detail { get; set; }
     }
 }

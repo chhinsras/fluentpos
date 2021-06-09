@@ -1,11 +1,14 @@
 ﻿using FluentPOS.Shared.Infrastructure.Controllers;
 using FluentPOS.Shared.Infrastructure.Middlewares;
 using FluentPOS.Shared.Infrastructure.Persistence.Postgres;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Bootstrapper")]
@@ -14,6 +17,15 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 {
     internal static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
+        {
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            return services;
+        }
+
         public static IServiceCollection AddSharedInfrastructure(this IServiceCollection services)
         {
             services.AddControllers()
@@ -21,10 +33,16 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                 {
                     manager.FeatureProviders.Add(new InternalControllerFeatureProvider());
                 });
+            services.AddApplicationLayer();
+            services.AddLocalization(options =>
+            {
+                options.ResourcesPath = "Resources";
+            });
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddPostgres();
             services.AddSingleton<GlobalExceptionHandler>();
             services.AddSwaggerDocumentation();
+
             return services;
         }
         internal static T GetOptions<T>(this IServiceCollection services, string sectionName) where T : new()

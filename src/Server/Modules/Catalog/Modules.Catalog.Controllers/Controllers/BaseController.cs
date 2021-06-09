@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentPOS.Modules.Catalog.Controllers
 {
@@ -7,5 +9,8 @@ namespace FluentPOS.Modules.Catalog.Controllers
     internal abstract class BaseController : ControllerBase
     {
         protected const string BasePath = "api/catalog";
+
+        private IMediator _mediatorInstance;
+        protected IMediator _mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
     }
 }

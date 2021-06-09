@@ -1,4 +1,4 @@
-﻿using FluentPOS.Shared.Abstractions.Identity;
+﻿using FluentPOS.Shared.Abstractions.Interfaces.Services.Identity;
 using FluentPOS.Shared.DTOs.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

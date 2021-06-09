@@ -1,6 +1,6 @@
 ﻿using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Settings;
-using FluentPOS.Shared.Abstractions.Identity;
+using FluentPOS.Shared.Abstractions.Interfaces.Services.Identity;
 using FluentPOS.Shared.Abstractions.Wrapper;
 using FluentPOS.Shared.DTOs.Identity;
 using Microsoft.AspNetCore.Identity;

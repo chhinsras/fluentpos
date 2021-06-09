@@ -1,7 +1,9 @@
 ﻿using FluentPOS.Modules.Catalog.Infrastructure.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace FluentPOS.Modules.Catalog
 {
@@ -10,6 +12,7 @@ namespace FluentPOS.Modules.Catalog
         public static IServiceCollection AddCatalogModule(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddCatalogInfrastructure();
+
             return services;
         }
 

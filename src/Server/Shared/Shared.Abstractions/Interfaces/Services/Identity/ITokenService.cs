@@ -2,7 +2,7 @@
 using FluentPOS.Shared.DTOs.Identity;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Shared.Abstractions.Identity
+namespace FluentPOS.Shared.Abstractions.Interfaces.Services.Identity
 {
     public interface ITokenService
     {

@@ -1,10 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Commands.AddEdit;
+using FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Commands.Delete;
+using FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Queries.GetAll;
+using FluentPOS.Modules.Catalogs.Infrastructure.Features.Brands.Queries.GetById;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Catalog.Controllers
 {
     internal class BrandsController : BaseController
     {
         [HttpGet]
-        public ActionResult<string> Get() => "Brands module";
+        public async Task<IActionResult> GetAll()
+        {
+            var brands = await _mediator.Send(new GetAllBrandsQuery());
+            return Ok(brands);
+        }
+       
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var brand = await _mediator.Send(new GetBrandByIdQuery() { Id = id });
+            return Ok(brand);
+        }
+     
+        [HttpPost]
+        public async Task<IActionResult> Post(AddEditBrandCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+     
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            return Ok(await _mediator.Send(new DeleteBrandCommand { Id = id }));
+        }
     }
 }

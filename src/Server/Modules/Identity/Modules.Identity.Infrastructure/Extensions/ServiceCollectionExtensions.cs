@@ -2,7 +2,7 @@
 using FluentPOS.Modules.Identity.Core.Settings;
 using FluentPOS.Modules.Identity.Infrastructure.Persistence;
 using FluentPOS.Modules.Identity.Infrastructure.Services;
-using FluentPOS.Shared.Abstractions.Identity;
+using FluentPOS.Shared.Abstractions.Interfaces.Services.Identity;
 using FluentPOS.Shared.Infrastructure.Persistence.Postgres;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
