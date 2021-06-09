@@ -6,4 +6,9 @@
     <AssemblyName>FluentPOS.Modules.Identity</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Modules.Identity.Core\Modules.Identity.Core.csproj" />
+    <ProjectReference Include="..\Modules.Identity.Infrastructure\Modules.Identity.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
