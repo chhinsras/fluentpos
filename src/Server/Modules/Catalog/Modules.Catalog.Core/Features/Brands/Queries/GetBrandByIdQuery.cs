@@ -16,13 +16,13 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
         public Guid Id { get; set; }
     }
 
-    internal class GetProductByIdQueryHandler : IRequestHandler<GetBrandByIdQuery, Result<GetBrandByIdResponse>>
+    internal class GetBrandByIdQueryHandler : IRequestHandler<GetBrandByIdQuery, Result<GetBrandByIdResponse>>
     {
         private readonly ICatalogDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IStringLocalizer<GetProductByIdQueryHandler> _localizer;
+        private readonly IStringLocalizer<GetBrandByIdQueryHandler> _localizer;
 
-        public GetProductByIdQueryHandler(ICatalogDbContext context, IMapper mapper, IStringLocalizer<GetProductByIdQueryHandler> localizer)
+        public GetBrandByIdQueryHandler(ICatalogDbContext context, IMapper mapper, IStringLocalizer<GetBrandByIdQueryHandler> localizer)
         {
             _context = context;
             _mapper = mapper;
