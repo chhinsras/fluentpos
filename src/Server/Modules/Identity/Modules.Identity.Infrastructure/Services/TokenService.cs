@@ -1,4 +1,5 @@
 ﻿using FluentPOS.Modules.Identity.Core.Entities;
+using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Modules.Identity.Core.Settings;
 using FluentPOS.Shared.Abstractions.Interfaces.Services.Identity;
 using FluentPOS.Shared.Abstractions.Wrapper;
@@ -36,27 +37,17 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         {
             var user = await _userManager.FindByEmailAsync(request.email);
             if (user == null)
-            {
-                return Result<TokenResponse>.Fail("User Not Found.");
-            }
+                throw new IdentityException("User Not Found.");
             if (!user.IsActive)
-            {
-                return Result<TokenResponse>.Fail("User Not Active. Please contact the administrator.");
-            }
+                throw new IdentityException("User Not Active. Please contact the administrator.");
             if (!user.EmailConfirmed)
-            {
-                return Result<TokenResponse>.Fail("E-Mail not confirmed.");
-            }
+                throw new IdentityException("E-Mail not confirmed.");
             var passwordValid = await _userManager.CheckPasswordAsync(user, request.password);
             if (!passwordValid)
-            {
-                return Result<TokenResponse>.Fail("Invalid Credentials.");
-            }
-
+                throw new IdentityException("Invalid Credentials.");
             user.RefreshToken = GenerateRefreshToken();
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.refreshTokenExpirationInDays);
             await _userManager.UpdateAsync(user);
-
             var token = await GenerateJwtAsync(user, ipAddress);
             var response = new TokenResponse(token, user.RefreshToken,user.RefreshTokenExpiryTime);
             return Result<TokenResponse>.Success(response);
@@ -65,16 +56,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         public async Task<IResult<TokenResponse>> RefreshTokenAsync(RefreshTokenRequest request, string ipAddress)
         {
             if (request is null)
-            {
-                return Result<TokenResponse>.Fail("Invalid Client Token.");
-            }
+                throw new IdentityException("Invalid Client Token.");
             var userPrincipal = GetPrincipalFromExpiredToken(request.token);
             var userEmail = userPrincipal.FindFirstValue(ClaimTypes.Email);
             var user = await _userManager.FindByEmailAsync(userEmail);
             if (user == null)
-                return Result<TokenResponse>.Fail("User Not Found.");
+                throw new IdentityException("User Not Found.");
             if (user.RefreshToken != request.refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
-                return Result<TokenResponse>.Fail("Invalid Client Token.");
+                throw new IdentityException("Invalid Client Token.");
             var token = GenerateEncryptedToken(GetSigningCredentials(), await GetClaimsAsync(user, ipAddress));
             user.RefreshToken = GenerateRefreshToken();
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.refreshTokenExpirationInDays);
@@ -156,12 +145,10 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             SecurityToken securityToken;
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
             var jwtSecurityToken = securityToken as JwtSecurityToken;
-            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
+            if (jwtSecurityToken == null || 
+                !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
                 StringComparison.InvariantCultureIgnoreCase))
-            {
-                throw new SecurityTokenException("Invalid Token.");
-            }
-
+                throw new IdentityException("Invalid Token.");
             return principal;
         }
 
