@@ -12,7 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands.AddEdit
+namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
 {
     public partial class AddEditBrandCommand : IRequest<Result<Guid>>
     {
@@ -54,7 +54,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands.AddEdit
 
             if (command.Id == Guid.Empty)
             {
-                var brand = _mapper.Map<Brand>(command);
+                var brand = _mapper.Map<AddEditBrandCommand, Brand>(command);
                 if (uploadRequest != null)
                 {
                     brand.ImageUrl = _uploadService.UploadAsync(uploadRequest);
@@ -76,6 +76,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands.AddEdit
                     brand.ImageUrl = command.ImageUrl ?? brand.ImageUrl;
                     brand.Detail = command.Detail ?? brand.Detail;
                     _context.Brands.Update(brand);
+                    await _context.SaveChangesAsync(cancellationToken);
                     return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Updated"]);
                 }
                 else

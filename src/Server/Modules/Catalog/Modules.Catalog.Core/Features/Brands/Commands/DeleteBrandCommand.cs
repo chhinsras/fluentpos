@@ -7,7 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands.Delete
+namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
 {
     public class DeleteBrandCommand : IRequest<Result<Guid>>
     {
