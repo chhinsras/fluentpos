@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries.GetAll
+namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
 {
     public class GetAllBrandsQuery : IRequest<Result<List<GetAllBrandsResponse>>>
     {

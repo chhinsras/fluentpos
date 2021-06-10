@@ -9,7 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries.GetById
+namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
 {
     public class GetBrandByIdQuery : IRequest<Result<GetBrandByIdResponse>>
     {

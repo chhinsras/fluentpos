@@ -1,7 +1,5 @@
-﻿using FluentPOS.Modules.Catalog.Core.Features.Brands.Commands.AddEdit;
-using FluentPOS.Modules.Catalog.Core.Features.Brands.Commands.Delete;
-using FluentPOS.Modules.Catalog.Core.Features.Brands.Queries.GetAll;
-using FluentPOS.Modules.Catalog.Core.Features.Brands.Queries.GetById;
+﻿using FluentPOS.Modules.Catalog.Core.Features.Brands.Commands;
+using FluentPOS.Modules.Catalog.Core.Features.Brands.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
