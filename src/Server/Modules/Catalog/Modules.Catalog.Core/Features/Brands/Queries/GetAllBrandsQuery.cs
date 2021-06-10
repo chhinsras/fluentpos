@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
+using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Abstractions.Wrapper;
 using FluentPOS.Shared.DTOs.Catalogs.Brands;
 using MediatR;
@@ -34,7 +35,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
         public async Task<Result<List<GetAllBrandsResponse>>> Handle(GetAllBrandsQuery request, CancellationToken cancellationToken)
         {
             var brandList = await _context.Brands.ToListAsync();
-            if (brandList == null) return await Result<List<GetAllBrandsResponse>>.FailAsync(_localizer["Brand Not Found!"]);
+            if (brandList == null) throw new CatalogException(_localizer["Brand Not Found!"]);
             // TODO: Cache
             var mappedBrands = _mapper.Map<List<GetAllBrandsResponse>>(brandList);
             return await Result<List<GetAllBrandsResponse>>.SuccessAsync(mappedBrands);

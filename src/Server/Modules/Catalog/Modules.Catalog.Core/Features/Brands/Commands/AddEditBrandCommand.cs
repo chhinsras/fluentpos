@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Entites;
+using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Abstractions.Interfaces.Services;
 using FluentPOS.Shared.Abstractions.Wrapper;
 using FluentPOS.Shared.DTOs.Upload;
@@ -81,7 +82,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
                 }
                 else
                 {
-                    return await Result<Guid>.FailAsync(_localizer["Brand Not Found!"]);
+                    throw new CatalogException(_localizer["Brand Not Found!"]);
                 }
             }
         }

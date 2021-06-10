@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
+using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Abstractions.Wrapper;
 using FluentPOS.Shared.DTOs.Catalogs.Categories;
 using MediatR;
@@ -34,7 +35,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
         public async Task<Result<List<GetAllCategoriesResponse>>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
         {
             var categoryList = await _context.Categories.ToListAsync();
-            if (categoryList == null) return await Result<List<GetAllCategoriesResponse>>.FailAsync(_localizer["Category Not Found!"]);
+            if (categoryList == null) throw new CatalogException(_localizer["Category Not Found!"]);
             // TODO: Cache
             var mappedCategories = _mapper.Map<List<GetAllCategoriesResponse>>(categoryList);
             return await Result<List<GetAllCategoriesResponse>>.SuccessAsync(mappedCategories);

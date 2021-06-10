@@ -1,4 +1,5 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
+using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Abstractions.Wrapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
             }
             else
             {
-                return await Result<Guid>.FailAsync(_localizer["Deletion Not Allowed"]);
+                throw new CatalogException(_localizer["Deletion Not Allowed"]);
             }
         }
 
