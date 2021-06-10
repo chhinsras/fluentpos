@@ -4,7 +4,7 @@ namespace FluentPOS.Modules.Identity.Core.Exceptions
 {
     public class IdentityException : CustomException
     {
-        public IdentityException(string message) : base(message)
+        public IdentityException(string message) : base(typeof(IdentityException).Name + " : " + message)
         {
         }
     }
