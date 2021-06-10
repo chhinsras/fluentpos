@@ -1,4 +1,5 @@
 ﻿using FluentPOS.Modules.Identity.Core.Entities;
+using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Modules.Identity.Core.Settings;
 using FluentPOS.Shared.Abstractions.Interfaces.Services.Identity;
 using FluentPOS.Shared.Abstractions.Wrapper;
@@ -37,7 +38,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             var user = await _userManager.FindByEmailAsync(request.email);
             if (user == null)
             {
-                return Result<TokenResponse>.Fail("User Not Found.");
+                throw new IdentityException("User Not Found.");
             }
             if (!user.IsActive)
             {
