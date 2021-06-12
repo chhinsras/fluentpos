@@ -11,7 +11,7 @@ namespace FluentPOS.Modules.Catalog.Core.Mappings
         {
             CreateMap<AddEditBrandCommand, Brand>().ReverseMap();
             CreateMap<GetBrandByIdResponse, Brand>().ReverseMap();
-            CreateMap<GetAllBrandsResponse, Brand>().ReverseMap();
+            CreateMap<GetAllPagedBrandsResponse, Brand>().ReverseMap();
         }
     }
 }

@@ -9,12 +9,12 @@ namespace FluentPOS.Modules.Catalog.Controllers
     internal class CategoriesController : BaseController
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int pageNumber, int pageSize, string searchString)
         {
-            var categories = await _mediator.Send(new GetAllCategoriesQuery());
+            var categories = await _mediator.Send(new GetAllPagedCategoriesQuery(pageNumber, pageSize, searchString));
             return Ok(categories);
         }
-
+       
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

@@ -11,7 +11,7 @@ namespace FluentPOS.Modules.Catalog.Core.Mappings
         {
             CreateMap<AddEditCategoryCommand, Category>().ReverseMap();
             CreateMap<GetCategoryByIdResponse, Category>().ReverseMap();
-            CreateMap<GetAllCategoriesResponse, Category>().ReverseMap();
+            CreateMap<GetAllPagedCategoriesResponse, Category>().ReverseMap();
         }
     }
 }
