@@ -15,13 +15,23 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
     {
         public static IServiceCollection AddIdentityInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddHttpContextAccessor();
-            services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
-            services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
-            services.AddTransient<ITokenService, TokenService>();
-            services.AddTransient<IIdentityService, IdentityService>();
-            services.AddPostgres<IdentityDbContext>();
-            services.AddIdentity<ExtendedIdentityUser, ExtendedIdentityRole>().AddEntityFrameworkStores<IdentityDbContext>().AddDefaultTokenProviders();
+            services
+                .AddHttpContextAccessor()
+                .AddScoped<IAuthenticatedUserService, AuthenticatedUserService>()
+                .Configure<JwtSettings>(configuration.GetSection("JwtSettings"))
+                .AddTransient<ITokenService, TokenService>()
+                .AddTransient<IIdentityService, IdentityService>()
+                .AddPostgres<IdentityDbContext>()
+                .AddIdentity<ExtendedIdentityUser, ExtendedIdentityRole>(options =>
+                {
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.User.RequireUniqueEmail = true;
+                })
+                .AddEntityFrameworkStores<IdentityDbContext>().AddDefaultTokenProviders();
             return services;
         }
     }
