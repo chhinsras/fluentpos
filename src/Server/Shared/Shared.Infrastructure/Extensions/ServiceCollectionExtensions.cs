@@ -1,4 +1,5 @@
 ﻿using FluentPOS.Shared.Abstractions.Interfaces.Services;
+using FluentPOS.Shared.Abstractions.Settings;
 using FluentPOS.Shared.Infrastructure.Controllers;
 using FluentPOS.Shared.Infrastructure.Middlewares;
 using FluentPOS.Shared.Infrastructure.Persistence.Postgres;
@@ -19,20 +20,21 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 {
     internal static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
+        public static IServiceCollection AddApplicationLayer(this IServiceCollection services, IConfiguration config)
         {
             services.AddTransient<IUploadService, UploadService>();
+            services.Configure<MailSettings>(config.GetSection("MailSettings"));
             return services;
         }
 
-        public static IServiceCollection AddSharedInfrastructure(this IServiceCollection services)
+        public static IServiceCollection AddSharedInfrastructure(this IServiceCollection services, IConfiguration config)
         {
             services.AddControllers()
                 .ConfigureApplicationPartManager(manager =>
                 {
                     manager.FeatureProviders.Add(new InternalControllerFeatureProvider());
                 });
-            services.AddApplicationLayer();
+            services.AddApplicationLayer(config);
             services.AddLocalization(options =>
             {
                 options.ResourcesPath = "Resources";

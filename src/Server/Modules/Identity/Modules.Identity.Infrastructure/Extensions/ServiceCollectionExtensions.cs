@@ -1,4 +1,5 @@
-﻿using FluentPOS.Modules.Identity.Core.Entities;
+﻿using FluentPOS.Modules.Identity.Core.Abstractions;
+using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Settings;
 using FluentPOS.Modules.Identity.Infrastructure.Persistence;
 using FluentPOS.Modules.Identity.Infrastructure.Services;
@@ -21,6 +22,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
         {
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
             services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<IIdentityService, IdentityService>();
             services.AddPostgres<IdentityDbContext>();
             services.AddIdentity<ExtendedIdentityUser, ExtendedIdentityRole>().AddEntityFrameworkStores<IdentityDbContext>().AddDefaultTokenProviders();
             return services;
