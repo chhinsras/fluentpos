@@ -1,10 +1,14 @@
 ﻿using FluentPOS.Shared.Abstractions.Exceptions;
+using System.Collections.Generic;
 
 namespace FluentPOS.Modules.Identity.Core.Exceptions
 {
     public class IdentityException : CustomException
     {
-        public IdentityException(string message) : base(typeof(IdentityException).Name + " : " + message)
+        public IdentityException(string message) : base(message)
+        {
+        }
+        public IdentityException(List<string> messages) : base(messages)
         {
         }
     }

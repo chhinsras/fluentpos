@@ -47,7 +47,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             var userWithSameUserName = await _userManager.FindByNameAsync(request.UserName);
             if (userWithSameUserName != null)
             {
-                return Result.Fail($"Username '{request.UserName}' is already taken.");
+                throw new IdentityException($"Username '{request.UserName}' is already taken.");
             }
             var user = new ExtendedIdentityUser
             {
@@ -83,7 +83,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 }
                 else
                 {
-                    return Result.Fail(result.Errors.Select(a => a.Description).ToList());
+                    throw new IdentityException(result.Errors.Select(a => a.Description).ToList());
                 }
             }
             else

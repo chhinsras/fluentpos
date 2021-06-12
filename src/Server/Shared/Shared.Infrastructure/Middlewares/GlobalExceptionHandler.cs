@@ -29,25 +29,27 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
             {
                 var response = context.Response;
                 response.ContentType = "application/json";
-                var responseModel = await Result<string>.FailAsync(exception.Message);
+                var responseModel = await ErrorResult<string>.ReturnErrorAsync(exception.Message);
                 _logger.LogError(exception.Message);
                 switch (exception)
                 {
                     case CustomException e:
-                        // custom application error
-                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        response.StatusCode = responseModel.ErrorCode = (int)HttpStatusCode.BadRequest;
+                        if(e.ErrorMessages.Count>0)
+                        {
+                            responseModel.Messages = (e.ErrorMessages);
+                        }
                         break;
 
                     case KeyNotFoundException e:
-                        // not found error
-                        response.StatusCode = (int)HttpStatusCode.NotFound;
+                        response.StatusCode = responseModel.ErrorCode = (int)HttpStatusCode.NotFound;
                         break;
 
                     default:
-                        // unhandled error
-                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        response.StatusCode = responseModel.ErrorCode = (int)HttpStatusCode.InternalServerError;
                         break;
                 }
+                responseModel.Source = exception.Source;
                 var result = JsonSerializer.Serialize(responseModel);
                 await response.WriteAsync(result);
             }
