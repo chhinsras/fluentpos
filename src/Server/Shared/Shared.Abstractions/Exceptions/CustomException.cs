@@ -6,12 +6,9 @@ namespace FluentPOS.Shared.Abstractions.Exceptions
     public class CustomException : Exception
     {
         public List<string> ErrorMessages { get; set; } = new List<string>();
-        public CustomException(string message) : base(message)
+        public CustomException(string message, List<string> errors = default) : base(message)
         {
-        }
-        public CustomException(List<string> messages)
-        {
-            this.ErrorMessages = messages;
+            this.ErrorMessages = errors;
         }
     }
 }

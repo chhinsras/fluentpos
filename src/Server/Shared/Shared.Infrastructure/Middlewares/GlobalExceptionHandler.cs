@@ -30,11 +30,13 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
                 var response = context.Response;
                 response.ContentType = "application/json";
                 var responseModel = await ErrorResult<string>.ReturnErrorAsync(exception.Message);
+                responseModel.Source = exception.Source;
                 _logger.LogError(exception.Message);
                 switch (exception)
                 {
                     case CustomException e:
                         response.StatusCode = responseModel.ErrorCode = (int)HttpStatusCode.BadRequest;
+                        if (e.ErrorMessages == null) break;
                         if(e.ErrorMessages.Count>0)
                         {
                             responseModel.Messages = (e.ErrorMessages);
@@ -49,7 +51,6 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
                         response.StatusCode = responseModel.ErrorCode = (int)HttpStatusCode.InternalServerError;
                         break;
                 }
-                responseModel.Source = exception.Source;
                 var result = JsonSerializer.Serialize(responseModel);
                 await response.WriteAsync(result);
             }

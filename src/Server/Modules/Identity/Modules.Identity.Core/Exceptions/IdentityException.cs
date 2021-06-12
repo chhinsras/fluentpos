@@ -5,12 +5,8 @@ namespace FluentPOS.Modules.Identity.Core.Exceptions
 {
     public class IdentityException : CustomException
     {
-        public IdentityException(string message) : base(message)
+        public IdentityException(string message, List<string> errors = default) : base(message, errors)
         {
-        }
-        public IdentityException(string message, List<string> errors) : base(message)
-        {
-            base.ErrorMessages = errors;
         }
     }
 }
