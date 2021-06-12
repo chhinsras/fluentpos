@@ -4,6 +4,7 @@ using FluentPOS.Modules.Identity.Core.Settings;
 using FluentPOS.Modules.Identity.Infrastructure.Persistence;
 using FluentPOS.Modules.Identity.Infrastructure.Services;
 using FluentPOS.Shared.Abstractions.Interfaces.Services.Identity;
+using FluentPOS.Shared.Abstractions.Services;
 using FluentPOS.Shared.Infrastructure.Persistence.Postgres;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,8 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
     {
         public static IServiceCollection AddIdentityInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddHttpContextAccessor();
+            services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IIdentityService, IdentityService>();
