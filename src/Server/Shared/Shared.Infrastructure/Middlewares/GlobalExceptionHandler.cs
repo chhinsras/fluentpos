@@ -13,10 +13,12 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
     internal class GlobalExceptionHandler : IMiddleware
     {
         private readonly ILogger<GlobalExceptionHandler> _logger;
+
         public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
         {
             _logger = logger;
         }
+
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try

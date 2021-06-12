@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Core.Entities
 {
@@ -11,8 +6,8 @@ namespace FluentPOS.Modules.Identity.Core.Entities
     {
         public ExtendedIdentityRole()
         {
-
         }
+
         public ExtendedIdentityRole(string roleName)
         {
             Name = roleName;

@@ -9,13 +9,14 @@ namespace FluentPOS.Modules.Identity.Controllers
     internal class TokensController : BaseController
     {
         private readonly ITokenService _tokenService;
+
         public TokensController(ITokenService tokenService)
         {
             _tokenService = tokenService;
         }
+
         [HttpPost]
         [AllowAnonymous]
-
         public async Task<IActionResult> GetTokenAsync(TokenRequest request)
         {
             var token = await _tokenService.GetTokenAsync(request, GenerateIPAddress());

@@ -1,11 +1,7 @@
 ﻿using FluentPOS.Shared.DTOs.Mails;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Shared.Abstractions.Services
+namespace FluentPOS.Shared.Abstractions.Interfaces.Services
 {
     public interface IMailService
     {

@@ -13,10 +13,11 @@ namespace FluentPOS.Shared.Infrastructure.Persistence.Postgres
 
             return services;
         }
+
         public static IServiceCollection AddPostgres<T>(this IServiceCollection services) where T : DbContext
         {
             var options = services.GetOptions<PostgresSettings>("postgres");
-            services.AddDbContext<T>(m => m.UseNpgsql(options.ConnectionString,e=>e.MigrationsAssembly(typeof(T).Assembly.FullName)));
+            services.AddDbContext<T>(m => m.UseNpgsql(options.ConnectionString, e => e.MigrationsAssembly(typeof(T).Assembly.FullName)));
             using var scope = services.BuildServiceProvider().CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<T>();
             dbContext.Database.Migrate();

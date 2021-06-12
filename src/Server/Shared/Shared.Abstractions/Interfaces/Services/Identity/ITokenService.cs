@@ -7,6 +7,7 @@ namespace FluentPOS.Shared.Abstractions.Interfaces.Services.Identity
     public interface ITokenService
     {
         Task<IResult<TokenResponse>> GetTokenAsync(TokenRequest model, string ipAddress);
+
         Task<IResult<TokenResponse>> RefreshTokenAsync(RefreshTokenRequest model, string ipAddress);
     }
 }

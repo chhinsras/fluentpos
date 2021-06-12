@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Builder;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("FluentPOS.Bootstrapper")]
+
 namespace FluentPOS.Shared.Infrastructure.Extensions
 {
     internal static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder UseSharedInfrastructure(this IApplicationBuilder app)
         {
-
             app.UseRouting();
             app.UseMiddleware<GlobalExceptionHandler>();
             app.UseSwaggerDocumentation();
@@ -19,6 +19,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             });
             return app;
         }
+
         private static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
         {
             app.UseSwagger();

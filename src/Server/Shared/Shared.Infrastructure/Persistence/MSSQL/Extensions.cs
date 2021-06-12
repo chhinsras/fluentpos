@@ -13,6 +13,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence.MSSQL
 
             return services;
         }
+
         public static IServiceCollection AddMSSQL<T>(this IServiceCollection services) where T : DbContext
         {
             var options = services.GetOptions<MSSQLSettings>("mssql");

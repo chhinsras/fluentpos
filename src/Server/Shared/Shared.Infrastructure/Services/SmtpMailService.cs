@@ -1,4 +1,4 @@
-﻿using FluentPOS.Shared.Abstractions.Services;
+﻿using FluentPOS.Shared.Abstractions.Interfaces.Services;
 using FluentPOS.Shared.Abstractions.Settings;
 using FluentPOS.Shared.DTOs.Mails;
 using MailKit.Net.Smtp;

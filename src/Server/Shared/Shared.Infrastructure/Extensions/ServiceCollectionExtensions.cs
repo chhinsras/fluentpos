@@ -4,14 +4,11 @@ using FluentPOS.Shared.Infrastructure.Controllers;
 using FluentPOS.Shared.Infrastructure.Middlewares;
 using FluentPOS.Shared.Infrastructure.Persistence.Postgres;
 using FluentPOS.Shared.Infrastructure.Services;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Bootstrapper")]
@@ -23,6 +20,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
         public static IServiceCollection AddApplicationLayer(this IServiceCollection services, IConfiguration config)
         {
             services.AddTransient<IUploadService, UploadService>();
+            services.AddTransient<IMailService, SmtpMailService>();
             services.Configure<MailSettings>(config.GetSection("MailSettings"));
             return services;
         }
@@ -46,6 +44,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 
             return services;
         }
+
         internal static T GetOptions<T>(this IServiceCollection services, string sectionName) where T : new()
         {
             using var serviceProvider = services.BuildServiceProvider();
@@ -56,6 +55,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 
             return options;
         }
+
         private static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
         {
             return services.AddSwaggerGen(c =>
