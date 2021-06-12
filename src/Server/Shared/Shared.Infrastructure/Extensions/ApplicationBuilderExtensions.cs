@@ -1,4 +1,5 @@
 ﻿using FluentPOS.Shared.Infrastructure.Middlewares;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using System.Runtime.CompilerServices;
 
@@ -16,6 +17,10 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+            app.UseHangfireDashboard("/jobs", new DashboardOptions
+            {
+                DashboardTitle = "FluentPOS Jobs"
             });
             return app;
         }

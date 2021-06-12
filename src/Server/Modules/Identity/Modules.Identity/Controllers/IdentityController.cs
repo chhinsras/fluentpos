@@ -16,21 +16,21 @@ namespace FluentPOS.Modules.Identity.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("register")]
+        [HttpPost("/api/identity/register")]
         public async Task<IActionResult> RegisterAsync(RegisterRequest request)
         {
             var origin = Request.Headers["origin"];
             return Ok(await _identityService.RegisterAsync(request, origin));
         }
 
-        [HttpGet("confirm-email")]
+        [HttpGet("/api/identity/confirm-email")]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmailAsync([FromQuery] int userId, [FromQuery] string code)
         {
             return Ok(await _identityService.ConfirmEmailAsync(userId, code));
         }
 
-        [HttpPost("forgot-password")]
+        [HttpPost("/api/identity/forgot-password")]
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPasswordAsync(ForgotPasswordRequest request)
         {
@@ -38,7 +38,7 @@ namespace FluentPOS.Modules.Identity.Controllers
             return Ok(await _identityService.ForgotPasswordAsync(request.Email, origin));
         }
 
-        [HttpPost("reset-password")]
+        [HttpPost("/api/identity/reset-password")]
         [AllowAnonymous]
         public async Task<IActionResult> ResetPasswordAsync(ResetPasswordRequest request)
         {

@@ -3,6 +3,7 @@ using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Enums;
 using FluentPOS.Modules.Identity.Core.Exceptions;
+using FluentPOS.Shared.Abstractions.Interfaces.Services;
 using FluentPOS.Shared.Abstractions.Wrapper;
 using FluentPOS.Shared.DTOs.Identity;
 using FluentPOS.Shared.DTOs.Mails;
@@ -22,15 +23,19 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
     {
         private readonly UserManager<ExtendedIdentityUser> _userManager;
         private readonly RoleManager<ExtendedIdentityRole> _roleManager;
+        private readonly IJobService _jobService;
+        private readonly IMailService _mailService;
 
         public IdentityService(
             UserManager<ExtendedIdentityUser> userManager,
             IMapper mapper,
-            RoleManager<ExtendedIdentityRole> roleManager)
+            RoleManager<ExtendedIdentityRole> roleManager, IJobService jobService, IMailService mailService)
         {
             _userManager = userManager;
             _mapper = mapper;
             _roleManager = roleManager;
+            _jobService = jobService;
+            _mailService = mailService;
         }
 
         private IMapper _mapper;
@@ -56,8 +61,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 LastName = request.LastName,
                 UserName = request.UserName,
                 PhoneNumber = request.PhoneNumber,
-                IsActive = request.ActivateUser,
-                EmailConfirmed = request.AutoConfirmEmail
+                IsActive = true
             };
             var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
             if (userWithSameEmail == null)
@@ -72,14 +76,10 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     catch
                     {
                     }
-                    
-                    if (!request.AutoConfirmEmail)
-                    {
-                        var verificationUri = await SendVerificationEmail(user, origin);
-                        //BackgroundJob.Enqueue(() => _mailService.SendAsync(new MailRequest() { From = "mail@codewithmukesh.com", To = user.Email, Body = $"Please confirm your account by <a href='{verificationUri}'>clicking here</a>.", Subject = "Confirm Registration" }));
-                        return Result<int>.Success(user.Id, message: $"User Registered. Please check your Mailbox to verify!");
-                    }
-                    return Result<int>.Success(user.Id, message: $"User Registered");
+
+                    var verificationUri = await SendVerificationEmail(user, origin);
+                    _jobService.Enqueue(() => _mailService.SendAsync(new MailRequest() { From = "mail@codewithmukesh.com", To = user.Email, Body = $"Please confirm your account by <a href='{verificationUri}'>clicking here</a>.", Subject = "Confirm Registration" }));
+                    return Result<int>.Success(user.Id, message: $"User Registered. Please check your Mailbox to verify!");
                 }
                 else
                 {
@@ -96,7 +96,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var route = "api/identity/user/confirm-email/";
+            var route = "api/identity/confirm-email/";
             var _enpointUri = new Uri(string.Concat($"{origin}/", route));
             var verificationUri = QueryHelpers.AddQueryString(_enpointUri.ToString(), "userId", user.Id.ToString());
             verificationUri = QueryHelpers.AddQueryString(verificationUri, "code", code);
@@ -155,7 +155,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
             {
                 // Don't reveal that the user does not exist or is not confirmed
-                return Result.Fail("An Error has occured!");
+                throw new IdentityException("An Error has occured!");
             }
             // For more information on how to enable account confirmation and password reset please
             // visit https://go.microsoft.com/fwlink/?LinkID=532713
@@ -180,7 +180,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return Result.Fail("An Error has occured!");
+                throw new IdentityException("An Error has occured!");
             }
 
             var result = await _userManager.ResetPasswordAsync(user, request.Token, request.Password);
@@ -190,7 +190,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             }
             else
             {
-                return Result.Fail("An Error has occured!");
+                throw new IdentityException("An Error has occured!");
             }
         }
     }

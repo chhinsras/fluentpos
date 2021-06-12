@@ -1,4 +1,6 @@
 ﻿using FluentPOS.Shared.Infrastructure.Extensions;
+using Hangfire;
+using Hangfire.PostgreSql;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +23,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence.Postgres
             using var scope = services.BuildServiceProvider().CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<T>();
             dbContext.Database.Migrate();
+            services.AddHangfire(x => x.UsePostgreSqlStorage(options.ConnectionString));
             return services;
         }
     }
