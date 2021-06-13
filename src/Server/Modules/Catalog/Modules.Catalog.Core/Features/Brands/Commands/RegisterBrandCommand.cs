@@ -5,14 +5,11 @@ using System;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
 {
-    public class RegisterBrandCommand : BrandCommand, IRequest<Result<Guid>>
+    public class RegisterBrandCommand : IRequest<Result<Guid>>
     {
-        public RegisterBrandCommand(string name, string imageUrl, string detail, UploadRequest uploadRequest)
-        {
-            Name = name;
-            ImageUrl = imageUrl;
-            Detail = detail;
-            UploadRequest = uploadRequest;
-        }
+        public string Name { get; set; }
+        public string ImageUrl { get; set; }
+        public string Detail { get; set; }
+        public UploadRequest UploadRequest { get; set; }
     }
 }

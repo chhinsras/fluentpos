@@ -45,7 +45,6 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             services.AddHangfireServer();
             services.AddSingleton<GlobalExceptionHandler>();
             services.AddSwaggerDocumentation();
-
             return services;
         }
 

@@ -1,4 +1,4 @@
-﻿using FluentPOS.Shared.Abstractions.Settings;
+﻿using FluentPOS.Shared.Application.Settings;
 using FluentPOS.Shared.Application.Queries;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Shared.Abstractions.Behaviors
+namespace FluentPOS.Shared.Application.Behaviors
 {
     public class CachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : ICacheable
     {

@@ -2,6 +2,7 @@
 using FluentPOS.Modules.Catalog.Core.Constants;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Application.Wrapper;
+using FluentPOS.Shared.DTOs.Upload;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
@@ -12,11 +13,8 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
 {
-    public class DeleteBrandCommand : BrandCommand, IRequest<Result<Guid>>
+    public class RemoveBrandCommand : IRequest<Result<Guid>>
     {
-        public DeleteBrandCommand(Guid id)
-        {
-            Id = id;
-        }
+        public Guid Id { get; set; }
     }
 }

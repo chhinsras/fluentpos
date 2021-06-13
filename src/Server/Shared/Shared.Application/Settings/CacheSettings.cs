@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Shared.Abstractions.Settings
+namespace FluentPOS.Shared.Application.Settings
 {
     public class CacheSettings
     {

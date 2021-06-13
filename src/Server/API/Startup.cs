@@ -1,6 +1,6 @@
 using FluentPOS.Modules.Catalog;
 using FluentPOS.Modules.Identity.Extensions;
-using FluentPOS.Shared.Abstractions.Extensions;
+using FluentPOS.Shared.Application.Extensions;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

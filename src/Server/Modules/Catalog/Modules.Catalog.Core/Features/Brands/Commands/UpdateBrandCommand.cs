@@ -5,15 +5,12 @@ using System;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
 {
-    public class UpdateBrandCommand : BrandCommand, IRequest<Result<Guid>>
+    public class UpdateBrandCommand :  IRequest<Result<Guid>>
     {
-        public UpdateBrandCommand(Guid id, string name, string imageUrl, string detail, UploadRequest uploadRequest)
-        {
-            Id = id;
-            Name = name;
-            ImageUrl = imageUrl;
-            Detail = detail;
-            UploadRequest = uploadRequest;
-        }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string ImageUrl { get; set; }
+        public string Detail { get; set; }
+        public UploadRequest UploadRequest { get; set; }
     }
 }

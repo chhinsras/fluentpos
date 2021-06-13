@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>FluentPOS.Shared.Abstractions</RootNamespace>
-    <AssemblyName>FluentPOS.Shared.Abstractions</AssemblyName>
+    <RootNamespace>FluentPOS.Shared.Application</RootNamespace>
+    <AssemblyName>FluentPOS.Shared.Application</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +17,8 @@
     <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="10.2.3" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.2.3" />
   </ItemGroup>
 
   <ItemGroup>

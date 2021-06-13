@@ -38,7 +38,7 @@ namespace FluentPOS.Modules.Catalog.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return Ok(await _mediator.Send(new DeleteBrandCommand(id)));
+            return Ok(await _mediator.Send(new RemoveBrandCommand { Id = id }));
         }
     }
 }

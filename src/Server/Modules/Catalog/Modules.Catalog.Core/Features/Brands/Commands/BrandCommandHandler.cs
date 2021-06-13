@@ -17,8 +17,8 @@ using System.Threading.Tasks;
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
 {
     internal class BrandCommandHandler :
+        IRequestHandler<RemoveBrandCommand, Result<Guid>>,
         IRequestHandler<RegisterBrandCommand, Result<Guid>>,
-        IRequestHandler<DeleteBrandCommand, Result<Guid>>,
         IRequestHandler<UpdateBrandCommand, Result<Guid>>
 
     {
@@ -48,7 +48,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Saved"]);
         }
-        public async Task<Result<Guid>> Handle(DeleteBrandCommand command, CancellationToken cancellationToken)
+        public async Task<Result<Guid>> Handle(RemoveBrandCommand command, CancellationToken cancellationToken)
         {
             var isBrandUsed = await IsBrandUsed(command.Id);
             if (isBrandUsed) throw new CatalogException(_localizer["Deletion Not Allowed"]);
