@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
+using FluentPOS.Modules.Catalog.Core.Constants;
 using FluentPOS.Modules.Catalog.Core.Entites;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Application.Interfaces.Services;
@@ -7,6 +8,7 @@ using FluentPOS.Shared.Application.Wrapper;
 using FluentPOS.Shared.DTOs.Upload;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Localization;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -30,17 +32,19 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
 
     internal class EditBrandCommandHandler : IRequestHandler<EditBrandCommand, Result<Guid>>
     {
+        private readonly IDistributedCache _cache;
         private readonly ICatalogDbContext _context;
         private readonly IMapper _mapper;
         private readonly IUploadService _uploadService;
         private readonly IStringLocalizer<EditBrandCommandHandler> _localizer;
 
-        public EditBrandCommandHandler(ICatalogDbContext context, IMapper mapper, IUploadService uploadService, IStringLocalizer<EditBrandCommandHandler> localizer)
+        public EditBrandCommandHandler(ICatalogDbContext context, IMapper mapper, IUploadService uploadService, IStringLocalizer<EditBrandCommandHandler> localizer, IDistributedCache cache)
         {
             _context = context;
             _mapper = mapper;
             _uploadService = uploadService;
             _localizer = localizer;
+            _cache = cache;
         }
 
         public async Task<Result<Guid>> Handle(EditBrandCommand command, CancellationToken cancellationToken)
@@ -57,6 +61,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
                 }
                 _context.Brands.Update(brand);
                 await _context.SaveChangesAsync(cancellationToken);
+                await _cache.RemoveAsync(CatalogCacheKeys.GetBrandByIdCacheKey(command.Id));
                 return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Updated"]);
             }
             else

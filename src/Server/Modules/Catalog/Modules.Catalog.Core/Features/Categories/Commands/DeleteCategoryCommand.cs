@@ -1,8 +1,10 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
+using FluentPOS.Modules.Catalog.Core.Constants;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Application.Wrapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Threading;
@@ -17,13 +19,15 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
 
     internal class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, Result<Guid>>
     {
+        private readonly IDistributedCache _cache;
         private readonly ICatalogDbContext _context;
         private readonly IStringLocalizer<DeleteCategoryCommandHandler> _localizer;
 
-        public DeleteCategoryCommandHandler(ICatalogDbContext context, IStringLocalizer<DeleteCategoryCommandHandler> localizer)
+        public DeleteCategoryCommandHandler(ICatalogDbContext context, IStringLocalizer<DeleteCategoryCommandHandler> localizer, IDistributedCache cache)
         {
             _context = context;
             _localizer = localizer;
+            _cache = cache;
         }
 
         public async Task<Result<Guid>> Handle(DeleteCategoryCommand command, CancellationToken cancellationToken)
@@ -34,6 +38,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
                 var category = await _context.Categories.FirstOrDefaultAsync(b => b.Id == command.Id);
                 _context.Categories.Remove(category);
                 await _context.SaveChangesAsync(cancellationToken);
+                await _cache.RemoveAsync(CatalogCacheKeys.GetCategoryByIdCacheKey(command.Id));
                 return await Result<Guid>.SuccessAsync(category.Id, _localizer["Category Deleted"]);
             }
             else
