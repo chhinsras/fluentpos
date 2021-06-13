@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -39,7 +40,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
 
         public async Task<Result<GetBrandByIdResponse>> Handle(GetBrandByIdQuery query, CancellationToken cancellationToken)
         {
-            var brand = await _context.Brands.SingleOrDefaultAsync(b => b.Id == query.Id);
+            var brand = await _context.Brands.Where(b => b.Id == query.Id).FirstOrDefaultAsync(cancellationToken);
             if (brand == null) throw new CatalogException(_localizer["Brand Not Found!"]);
             var mappedBrand = _mapper.Map<GetBrandByIdResponse>(brand);
             return await Result<GetBrandByIdResponse>.SuccessAsync(mappedBrand);

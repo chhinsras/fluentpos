@@ -19,7 +19,7 @@ namespace FluentPOS.Modules.Catalog.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id, bool bypassCache)
         {
-            var brand = await _mediator.Send(new GetBrandByIdQuery() { Id = id, BypassCache  = bypassCache });
+            var brand = await _mediator.Send(new GetBrandByIdQuery() { Id = id, BypassCache = bypassCache });
             return Ok(brand);
         }
      

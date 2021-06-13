@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
+using FluentPOS.Shared.Application.Queries;
 using FluentPOS.Shared.Application.Wrapper;
 using FluentPOS.Shared.DTOs.Catalogs.Products;
 using MediatR;
@@ -13,9 +14,12 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 {
-    public class GetProductByIdQuery : IRequest<Result<GetProductByIdResponse>>
+    public class GetProductByIdQuery : IRequest<Result<GetProductByIdResponse>>, ICacheable
     {
         public Guid Id { get; set; }
+        public bool BypassCache { get; set; }
+        public string CacheKey => $"Product-{Id}";
+        public TimeSpan? SlidingExpiration { get; set; }
     }
 
     internal class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Result<GetProductByIdResponse>>
