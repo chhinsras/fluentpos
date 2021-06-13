@@ -4,6 +4,7 @@ using FluentPOS.Modules.Identity.Core.Settings;
 using FluentPOS.Modules.Identity.Infrastructure.Persistence;
 using FluentPOS.Modules.Identity.Infrastructure.Services;
 using FluentPOS.Shared.Abstractions.Interfaces.Services.Identity;
+using FluentPOS.Shared.Infrastructure.Persistence;
 using FluentPOS.Shared.Infrastructure.Persistence.Postgres;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +22,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                 .Configure<JwtSettings>(configuration.GetSection("JwtSettings"))
                 .AddTransient<ITokenService, TokenService>()
                 .AddTransient<IIdentityService, IdentityService>()
-                .AddPostgres<IdentityDbContext>()
+                .AddDatabaseContext<IdentityDbContext>()
                 .AddIdentity<ExtendedIdentityUser, ExtendedIdentityRole>(options =>
                 {
                     options.Password.RequiredLength = 6;

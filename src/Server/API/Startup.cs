@@ -19,15 +19,15 @@ namespace FluentPOS.Bootstrapper
         {
             services
                  .AddSharedInfrastructure(_config)
-                .AddCatalogModule(_config)
-                .AddIdentityModule(_config);
+                 .AddCatalogModule(_config)
+                 .AddIdentityModule(_config);
 
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSharedInfrastructure();
-            
+
         }
     }
 }
