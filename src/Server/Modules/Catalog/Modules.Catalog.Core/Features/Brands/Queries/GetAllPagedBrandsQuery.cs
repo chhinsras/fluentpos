@@ -29,38 +29,4 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
             SearchString = searchString;
         }
     }
-
-    internal class GetAllPagedBrandsCachedQueryHandler : IRequestHandler<GetAllPagedBrandsQuery, PaginatedResult<GetAllPagedBrandsResponse>>
-    {
-        private readonly ICatalogDbContext _context;
-        private readonly IMapper _mapper;
-        private readonly IStringLocalizer<GetAllPagedBrandsCachedQueryHandler> _localizer;
-
-        public GetAllPagedBrandsCachedQueryHandler(ICatalogDbContext context, IMapper mapper, IStringLocalizer<GetAllPagedBrandsCachedQueryHandler> localizer)
-        {
-            _context = context;
-            _mapper = mapper;
-            _localizer = localizer;
-        }
-
-        public async Task<PaginatedResult<GetAllPagedBrandsResponse>> Handle(GetAllPagedBrandsQuery request, CancellationToken cancellationToken)
-        {
-            Expression<Func<Brand, GetAllPagedBrandsResponse>> expression = e => new GetAllPagedBrandsResponse(e.Id, e.Name, e.Detail);
-
-            var queryable = _context.Brands.OrderBy(x => x.Id).AsQueryable();
-
-            if (!string.IsNullOrEmpty(request.SearchString)) queryable = queryable.Where(b => b.Name.Contains(request.SearchString) || b.Detail.Contains(request.SearchString));
-           
-            var brandList = await queryable
-                .Select(expression)
-                .ToPaginatedListAsync(request.PageNumber, request.PageSize);
-
-            if (brandList == null) throw new CatalogException(_localizer["Brand Not Found!"]);
-          
-            var mappedBrands = _mapper.Map<PaginatedResult<GetAllPagedBrandsResponse>>(brandList);
-
-            return mappedBrands;
-
-        }
-    }
 }

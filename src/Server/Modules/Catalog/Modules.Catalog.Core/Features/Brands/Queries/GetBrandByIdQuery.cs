@@ -25,26 +25,4 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
 
         public TimeSpan? SlidingExpiration { get; set; }
     }
-
-    internal class GetBrandByIdQueryHandler : IRequestHandler<GetBrandByIdQuery, Result<GetBrandByIdResponse>>
-    {
-        private readonly ICatalogDbContext _context;
-        private readonly IMapper _mapper;
-        private readonly IStringLocalizer<GetBrandByIdQueryHandler> _localizer;
-
-        public GetBrandByIdQueryHandler(ICatalogDbContext context, IMapper mapper, IStringLocalizer<GetBrandByIdQueryHandler> localizer)
-        {
-            _context = context;
-            _mapper = mapper;
-            _localizer = localizer;
-        }
-
-        public async Task<Result<GetBrandByIdResponse>> Handle(GetBrandByIdQuery query, CancellationToken cancellationToken)
-        {
-            var brand = await _context.Brands.Where(b => b.Id == query.Id).FirstOrDefaultAsync(cancellationToken);
-            if (brand == null) throw new CatalogException(_localizer["Brand Not Found!"]);
-            var mappedBrand = _mapper.Map<GetBrandByIdResponse>(brand);
-            return await Result<GetBrandByIdResponse>.SuccessAsync(mappedBrand);
-        }
-    }
 }

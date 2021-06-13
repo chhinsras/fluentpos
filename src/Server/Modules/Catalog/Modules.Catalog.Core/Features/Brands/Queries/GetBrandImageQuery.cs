@@ -18,20 +18,4 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
             Id = brandId;
         }
     }
-
-    internal class GetBrandImageQueryHandler : IRequestHandler<GetBrandImageQuery, Result<string>>
-    {
-        private readonly ICatalogDbContext _context;
-
-        public GetBrandImageQueryHandler(ICatalogDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<Result<string>> Handle(GetBrandImageQuery request, CancellationToken cancellationToken)
-        {
-            var data = await _context.Brands.Where(b => b.Id == request.Id).Select(a => a.ImageUrl).FirstOrDefaultAsync(cancellationToken);
-            return await Result<string>.SuccessAsync(data: data);
-        }
-    }
 }
