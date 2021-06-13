@@ -56,7 +56,9 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
 
             if (categoryList == null) throw new CatalogException(_localizer["Category Not Found!"]);
             // TODO: Cache
-            return categoryList;
+            var mappedCategories = _mapper.Map<PaginatedResult<GetAllPagedCategoriesResponse>>(categoryList);
+
+            return mappedCategories;
         }
     }
 }

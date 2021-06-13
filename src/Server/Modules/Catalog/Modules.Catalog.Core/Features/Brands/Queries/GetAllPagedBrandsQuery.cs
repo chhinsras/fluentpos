@@ -54,9 +54,12 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
                 .Select(expression)
                 .ToPaginatedListAsync(request.PageNumber, request.PageSize);
 
+
             if (brandList == null) throw new CatalogException(_localizer["Brand Not Found!"]);
             // TODO: Cache
-            return brandList;
+            var mappedBrands = _mapper.Map<PaginatedResult<GetAllPagedBrandsResponse>>(brandList);
+
+            return mappedBrands;
 
         }
     }

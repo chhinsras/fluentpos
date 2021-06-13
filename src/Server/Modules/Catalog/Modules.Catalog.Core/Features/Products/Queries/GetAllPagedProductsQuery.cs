@@ -1,4 +1,5 @@
-﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
+﻿using AutoMapper;
+using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Entites;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Abstractions.Wrapper;
@@ -31,12 +32,14 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
     internal class GGetAllProductsQueryHandler : IRequestHandler<GetAllPagedProductsQuery, PaginatedResult<GetAllPagedProductsResponse>>
     {
         private readonly ICatalogDbContext _context;
+        private readonly IMapper _mapper;
         private readonly IStringLocalizer<GGetAllProductsQueryHandler> _localizer;
 
-        public GGetAllProductsQueryHandler(ICatalogDbContext context, IStringLocalizer<GGetAllProductsQueryHandler> localizer)
+        public GGetAllProductsQueryHandler(ICatalogDbContext context, IMapper mapper, IStringLocalizer<GGetAllProductsQueryHandler> localizer)
         {
             _context = context;
             _localizer = localizer;
+            _mapper = mapper;
         }
 
         public async Task<PaginatedResult<GetAllPagedProductsResponse>> Handle(GetAllPagedProductsQuery query, CancellationToken cancellationToken)
@@ -69,7 +72,9 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 
             if (productList == null) throw new CatalogException(_localizer["Product Not Found!"]);
             // TODO: Cache
-            return productList;
+            var mappedProducts = _mapper.Map<PaginatedResult<GetAllPagedProductsResponse>>(productList);
+
+            return mappedProducts;
         }
     }
 }
