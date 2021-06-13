@@ -19,6 +19,7 @@ namespace FluentPOS.Bootstrapper
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .AddDistributedMemoryCache()
                  .AddSharedInfrastructure(_config)
                  .AddSharedApplication(_config)
                  .AddCatalogModule(_config)
