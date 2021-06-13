@@ -2,6 +2,7 @@
 using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Entites;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
+using FluentPOS.Shared.Application.Queries;
 using FluentPOS.Shared.Application.Wrapper;
 using FluentPOS.Shared.DTOs.Catalogs.Brands;
 using FluentPOS.Shared.Infrastructure.Extensions;
@@ -20,7 +21,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public string SearchString { get; set; }
-  
+
         public GetAllPagedBrandsQuery(int pageNumber, int pageSize, string searchString)
         {
             PageNumber = pageNumber;
