@@ -24,7 +24,13 @@ namespace FluentPOS.Modules.Catalog.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(AddEditProductCommand command)
+        public async Task<IActionResult> Create(AddProductCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(EditProductCommand command)
         {
             return Ok(await _mediator.Send(command));
         }

@@ -9,7 +9,8 @@ namespace FluentPOS.Modules.Catalog.Core.Mappings
     {
         public CategoryProfile()
         {
-            CreateMap<AddEditCategoryCommand, Category>().ReverseMap();
+            CreateMap<AddCategoryCommand, Category>().ReverseMap();
+            CreateMap<EditCategoryCommand, Category>().ReverseMap();
             CreateMap<GetCategoryByIdResponse, Category>().ReverseMap();
             CreateMap<GetAllPagedCategoriesResponse, Category>().ReverseMap();
         }

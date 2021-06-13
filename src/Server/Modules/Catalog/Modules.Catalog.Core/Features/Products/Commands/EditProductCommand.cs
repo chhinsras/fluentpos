@@ -16,8 +16,9 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
 {
-    public partial class AddEditProductCommand : IRequest<Result<Guid>>
+    public partial class EditProductCommand : IRequest<Result<Guid>>
     {
+        [Required]
         public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
@@ -42,14 +43,14 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
         public UploadRequest UploadRequest { get; set; }
     }
 
-    internal class AddEditProductCommandHandler : IRequestHandler<AddEditProductCommand, Result<Guid>>
+    internal class EditProductCommandHandler : IRequestHandler<EditProductCommand, Result<Guid>>
     {
         private readonly IMapper _mapper;
         private readonly ICatalogDbContext _context;
         private readonly IUploadService _uploadService;
-        private readonly IStringLocalizer<AddEditProductCommandHandler> _localizer;
+        private readonly IStringLocalizer<EditProductCommandHandler> _localizer;
 
-        public AddEditProductCommandHandler(ICatalogDbContext context, IMapper mapper, IUploadService uploadService, IStringLocalizer<AddEditProductCommandHandler> localizer)
+        public EditProductCommandHandler(ICatalogDbContext context, IMapper mapper, IUploadService uploadService, IStringLocalizer<EditProductCommandHandler> localizer)
         {
             _context = context;
             _mapper = mapper;
@@ -57,49 +58,31 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
             _localizer = localizer;
         }
 
-        public async Task<Result<Guid>> Handle(AddEditProductCommand command, CancellationToken cancellationToken)
+        public async Task<Result<Guid>> Handle(EditProductCommand command, CancellationToken cancellationToken)
         {
             if (await _context.Products.Where(p => p.Id != command.Id).AnyAsync(p => p.BarcodeSymbology == command.BarcodeSymbology, cancellationToken))
             {
                 throw new CatalogException(_localizer["Barcode already exists."]);
             }
 
-            var uploadRequest = command.UploadRequest;
-            if (uploadRequest != null)
-            {
-                uploadRequest.FileName = $"P-{command.BarcodeSymbology}{uploadRequest.Extension}";
-            }
+            var product = await _context.Products.Where(p => p.Id == command.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 
-            if (command.Id == Guid.Empty)
+            if (product != null)
             {
-                var product = _mapper.Map<Product>(command);
+                product = _mapper.Map<Product>(command);
+                var uploadRequest = command.UploadRequest;
                 if (uploadRequest != null)
                 {
+                    uploadRequest.FileName = $"P-{command.BarcodeSymbology}{uploadRequest.Extension}";
                     product.ImageUrl = _uploadService.UploadAsync(uploadRequest);
                 }
-                await _context.Products.AddAsync(product);
+                _context.Products.Update(product);
                 await _context.SaveChangesAsync(cancellationToken);
-                return await Result<Guid>.SuccessAsync(product.Id, _localizer["Product Saved"]);
+                return await Result<Guid>.SuccessAsync(product.Id, _localizer["Product Updated"]);
             }
             else
             {
-                var product = await _context.Products.Where(p => p.Id == command.Id).FirstOrDefaultAsync(cancellationToken);
-
-                if (product != null)
-                {
-                    product = _mapper.Map<Product>(command);
-                    if (uploadRequest != null)
-                    {
-                        product.ImageUrl = _uploadService.UploadAsync(uploadRequest);
-                    }
-                    _context.Products.Update(product);
-                    await _context.SaveChangesAsync(cancellationToken);
-                    return await Result<Guid>.SuccessAsync(product.Id, _localizer["Product Updated"]);
-                }
-                else
-                {
-                    throw new CatalogException(_localizer["Product Not Found!"]);
-                }
+                throw new CatalogException(_localizer["Product Not Found!"]);
             }
         }
     }

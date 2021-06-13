@@ -22,13 +22,19 @@ namespace FluentPOS.Modules.Catalog.Controllers
             var brand = await _mediator.Send(new GetBrandByIdQuery() { Id = id, BypassCache = bypassCache });
             return Ok(brand);
         }
-     
+
         [HttpPost]
-        public async Task<IActionResult> Post(AddEditBrandCommand command)
+        public async Task<IActionResult> Create(AddBrandCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-     
+
+        [HttpPut]
+        public async Task<IActionResult> Update(EditBrandCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
