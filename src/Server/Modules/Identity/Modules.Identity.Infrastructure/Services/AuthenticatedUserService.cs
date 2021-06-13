@@ -1,4 +1,4 @@
-﻿using FluentPOS.Shared.Abstractions.Interfaces.Services.Identity;
+﻿using FluentPOS.Shared.Application.Interfaces.Services.Identity;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Linq;

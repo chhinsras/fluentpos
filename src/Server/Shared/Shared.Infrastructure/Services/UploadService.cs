@@ -1,4 +1,4 @@
-﻿using FluentPOS.Shared.Abstractions.Interfaces.Services;
+﻿using FluentPOS.Shared.Application.Interfaces.Services;
 using FluentPOS.Shared.DTOs.Upload;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using System.IO;

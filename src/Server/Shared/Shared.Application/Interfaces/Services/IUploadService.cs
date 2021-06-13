@@ -1,6 +1,6 @@
 ﻿using FluentPOS.Shared.DTOs.Upload;
 
-namespace FluentPOS.Shared.Abstractions.Interfaces.Services
+namespace FluentPOS.Shared.Application.Interfaces.Services
 {
     public interface IUploadService
     {

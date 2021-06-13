@@ -1,4 +1,4 @@
-﻿using FluentPOS.Shared.Abstractions.Wrapper;
+﻿using FluentPOS.Shared.Application.Wrapper;
 using FluentPOS.Shared.DTOs.Identity;
 using System.Threading.Tasks;
 

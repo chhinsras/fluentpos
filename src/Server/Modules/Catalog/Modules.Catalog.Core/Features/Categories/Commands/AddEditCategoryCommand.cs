@@ -2,8 +2,8 @@
 using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Entites;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
-using FluentPOS.Shared.Abstractions.Interfaces.Services;
-using FluentPOS.Shared.Abstractions.Wrapper;
+using FluentPOS.Shared.Application.Interfaces.Services;
+using FluentPOS.Shared.Application.Wrapper;
 using FluentPOS.Shared.DTOs.Upload;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

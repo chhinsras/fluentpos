@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FluentPOS.Shared.Abstractions.Exceptions
+namespace FluentPOS.Shared.Application.Exceptions
 {
     public class CustomException : Exception
     {

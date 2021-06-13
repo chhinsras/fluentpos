@@ -1,5 +1,6 @@
 using FluentPOS.Modules.Catalog;
 using FluentPOS.Modules.Identity.Extensions;
+using FluentPOS.Shared.Abstractions.Extensions;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +20,7 @@ namespace FluentPOS.Bootstrapper
         {
             services
                  .AddSharedInfrastructure(_config)
+                 .AddSharedApplication(_config)
                  .AddCatalogModule(_config)
                  .AddIdentityModule(_config);
 

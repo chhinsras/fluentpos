@@ -1,4 +1,4 @@
-﻿namespace FluentPOS.Shared.Abstractions.Settings
+﻿namespace FluentPOS.Shared.Application.Settings
 {
     public class MailSettings
     {

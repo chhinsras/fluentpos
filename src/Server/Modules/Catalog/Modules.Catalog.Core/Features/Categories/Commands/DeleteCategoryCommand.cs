@@ -1,6 +1,6 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
-using FluentPOS.Shared.Abstractions.Wrapper;
+using FluentPOS.Shared.Application.Wrapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;

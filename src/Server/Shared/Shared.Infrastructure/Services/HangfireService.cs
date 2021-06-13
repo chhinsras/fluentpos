@@ -1,4 +1,4 @@
-﻿using FluentPOS.Shared.Abstractions.Interfaces.Services;
+﻿using FluentPOS.Shared.Application.Interfaces.Services;
 using Hangfire;
 using System;
 using System.Linq.Expressions;

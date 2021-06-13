@@ -1,5 +1,5 @@
-﻿using FluentPOS.Shared.Abstractions.Exceptions;
-using FluentPOS.Shared.Abstractions.Wrapper;
+﻿using FluentPOS.Shared.Application.Exceptions;
+using FluentPOS.Shared.Application.Wrapper;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;

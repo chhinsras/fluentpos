@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentPOS.Shared.Abstractions.Domain
+namespace FluentPOS.Shared.Application.Domain
 {
     public abstract class BaseEntity
     {

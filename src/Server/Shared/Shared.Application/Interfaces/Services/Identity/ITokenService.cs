@@ -1,8 +1,8 @@
-﻿using FluentPOS.Shared.Abstractions.Wrapper;
+﻿using FluentPOS.Shared.Application.Wrapper;
 using FluentPOS.Shared.DTOs.Identity;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Shared.Abstractions.Interfaces.Services.Identity
+namespace FluentPOS.Shared.Application.Interfaces.Services.Identity
 {
     public interface ITokenService
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Shared.Abstractions.Wrapper
+namespace FluentPOS.Shared.Application.Wrapper
 {
     public class Result : IResult
     {

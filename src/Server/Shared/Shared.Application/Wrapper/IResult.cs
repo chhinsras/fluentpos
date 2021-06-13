@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FluentPOS.Shared.Abstractions.Wrapper
+namespace FluentPOS.Shared.Application.Wrapper
 {
     public interface IResult
     {

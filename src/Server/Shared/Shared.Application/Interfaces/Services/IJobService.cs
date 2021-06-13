@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Shared.Abstractions.Interfaces.Services
+namespace FluentPOS.Shared.Application.Interfaces.Services
 {
     public interface IJobService
     {

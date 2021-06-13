@@ -3,7 +3,7 @@ using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Settings;
 using FluentPOS.Modules.Identity.Infrastructure.Persistence;
 using FluentPOS.Modules.Identity.Infrastructure.Services;
-using FluentPOS.Shared.Abstractions.Interfaces.Services.Identity;
+using FluentPOS.Shared.Application.Interfaces.Services.Identity;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using FluentPOS.Shared.Infrastructure.Persistence.Postgres;
 using Microsoft.AspNetCore.Identity;

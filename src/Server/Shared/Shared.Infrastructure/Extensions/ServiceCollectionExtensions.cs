@@ -1,5 +1,5 @@
-﻿using FluentPOS.Shared.Abstractions.Interfaces.Services;
-using FluentPOS.Shared.Abstractions.Settings;
+﻿using FluentPOS.Shared.Application.Interfaces.Services;
+using FluentPOS.Shared.Application.Settings;
 using FluentPOS.Shared.Infrastructure.Controllers;
 using FluentPOS.Shared.Infrastructure.Middlewares;
 using FluentPOS.Shared.Infrastructure.Persistence.Postgres;

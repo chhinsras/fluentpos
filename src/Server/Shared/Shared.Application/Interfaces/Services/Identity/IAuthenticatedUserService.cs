@@ -1,4 +1,4 @@
-﻿namespace FluentPOS.Shared.Abstractions.Interfaces.Services.Identity
+﻿namespace FluentPOS.Shared.Application.Interfaces.Services.Identity
 {
     public interface IAuthenticatedUserService
     {
