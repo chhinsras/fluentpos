@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
+using FluentPOS.Modules.Catalog.Core.Constants;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Application.Queries;
 using FluentPOS.Shared.Application.Wrapper;
@@ -18,7 +19,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
         public Guid Id { get; set; }
         public bool BypassCache { get; set; }
 
-        public string CacheKey => $"Category-{Id}";
+        public string CacheKey => CatalogCacheKeys.GetCategoryByIdCacheKey(Id);
 
         public TimeSpan? SlidingExpiration { get; set; }
     }

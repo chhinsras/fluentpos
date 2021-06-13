@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
+using FluentPOS.Modules.Catalog.Core.Constants;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Application.Queries;
 using FluentPOS.Shared.Application.Wrapper;
@@ -20,7 +21,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
 
         public bool BypassCache { get; set; }
 
-        public string CacheKey => $"Brand-{Id}";
+        public string CacheKey => CatalogCacheKeys.GetBrandByIdCacheKey(Id);
 
         public TimeSpan? SlidingExpiration { get; set; }
     }
