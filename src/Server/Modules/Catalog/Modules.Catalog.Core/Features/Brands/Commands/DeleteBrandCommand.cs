@@ -12,8 +12,11 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
 {
-    public class DeleteBrandCommand : IRequest<Result<Guid>>
+    public class DeleteBrandCommand : BrandCommand, IRequest<Result<Guid>>
     {
-        public Guid Id { get; set; }
+        public DeleteBrandCommand(Guid id)
+        {
+            Id = id;
+        }
     }
 }
