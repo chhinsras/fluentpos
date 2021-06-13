@@ -61,6 +61,7 @@ namespace FluentPOS.Shared.Application.Wrapper
     public class ErrorResult<T>:Result<T>
     {
         public string Source { get; set; }
+        public string Exception { get; set; }
         public int ErrorCode { get; set; }
     }
     public class Result<T> : Result, IResult<T>

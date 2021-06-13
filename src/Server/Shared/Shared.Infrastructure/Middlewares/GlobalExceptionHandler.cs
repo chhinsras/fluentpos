@@ -31,16 +31,13 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
                 response.ContentType = "application/json";
                 var responseModel = await ErrorResult<string>.ReturnErrorAsync(exception.Message);
                 responseModel.Source = exception.Source;
+                responseModel.Exception = exception.Message;
                 _logger.LogError(exception.Message);
                 switch (exception)
                 {
                     case CustomException e:
                         response.StatusCode = responseModel.ErrorCode = (int)HttpStatusCode.BadRequest;
-                        if (e.ErrorMessages == null) break;
-                        if(e.ErrorMessages.Count>0)
-                        {
-                            responseModel.Messages = (e.ErrorMessages);
-                        }
+                        responseModel.Messages = e.ErrorMessages;
                         break;
 
                     case KeyNotFoundException e:
