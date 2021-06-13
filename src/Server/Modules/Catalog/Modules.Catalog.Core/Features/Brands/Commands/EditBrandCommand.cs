@@ -29,45 +29,4 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
         public string Detail { get; set; }
         public UploadRequest UploadRequest { get; set; }
     }
-
-    internal class EditBrandCommandHandler : IRequestHandler<EditBrandCommand, Result<Guid>>
-    {
-        private readonly IDistributedCache _cache;
-        private readonly ICatalogDbContext _context;
-        private readonly IMapper _mapper;
-        private readonly IUploadService _uploadService;
-        private readonly IStringLocalizer<EditBrandCommandHandler> _localizer;
-
-        public EditBrandCommandHandler(ICatalogDbContext context, IMapper mapper, IUploadService uploadService, IStringLocalizer<EditBrandCommandHandler> localizer, IDistributedCache cache)
-        {
-            _context = context;
-            _mapper = mapper;
-            _uploadService = uploadService;
-            _localizer = localizer;
-            _cache = cache;
-        }
-
-        public async Task<Result<Guid>> Handle(EditBrandCommand command, CancellationToken cancellationToken)
-        {
-            var brand = await _context.Brands.Where(b => b.Id == command.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
-            if (brand != null)
-            {
-                brand = _mapper.Map<Brand>(command);
-                var uploadRequest = command.UploadRequest;
-                if (uploadRequest != null)
-                {
-                    uploadRequest.FileName = $"B-{command.Name}{uploadRequest.Extension}";
-                    brand.ImageUrl = _uploadService.UploadAsync(uploadRequest);
-                }
-                _context.Brands.Update(brand);
-                await _context.SaveChangesAsync(cancellationToken);
-                await _cache.RemoveAsync(CatalogCacheKeys.GetBrandByIdCacheKey(command.Id));
-                return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Updated"]);
-            }
-            else
-            {
-                throw new CatalogException(_localizer["Brand Not Found!"]);
-            }
-        }
-    }
 }
