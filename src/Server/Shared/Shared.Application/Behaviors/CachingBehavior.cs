@@ -30,7 +30,11 @@ namespace FluentPOS.Shared.Abstractions.Behaviors
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             TResponse response;
-            if (request.BypassCache) return await next();
+            if (request.BypassCache)
+            {
+                _logger.LogInformation($"Bypassing Cache for -> '{request.CacheKey}'.");
+                return await next();
+            }
             async Task<TResponse> GetResponseAndAddToCache()
             {
                 response = await next();

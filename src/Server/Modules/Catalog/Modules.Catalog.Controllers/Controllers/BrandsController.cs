@@ -1,5 +1,6 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Features.Brands.Commands;
 using FluentPOS.Modules.Catalog.Core.Features.Brands.Queries;
+using FluentPOS.Shared.DTOs.Catalogs.Brands;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -9,9 +10,9 @@ namespace FluentPOS.Modules.Catalog.Controllers
     internal class BrandsController : BaseController
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll(int pageNumber, int pageSize, string searchString)
+        public async Task<IActionResult> GetAll([FromQuery] PaginatedBrandFilter filter)
         {
-            var brands = await _mediator.Send(new GetAllPagedBrandsQuery(pageNumber, pageSize, searchString));
+            var brands = await _mediator.Send(new GetAllPagedBrandsQuery(filter.PageNumber, filter.PageSize, filter.SearchString));
             return Ok(brands);
         }
 
