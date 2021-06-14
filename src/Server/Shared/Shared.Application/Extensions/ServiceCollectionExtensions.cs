@@ -1,4 +1,5 @@
 ﻿using FluentPOS.Shared.Application.Behaviors;
+using FluentPOS.Shared.Application.EventLogging;
 using FluentPOS.Shared.Application.Settings;
 using MediatR;
 using Microsoft.Extensions.Configuration;

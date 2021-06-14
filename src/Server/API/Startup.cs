@@ -20,10 +20,10 @@ namespace FluentPOS.Bootstrapper
         {
             services
                 .AddDistributedMemoryCache()
-                 .AddSharedInfrastructure(_config)
-                 .AddSharedApplication(_config)
-                 .AddCatalogModule(_config)
-                 .AddIdentityModule(_config);
+                .AddIdentityModule(_config)
+                .AddSharedInfrastructure(_config)
+                .AddSharedApplication(_config)
+                .AddCatalogModule(_config);
 
 
         }

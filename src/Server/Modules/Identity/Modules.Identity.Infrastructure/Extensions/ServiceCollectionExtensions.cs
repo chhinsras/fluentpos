@@ -18,7 +18,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
         {
             services
                 .AddHttpContextAccessor()
-                .AddScoped<IAuthenticatedUserService, AuthenticatedUserService>()
+                .AddScoped<ICurrentUser, CurrentUser>()
                 .Configure<JwtSettings>(configuration.GetSection("JwtSettings"))
                 .AddTransient<ITokenService, TokenService>()
                 .AddTransient<IIdentityService, IdentityService>()

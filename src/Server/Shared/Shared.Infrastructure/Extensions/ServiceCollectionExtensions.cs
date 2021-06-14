@@ -1,7 +1,11 @@
-﻿using FluentPOS.Shared.Application.Interfaces.Services;
+﻿using FluentPOS.Shared.Application.EventLogging;
+using FluentPOS.Shared.Application.Interfaces;
+using FluentPOS.Shared.Application.Interfaces.Services;
 using FluentPOS.Shared.Application.Settings;
 using FluentPOS.Shared.Infrastructure.Controllers;
+using FluentPOS.Shared.Infrastructure.EventLogging;
 using FluentPOS.Shared.Infrastructure.Middlewares;
+using FluentPOS.Shared.Infrastructure.Persistence;
 using FluentPOS.Shared.Infrastructure.Persistence.Postgres;
 using FluentPOS.Shared.Infrastructure.Services;
 using Hangfire;
@@ -30,6 +34,11 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 
         public static IServiceCollection AddSharedInfrastructure(this IServiceCollection services, IConfiguration config)
         {
+            services
+                 .AddDatabaseContext<ApplicationDbContext>()
+                 .AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+
+            services.AddScoped<IEventLogger, EventLogger>();
             services.AddControllers()
                 .ConfigureApplicationPartManager(manager =>
                 {

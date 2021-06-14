@@ -1,11 +1,15 @@
 ﻿using FluentPOS.Shared.Application.Domain;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
 {
-    public class BrandRegisteredEvent : Event
+    public class BrandUpdatedEvent : Event
     {
-        public BrandRegisteredEvent(Guid id,string name, string imageUrl, string detail)
+        public BrandUpdatedEvent(Guid id, string name, string imageUrl, string detail)
         {
             Name = name;
             ImageUrl = imageUrl;

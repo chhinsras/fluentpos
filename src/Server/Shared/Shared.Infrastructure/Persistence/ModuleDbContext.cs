@@ -1,4 +1,5 @@
 ﻿using FluentPOS.Shared.Application.Domain;
+using FluentPOS.Shared.Application.EventLogging;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,9 +14,11 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
     public abstract class ModuleDbContext : DbContext
     {
         private readonly IMediator _mediator;
-        public ModuleDbContext(DbContextOptions options, IMediator mediator) : base(options)
+        private readonly IEventLogger _eventLogger;
+        public ModuleDbContext(DbContextOptions options, IMediator mediator, IEventLogger eventLogger) : base(options)
         {
             _mediator = mediator;
+            _eventLogger = eventLogger;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,6 +42,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
 
             var tasks = domainEvents
                 .Select(async (domainEvent) => {
+                    await _eventLogger.Save(domainEvent);
                     await _mediator.Publish(domainEvent);
                 });
             await Task.WhenAll(tasks);

@@ -72,6 +72,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
                 uploadRequest.FileName = $"B-{command.Name}{uploadRequest.Extension}";
                 brand.ImageUrl = _uploadService.UploadAsync(uploadRequest);
             }
+            brand.AddDomainEvent(new BrandUpdatedEvent(brand.Id, brand.Name, brand.ImageUrl, brand.Detail));
             _context.Brands.Update(brand);
             await _context.SaveChangesAsync(cancellationToken);
             await _cache.RemoveAsync(CatalogCacheKeys.GetBrandByIdCacheKey(command.Id));

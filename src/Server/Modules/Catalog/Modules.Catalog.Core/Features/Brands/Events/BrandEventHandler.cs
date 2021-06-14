@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
 {
     public class BrandEventHandler :
-         INotificationHandler<BrandRegisteredEvent>
+         INotificationHandler<BrandRegisteredEvent>,
+        INotificationHandler<BrandUpdatedEvent>
     {
         private readonly ILogger<BrandEventHandler> logger;
 
@@ -18,6 +19,12 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
         public Task Handle(BrandRegisteredEvent notification, CancellationToken cancellationToken)
         {
             logger.LogInformation($"BrandRegisteredEvent Raised.");
+            return Task.CompletedTask;
+        }
+
+        public Task Handle(BrandUpdatedEvent notification, CancellationToken cancellationToken)
+        {
+            logger.LogInformation($"BrandUpdatedEvent Raised.");
             return Task.CompletedTask;
         }
     }
