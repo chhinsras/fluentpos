@@ -9,8 +9,8 @@ namespace FluentPOS.Modules.Catalog.Core.Mappings
     {
         public ProductProfile()
         {
-            CreateMap<AddProductCommand, Product>().ReverseMap();
-            CreateMap<EditProductCommand, Product>().ReverseMap();
+            CreateMap<RegisterProductCommand, Product>().ReverseMap();
+            CreateMap<UpdateProductCommand, Product>().ReverseMap();
             CreateMap<GetProductByIdResponse, Product>().ReverseMap();
             CreateMap<GetAllPagedProductsResponse, Product>().ReverseMap();
         }

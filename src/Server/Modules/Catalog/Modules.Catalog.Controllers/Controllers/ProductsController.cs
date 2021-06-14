@@ -24,13 +24,13 @@ namespace FluentPOS.Modules.Catalog.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(AddProductCommand command)
+        public async Task<IActionResult> Create(RegisterProductCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(EditProductCommand command)
+        public async Task<IActionResult> Update(UpdateProductCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
@@ -38,7 +38,7 @@ namespace FluentPOS.Modules.Catalog.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return Ok(await _mediator.Send(new DeleteProductCommand { Id = id }));
+            return Ok(await _mediator.Send(new RemoveProductCommand { Id = id }));
         }
     }
 }
