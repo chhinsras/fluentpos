@@ -3,6 +3,7 @@ using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Constants;
 using FluentPOS.Modules.Catalog.Core.Entites;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
+using FluentPOS.Modules.Catalog.Core.Features.Brands.Events;
 using FluentPOS.Shared.Application.Interfaces.Services;
 using FluentPOS.Shared.Application.Wrapper;
 using MediatR;
@@ -44,6 +45,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
                 uploadRequest.FileName = $"B-{command.Name}{uploadRequest.Extension}";
                 brand.ImageUrl = _uploadService.UploadAsync(uploadRequest);
             }
+            brand.AddDomainEvent(new BrandRegisteredEvent(brand.Id,brand.Name,brand.ImageUrl,brand.Detail));
             await _context.Brands.AddAsync(brand);
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Saved"]);
