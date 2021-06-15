@@ -5,7 +5,11 @@
     <RootNamespace>FluentPOS.Modules.Catalog.Infrastructure</RootNamespace>
     <AssemblyName>FluentPOS.Modules.Catalog.Infrastructure</AssemblyName>
   </PropertyGroup>
-
+  
+  <ItemGroup>
+    <None Include="Persistence\SeedData\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  
   <ItemGroup>
     <Compile Remove="Resources\**" />
     <EmbeddedResource Remove="Resources\**" />
