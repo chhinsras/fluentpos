@@ -11,8 +11,10 @@ namespace FluentPOS.Shared.Application.Domain
         {
             Id = Guid.NewGuid();
         }
+
         private List<Event> _domainEvents;
         public IReadOnlyCollection<Event> DomainEvents => _domainEvents?.AsReadOnly();
+
         public void AddDomainEvent(Event domainEvent)
         {
             _domainEvents = _domainEvents ?? new List<Event>();

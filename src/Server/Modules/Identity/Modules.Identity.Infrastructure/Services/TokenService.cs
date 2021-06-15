@@ -49,7 +49,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.refreshTokenExpirationInDays);
             await _userManager.UpdateAsync(user);
             var token = await GenerateJwtAsync(user, ipAddress);
-            var response = new TokenResponse(token, user.RefreshToken,user.RefreshTokenExpiryTime);
+            var response = new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime);
             return Result<TokenResponse>.Success(response);
         }
 
@@ -68,7 +68,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             user.RefreshToken = GenerateRefreshToken();
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.refreshTokenExpirationInDays);
             await _userManager.UpdateAsync(user);
-            var response = new TokenResponse (token,user.RefreshToken,user.RefreshTokenExpiryTime);
+            var response = new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime);
             return Result<TokenResponse>.Success(response);
         }
 
@@ -145,7 +145,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             SecurityToken securityToken;
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
             var jwtSecurityToken = securityToken as JwtSecurityToken;
-            if (jwtSecurityToken == null || 
+            if (jwtSecurityToken == null ||
                 !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
                 StringComparison.InvariantCultureIgnoreCase))
                 throw new IdentityException("Invalid Token.");

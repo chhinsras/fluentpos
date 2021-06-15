@@ -9,7 +9,6 @@ using FluentPOS.Shared.Infrastructure.Persistence;
 using FluentPOS.Shared.Infrastructure.Persistence.Postgres;
 using FluentPOS.Shared.Infrastructure.Services;
 using Hangfire;
-using Hangfire.PostgreSql;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -27,7 +26,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
         {
             services.AddTransient<IUploadService, UploadService>();
             services.AddTransient<IMailService, SmtpMailService>();
-            services.AddScoped<IJobService, HangfireService>();            
+            services.AddScoped<IJobService, HangfireService>();
             services.Configure<MailSettings>(config.GetSection("MailSettings"));
             return services;
         }

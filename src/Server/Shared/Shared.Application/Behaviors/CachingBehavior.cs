@@ -1,13 +1,11 @@
-﻿using FluentPOS.Shared.Application.Settings;
-using FluentPOS.Shared.Application.Queries;
+﻿using FluentPOS.Shared.Application.Queries;
+using FluentPOS.Shared.Application.Settings;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;

@@ -3,7 +3,6 @@ using FluentPOS.Shared.Application.Interfaces.Services.Identity;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FluentPOS.Shared.DTOs.Filters
+﻿namespace FluentPOS.Shared.DTOs.Filters
 {
     public class BaseFilter
     {

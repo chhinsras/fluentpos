@@ -1,10 +1,8 @@
 ﻿using FluentPOS.Shared.Application.Exceptions;
 using FluentValidation;
 using MediatR;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,7 +30,7 @@ namespace FluentPOS.Shared.Application.Behaviors
                 {
                     var errorMessages = failures.Select(a => a.ErrorMessage).ToList();
                     throw new CustomValidationException(errorMessages);
-                }                    
+                }
             }
             return await next();
         }

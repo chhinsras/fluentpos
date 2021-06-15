@@ -15,7 +15,9 @@ namespace FluentPOS.Bootstrapper
         {
             _config = config;
         }
+
         public IConfiguration _config { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services
@@ -24,13 +26,11 @@ namespace FluentPOS.Bootstrapper
                 .AddSharedInfrastructure(_config)
                 .AddSharedApplication(_config)
                 .AddCatalogModule(_config);
-
-
         }
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSharedInfrastructure();
-
         }
     }
 }

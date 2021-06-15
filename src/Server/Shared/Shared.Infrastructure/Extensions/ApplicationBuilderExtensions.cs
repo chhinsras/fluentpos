@@ -27,6 +27,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             app.Initialize();
             return app;
         }
+
         internal static IApplicationBuilder Initialize(this IApplicationBuilder app)
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
@@ -40,6 +41,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 
             return app;
         }
+
         private static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
         {
             app.UseSwagger();
