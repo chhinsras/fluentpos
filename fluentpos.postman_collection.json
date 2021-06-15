@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "701d967a-bdd4-4c2a-8ec1-e60deec788c8",
+		"_postman_id": "60ead734-8d34-4037-8062-db596d83c29a",
 		"name": "fluentpos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -21,6 +21,25 @@
 							"path": [
 								"catalog",
 								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Brand By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/catalog/brands/00235f06-a666-43e3-9e10-b77f27f3c6ac",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"catalog",
+								"brands",
+								"00235f06-a666-43e3-9e10-b77f27f3c6ac"
 							]
 						}
 					},
