@@ -1,13 +1,16 @@
 ﻿using FluentPOS.Modules.Identity.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using FluentPOS.Shared.Infrastructure.Persistence;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
 {
     public static class ModelBuilderExtensions
     {
-        public static void ApplyIdentityConfiguration(this ModelBuilder builder)
+        public static void ApplyIdentityConfiguration(this ModelBuilder builder, PersistenceSettings persistenceOptions)
         {
+            // build model for MSSQL and Postgres
+
             builder.Entity<ExtendedIdentityUser>(entity =>
             {
                 entity.ToTable(name: "Users", "Identity");

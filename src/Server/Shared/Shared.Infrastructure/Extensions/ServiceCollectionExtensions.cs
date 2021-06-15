@@ -34,8 +34,8 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
         public static IServiceCollection AddSharedInfrastructure(this IServiceCollection services, IConfiguration config)
         {
             services
-                 .AddDatabaseContext<ApplicationDbContext>()
-                 .AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+                .AddDatabaseContext<ApplicationDbContext>()
+                .AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
             services.AddScoped<IEventLogger, EventLogger>();
             services.AddControllers()
