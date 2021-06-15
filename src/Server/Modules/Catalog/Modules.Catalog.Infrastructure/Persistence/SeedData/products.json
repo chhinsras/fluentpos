@@ -16,7 +16,7 @@
     "Detail": "Sample Data"
   },
   {
-    "Id": "764b5aa5-16e3-49c4-b690-aeffb8e53efc",
+    "Id": "69bbee02-934e-4dc4-9f95-21537a156b8b",
     "Name": "IPhone X",
     "LocaleName": "IPhone X",
     "BrandId": "ca43337c-c9bc-4c18-98e1-3bf8694f9fb8",
@@ -32,7 +32,7 @@
     "Detail": "Sample Data"
   },
   {
-    "Id": "3a632051-2b2f-492f-b3b7-acfbb4113e3c",
+    "Id": "8f02c611-e709-43bb-a516-cfbbbdf71685",
     "Name": "Jordan 1 ",
     "LocaleName": "Jordan 1 ",
     "BrandId": "ca43337c-c9bc-4c18-98e1-3bf8694f9fb9",
@@ -48,10 +48,10 @@
     "Detail": "Sample Data"
   },
   {
-    "Id": "8fd2f58b-9434-4eb9-af9b-0559199233df",
+    "Id": "5b90c448-f94d-4e2b-88c8-38ed69c9aa7b",
     "Name": "Jordan 2",
     "LocaleName": "Jordan 2",
-    "BrandId": "ca43337c-c9bc-4c18-98e1-3bf8694f9fb10",
+    "BrandId": "538f5ce7-9bd4-4309-8e62-6e566b01fdfe",
     "CategoryId": "7eabe928-5e72-4743-a40a-cbb54aac9888",
     "Price": 499,
     "Cost": 450,
@@ -64,10 +64,10 @@
     "Detail": "Sample Data"
   },
   {
-    "Id": "370b8ad8-dfb1-45a4-a04d-e60d0ca97060",
+    "Id": "492a37d6-d313-4ac5-804e-dd7deede1065",
     "Name": "Jordan 3",
     "LocaleName": "Jordan 3",
-    "BrandId": "ca43337c-c9bc-4c18-98e1-3bf8694f9fb11",
+    "BrandId": "538f5ce7-9bd4-4309-8e62-6e566b01fdfe",
     "CategoryId": "7eabe928-5e72-4743-a40a-cbb54aac9889",
     "Price": 499,
     "Cost": 450,
@@ -80,10 +80,10 @@
     "Detail": "Sample Data"
   },
   {
-    "Id": "40bb50ba-1842-4b0e-9a49-9767c4d38923",
+    "Id": "024649d3-7e8b-43d1-bd65-1fe8d0dcd818",
     "Name": "Jordan 4",
     "LocaleName": "Jordan 4",
-    "BrandId": "ca43337c-c9bc-4c18-98e1-3bf8694f9fb12",
+    "BrandId": "538f5ce7-9bd4-4309-8e62-6e566b01fdfe",
     "CategoryId": "7eabe928-5e72-4743-a40a-cbb54aac9890",
     "Price": 299,
     "Cost": 250,
@@ -96,10 +96,10 @@
     "Detail": "Sample Data"
   },
   {
-    "Id": "162bf4c9-e7d3-4135-add1-4b3e5d793259",
+    "Id": "327c0534-a044-40eb-a8fe-a53b4ff47559",
     "Name": "Macbook Pro",
     "LocaleName": "Macbook Pro",
-    "BrandId": "ca43337c-c9bc-4c18-98e1-3bf8694f9fb13",
+    "BrandId": "538f5ce7-9bd4-4309-8e62-6e566b01fdfe",
     "CategoryId": "7eabe928-5e72-4743-a40a-cbb54aac9891",
     "Price": 1499,
     "Cost": 1400,

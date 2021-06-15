@@ -1,14 +1,11 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Entites;
 using FluentPOS.Shared.Application.Interfaces.Services;
 using Microsoft.Extensions.Logging;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
@@ -26,10 +23,18 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
 
         public void Initialize()
         {
-            AddBrands();
-            AddCategories();
-            AddProducts();
-            _db.SaveChanges();
+            try
+            {
+                AddBrands();
+                AddCategories();
+                AddProducts();
+                _db.SaveChanges();
+            }
+            catch (System.Exception)
+            {
+                _logger.LogError("An error occured while seeding Catalog data.");
+            }
+            
         }
 
         private void AddBrands()
@@ -40,7 +45,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
                 if (!_db.Brands.Any())
                 {
                     var brandData = File.ReadAllText(path + @"/Persistence/SeedData/brands.json");
-                    List<Brand> brands = JsonSerializer.Deserialize<List<Brand>>(brandData);
+                    List<Brand> brands = JsonConvert.DeserializeObject<List<Brand>>(brandData);
 
                     foreach (Brand brand in brands)
                     {
@@ -61,7 +66,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
                 if (!_db.Categories.Any())
                 {
                     var categoryData = File.ReadAllText(path + @"/Persistence/SeedData/categories.json");
-                    List<Category> categories = JsonSerializer.Deserialize<List<Category>>(categoryData);
+                    List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(categoryData);
 
                     foreach (Category category in categories)
                     {
@@ -81,7 +86,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
                 if (!_db.Products.Any())
                 {
                     var productData = File.ReadAllText(path + @"/Persistence/SeedData/products.json");
-                    List<Product> products = JsonSerializer.Deserialize<List<Product>>(productData);
+                    List<Product> products = JsonConvert.DeserializeObject<List<Product>>(productData);
 
                     foreach (Product product in products)
                     {
