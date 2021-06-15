@@ -61,7 +61,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
                 .ToPaginatedListAsync(query.PageNumber, query.PageSize);
 
             if (productList == null) throw new CatalogException(_localizer["Product Not Found!"]);
-     
+
             var mappedProducts = _mapper.Map<PaginatedResult<GetAllPagedProductsResponse>>(productList);
 
             return mappedProducts;
@@ -74,7 +74,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
             var mappedProduct = _mapper.Map<GetProductByIdResponse>(product);
             return await Result<GetProductByIdResponse>.SuccessAsync(mappedProduct);
         }
-        
+
         public async Task<Result<string>> Handle(GetProductImageQuery query, CancellationToken cancellationToken)
         {
             var data = await _context.Brands.Where(p => p.Id == query.Id).Select(x => x.ImageUrl).FirstOrDefaultAsync(cancellationToken);

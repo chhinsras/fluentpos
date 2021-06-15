@@ -1,10 +1,8 @@
-﻿using FluentPOS.Modules.Catalog.Infrastructure.Extensions;
-using FluentPOS.Modules.Catalog.Core.Extensions;
-using MediatR;
+﻿using FluentPOS.Modules.Catalog.Core.Extensions;
+using FluentPOS.Modules.Catalog.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace FluentPOS.Modules.Catalog
 {

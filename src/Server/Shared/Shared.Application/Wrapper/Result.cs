@@ -58,12 +58,14 @@ namespace FluentPOS.Shared.Application.Wrapper
             return Task.FromResult(Success(message));
         }
     }
-    public class ErrorResult<T>:Result<T>
+
+    public class ErrorResult<T> : Result<T>
     {
         public string Source { get; set; }
         public string Exception { get; set; }
         public int ErrorCode { get; set; }
     }
+
     public class Result<T> : Result, IResult<T>
     {
         public Result()
@@ -81,6 +83,7 @@ namespace FluentPOS.Shared.Application.Wrapper
         {
             return new Result<T> { Succeeded = false, Messages = new List<string> { message } };
         }
+
         public static ErrorResult<T> ReturnError(string message)
         {
             return new ErrorResult<T> { Succeeded = false, Messages = new List<string> { message }, ErrorCode = 500 };
@@ -100,6 +103,7 @@ namespace FluentPOS.Shared.Application.Wrapper
         {
             return Task.FromResult(Fail(message));
         }
+
         public static Task<ErrorResult<T>> ReturnErrorAsync(string message)
         {
             return Task.FromResult(ReturnError(message));

@@ -5,7 +5,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
 {
     public class BrandRegisteredEvent : Event
     {
-        public BrandRegisteredEvent(Guid id,string name, string imageUrl, string detail)
+        public BrandRegisteredEvent(Guid id, string name, string imageUrl, string detail)
         {
             Name = name;
             ImageUrl = imageUrl;
@@ -13,6 +13,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
             Id = id;
             AggregateId = id;
         }
+
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }

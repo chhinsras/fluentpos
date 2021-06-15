@@ -1,9 +1,5 @@
 ﻿using FluentPOS.Shared.Application.Domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentPOS.Shared.Application.EventLogging
 {
@@ -17,7 +13,10 @@ namespace FluentPOS.Shared.Application.EventLogging
             Data = data;
             User = user;
         }
-        protected EventLog() { }
+
+        protected EventLog()
+        {
+        }
 
         public Guid Id { get; private set; }
 

@@ -5,7 +5,7 @@ using System;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
 {
-    public class UpdateBrandCommand :  IRequest<Result<Guid>>
+    public class UpdateBrandCommand : IRequest<Result<Guid>>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

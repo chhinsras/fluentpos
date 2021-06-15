@@ -3,15 +3,15 @@ using FluentPOS.Shared.Application.EventLogging;
 using FluentPOS.Shared.Application.Interfaces;
 using FluentPOS.Shared.Application.Interfaces.Services.Identity;
 using Newtonsoft.Json;
-using System;
 using System.Threading.Tasks;
 
 namespace FluentPOS.Shared.Infrastructure.EventLogging
 {
-    class EventLogger : IEventLogger
+    internal class EventLogger : IEventLogger
     {
         private readonly ICurrentUser _user;
         private readonly IApplicationDbContext _context;
+
         public EventLogger(ICurrentUser user, IApplicationDbContext context)
         {
             _user = user;

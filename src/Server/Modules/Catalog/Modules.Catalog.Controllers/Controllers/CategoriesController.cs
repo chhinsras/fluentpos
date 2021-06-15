@@ -15,11 +15,11 @@ namespace FluentPOS.Modules.Catalog.Controllers
             var categories = await _mediator.Send(new GetAllPagedCategoriesQuery(filter.PageNumber, filter.PageSize, filter.SearchString));
             return Ok(categories);
         }
-       
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id, bool bypassCache)
         {
-            var category = await _mediator.Send(new GetCategoryByIdQuery() { Id = id, BypassCache = bypassCache});
+            var category = await _mediator.Send(new GetCategoryByIdQuery() { Id = id, BypassCache = bypassCache });
             return Ok(category);
         }
 

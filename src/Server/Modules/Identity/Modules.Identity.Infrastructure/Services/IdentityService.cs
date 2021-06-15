@@ -83,7 +83,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 }
                 else
                 {
-                    throw new IdentityException("Validation Errors Occured.",result.Errors.Select(a => a.Description).ToList());
+                    throw new IdentityException("Validation Errors Occured.", result.Errors.Select(a => a.Description).ToList());
                 }
             }
             else

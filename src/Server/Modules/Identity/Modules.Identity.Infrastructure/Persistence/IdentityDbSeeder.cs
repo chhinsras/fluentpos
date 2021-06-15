@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 {
-    class IdentityDbSeeder : IDatabaseSeeder
+    internal class IdentityDbSeeder : IDatabaseSeeder
     {
         private readonly ILogger<IdentityDbSeeder> _logger;
         private readonly IdentityDbContext _db;
@@ -24,7 +24,6 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
             _userManager = userManager;
         }
 
-
         public void Initialize()
         {
             AddDefaultRoles();
@@ -37,7 +36,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
         {
             Task.Run(async () =>
             {
-                foreach(var roleName in Enum.GetNames(typeof(Roles)))
+                foreach (var roleName in Enum.GetNames(typeof(Roles)))
                 {
                     var role = new ExtendedIdentityRole(roleName);
                     var roleInDb = await _roleManager.FindByNameAsync(roleName);
@@ -47,7 +46,6 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                         _logger.LogInformation($"Added '{roleName}' to Roles");
                     }
                 }
-                
             }).GetAwaiter().GetResult();
         }
 

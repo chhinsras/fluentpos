@@ -2,10 +2,7 @@
 using FluentPOS.Shared.Application.EventLogging;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,6 +12,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
     {
         private readonly IMediator _mediator;
         private readonly IEventLogger _eventLogger;
+
         public ModuleDbContext(DbContextOptions options, IMediator mediator, IEventLogger eventLogger) : base(options)
         {
             _mediator = mediator;
@@ -27,6 +25,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         }
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var domainEntities = this.ChangeTracker
@@ -41,7 +40,8 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
                 .ForEach(entity => entity.Entity.ClearDomainEvents());
 
             var tasks = domainEvents
-                .Select(async (domainEvent) => {
+                .Select(async (domainEvent) =>
+                {
                     await _eventLogger.Save(domainEvent);
                     await _mediator.Publish(domainEvent);
                 });

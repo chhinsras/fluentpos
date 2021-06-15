@@ -28,6 +28,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
         private readonly IMapper _mapper;
         private readonly IUploadService _uploadService;
         private readonly IStringLocalizer<BrandCommandHandler> _localizer;
+
         public BrandCommandHandler(ICatalogDbContext context, IMapper mapper, IUploadService uploadService, IStringLocalizer<BrandCommandHandler> localizer, IDistributedCache cache)
         {
             _context = context;
@@ -36,6 +37,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
             _localizer = localizer;
             _cache = cache;
         }
+
         public async Task<Result<Guid>> Handle(RegisterBrandCommand command, CancellationToken cancellationToken)
         {
             var brand = _mapper.Map<Brand>(command);
@@ -45,23 +47,25 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
                 uploadRequest.FileName = $"B-{command.Name}{uploadRequest.Extension}";
                 brand.ImageUrl = _uploadService.UploadAsync(uploadRequest);
             }
-            brand.AddDomainEvent(new BrandRegisteredEvent(brand.Id,brand.Name,brand.ImageUrl,brand.Detail));
+            brand.AddDomainEvent(new BrandRegisteredEvent(brand.Id, brand.Name, brand.ImageUrl, brand.Detail));
             await _context.Brands.AddAsync(brand);
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Saved"]);
         }
+
         public async Task<Result<Guid>> Handle(RemoveBrandCommand command, CancellationToken cancellationToken)
         {
             var isBrandUsed = await IsBrandUsed(command.Id);
             if (isBrandUsed) throw new CatalogException(_localizer["Deletion Not Allowed"]);
             var brand = await _context.Brands.FirstOrDefaultAsync(b => b.Id == command.Id);
-            if(brand == null) throw new CatalogException(_localizer["Brand Not Found"]);
+            if (brand == null) throw new CatalogException(_localizer["Brand Not Found"]);
             _context.Brands.Remove(brand);
             brand.AddDomainEvent(new BrandRemovedEvent(command.Id));
             await _context.SaveChangesAsync(cancellationToken);
             await _cache.RemoveAsync(CatalogCacheKeys.GetBrandByIdCacheKey(command.Id));
             return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Deleted"]);
         }
+
         public async Task<Result<Guid>> Handle(UpdateBrandCommand command, CancellationToken cancellationToken)
         {
             var brand = await _context.Brands.Where(b => b.Id == command.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
@@ -79,6 +83,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
             await _cache.RemoveAsync(CatalogCacheKeys.GetBrandByIdCacheKey(command.Id));
             return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Updated"]);
         }
+
         public async Task<bool> IsBrandUsed(Guid brandId)
         {
             return await _context.Products.AnyAsync(b => b.BrandId == brandId);
