@@ -7,7 +7,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 {
     public class IdentityDbContext : IdentityDbContext<ExtendedIdentityUser, ExtendedIdentityRole, int>
     {
-        public IdentityDbContext(DbContextOptions options) : base(options)
+        public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
