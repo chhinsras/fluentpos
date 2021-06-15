@@ -1,6 +1,8 @@
-﻿using FluentPOS.Shared.Infrastructure.Middlewares;
+﻿using FluentPOS.Shared.Application.Interfaces.Services;
+using FluentPOS.Shared.Infrastructure.Middlewares;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("FluentPOS.Bootstrapper")]
@@ -22,9 +24,22 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             {
                 DashboardTitle = "FluentPOS Jobs"
             });
+            app.Initialize();
             return app;
         }
+        internal static IApplicationBuilder Initialize(this IApplicationBuilder app)
+        {
+            using var serviceScope = app.ApplicationServices.CreateScope();
 
+            var initializers = serviceScope.ServiceProvider.GetServices<IDatabaseSeeder>();
+
+            foreach (var initializer in initializers)
+            {
+                initializer.Initialize();
+            }
+
+            return app;
+        }
         private static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
         {
             app.UseSwagger();

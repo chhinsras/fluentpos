@@ -3,6 +3,7 @@ using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Settings;
 using FluentPOS.Modules.Identity.Infrastructure.Persistence;
 using FluentPOS.Modules.Identity.Infrastructure.Services;
+using FluentPOS.Shared.Application.Interfaces.Services;
 using FluentPOS.Shared.Application.Interfaces.Services.Identity;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using FluentPOS.Shared.Infrastructure.Persistence.Postgres;
@@ -33,6 +34,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                     options.User.RequireUniqueEmail = true;
                 })
                 .AddEntityFrameworkStores<IdentityDbContext>().AddDefaultTokenProviders();
+            services.AddTransient<IDatabaseSeeder, IdentityDbSeeder>();
             return services;
         }
     }
