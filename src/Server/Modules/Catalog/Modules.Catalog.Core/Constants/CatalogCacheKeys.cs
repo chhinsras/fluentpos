@@ -4,19 +4,19 @@ namespace FluentPOS.Modules.Catalog.Core.Constants
 {
     public static class CatalogCacheKeys
     {
-        public static string GetBrandByIdCacheKey(Guid Id)
+        public static string GetBrandByIdCacheKey(Guid id)
         {
-            return $"Brand-{Id}";
+            return $"Brand-{id}";
         }
 
-        public static string GetCategoryByIdCacheKey(Guid Id)
+        public static string GetCategoryByIdCacheKey(Guid id)
         {
-            return $"Category-{Id}";
+            return $"Category-{id}";
         }
 
-        public static string GetProductByIdCacheKey(Guid Id)
+        public static string GetProductByIdCacheKey(Guid id)
         {
-            return $"Product-{Id}";
+            return $"Product-{id}";
         }
     }
 }

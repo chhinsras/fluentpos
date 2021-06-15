@@ -1,6 +1,6 @@
 ﻿using FluentPOS.Shared.Application.Domain;
 
-namespace FluentPOS.Modules.Catalog.Core.Entites
+namespace FluentPOS.Modules.Catalog.Core.Entities
 {
     public class Brand : BaseEntity
     {

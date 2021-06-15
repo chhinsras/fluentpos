@@ -1,5 +1,5 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
-using FluentPOS.Modules.Catalog.Core.Entites;
+using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Shared.Application.EventLogging;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using MediatR;
@@ -15,8 +15,8 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
         public CatalogDbContext(
             DbContextOptions<CatalogDbContext> options,
             IMediator mediator,
-            IEventLogger eventLogger, 
-            IOptions<PersistenceSettings> persistenceOptions) 
+            IEventLogger eventLogger,
+            IOptions<PersistenceSettings> persistenceOptions)
                 : base(options, mediator, eventLogger, persistenceOptions)
         {
             _persistenceOptions = persistenceOptions.Value;

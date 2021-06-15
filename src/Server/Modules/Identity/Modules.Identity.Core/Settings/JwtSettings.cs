@@ -2,8 +2,8 @@
 {
     public class JwtSettings
     {
-        public string key { get; set; }
-        public int tokenExpirationInMinutes { get; set; }
-        public int refreshTokenExpirationInDays { get; set; }
+        public string Key { get; set; }
+        public int TokenExpirationInMinutes { get; set; }
+        public int RefreshTokenExpirationInDays { get; set; }
     }
 }

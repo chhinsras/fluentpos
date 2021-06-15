@@ -1,4 +1,4 @@
-﻿using FluentPOS.Modules.Catalog.Core.Entites;
+﻿using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Shared.Application.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -32,9 +32,8 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
             }
             catch (System.Exception)
             {
-                _logger.LogError("An error occured while seeding Catalog data.");
+                _logger.LogError("An error occurred while seeding Catalog data.");
             }
-            
         }
 
         private void AddBrands()
@@ -44,18 +43,21 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
                 var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 if (!_db.Brands.Any())
                 {
-                    var brandData = File.ReadAllText(path + @"/Persistence/SeedData/brands.json");
-                    List<Brand> brands = JsonConvert.DeserializeObject<List<Brand>>(brandData);
+                    var brandData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/brands.json");
+                    var brands = JsonConvert.DeserializeObject<List<Brand>>(brandData);
 
-                    foreach (Brand brand in brands)
+                    if (brands != null)
                     {
-                        _db.Brands.Add(brand);
+                        foreach (var brand in brands)
+                        {
+                            _db.Brands.Add(brand);
+                        }
                     }
+
                     await _db.SaveChangesAsync();
                     _logger.LogInformation("Seeded Brands.");
                 }
             }).GetAwaiter().GetResult();
-
         }
 
         private void AddCategories()
@@ -65,13 +67,17 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
                 var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 if (!_db.Categories.Any())
                 {
-                    var categoryData = File.ReadAllText(path + @"/Persistence/SeedData/categories.json");
-                    List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(categoryData);
+                    var categoryData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/categories.json");
+                    var categories = JsonConvert.DeserializeObject<List<Category>>(categoryData);
 
-                    foreach (Category category in categories)
+                    if (categories != null)
                     {
-                        _db.Categories.Add(category);
+                        foreach (var category in categories)
+                        {
+                            _db.Categories.Add(category);
+                        }
                     }
+
                     await _db.SaveChangesAsync();
                     _logger.LogInformation("Seeded Categories.");
                 }
@@ -85,13 +91,17 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
                 var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 if (!_db.Products.Any())
                 {
-                    var productData = File.ReadAllText(path + @"/Persistence/SeedData/products.json");
-                    List<Product> products = JsonConvert.DeserializeObject<List<Product>>(productData);
+                    var productData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/products.json");
+                    var products = JsonConvert.DeserializeObject<List<Product>>(productData);
 
-                    foreach (Product product in products)
+                    if (products != null)
                     {
-                        _db.Products.Add(product);
+                        foreach (var product in products)
+                        {
+                            _db.Products.Add(product);
+                        }
                     }
+
                     await _db.SaveChangesAsync();
                     _logger.LogInformation("Seeded Products.");
                 }
@@ -99,4 +109,3 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
         }
     }
 }
-

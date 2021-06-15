@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Constants;
-using FluentPOS.Modules.Catalog.Core.Entites;
+using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Application.Interfaces.Services;
 using FluentPOS.Shared.Application.Wrapper;
@@ -46,7 +46,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
                 uploadRequest.FileName = $"C-{command.Name}{uploadRequest.Extension}";
                 category.ImageUrl = _uploadService.UploadAsync(uploadRequest);
             }
-            await _context.Categories.AddAsync(category);
+            await _context.Categories.AddAsync(category, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(category.Id, _localizer["Category Saved"]);
         }
@@ -65,7 +65,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
                 }
                 _context.Categories.Update(category);
                 await _context.SaveChangesAsync(cancellationToken);
-                await _cache.RemoveAsync(CatalogCacheKeys.GetCategoryByIdCacheKey(command.Id));
+                await _cache.RemoveAsync(CatalogCacheKeys.GetCategoryByIdCacheKey(command.Id), cancellationToken);
                 return await Result<Guid>.SuccessAsync(category.Id, _localizer["Category Updated"]);
             }
             else
@@ -79,10 +79,10 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
             var isCategoryUsed = await IsCategoryUsed(command.Id);
             if (!isCategoryUsed)
             {
-                var category = await _context.Categories.FirstOrDefaultAsync(b => b.Id == command.Id);
+                var category = await _context.Categories.FirstOrDefaultAsync(b => b.Id == command.Id, cancellationToken);
                 _context.Categories.Remove(category);
                 await _context.SaveChangesAsync(cancellationToken);
-                await _cache.RemoveAsync(CatalogCacheKeys.GetCategoryByIdCacheKey(command.Id));
+                await _cache.RemoveAsync(CatalogCacheKeys.GetCategoryByIdCacheKey(command.Id), cancellationToken);
                 return await Result<Guid>.SuccessAsync(category.Id, _localizer["Category Deleted"]);
             }
             else

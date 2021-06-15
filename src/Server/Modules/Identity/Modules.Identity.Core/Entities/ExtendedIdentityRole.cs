@@ -2,7 +2,7 @@
 
 namespace FluentPOS.Modules.Identity.Core.Entities
 {
-    public class ExtendedIdentityRole : IdentityRole<int>
+    public sealed class ExtendedIdentityRole : IdentityRole<int>
     {
         public ExtendedIdentityRole()
         {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
-using FluentPOS.Modules.Catalog.Core.Entites;
+using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Application.Wrapper;
 using FluentPOS.Shared.DTOs.Catalogs.Categories;

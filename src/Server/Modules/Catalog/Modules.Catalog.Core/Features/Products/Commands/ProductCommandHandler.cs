@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Constants;
-using FluentPOS.Modules.Catalog.Core.Entites;
+using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Application.Interfaces.Services;
 using FluentPOS.Shared.Application.Wrapper;
@@ -51,7 +51,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
                 uploadRequest.FileName = $"P-{command.BarcodeSymbology}{uploadRequest.Extension}";
                 product.ImageUrl = _uploadService.UploadAsync(uploadRequest);
             }
-            await _context.Products.AddAsync(product);
+            await _context.Products.AddAsync(product, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(product.Id, _localizer["Product Saved"]);
         }
@@ -76,7 +76,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
                 }
                 _context.Products.Update(product);
                 await _context.SaveChangesAsync(cancellationToken);
-                await _cache.RemoveAsync(CatalogCacheKeys.GetProductByIdCacheKey(command.Id));
+                await _cache.RemoveAsync(CatalogCacheKeys.GetProductByIdCacheKey(command.Id), cancellationToken);
                 return await Result<Guid>.SuccessAsync(product.Id, _localizer["Product Updated"]);
             }
             else
@@ -92,7 +92,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
             {
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync(cancellationToken);
-                await _cache.RemoveAsync(CatalogCacheKeys.GetProductByIdCacheKey(command.Id));
+                await _cache.RemoveAsync(CatalogCacheKeys.GetProductByIdCacheKey(command.Id), cancellationToken);
                 return await Result<Guid>.SuccessAsync(product.Id, _localizer["Product Deleted"]);
             }
             else

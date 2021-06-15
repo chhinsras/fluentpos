@@ -35,41 +35,41 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
 
         public async Task<IResult<TokenResponse>> GetTokenAsync(TokenRequest request, string ipAddress)
         {
-            var user = await _userManager.FindByEmailAsync(request.email);
+            var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
                 throw new IdentityException("User Not Found.");
             if (!user.IsActive)
                 throw new IdentityException("User Not Active. Please contact the administrator.");
             if (!user.EmailConfirmed)
                 throw new IdentityException("E-Mail not confirmed.");
-            var passwordValid = await _userManager.CheckPasswordAsync(user, request.password);
+            var passwordValid = await _userManager.CheckPasswordAsync(user, request.Password);
             if (!passwordValid)
                 throw new IdentityException("Invalid Credentials.");
             user.RefreshToken = GenerateRefreshToken();
-            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.refreshTokenExpirationInDays);
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.RefreshTokenExpirationInDays);
             await _userManager.UpdateAsync(user);
             var token = await GenerateJwtAsync(user, ipAddress);
             var response = new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime);
-            return Result<TokenResponse>.Success(response);
+            return await Result<TokenResponse>.SuccessAsync(response);
         }
 
         public async Task<IResult<TokenResponse>> RefreshTokenAsync(RefreshTokenRequest request, string ipAddress)
         {
             if (request is null)
                 throw new IdentityException("Invalid Client Token.");
-            var userPrincipal = GetPrincipalFromExpiredToken(request.token);
+            var userPrincipal = GetPrincipalFromExpiredToken(request.Token);
             var userEmail = userPrincipal.FindFirstValue(ClaimTypes.Email);
             var user = await _userManager.FindByEmailAsync(userEmail);
             if (user == null)
                 throw new IdentityException("User Not Found.");
-            if (user.RefreshToken != request.refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+            if (user.RefreshToken != request.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
                 throw new IdentityException("Invalid Client Token.");
             var token = GenerateEncryptedToken(GetSigningCredentials(), await GetClaimsAsync(user, ipAddress));
             user.RefreshToken = GenerateRefreshToken();
-            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.refreshTokenExpirationInDays);
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.RefreshTokenExpirationInDays);
             await _userManager.UpdateAsync(user);
             var response = new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime);
-            return Result<TokenResponse>.Success(response);
+            return await Result<TokenResponse>.SuccessAsync(response);
         }
 
         private async Task<string> GenerateJwtAsync(ExtendedIdentityUser user, string ipAddress)
@@ -84,7 +84,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             var roles = await _userManager.GetRolesAsync(user);
             var roleClaims = new List<Claim>();
             var permissionClaims = new List<Claim>();
-            for (int i = 0; i < roles.Count; i++)
+            for (var i = 0; i < roles.Count; i++)
             {
                 roleClaims.Add(new Claim(ClaimTypes.Role, roles[i]));
                 var thisRole = await _roleManager.FindByNameAsync(roles[i]);
@@ -96,12 +96,12 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             }
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.FirstName),
-                new Claim(ClaimTypes.Surname, user.LastName),
-                new Claim(ClaimTypes.MobilePhone, user.PhoneNumber ?? string.Empty),
-                new Claim("ipAddress", ipAddress)
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new(ClaimTypes.Email, user.Email),
+                new(ClaimTypes.Name, user.FirstName),
+                new(ClaimTypes.Surname, user.LastName),
+                new(ClaimTypes.MobilePhone, user.PhoneNumber ?? string.Empty),
+                new("ipAddress", ipAddress)
             }
             .Union(userClaims)
             .Union(roleClaims)
@@ -112,18 +112,16 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         private string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(randomNumber);
-                return Convert.ToBase64String(randomNumber);
-            }
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
         }
 
         private string GenerateEncryptedToken(SigningCredentials signingCredentials, IEnumerable<Claim> claims)
         {
             var token = new JwtSecurityToken(
                claims: claims,
-               expires: DateTime.UtcNow.AddMinutes(_config.tokenExpirationInMinutes),
+               expires: DateTime.UtcNow.AddMinutes(_config.TokenExpirationInMinutes),
                signingCredentials: signingCredentials);
             var tokenHandler = new JwtSecurityTokenHandler();
             var encryptedToken = tokenHandler.WriteToken(token);
@@ -135,26 +133,24 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.key)),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.Key)),
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 RoleClaimType = ClaimTypes.Role,
                 ClockSkew = TimeSpan.Zero
             };
             var tokenHandler = new JwtSecurityTokenHandler();
-            SecurityToken securityToken;
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
-            var jwtSecurityToken = securityToken as JwtSecurityToken;
-            if (jwtSecurityToken == null ||
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
+            if (securityToken is not JwtSecurityToken jwtSecurityToken ||
                 !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
-                StringComparison.InvariantCultureIgnoreCase))
+                    StringComparison.InvariantCultureIgnoreCase))
                 throw new IdentityException("Invalid Token.");
             return principal;
         }
 
         private SigningCredentials GetSigningCredentials()
         {
-            var secret = Encoding.UTF8.GetBytes(_config.key);
+            var secret = Encoding.UTF8.GetBytes(_config.Key);
             return new SigningCredentials(new SymmetricSecurityKey(secret), SecurityAlgorithms.HmacSha256);
         }
     }

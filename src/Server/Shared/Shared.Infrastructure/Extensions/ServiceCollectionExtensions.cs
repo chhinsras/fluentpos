@@ -71,7 +71,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
         {
             return services.AddSwaggerGen(c =>
             {
-                c.IncludeXmlComments(string.Format(@"{0}\Bootstrapper.xml", System.AppDomain.CurrentDomain.BaseDirectory));
+                c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\Bootstrapper.xml");
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",

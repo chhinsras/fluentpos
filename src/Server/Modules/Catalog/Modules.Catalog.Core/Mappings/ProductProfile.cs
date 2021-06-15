@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FluentPOS.Modules.Catalog.Core.Entites;
+using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Features.Products.Commands;
 using FluentPOS.Shared.DTOs.Catalogs.Products;
 

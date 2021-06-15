@@ -13,7 +13,7 @@ namespace FluentPOS.Shared.Application.Interfaces.Services.Identity
 
         string GetUserEmail();
 
-        bool IsAutenticated();
+        bool IsAuthenticated();
 
         bool IsInRole(string role);
 

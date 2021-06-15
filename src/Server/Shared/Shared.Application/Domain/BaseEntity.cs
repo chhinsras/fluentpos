@@ -17,7 +17,7 @@ namespace FluentPOS.Shared.Application.Domain
 
         public void AddDomainEvent(Event domainEvent)
         {
-            _domainEvents = _domainEvents ?? new List<Event>();
+            _domainEvents ??= new List<Event>();
             _domainEvents.Add(domainEvent);
         }
 

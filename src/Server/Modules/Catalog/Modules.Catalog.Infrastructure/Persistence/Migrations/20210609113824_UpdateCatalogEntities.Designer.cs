@@ -22,7 +22,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entites.Brand", b =>
+            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.Brand", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,7 +42,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entites.Product", b =>
+            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -96,7 +96,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entites.Category", b =>
+            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -116,15 +116,15 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entites.Product", b =>
+            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.Product", b =>
                 {
-                    b.HasOne("FluentPOS.Modules.Catalog.Core.Entites.Brand", "Brand")
+                    b.HasOne("FluentPOS.Modules.Catalog.Core.Entities.Brand", "Brand")
                         .WithMany()
                         .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FluentPOS.Modules.Catalog.Core.Entites.Category", "Category")
+                    b.HasOne("FluentPOS.Modules.Catalog.Core.Entities.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)

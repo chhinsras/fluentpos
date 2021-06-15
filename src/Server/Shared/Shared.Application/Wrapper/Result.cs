@@ -9,7 +9,7 @@ namespace FluentPOS.Shared.Application.Wrapper
         {
         }
 
-        public List<string> Messages { get; set; } = new List<string>();
+        public List<string> Messages { get; set; } = new();
 
         public bool Succeeded { get; set; }
 
@@ -74,32 +74,32 @@ namespace FluentPOS.Shared.Application.Wrapper
 
         public T Data { get; set; }
 
-        public static new Result<T> Fail()
+        public new static Result<T> Fail()
         {
-            return new Result<T> { Succeeded = false };
+            return new() { Succeeded = false };
         }
 
-        public static new Result<T> Fail(string message)
+        public new static Result<T> Fail(string message)
         {
-            return new Result<T> { Succeeded = false, Messages = new List<string> { message } };
+            return new() { Succeeded = false, Messages = new List<string> { message } };
         }
 
         public static ErrorResult<T> ReturnError(string message)
         {
-            return new ErrorResult<T> { Succeeded = false, Messages = new List<string> { message }, ErrorCode = 500 };
+            return new() { Succeeded = false, Messages = new List<string> { message }, ErrorCode = 500 };
         }
 
-        public static new Result<T> Fail(List<string> messages)
+        public new static Result<T> Fail(List<string> messages)
         {
-            return new Result<T> { Succeeded = false, Messages = messages };
+            return new() { Succeeded = false, Messages = messages };
         }
 
-        public static new Task<Result<T>> FailAsync()
+        public new static Task<Result<T>> FailAsync()
         {
             return Task.FromResult(Fail());
         }
 
-        public static new Task<Result<T>> FailAsync(string message)
+        public new static Task<Result<T>> FailAsync(string message)
         {
             return Task.FromResult(Fail(message));
         }
@@ -109,37 +109,37 @@ namespace FluentPOS.Shared.Application.Wrapper
             return Task.FromResult(ReturnError(message));
         }
 
-        public static new Result<T> Success()
+        public new static Result<T> Success()
         {
-            return new Result<T> { Succeeded = true };
+            return new() { Succeeded = true };
         }
 
-        public static new Result<T> Success(string message)
+        public new static Result<T> Success(string message)
         {
-            return new Result<T> { Succeeded = true, Messages = new List<string> { message } };
+            return new() { Succeeded = true, Messages = new List<string> { message } };
         }
 
         public static Result<T> Success(T data)
         {
-            return new Result<T> { Succeeded = true, Data = data };
+            return new() { Succeeded = true, Data = data };
         }
 
         public static Result<T> Success(T data, string message)
         {
-            return new Result<T> { Succeeded = true, Data = data, Messages = new List<string> { message } };
+            return new() { Succeeded = true, Data = data, Messages = new List<string> { message } };
         }
 
         public static Result<T> Success(T data, List<string> messages)
         {
-            return new Result<T> { Succeeded = true, Data = data, Messages = messages };
+            return new() { Succeeded = true, Data = data, Messages = messages };
         }
 
-        public static new Task<Result<T>> SuccessAsync()
+        public new static Task<Result<T>> SuccessAsync()
         {
             return Task.FromResult(Success());
         }
 
-        public static new Task<Result<T>> SuccessAsync(string message)
+        public new static Task<Result<T>> SuccessAsync(string message)
         {
             return Task.FromResult(Success(message));
         }

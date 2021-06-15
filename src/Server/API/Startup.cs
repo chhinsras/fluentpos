@@ -12,12 +12,12 @@ namespace FluentPOS.Bootstrapper
 {
     public class Startup
     {
+        private readonly IConfiguration _config;
+
         public Startup(IConfiguration config)
         {
             _config = config;
         }
-
-        public IConfiguration _config { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
