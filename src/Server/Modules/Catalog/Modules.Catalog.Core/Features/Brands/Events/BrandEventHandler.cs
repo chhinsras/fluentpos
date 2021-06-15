@@ -7,7 +7,8 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
 {
     public class BrandEventHandler :
          INotificationHandler<BrandRegisteredEvent>,
-        INotificationHandler<BrandUpdatedEvent>
+        INotificationHandler<BrandUpdatedEvent>,
+        INotificationHandler<BrandRemovedEvent>
     {
         private readonly ILogger<BrandEventHandler> logger;
 
@@ -25,6 +26,12 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
         public Task Handle(BrandUpdatedEvent notification, CancellationToken cancellationToken)
         {
             logger.LogInformation($"BrandUpdatedEvent Raised.");
+            return Task.CompletedTask;
+        }
+
+        public Task Handle(BrandRemovedEvent notification, CancellationToken cancellationToken)
+        {
+            logger.LogInformation($"BrandRemovedEvent Raised. {notification.Id} Removed.");
             return Task.CompletedTask;
         }
     }
