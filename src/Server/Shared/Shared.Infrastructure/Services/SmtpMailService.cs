@@ -12,7 +12,7 @@ namespace FluentPOS.Shared.Infrastructure.Services
 {
     public class SmtpMailService : IMailService
     {
-        public MailSettings _settings { get; }
+        private readonly MailSettings _settings;
         public ILogger<SmtpMailService> Logger { get; }
 
         public SmtpMailService(IOptions<MailSettings> settings, ILogger<SmtpMailService> logger)
@@ -25,18 +25,18 @@ namespace FluentPOS.Shared.Infrastructure.Services
         {
             try
             {
-                var email = new MimeMessage();
-                email.Sender = MailboxAddress.Parse(request.From ?? _settings.From);
+                var email = new MimeMessage
+                {
+                    Sender = MailboxAddress.Parse(request.From ?? _settings.From),
+                    Subject = request.Subject,
+                    Body = new BodyBuilder {HtmlBody = request.Body}.ToMessageBody()
+                };
                 email.To.Add(MailboxAddress.Parse(request.To));
-                email.Subject = request.Subject;
-                var builder = new BodyBuilder();
-                builder.HtmlBody = request.Body;
-                email.Body = builder.ToMessageBody();
                 using var smtp = new SmtpClient();
-                smtp.Connect(_settings.Host, _settings.Port, SecureSocketOptions.StartTls);
-                smtp.Authenticate(_settings.UserName, _settings.Password);
+                await smtp.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.StartTls);
+                await smtp.AuthenticateAsync(_settings.UserName, _settings.Password);
                 await smtp.SendAsync(email);
-                smtp.Disconnect(true);
+                await smtp.DisconnectAsync(true);
             }
             catch (System.Exception ex)
             {

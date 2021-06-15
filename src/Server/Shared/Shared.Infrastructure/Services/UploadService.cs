@@ -16,7 +16,7 @@ namespace FluentPOS.Shared.Infrastructure.Services
                 var folder = request.UploadType.ToDescriptionString();
                 var folderName = Path.Combine("Files", folder);
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                bool exists = System.IO.Directory.Exists(pathToSave);
+                bool exists = Directory.Exists(pathToSave);
                 if (!exists)
                     System.IO.Directory.CreateDirectory(pathToSave);
                 var fileName = request.FileName.Trim('"');
@@ -27,10 +27,9 @@ namespace FluentPOS.Shared.Infrastructure.Services
                     dbPath = NextAvailableFilename(dbPath);
                     fullPath = NextAvailableFilename(fullPath);
                 }
-                using (var stream = new FileStream(fullPath, FileMode.Create))
-                {
-                    streamData.CopyTo(stream);
-                }
+
+                using var stream = new FileStream(fullPath, FileMode.Create);
+                streamData.CopyTo(stream);
                 return dbPath;
             }
             else

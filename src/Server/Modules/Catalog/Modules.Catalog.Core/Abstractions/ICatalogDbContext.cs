@@ -1,4 +1,4 @@
-﻿using FluentPOS.Modules.Catalog.Core.Entites;
+﻿using FluentPOS.Modules.Catalog.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;

@@ -1,4 +1,4 @@
 ﻿namespace FluentPOS.Shared.DTOs.Identity
 {
-    public record TokenRequest(string email, string password);
+    public record TokenRequest(string Email, string Password);
 }

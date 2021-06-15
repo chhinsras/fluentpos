@@ -12,33 +12,33 @@ namespace FluentPOS.Modules.Catalog.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] PaginatedCategoryFilter filter)
         {
-            var categories = await _mediator.Send(new GetAllPagedCategoriesQuery(filter.PageNumber, filter.PageSize, filter.SearchString));
+            var categories = await Mediator.Send(new GetAllPagedCategoriesQuery(filter.PageNumber, filter.PageSize, filter.SearchString));
             return Ok(categories);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id, bool bypassCache)
         {
-            var category = await _mediator.Send(new GetCategoryByIdQuery() { Id = id, BypassCache = bypassCache });
+            var category = await Mediator.Send(new GetCategoryByIdQuery() { Id = id, BypassCache = bypassCache });
             return Ok(category);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(RegisterCategoryCommand command)
         {
-            return Ok(await _mediator.Send(command));
+            return Ok(await Mediator.Send(command));
         }
 
         [HttpPut]
         public async Task<IActionResult> Update(UpdateCategoryCommand command)
         {
-            return Ok(await _mediator.Send(command));
+            return Ok(await Mediator.Send(command));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return Ok(await _mediator.Send(new RemoveCategoryCommand { Id = id }));
+            return Ok(await Mediator.Send(new RemoveCategoryCommand { Id = id }));
         }
     }
 }

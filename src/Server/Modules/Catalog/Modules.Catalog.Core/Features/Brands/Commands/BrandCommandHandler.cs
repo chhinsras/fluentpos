@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Constants;
-using FluentPOS.Modules.Catalog.Core.Entites;
+using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Modules.Catalog.Core.Features.Brands.Events;
 using FluentPOS.Shared.Application.Interfaces.Services;
@@ -48,7 +48,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
                 brand.ImageUrl = _uploadService.UploadAsync(uploadRequest);
             }
             brand.AddDomainEvent(new BrandRegisteredEvent(brand.Id, brand.Name, brand.ImageUrl, brand.Detail));
-            await _context.Brands.AddAsync(brand);
+            await _context.Brands.AddAsync(brand, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Saved"]);
         }
@@ -57,12 +57,12 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
         {
             var isBrandUsed = await IsBrandUsed(command.Id);
             if (isBrandUsed) throw new CatalogException(_localizer["Deletion Not Allowed"]);
-            var brand = await _context.Brands.FirstOrDefaultAsync(b => b.Id == command.Id);
+            var brand = await _context.Brands.FirstOrDefaultAsync(b => b.Id == command.Id, cancellationToken);
             if (brand == null) throw new CatalogException(_localizer["Brand Not Found"]);
             _context.Brands.Remove(brand);
             brand.AddDomainEvent(new BrandRemovedEvent(command.Id));
             await _context.SaveChangesAsync(cancellationToken);
-            await _cache.RemoveAsync(CatalogCacheKeys.GetBrandByIdCacheKey(command.Id));
+            await _cache.RemoveAsync(CatalogCacheKeys.GetBrandByIdCacheKey(command.Id), cancellationToken);
             return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Deleted"]);
         }
 
@@ -80,7 +80,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
             brand.AddDomainEvent(new BrandUpdatedEvent(brand.Id, brand.Name, brand.ImageUrl, brand.Detail));
             _context.Brands.Update(brand);
             await _context.SaveChangesAsync(cancellationToken);
-            await _cache.RemoveAsync(CatalogCacheKeys.GetBrandByIdCacheKey(command.Id));
+            await _cache.RemoveAsync(CatalogCacheKeys.GetBrandByIdCacheKey(command.Id), cancellationToken);
             return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Updated"]);
         }
 

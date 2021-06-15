@@ -36,7 +36,7 @@ namespace FluentPOS.Shared.Application.Behaviors
             async Task<TResponse> GetResponseAndAddToCache()
             {
                 response = await next();
-                var slidingExpiration = request.SlidingExpiration == null ? TimeSpan.FromHours(_settings.SlidingExpiration) : request.SlidingExpiration;
+                var slidingExpiration = request.SlidingExpiration ?? TimeSpan.FromHours(_settings.SlidingExpiration);
                 var options = new DistributedCacheEntryOptions { SlidingExpiration = slidingExpiration };
                 var serializedData = Encoding.Default.GetBytes(JsonConvert.SerializeObject(response));
                 await _cache.SetAsync((string)request.CacheKey, serializedData, options, cancellationToken);

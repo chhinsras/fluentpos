@@ -11,6 +11,6 @@ namespace FluentPOS.Modules.Catalog.Controllers
         protected const string BasePath = "api/catalog";
 
         private IMediator _mediatorInstance;
-        protected IMediator _mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
+        protected IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
     }
 }

@@ -24,12 +24,12 @@ namespace FluentPOS.Shared.Application.Wrapper
 
         public static PaginatedResult<T> Failure(List<string> messages)
         {
-            return new PaginatedResult<T>(false, default, messages);
+            return new(false, default, messages);
         }
 
         public static PaginatedResult<T> Success(List<T> data, int count, int page, int pageSize)
         {
-            return new PaginatedResult<T>(true, data, null, count, page, pageSize);
+            return new(true, data, null, count, page, pageSize);
         }
 
         public int CurrentPage { get; set; }

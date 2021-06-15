@@ -1,7 +1,7 @@
 ﻿using FluentPOS.Shared.Application.Domain;
 using System;
 
-namespace FluentPOS.Modules.Catalog.Core.Entites
+namespace FluentPOS.Modules.Catalog.Core.Entities
 {
     public class Product : BaseEntity //IAuditableEntity
     {
