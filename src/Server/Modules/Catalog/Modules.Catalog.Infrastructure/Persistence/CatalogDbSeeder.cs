@@ -52,8 +52,8 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
                         _db.Brands.Add(brand);
                     }
                     await _db.SaveChangesAsync();
+                    _logger.LogInformation("Seeded Brands.");
                 }
-                _logger.LogInformation("Seeded Brands.");
             }).GetAwaiter().GetResult();
 
         }
@@ -73,8 +73,8 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
                         _db.Categories.Add(category);
                     }
                     await _db.SaveChangesAsync();
+                    _logger.LogInformation("Seeded Categories.");
                 }
-                _logger.LogInformation("Seeded Categories.");
             }).GetAwaiter().GetResult();
         }
 
@@ -93,8 +93,8 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
                         _db.Products.Add(product);
                     }
                     await _db.SaveChangesAsync();
+                    _logger.LogInformation("Seeded Products.");
                 }
-                _logger.LogInformation("Seeded Products.");
             }).GetAwaiter().GetResult();
         }
     }
