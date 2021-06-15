@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Infrastructure.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace FluentPOS.Shared.Infrastructure.Persistence
 {
@@ -12,11 +14,17 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
     {
         private readonly IMediator _mediator;
         private readonly IEventLogger _eventLogger;
+        private readonly PersistenceSettings _persistenceOptions;
 
-        public ModuleDbContext(DbContextOptions options, IMediator mediator, IEventLogger eventLogger) : base(options)
+        protected ModuleDbContext(
+            DbContextOptions options,
+            IMediator mediator,
+            IEventLogger eventLogger,
+            IOptions<PersistenceSettings> persistenceOptions) : base(options)
         {
             _mediator = mediator;
             _eventLogger = eventLogger;
+            _persistenceOptions = persistenceOptions.Value;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,9 +32,10 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
             modelBuilder.Ignore<Event>();
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+            modelBuilder.ApplyModuleConfiguration(_persistenceOptions);
         }
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var domainEntities = this.ChangeTracker
                 .Entries<BaseEntity>()
@@ -43,7 +52,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
                 .Select(async (domainEvent) =>
                 {
                     await _eventLogger.Save(domainEvent);
-                    await _mediator.Publish(domainEvent);
+                    await _mediator.Publish(domainEvent, cancellationToken);
                 });
             await Task.WhenAll(tasks);
             return (await base.SaveChangesAsync(true, cancellationToken));
