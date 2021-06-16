@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Shared.Infrastructure.Extensions
+namespace FluentPOS.Shared.Application.Extensions
 {
     public static class QueryableExtensions
     {
