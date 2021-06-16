@@ -6,7 +6,6 @@ using FluentPOS.Shared.Infrastructure.Controllers;
 using FluentPOS.Shared.Infrastructure.EventLogging;
 using FluentPOS.Shared.Infrastructure.Middlewares;
 using FluentPOS.Shared.Infrastructure.Persistence;
-using FluentPOS.Shared.Infrastructure.Persistence.Postgres;
 using FluentPOS.Shared.Infrastructure.Services;
 using Hangfire;
 using Microsoft.Extensions.Configuration;
@@ -28,12 +27,13 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             services.AddTransient<IUploadService, UploadService>();
             services.AddTransient<IMailService, SmtpMailService>();
             services.AddScoped<IJobService, HangfireService>();
-            services.Configure<MailSettings>(config.GetSection("MailSettings"));
+            services.Configure<MailSettings>(config.GetSection(nameof(MailSettings)));
             return services;
         }
 
         public static IServiceCollection AddSharedInfrastructure(this IServiceCollection services, IConfiguration config)
         {
+            services.AddPersistenceSettings(config);
             services
                 .AddDatabaseContext<ApplicationDbContext>()
                 .AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
@@ -50,7 +50,6 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                 options.ResourcesPath = "Resources";
             });
             services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddPostgres();
             services.AddHangfireServer();
             services.AddSingleton<GlobalExceptionHandler>();
             services.AddSwaggerDocumentation();
@@ -66,6 +65,12 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             section.Bind(options);
 
             return options;
+        }
+
+        private static IServiceCollection AddPersistenceSettings(this IServiceCollection services, IConfiguration config)
+        {
+            return services
+                .Configure<PersistenceSettings>(config.GetSection(nameof(PersistenceSettings)));
         }
 
         private static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)

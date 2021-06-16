@@ -10,7 +10,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
     {
         public static IServiceCollection AddDatabaseContext<T>(this IServiceCollection services) where T : DbContext
         {
-            var options = services.GetOptions<PersistenceSettings>("PersistenceSettings");
+            var options = services.GetOptions<PersistenceSettings>(nameof(PersistenceSettings));
             if (options.UsePostgres)
             {
                 services.AddPostgres<T>();
