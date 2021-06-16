@@ -45,7 +45,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
             if (uploadRequest != null)
             {
                 uploadRequest.FileName = $"B-{command.Name}{uploadRequest.Extension}";
-                brand.ImageUrl = _uploadService.UploadAsync(uploadRequest);
+                brand.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
             }
             brand.AddDomainEvent(new BrandRegisteredEvent(brand.Id, brand.Name, brand.ImageUrl, brand.Detail));
             await _context.Brands.AddAsync(brand, cancellationToken);
@@ -75,7 +75,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
             if (uploadRequest != null)
             {
                 uploadRequest.FileName = $"B-{command.Name}{uploadRequest.Extension}";
-                brand.ImageUrl = _uploadService.UploadAsync(uploadRequest);
+                brand.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
             }
             brand.AddDomainEvent(new BrandUpdatedEvent(brand.Id, brand.Name, brand.ImageUrl, brand.Detail));
             _context.Brands.Update(brand);

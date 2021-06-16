@@ -2,14 +2,15 @@
 using FluentPOS.Shared.DTOs.Upload;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace FluentPOS.Shared.Infrastructure.Services
 {
     public class UploadService : IUploadService
     {
-        public string UploadAsync(UploadRequest request)
+        public Task<string> UploadAsync(UploadRequest request)
         {
-            if (request.Data == null) return string.Empty;
+            if (request.Data == null) return Task.FromResult(string.Empty);
             var streamData = new MemoryStream(request.Data);
             if (streamData.Length > 0)
             {
@@ -30,17 +31,17 @@ namespace FluentPOS.Shared.Infrastructure.Services
 
                 using var stream = new FileStream(fullPath, FileMode.Create);
                 streamData.CopyTo(stream);
-                return dbPath;
+                return Task.FromResult(dbPath);
             }
             else
             {
-                return string.Empty;
+                return Task.FromResult(string.Empty);
             }
         }
 
         private static string numberPattern = " ({0})";
 
-        public static string NextAvailableFilename(string path)
+        private static string NextAvailableFilename(string path)
         {
             // Short-cut if already available
             if (!File.Exists(path))
