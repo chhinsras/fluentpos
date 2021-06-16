@@ -6,9 +6,9 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
 {
     public class GetAllPagedBrandsQuery : IRequest<PaginatedResult<GetAllPagedBrandsResponse>>
     {
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
-        public string SearchString { get; set; }
+        public int PageNumber { get; }
+        public int PageSize { get; }
+        public string SearchString { get; }
 
         public GetAllPagedBrandsQuery(int pageNumber, int pageSize, string searchString)
         {

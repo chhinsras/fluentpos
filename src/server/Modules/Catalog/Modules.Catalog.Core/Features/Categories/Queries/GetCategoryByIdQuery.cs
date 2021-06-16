@@ -9,9 +9,16 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
 {
     public class GetCategoryByIdQuery : IRequest<Result<GetCategoryByIdResponse>>, ICacheable
     {
-        public Guid Id { get; set; }
-        public bool BypassCache { get; set; }
+        public Guid Id { get; }
+        public bool BypassCache { get; }
         public string CacheKey => CatalogCacheKeys.GetCategoryByIdCacheKey(Id);
-        public TimeSpan? SlidingExpiration { get; set; }
+        public TimeSpan? SlidingExpiration { get; }
+
+        public GetCategoryByIdQuery(Guid categoryId, bool bypassCache = false, TimeSpan? slidingExpiration = null)
+        {
+            Id = categoryId;
+            BypassCache = bypassCache;
+            SlidingExpiration = slidingExpiration;
+        }
     }
 }
