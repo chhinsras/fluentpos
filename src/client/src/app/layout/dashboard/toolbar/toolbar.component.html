@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-icon-button (click)="inputSideNav.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <a mat-button routerLink="/" aria-label="fluentpos">
+            <img class="angular-logo" src="../assets/angular-white-transparent.svg">
+            <span style="font-weight:lighter;font-size: larger;">fluentpos</span>
+        </a>
+        <span class="nav-spacer"></span>
+        <a mat-icon-button matTooltip="Fork this repository!" href="https://github.com/fluentpos/fluentpos/"
+            target="_blank">
+            <mat-icon class="fab fa-github"></mat-icon>
+        </a>
+        <a mat-icon-button (click)="toggleDarkMode()">
+            <mat-icon>{{darkModeIcon}}</mat-icon>
+        </a>
+
+    </mat-toolbar-row>
+</mat-toolbar>

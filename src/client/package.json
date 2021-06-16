@@ -12,13 +12,16 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.0.4",
+    "@angular/cdk": "^12.0.5",
     "@angular/common": "~12.0.4",
     "@angular/compiler": "~12.0.4",
     "@angular/core": "~12.0.4",
     "@angular/forms": "~12.0.4",
+    "@angular/material": "^12.0.5",
     "@angular/platform-browser": "~12.0.4",
     "@angular/platform-browser-dynamic": "~12.0.4",
     "@angular/router": "~12.0.4",
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
