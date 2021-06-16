@@ -58,6 +58,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 
             var productList = await queryable
                 .Select(expression)
+                .AsNoTracking()
                 .ToPaginatedListAsync(query.PageNumber, query.PageSize);
 
             if (productList == null) throw new CatalogException(_localizer["Product Not Found!"]);

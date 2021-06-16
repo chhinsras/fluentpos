@@ -42,6 +42,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
 
             var brandList = await queryable
                 .Select(expression)
+                .AsNoTracking()
                 .ToPaginatedListAsync(request.PageNumber, request.PageSize);
 
             if (brandList == null) throw new CatalogException(_localizer["Brand Not Found!"]);
