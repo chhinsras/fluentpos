@@ -84,7 +84,19 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                 {
                     await _userManager.CreateAsync(superUser, UserConstants.DefaultPassword);
                     var result = await _userManager.AddToRoleAsync(superUser, Roles.SuperAdmin.ToString());
-                    _logger.LogInformation(_localizer["Seeded Default SuperAdmin User."]);
+                    if (result.Succeeded)
+                    {
+                        //TODO - add permissions
+
+                        _logger.LogInformation(_localizer["Seeded Default SuperAdmin User."]);
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            _logger.LogError(error.Description);
+                        }
+                    }
                 }
             }).GetAwaiter().GetResult();
         }
