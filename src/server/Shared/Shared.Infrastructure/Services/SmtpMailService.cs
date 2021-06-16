@@ -13,12 +13,12 @@ namespace FluentPOS.Shared.Infrastructure.Services
     public class SmtpMailService : IMailService
     {
         private readonly MailSettings _settings;
-        public ILogger<SmtpMailService> Logger { get; }
+        private readonly ILogger<SmtpMailService> _logger;
 
         public SmtpMailService(IOptions<MailSettings> settings, ILogger<SmtpMailService> logger)
         {
             _settings = settings.Value;
-            Logger = logger;
+            _logger = logger;
         }
 
         public async Task SendAsync(MailRequest request)
@@ -40,7 +40,7 @@ namespace FluentPOS.Shared.Infrastructure.Services
             }
             catch (System.Exception ex)
             {
-                Logger.LogError(ex.Message, ex);
+                _logger.LogError(ex.Message, ex);
             }
         }
     }
