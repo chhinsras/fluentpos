@@ -27,9 +27,12 @@ namespace FluentPOS.Shared.Infrastructure.Services
             {
                 var email = new MimeMessage
                 {
-                    Sender = MailboxAddress.Parse(request.From ?? _settings.From),
+                    Sender = new MailboxAddress(_settings.DisplayName, request.From ?? _settings.From),
                     Subject = request.Subject,
-                    Body = new BodyBuilder {HtmlBody = request.Body}.ToMessageBody()
+                    Body = new BodyBuilder
+                    {
+                        HtmlBody = request.Body
+                    }.ToMessageBody()
                 };
                 email.To.Add(MailboxAddress.Parse(request.To));
                 using var smtp = new SmtpClient();
