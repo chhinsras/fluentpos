@@ -42,6 +42,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
 
             var categoryList = await queryable
                 .Select(expression)
+                .AsNoTracking()
                 .ToPaginatedListAsync(request.PageNumber, request.PageSize);
 
             if (categoryList == null) throw new CatalogException(_localizer["Category Not Found!"]);
