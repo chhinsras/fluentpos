@@ -1,5 +1,5 @@
-﻿using FluentPOS.Shared.Application.Domain;
-using FluentPOS.Shared.Application.EventLogging;
+﻿using FluentPOS.Shared.Core.Domain;
+using FluentPOS.Shared.Core.EventLogging;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

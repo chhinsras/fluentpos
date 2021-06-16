@@ -5,13 +5,7 @@
     <RootNamespace>FluentPOS.Modules.Identity.Infrastructure</RootNamespace>
     <AssemblyName>FluentPOS.Modules.Identity.Infrastructure</AssemblyName>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>FluentPOS.Modules.Identity.Infrastructure.xml</DocumentationFile>
-  </PropertyGroup>
-
-
-
+  
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules.Identity.Core\Modules.Identity.Core.csproj" />

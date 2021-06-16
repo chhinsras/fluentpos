@@ -1,7 +1,7 @@
-﻿using FluentPOS.Shared.Application.EventLogging;
-using FluentPOS.Shared.Application.Interfaces;
-using FluentPOS.Shared.Application.Interfaces.Services;
-using FluentPOS.Shared.Application.Settings;
+﻿using FluentPOS.Shared.Core.EventLogging;
+using FluentPOS.Shared.Core.Interfaces;
+using FluentPOS.Shared.Core.Interfaces.Services;
+using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Infrastructure.Controllers;
 using FluentPOS.Shared.Infrastructure.EventLogging;
 using FluentPOS.Shared.Infrastructure.Middlewares;

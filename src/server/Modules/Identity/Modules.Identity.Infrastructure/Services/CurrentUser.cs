@@ -1,5 +1,5 @@
 ﻿using FluentPOS.Modules.Identity.Infrastructure.Extensions;
-using FluentPOS.Shared.Application.Interfaces.Services.Identity;
+using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;

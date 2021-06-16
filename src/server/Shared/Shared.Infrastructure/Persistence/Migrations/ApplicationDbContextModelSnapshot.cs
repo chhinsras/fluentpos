@@ -20,7 +20,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("FluentPOS.Shared.Application.EventLogging.EventLog", b =>
+            modelBuilder.Entity("FluentPOS.Shared.Core.EventLogging.EventLog", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

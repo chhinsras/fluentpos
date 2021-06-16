@@ -1,4 +1,4 @@
-﻿using FluentPOS.Shared.Application.Wrapper;
+﻿using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Upload;
 using MediatR;
 using System;

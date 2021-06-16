@@ -5,15 +5,11 @@
     <RootNamespace>FluentPOS.Shared.Infrastructure</RootNamespace>
     <AssemblyName>FluentPOS.Shared.Infrastructure</AssemblyName>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>FluentPOS.Shared.Infrastructure.xml</DocumentationFile>
-  </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Shared.Application\Shared.Application.csproj" />
+    <ProjectReference Include="..\Shared.Core\Shared.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="10.2.3" />

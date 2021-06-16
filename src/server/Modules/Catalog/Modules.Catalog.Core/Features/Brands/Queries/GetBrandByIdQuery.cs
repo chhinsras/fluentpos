@@ -1,6 +1,6 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Constants;
-using FluentPOS.Shared.Application.Queries;
-using FluentPOS.Shared.Application.Wrapper;
+using FluentPOS.Shared.Core.Queries;
+using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Catalogs.Brands;
 using MediatR;
 using System;

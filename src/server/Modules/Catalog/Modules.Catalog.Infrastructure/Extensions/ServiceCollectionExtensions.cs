@@ -1,6 +1,6 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Infrastructure.Persistence;
-using FluentPOS.Shared.Application.Interfaces.Services;
+using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 

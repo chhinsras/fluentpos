@@ -1,8 +1,8 @@
 ﻿using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Modules.Identity.Core.Settings;
-using FluentPOS.Shared.Application.Interfaces.Services.Identity;
-using FluentPOS.Shared.Application.Wrapper;
+using FluentPOS.Shared.Core.Interfaces.Services.Identity;
+using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;

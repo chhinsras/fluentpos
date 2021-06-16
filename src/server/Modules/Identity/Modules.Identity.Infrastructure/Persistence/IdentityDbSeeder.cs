@@ -1,7 +1,7 @@
 ﻿using FluentPOS.Modules.Identity.Core.Constants;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Enums;
-using FluentPOS.Shared.Application.Interfaces.Services;
+using FluentPOS.Shared.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System;

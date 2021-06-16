@@ -1,4 +1,4 @@
-﻿using FluentPOS.Shared.Application.Domain;
+﻿using FluentPOS.Shared.Core.Domain;
 using System;
 
 namespace FluentPOS.Modules.Catalog.Core.Entities

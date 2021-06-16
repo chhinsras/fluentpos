@@ -1,5 +1,5 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Entities;
-using FluentPOS.Shared.Application.Interfaces.Services;
+using FluentPOS.Shared.Core.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Collections.Generic;

@@ -5,9 +5,4 @@
     <RootNamespace>FluentPOS.Modules.Inventory.Infrastructure</RootNamespace>
     <AssemblyName>FluentPOS.Modules.Inventory.Infrastructure</AssemblyName>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>FluentPOS.Modules.Inventory.Infrastructure.xml</DocumentationFile>
-  </PropertyGroup>
-
 </Project>

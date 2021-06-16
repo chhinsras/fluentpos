@@ -1,5 +1,5 @@
-﻿using FluentPOS.Shared.Application.Interfaces.Services;
-using FluentPOS.Shared.Application.Settings;
+﻿using FluentPOS.Shared.Core.Interfaces.Services;
+using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.DTOs.Mails;
 using MailKit.Net.Smtp;
 using MailKit.Security;

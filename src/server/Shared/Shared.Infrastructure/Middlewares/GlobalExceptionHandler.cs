@@ -1,5 +1,5 @@
-﻿using FluentPOS.Shared.Application.Exceptions;
-using FluentPOS.Shared.Application.Wrapper;
+﻿using FluentPOS.Shared.Core.Exceptions;
+using FluentPOS.Shared.Core.Wrapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;

@@ -1,4 +1,4 @@
-﻿using FluentPOS.Shared.Application.Exceptions;
+﻿using FluentPOS.Shared.Core.Exceptions;
 using System.Collections.Generic;
 
 namespace FluentPOS.Modules.Identity.Core.Exceptions

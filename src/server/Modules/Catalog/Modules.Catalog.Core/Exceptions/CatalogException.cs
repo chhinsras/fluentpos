@@ -1,4 +1,4 @@
-﻿using FluentPOS.Shared.Application.Exceptions;
+﻿using FluentPOS.Shared.Core.Exceptions;
 
 namespace FluentPOS.Modules.Catalog.Core.Exceptions
 {

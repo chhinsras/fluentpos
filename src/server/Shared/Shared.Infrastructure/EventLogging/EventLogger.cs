@@ -1,7 +1,7 @@
-﻿using FluentPOS.Shared.Application.Domain;
-using FluentPOS.Shared.Application.EventLogging;
-using FluentPOS.Shared.Application.Interfaces;
-using FluentPOS.Shared.Application.Interfaces.Services.Identity;
+﻿using FluentPOS.Shared.Core.Domain;
+using FluentPOS.Shared.Core.EventLogging;
+using FluentPOS.Shared.Core.Interfaces;
+using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 

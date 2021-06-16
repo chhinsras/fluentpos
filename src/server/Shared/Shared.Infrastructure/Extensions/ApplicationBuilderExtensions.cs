@@ -1,4 +1,4 @@
-﻿using FluentPOS.Shared.Application.Interfaces.Services;
+﻿using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Infrastructure.Middlewares;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
