@@ -19,7 +19,7 @@ namespace FluentPOS.Modules.Catalog.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id, bool bypassCache)
         {
-            var brand = await Mediator.Send(new GetBrandByIdQuery() { Id = id, BypassCache = bypassCache });
+            var brand = await Mediator.Send(new GetBrandByIdQuery(id, bypassCache));
             return Ok(brand);
         }
 
@@ -38,7 +38,7 @@ namespace FluentPOS.Modules.Catalog.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return Ok(await Mediator.Send(new RemoveBrandCommand { Id = id }));
+            return Ok(await Mediator.Send(new RemoveBrandCommand(id)));
         }
     }
 }

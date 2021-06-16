@@ -14,9 +14,9 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
             AggregateId = id;
         }
 
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string ImageUrl { get; set; }
-        public string Detail { get; set; }
+        public Guid Id { get; }
+        public string Name { get; }
+        public string ImageUrl { get; }
+        public string Detail { get; }
     }
 }

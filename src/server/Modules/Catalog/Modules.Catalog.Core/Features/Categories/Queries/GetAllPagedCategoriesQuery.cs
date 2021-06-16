@@ -6,9 +6,9 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
 {
     public class GetAllPagedCategoriesQuery : IRequest<PaginatedResult<GetAllPagedCategoriesResponse>>
     {
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
-        public string SearchString { get; set; }
+        public int PageNumber { get; }
+        public int PageSize { get; }
+        public string SearchString { get; }
 
         public GetAllPagedCategoriesQuery(int pageNumber, int pageSize, string searchString)
         {

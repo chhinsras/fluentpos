@@ -9,9 +9,16 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 {
     public class GetProductByIdQuery : IRequest<Result<GetProductByIdResponse>>, ICacheable
     {
-        public Guid Id { get; set; }
-        public bool BypassCache { get; set; }
+        public Guid Id { get; }
+        public bool BypassCache { get; }
         public string CacheKey => CatalogCacheKeys.GetProductByIdCacheKey(Id);
-        public TimeSpan? SlidingExpiration { get; set; }
+        public TimeSpan? SlidingExpiration { get; }
+
+        public GetProductByIdQuery(Guid productId, bool bypassCache = false, TimeSpan? slidingExpiration = null)
+        {
+            Id = productId;
+            BypassCache = bypassCache;
+            SlidingExpiration = slidingExpiration;
+        }
     }
 }

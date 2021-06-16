@@ -5,7 +5,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
 {
     public class BrandRemovedEvent : Event
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; }
 
         public BrandRemovedEvent(Guid id)
         {

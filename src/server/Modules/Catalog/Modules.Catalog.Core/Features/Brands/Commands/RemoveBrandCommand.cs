@@ -6,6 +6,11 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
 {
     public class RemoveBrandCommand : IRequest<Result<Guid>>
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; }
+
+        public RemoveBrandCommand(Guid brandId)
+        {
+            Id = brandId;
+        }
     }
 }

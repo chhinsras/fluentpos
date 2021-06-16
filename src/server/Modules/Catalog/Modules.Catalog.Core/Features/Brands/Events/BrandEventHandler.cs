@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
 {
@@ -11,27 +12,29 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
         INotificationHandler<BrandRemovedEvent>
     {
         private readonly ILogger<BrandEventHandler> _logger;
+        private readonly IStringLocalizer<BrandEventHandler> _localizer;
 
-        public BrandEventHandler(ILogger<BrandEventHandler> logger)
+        public BrandEventHandler(ILogger<BrandEventHandler> logger, IStringLocalizer<BrandEventHandler> localizer)
         {
             _logger = logger;
+            _localizer = localizer;
         }
 
         public Task Handle(BrandRegisteredEvent notification, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"BrandRegisteredEvent Raised.");
+            _logger.LogInformation(_localizer[$"{nameof(BrandRegisteredEvent)} Raised."]);
             return Task.CompletedTask;
         }
 
         public Task Handle(BrandUpdatedEvent notification, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"BrandUpdatedEvent Raised.");
+            _logger.LogInformation(_localizer[$"{nameof(BrandUpdatedEvent)} Raised."]);
             return Task.CompletedTask;
         }
 
         public Task Handle(BrandRemovedEvent notification, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"BrandRemovedEvent Raised. {notification.Id} Removed.");
+            _logger.LogInformation(_localizer[$"{nameof(BrandRemovedEvent)} Raised. {notification.Id} Removed."]);
             return Task.CompletedTask;
         }
     }
