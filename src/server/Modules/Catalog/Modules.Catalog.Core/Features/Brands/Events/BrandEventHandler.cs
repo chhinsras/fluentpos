@@ -19,19 +19,19 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
 
         public Task Handle(BrandRegisteredEvent notification, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"BrandRegisteredEvent Raised.");
+            _logger.LogInformation($"{nameof(BrandRegisteredEvent)} Raised.");
             return Task.CompletedTask;
         }
 
         public Task Handle(BrandUpdatedEvent notification, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"BrandUpdatedEvent Raised.");
+            _logger.LogInformation($"{nameof(BrandUpdatedEvent)} Raised.");
             return Task.CompletedTask;
         }
 
         public Task Handle(BrandRemovedEvent notification, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"BrandRemovedEvent Raised. {notification.Id} Removed.");
+            _logger.LogInformation($"{nameof(BrandRemovedEvent)} Raised. {notification.Id} Removed.");
             return Task.CompletedTask;
         }
     }
