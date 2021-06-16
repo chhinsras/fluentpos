@@ -1,9 +1,10 @@
-﻿using FluentPOS.Shared.DTOs.Upload;
+﻿using System.Threading.Tasks;
+using FluentPOS.Shared.DTOs.Upload;
 
 namespace FluentPOS.Shared.Application.Interfaces.Services
 {
     public interface IUploadService
     {
-        string UploadAsync(UploadRequest request);
+        Task<string> UploadAsync(UploadRequest request);
     }
 }

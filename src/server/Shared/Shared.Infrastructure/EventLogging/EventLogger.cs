@@ -26,7 +26,7 @@ namespace FluentPOS.Shared.Infrastructure.EventLogging
                 @event,
                 serializedData,
                 _user.Name ?? _user.GetUserEmail());
-            _context.EventLogs.Add(thisEvent);
+            await _context.EventLogs.AddAsync(thisEvent);
             await _context.SaveChangesAsync(default);
         }
     }

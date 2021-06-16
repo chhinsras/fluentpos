@@ -49,7 +49,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
             if (uploadRequest != null)
             {
                 uploadRequest.FileName = $"P-{command.BarcodeSymbology}{uploadRequest.Extension}";
-                product.ImageUrl = _uploadService.UploadAsync(uploadRequest);
+                product.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
             }
             await _context.Products.AddAsync(product, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
@@ -72,7 +72,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
                 if (uploadRequest != null)
                 {
                     uploadRequest.FileName = $"P-{command.BarcodeSymbology}{uploadRequest.Extension}";
-                    product.ImageUrl = _uploadService.UploadAsync(uploadRequest);
+                    product.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
                 }
                 _context.Products.Update(product);
                 await _context.SaveChangesAsync(cancellationToken);

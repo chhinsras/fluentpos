@@ -44,7 +44,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
             if (uploadRequest != null)
             {
                 uploadRequest.FileName = $"C-{command.Name}{uploadRequest.Extension}";
-                category.ImageUrl = _uploadService.UploadAsync(uploadRequest);
+                category.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
             }
             await _context.Categories.AddAsync(category, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
@@ -61,7 +61,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
                 if (uploadRequest != null)
                 {
                     uploadRequest.FileName = $"C-{command.Name}{uploadRequest.Extension}";
-                    category.ImageUrl = _uploadService.UploadAsync(uploadRequest);
+                    category.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
                 }
                 _context.Categories.Update(category);
                 await _context.SaveChangesAsync(cancellationToken);

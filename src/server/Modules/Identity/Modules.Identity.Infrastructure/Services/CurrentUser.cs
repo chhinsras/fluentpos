@@ -25,7 +25,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
 
         public string GetUserEmail()
         {
-            return IsAuthenticated() ? _accessor.HttpContext?.User.GetUserEmail() : "";
+            return IsAuthenticated() ? _accessor.HttpContext?.User.GetUserEmail() : string.Empty;
         }
 
         public bool IsAuthenticated()

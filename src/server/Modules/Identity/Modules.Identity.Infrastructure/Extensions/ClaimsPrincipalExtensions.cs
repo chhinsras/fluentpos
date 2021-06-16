@@ -9,7 +9,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
         {
             if (principal == null)
             {
-                throw new ArgumentException(nameof(principal));
+                throw new ArgumentNullException(nameof(principal));
             }
 
             var claim = principal.FindFirst(ClaimTypes.NameIdentifier);
@@ -20,7 +20,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
         {
             if (principal == null)
             {
-                throw new ArgumentException(nameof(principal));
+                throw new ArgumentNullException(nameof(principal));
             }
 
             var claim = principal.FindFirst(ClaimTypes.Email);
