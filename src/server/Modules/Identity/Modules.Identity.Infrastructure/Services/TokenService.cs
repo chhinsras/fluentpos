@@ -15,6 +15,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
@@ -22,14 +23,17 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
     {
         private readonly UserManager<ExtendedIdentityUser> _userManager;
         private readonly RoleManager<ExtendedIdentityRole> _roleManager;
+        private readonly IStringLocalizer<TokenService> _localizer;
         private readonly JwtSettings _config;
 
         public TokenService(
             UserManager<ExtendedIdentityUser> userManager, RoleManager<ExtendedIdentityRole> roleManager,
-            IOptions<JwtSettings> config, SignInManager<ExtendedIdentityUser> signInManager)
+            IOptions<JwtSettings> config, SignInManager<ExtendedIdentityUser> signInManager,
+            IStringLocalizer<TokenService> localizer)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _localizer = localizer;
             _config = config.Value;
         }
 
@@ -37,14 +41,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
-                throw new IdentityException("User Not Found.");
+                throw new IdentityException(_localizer["User Not Found."]);
             if (!user.IsActive)
-                throw new IdentityException("User Not Active. Please contact the administrator.");
+                throw new IdentityException(_localizer["User Not Active. Please contact the administrator."]);
             if (!user.EmailConfirmed)
-                throw new IdentityException("E-Mail not confirmed.");
+                throw new IdentityException(_localizer["E-Mail not confirmed."]);
             var passwordValid = await _userManager.CheckPasswordAsync(user, request.Password);
             if (!passwordValid)
-                throw new IdentityException("Invalid Credentials.");
+                throw new IdentityException(_localizer["Invalid Credentials."]);
             user.RefreshToken = GenerateRefreshToken();
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.RefreshTokenExpirationInDays);
             await _userManager.UpdateAsync(user);
@@ -56,14 +60,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         public async Task<IResult<TokenResponse>> RefreshTokenAsync(RefreshTokenRequest request, string ipAddress)
         {
             if (request is null)
-                throw new IdentityException("Invalid Client Token.");
+                throw new IdentityException(_localizer["Invalid Client Token."]);
             var userPrincipal = GetPrincipalFromExpiredToken(request.Token);
             var userEmail = userPrincipal.FindFirstValue(ClaimTypes.Email);
             var user = await _userManager.FindByEmailAsync(userEmail);
             if (user == null)
-                throw new IdentityException("User Not Found.");
+                throw new IdentityException(_localizer["User Not Found."]);
             if (user.RefreshToken != request.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
-                throw new IdentityException("Invalid Client Token.");
+                throw new IdentityException(_localizer["Invalid Client Token."]);
             var token = GenerateEncryptedToken(GetSigningCredentials(), await GetClaimsAsync(user, ipAddress));
             user.RefreshToken = GenerateRefreshToken();
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.RefreshTokenExpirationInDays);
@@ -144,7 +148,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             if (securityToken is not JwtSecurityToken jwtSecurityToken ||
                 !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
                     StringComparison.InvariantCultureIgnoreCase))
-                throw new IdentityException("Invalid Token.");
+                throw new IdentityException(_localizer["Invalid Token."]);
             return principal;
         }
 
