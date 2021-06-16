@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 {
@@ -14,14 +15,21 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
         private readonly ILogger<IdentityDbSeeder> _logger;
         private readonly IdentityDbContext _db;
         private readonly UserManager<ExtendedIdentityUser> _userManager;
+        private readonly IStringLocalizer<IdentityDbSeeder> _localizer;
         private readonly RoleManager<ExtendedIdentityRole> _roleManager;
 
-        public IdentityDbSeeder(ILogger<IdentityDbSeeder> logger, IdentityDbContext db, RoleManager<ExtendedIdentityRole> roleManager, UserManager<ExtendedIdentityUser> userManager)
+        public IdentityDbSeeder(
+            ILogger<IdentityDbSeeder> logger,
+            IdentityDbContext db,
+            RoleManager<ExtendedIdentityRole> roleManager,
+            UserManager<ExtendedIdentityUser> userManager,
+            IStringLocalizer<IdentityDbSeeder> localizer)
         {
             _logger = logger;
             _db = db;
             _roleManager = roleManager;
             _userManager = userManager;
+            _localizer = localizer;
         }
 
         public void Initialize()
@@ -43,7 +51,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                     if (roleInDb == null)
                     {
                         await _roleManager.CreateAsync(role);
-                        _logger.LogInformation($"Added '{roleName}' to Roles");
+                        _logger.LogInformation(string.Format(_localizer["Added '{0}' to Roles"], roleName));
                     }
                 }
             }).GetAwaiter().GetResult();
@@ -76,7 +84,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                 {
                     await _userManager.CreateAsync(superUser, UserConstants.DefaultPassword);
                     var result = await _userManager.AddToRoleAsync(superUser, Roles.SuperAdmin.ToString());
-                    _logger.LogInformation("Seeded Default SuperAdmin User.");
+                    _logger.LogInformation(_localizer["Seeded Default SuperAdmin User."]);
                 }
             }).GetAwaiter().GetResult();
         }
@@ -108,7 +116,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                 {
                     await _userManager.CreateAsync(basicUser, UserConstants.DefaultPassword);
                     await _userManager.AddToRoleAsync(basicUser, Roles.Staff.ToString());
-                    _logger.LogInformation("Seeded Default Staff.");
+                    _logger.LogInformation(_localizer["Seeded Default Staff."]);
                 }
             }).GetAwaiter().GetResult();
         }
