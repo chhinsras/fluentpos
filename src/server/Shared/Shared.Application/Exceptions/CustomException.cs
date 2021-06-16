@@ -5,7 +5,7 @@ namespace FluentPOS.Shared.Application.Exceptions
 {
     public class CustomException : Exception
     {
-        public List<string> ErrorMessages { get; set; } = new();
+        public List<string> ErrorMessages { get; } = new();
 
         public CustomException(string message, List<string> errors = default) : base(message)
         {
