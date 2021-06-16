@@ -27,8 +27,9 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         private readonly JwtSettings _config;
 
         public TokenService(
-            UserManager<ExtendedIdentityUser> userManager, RoleManager<ExtendedIdentityRole> roleManager,
-            IOptions<JwtSettings> config, SignInManager<ExtendedIdentityUser> signInManager,
+            UserManager<ExtendedIdentityUser> userManager,
+            RoleManager<ExtendedIdentityRole> roleManager,
+            IOptions<JwtSettings> config,
             IStringLocalizer<TokenService> localizer)
         {
             _userManager = userManager;
@@ -88,15 +89,12 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             var roles = await _userManager.GetRolesAsync(user);
             var roleClaims = new List<Claim>();
             var permissionClaims = new List<Claim>();
-            for (var i = 0; i < roles.Count; i++)
+            foreach (var role in roles)
             {
-                roleClaims.Add(new Claim(ClaimTypes.Role, roles[i]));
-                var thisRole = await _roleManager.FindByNameAsync(roles[i]);
+                roleClaims.Add(new Claim(ClaimTypes.Role, role));
+                var thisRole = await _roleManager.FindByNameAsync(role);
                 var allPermissionsForThisRoles = await _roleManager.GetClaimsAsync(thisRole);
-                foreach (var permission in allPermissionsForThisRoles)
-                {
-                    permissionClaims.Add(permission);
-                }
+                permissionClaims.AddRange(allPermissionsForThisRoles);
             }
             var claims = new List<Claim>
             {
