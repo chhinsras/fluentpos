@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using Microsoft.Extensions.Options;
+using FluentPOS.Shared.Core.Settings;
 
 namespace FluentPOS.Shared.Infrastructure.Persistence
 {

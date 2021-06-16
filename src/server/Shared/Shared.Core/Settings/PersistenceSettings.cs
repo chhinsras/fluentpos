@@ -1,4 +1,4 @@
-﻿namespace FluentPOS.Shared.Infrastructure.Persistence
+﻿namespace FluentPOS.Shared.Core.Settings
 {
     public class PersistenceSettings
     {

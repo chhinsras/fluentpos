@@ -1,6 +1,7 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Shared.Core.EventLogging;
+using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

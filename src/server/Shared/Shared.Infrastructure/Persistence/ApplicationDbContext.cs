@@ -1,5 +1,6 @@
 ﻿using FluentPOS.Shared.Core.EventLogging;
 using FluentPOS.Shared.Core.Interfaces;
+using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

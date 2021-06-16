@@ -1,4 +1,5 @@
-﻿using FluentPOS.Shared.Infrastructure.Extensions;
+﻿using FluentPOS.Shared.Core.Settings;
+using FluentPOS.Shared.Infrastructure.Extensions;
 using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.EntityFrameworkCore;

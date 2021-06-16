@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>FluentPOS.Shared.Application</RootNamespace>
-    <AssemblyName>FluentPOS.Shared.Application</AssemblyName>
+    <RootNamespace>FluentPOS.Shared.Core</RootNamespace>
+    <AssemblyName>FluentPOS.Shared.Core</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Entities;
+using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
