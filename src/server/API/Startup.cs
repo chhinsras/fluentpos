@@ -2,7 +2,6 @@ using FluentPOS.Modules.Catalog;
 using FluentPOS.Modules.Identity.Extensions;
 using FluentPOS.Shared.Application.Extensions;
 using FluentPOS.Shared.Infrastructure.Extensions;
-using FluentPOS.Shared.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,7 +22,6 @@ namespace FluentPOS.Bootstrapper
         {
             services
                 .AddDistributedMemoryCache()
-                .Configure<PersistenceSettings>(_config.GetSection("PersistenceSettings"))
                 .AddIdentityModule(_config)
                 .AddSharedInfrastructure(_config)
                 .AddSharedApplication(_config)
