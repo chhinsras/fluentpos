@@ -3,6 +3,7 @@ using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Constants;
 using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
+using FluentPOS.Modules.Catalog.Core.Features.Categories.Events;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Core.Wrapper;
 using MediatR;
@@ -46,6 +47,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
                 uploadRequest.FileName = $"C-{command.Name}{uploadRequest.Extension}";
                 category.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
             }
+            category.AddDomainEvent(new CategoryRegisteredEvent(category.Id, category.Name, category.ImageUrl, category.Detail));
             await _context.Categories.AddAsync(category, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(category.Id, _localizer["Category Saved"]);
@@ -63,6 +65,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
                     uploadRequest.FileName = $"C-{command.Name}{uploadRequest.Extension}";
                     category.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
                 }
+                category.AddDomainEvent(new CategoryUpdatedEvent(category.Id, category.Name, category.ImageUrl, category.Detail));
                 _context.Categories.Update(category);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _cache.RemoveAsync(CatalogCacheKeys.GetCategoryByIdCacheKey(command.Id), cancellationToken);
@@ -80,6 +83,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
             if (!isCategoryUsed)
             {
                 var category = await _context.Categories.FirstOrDefaultAsync(b => b.Id == command.Id, cancellationToken);
+                category.AddDomainEvent(new CategoryRemovedEvent(category.Id));
                 _context.Categories.Remove(category);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _cache.RemoveAsync(CatalogCacheKeys.GetCategoryByIdCacheKey(command.Id), cancellationToken);
