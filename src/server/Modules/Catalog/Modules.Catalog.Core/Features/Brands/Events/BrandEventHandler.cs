@@ -1,8 +1,8 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
 {
