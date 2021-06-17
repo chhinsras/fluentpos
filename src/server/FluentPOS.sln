@@ -18,6 +18,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Inventory", "Inventory", "{47737E2E-19DD-438B-BC4F-3ABCED87FD8B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrapper", "API\Bootstrapper.csproj", "{6F036BDD-0283-454B-8701-8198BDBA738B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A9ACE119-B64A-41B0-8A2F-F5F6AFAB2007} = {A9ACE119-B64A-41B0-8A2F-F5F6AFAB2007}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{3527F964-727A-460F-9148-9A7D7799E433}"
 EndProject
@@ -54,6 +57,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Inventory.Infrastructure", "Modules\Inventory\Modules.Inventory.Infrastructure\Modules.Inventory.Infrastructure.csproj", "{9DD21FC1-934D-4419-ADA5-24B0A1817487}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.People", "Modules\People\Modules.People\Modules.People.csproj", "{A9ACE119-B64A-41B0-8A2F-F5F6AFAB2007}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C3FB367E-9CD8-4D98-BA71-CD6CBCB114F1} = {C3FB367E-9CD8-4D98-BA71-CD6CBCB114F1}
+		{0F1C5782-2723-4D1E-B9EE-065F56453AF4} = {0F1C5782-2723-4D1E-B9EE-065F56453AF4}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.People.Core", "Modules\People\Modules.People.Core\Modules.People.Core.csproj", "{C3FB367E-9CD8-4D98-BA71-CD6CBCB114F1}"
 EndProject

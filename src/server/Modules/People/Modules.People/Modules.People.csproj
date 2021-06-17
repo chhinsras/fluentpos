@@ -9,4 +9,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>FluentPOS.Modules.People.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Modules.People.Infrastructure\Modules.People.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules.People.Core\Modules.People.Core.csproj" />
+  </ItemGroup>
+  
 </Project>

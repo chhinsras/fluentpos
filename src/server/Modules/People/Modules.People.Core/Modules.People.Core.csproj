@@ -5,4 +5,11 @@
     <RootNamespace>FluentPOS.Modules.People.Core</RootNamespace>
     <AssemblyName>FluentPOS.Modules.People.Core</AssemblyName>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Shared.Core\Shared.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Features\" />
+    <Folder Include="Mappings\" />
+  </ItemGroup>
 </Project>

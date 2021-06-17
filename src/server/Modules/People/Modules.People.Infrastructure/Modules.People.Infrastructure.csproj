@@ -5,4 +5,10 @@
     <RootNamespace>FluentPOS.Modules.People.Infrastructure</RootNamespace>
     <AssemblyName>FluentPOS.Modules.People.Infrastructure</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules.People.Core\Modules.People.Core.csproj" />
+  </ItemGroup>
+  
 </Project>

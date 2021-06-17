@@ -23,7 +23,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Modules\Catalog\Modules.Catalog.Controllers\Modules.Catalog.csproj" />
     <ProjectReference Include="..\Modules\Identity\Modules.Identity\Modules.Identity.csproj" />
+    <ProjectReference Include="..\Modules\People\Modules.People\Modules.People.csproj" />
     <ProjectReference Include="..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
+
