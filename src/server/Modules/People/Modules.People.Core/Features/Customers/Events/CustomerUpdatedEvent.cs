@@ -1,9 +1,5 @@
 ﻿using FluentPOS.Shared.Core.Domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.People.Core.Features.Customers.Events
 {
@@ -20,11 +16,11 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Events
             AggregateId = id;
         }
 
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public string ImageUrl { get; set; }
-        public string Type { get; set; }
+        public Guid Id { get; }
+        public string Name { get; }
+        public string Phone { get; }
+        public string Email { get; }
+        public string ImageUrl { get; }
+        public string Type { get; }
     }
 }

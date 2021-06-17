@@ -2,10 +2,6 @@
 using FluentPOS.Shared.DTOs.Upload;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.People.Core.Features.Customers.Commands
 {

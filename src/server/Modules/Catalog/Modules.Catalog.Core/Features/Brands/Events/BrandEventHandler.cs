@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
 {
     public class BrandEventHandler :
-         INotificationHandler<BrandRegisteredEvent>,
+        INotificationHandler<BrandRegisteredEvent>,
         INotificationHandler<BrandUpdatedEvent>,
         INotificationHandler<BrandRemovedEvent>
     {
