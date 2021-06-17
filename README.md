@@ -33,10 +33,41 @@ fluentpos was meant for retail businesses. The modular monolith architecture wou
 
 - API - `In Progress`
 - Angular Project - `Not Yet Started`
+- Seperate Website to maintain documentation - `Coming Soon!`
+- Docker Container - `Coming Soon!`
 
 ### Getting Started
 
 > fluentpos is in it's early development stage.
+
+Clone this repository to your local machine.
+
+#### Prerequisites to run API
+1. Install the latest [.NET 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
+2. Install the latest DOTNET & EF CLI Tools by using this command `dotnet tool install --global dotnet-ef` 
+3. Install the latest version of Visual Studio IDE 2019 (v16.8 and above) 🚀
+4. It's recommended to use Postgres DB as it comes by default with fluentpos. Install [PostgreSQL](https://www.postgresql.org/download/). 
+5. As for quick DB Management, we love [Azure Data Studio](https://docs.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver15)
+
+#### Running the API
+
+1. Open up `FluentPOS.sln` in Visual Studio 2019.
+2. Navigate to appSettings.json under `src/Api/Bootstrapper/appsettings.json`
+3. Add you PostgreSQL connection string under `PersistenceSettings`. The default connection string is `"postgres": "Host=localhost;Database=fluentpos;Username=postgres;Password=root"`
+4. That's everything you need to setup the API. Just build and run the API project.
+5. By default, the database is migrated and latest changes are applied.
+6. Some defualt data is also seeded to this database like roles, users, brands, products etc.
+
+#### Default Credentials
+
+- superadmin - superadmin@fluentpos.com / 123Pa$$word!
+- staff - staff@fluentpos.com / 123Pa$$word!
+
+You can use these credentials to generate jwt tokens in the `api/identity/tokens` endpoint.
+
+### Note
+
+Since fluentpos is in it's early development stage, I have not been able to write detailed documentation about the implementation. You can expect quite a lot of content around this architecture on my blog [@codewithmukesh](https://codewithmukesh.com/) in the upcoming day.
 
 ### The Team
 - Mukesh Murugan [@iammukeshm](https://github.com/iammukeshm/)
