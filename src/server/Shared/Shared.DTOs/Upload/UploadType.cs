@@ -11,6 +11,9 @@ namespace FluentPOS.Shared.DTOs.Upload
         Brand,
 
         [Description(@"Images\Catalog\Categories")]
-        Category
+        Category,
+
+        [Description(@"Images\People\Customers")]
+        Customer
     }
 }
