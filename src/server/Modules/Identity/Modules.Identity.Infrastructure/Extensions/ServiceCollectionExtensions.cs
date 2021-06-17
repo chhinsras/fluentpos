@@ -6,16 +6,13 @@ using FluentPOS.Modules.Identity.Infrastructure.Persistence;
 using FluentPOS.Modules.Identity.Infrastructure.Services;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Core.Interfaces.Services.Identity;
-using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Security.Claims;
@@ -78,18 +75,11 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                     {
                         OnAuthenticationFailed = c =>
                         {
-                            if (c.Exception is SecurityTokenExpiredException)
-                            {
-                                throw new IdentityException("Token has expired.", statusCode: HttpStatusCode.Unauthorized);
-                            }
-                            else
-                            {
 #if DEBUG
-                                throw new IdentityException(c.Exception.ToString(), statusCode: HttpStatusCode.InternalServerError);
+                            throw new IdentityException(c.Exception.Message, statusCode: HttpStatusCode.InternalServerError);
 #else
-                                throw new IdentityException("An unhandled error has occurred.", statusCode: HttpStatusCode.InternalServerError);
+                                throw new IdentityException("Failed to Authenticate.", statusCode: HttpStatusCode.InternalServerError);
 #endif
-                            }
                         },
                         OnChallenge = context =>
                         {
