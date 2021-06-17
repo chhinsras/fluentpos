@@ -77,9 +77,6 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
         {
             return services.AddSwaggerGen(c =>
             {
-                //c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\Bootstrapper.xml");
-
-                // include all project's xml comments
                 var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
                 {

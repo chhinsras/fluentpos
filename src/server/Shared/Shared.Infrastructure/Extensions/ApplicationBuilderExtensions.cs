@@ -23,21 +23,20 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
     internal static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder UseSharedInfrastructure(this IApplicationBuilder app)
-        {
+        {            
+            app.UseMiddleware<GlobalExceptionHandler>();            
             app.UseRouting();
-            app.UseMiddleware<GlobalExceptionHandler>();
-            app.UseSwaggerDocumentation();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
             app.UseHangfireDashboard("/jobs", new DashboardOptions
             {
                 DashboardTitle = "FluentPOS Jobs"
             });
-            
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+            app.UseSwaggerDocumentation();
             app.Initialize();
             return app;
         }

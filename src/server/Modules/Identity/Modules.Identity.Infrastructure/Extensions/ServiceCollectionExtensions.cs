@@ -44,7 +44,8 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                     options.Password.RequireUppercase = false;
                     options.User.RequireUniqueEmail = true;
                 })
-                .AddEntityFrameworkStores<IdentityDbContext>().AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<IdentityDbContext>()
+                .AddDefaultTokenProviders();
             services.AddTransient<IDatabaseSeeder, IdentityDbSeeder>();
             services.AddJwtAuthentication(configuration);
             return services;
@@ -86,7 +87,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
 #if DEBUG
                                 throw new IdentityException(c.Exception.ToString(), statusCode: HttpStatusCode.InternalServerError);
 #else
-                                 throw new IdentityException("An unhandled error has occurred.", statusCode: HttpStatusCode.InternalServerError);
+                                throw new IdentityException("An unhandled error has occurred.", statusCode: HttpStatusCode.InternalServerError);
 #endif
                             }
                         },
@@ -97,7 +98,6 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                             {
                                 throw new IdentityException("You are not Authorized.", statusCode:HttpStatusCode.Unauthorized);
                             }
-
                             return Task.CompletedTask;
                         },
                         OnForbidden = context =>
