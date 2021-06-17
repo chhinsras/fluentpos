@@ -3,6 +3,7 @@ using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Constants;
 using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
+using FluentPOS.Modules.Catalog.Core.Features.Products.Events;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Core.Wrapper;
 using MediatR;
@@ -51,6 +52,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
                 uploadRequest.FileName = $"P-{command.BarcodeSymbology}{uploadRequest.Extension}";
                 product.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
             }
+            product.AddDomainEvent(new ProductRegisteredEvent(product.Id, product.Name, product.LocaleName, product.BrandId, product.CategoryId, product.Price, product.Cost, product.ImageUrl, product.Tax, product.TaxMethod, product.BarcodeSymbology, product.IsAlert, product.AlertQuantity, product.Detail));
             await _context.Products.AddAsync(product, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(product.Id, _localizer["Product Saved"]);
@@ -74,6 +76,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
                     uploadRequest.FileName = $"P-{command.BarcodeSymbology}{uploadRequest.Extension}";
                     product.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
                 }
+                product.AddDomainEvent(new ProductUpdatedEvent(product.Id, product.Name, product.LocaleName, product.BrandId, product.CategoryId, product.Price, product.Cost, product.ImageUrl, product.Tax, product.TaxMethod, product.BarcodeSymbology, product.IsAlert, product.AlertQuantity, product.Detail));
                 _context.Products.Update(product);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _cache.RemoveAsync(CatalogCacheKeys.GetProductByIdCacheKey(command.Id), cancellationToken);
@@ -90,6 +93,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
             var product = await _context.Products.Where(p => p.Id == command.Id).FirstOrDefaultAsync(cancellationToken);
             if (product != null)
             {
+                product.AddDomainEvent(new ProductRemovedEvent(product.Id));
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _cache.RemoveAsync(CatalogCacheKeys.GetProductByIdCacheKey(command.Id), cancellationToken);
