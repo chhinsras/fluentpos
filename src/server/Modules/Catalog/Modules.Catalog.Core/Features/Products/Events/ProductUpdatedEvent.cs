@@ -24,19 +24,19 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Events
             AggregateId = id;
         }
 
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string LocaleName { get; set; }
-        public Guid BrandId { get; set; }
-        public Guid CategoryId { get; set; }
-        public decimal Price { get; set; }
-        public decimal Cost { get; set; }
-        public string ImageUrl { get; set; }
-        public string Tax { get; set; }
-        public string TaxMethod { get; set; }
-        public string BarcodeSymbology { get; set; }
-        public bool IsAlert { get; set; }
-        public decimal AlertQuantity { get; set; }
-        public string Detail { get; set; }
+        public Guid Id { get; }
+        public string Name { get; }
+        public string LocaleName { get; }
+        public Guid BrandId { get; }
+        public Guid CategoryId { get; }
+        public decimal Price { get; }
+        public decimal Cost { get; }
+        public string ImageUrl { get; }
+        public string Tax { get; }
+        public string TaxMethod { get; }
+        public string BarcodeSymbology { get; }
+        public bool IsAlert { get; }
+        public decimal AlertQuantity { get; }
+        public string Detail { get; }
     }
 }

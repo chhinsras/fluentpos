@@ -1,17 +1,13 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.People.Core.Features.Customers.Events
 {
     public class CustomerEventHandler :
-         INotificationHandler<CustomerRegisteredEvent>,
+        INotificationHandler<CustomerRegisteredEvent>,
         INotificationHandler<CustomerUpdatedEvent>,
         INotificationHandler<CustomerRemovedEvent>
     {
