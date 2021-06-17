@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Core.Features.Customers.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.People.Core.Mappings
 {
