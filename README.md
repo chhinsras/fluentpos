@@ -56,7 +56,9 @@ Clone this repository to your local machine.
 3. Add you PostgreSQL connection string under `PersistenceSettings`. The default connection string is `"postgres": "Host=localhost;Database=fluentpos;Username=postgres;Password=root"`
 4. That's everything you need to setup the API. Just build and run the API project.
 5. By default, the database is migrated and latest changes are applied.
-6. Some defualt data is also seeded to this database like roles, users, brands, products etc.
+6. Some default data is also seeded to this database like roles, users, brands, products etc.
+
+> Not interested with PostgreSQL? You can easily switch to MSSQL by following this [guide]( https://github.com/fluentpos/fluentpos/blob/master/docs/api-switching-database-provider-tutorial.md).
 
 #### Default Credentials
 
@@ -67,7 +69,7 @@ You can use these credentials to generate jwt tokens in the `api/identity/tokens
 
 ### Note
 
-Since fluentpos is in it's early development stage, I have not been able to write detailed documentation about the implementation. You can expect quite a lot of content around this architecture on my blog [@codewithmukesh](https://codewithmukesh.com/) in the upcoming day.
+Since fluentpos is in it's early development stage, I have not been able to write detailed documentation about the implementation. You can expect quite a lot of content around this architecture on my blog [@codewithmukesh](https://codewithmukesh.com/) in the upcoming days.
 
 ### The Team
 - Mukesh Murugan [@iammukeshm](https://github.com/iammukeshm/)
