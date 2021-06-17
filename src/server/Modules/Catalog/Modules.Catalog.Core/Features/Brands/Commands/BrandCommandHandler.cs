@@ -12,6 +12,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -58,7 +59,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
             var isBrandUsed = await IsBrandUsed(command.Id);
             if (isBrandUsed) throw new CatalogException(_localizer["Deletion Not Allowed"]);
             var brand = await _context.Brands.FirstOrDefaultAsync(b => b.Id == command.Id, cancellationToken);
-            if (brand == null) throw new CatalogException(_localizer["Brand Not Found"]);
+            if (brand == null) throw new CatalogException(_localizer["Brand Not Found"],HttpStatusCode.NotFound);
             _context.Brands.Remove(brand);
             brand.AddDomainEvent(new BrandRemovedEvent(command.Id));
             await _context.SaveChangesAsync(cancellationToken);

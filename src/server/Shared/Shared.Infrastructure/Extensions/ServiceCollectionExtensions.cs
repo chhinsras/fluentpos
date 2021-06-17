@@ -20,7 +20,7 @@ using System.Runtime.CompilerServices;
 
 namespace FluentPOS.Shared.Infrastructure.Extensions
 {
-    internal static class ServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddApplicationLayer(this IServiceCollection services, IConfiguration config)
         {
@@ -56,7 +56,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             return services;
         }
 
-        internal static T GetOptions<T>(this IServiceCollection services, string sectionName) where T : new()
+        public static T GetOptions<T>(this IServiceCollection services, string sectionName) where T : new()
         {
             using var serviceProvider = services.BuildServiceProvider();
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();

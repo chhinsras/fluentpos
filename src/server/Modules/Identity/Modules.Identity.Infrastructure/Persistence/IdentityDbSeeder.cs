@@ -1,12 +1,13 @@
 ﻿using FluentPOS.Modules.Identity.Core.Constants;
 using FluentPOS.Modules.Identity.Core.Entities;
-using FluentPOS.Modules.Identity.Core.Enums;
+using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 {
@@ -44,7 +45,8 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
         {
             Task.Run(async () =>
             {
-                foreach (var roleName in Enum.GetNames(typeof(Roles)))
+                var roleList = new List<string> { RoleConstants.SuperAdmin, RoleConstants.Admin, RoleConstants.Manager, RoleConstants.Accountant, RoleConstants.Cashier, RoleConstants.Staff };
+                foreach (var roleName in roleList)
                 {
                     var role = new ExtendedIdentityRole(roleName);
                     var roleInDb = await _roleManager.FindByNameAsync(roleName);
@@ -62,8 +64,8 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
             Task.Run(async () =>
             {
                 //Check if Role Exists
-                var adminRole = new ExtendedIdentityRole(Roles.SuperAdmin.ToString());
-                var adminRoleInDb = await _roleManager.FindByNameAsync(Roles.SuperAdmin.ToString());
+                var adminRole = new ExtendedIdentityRole(RoleConstants.SuperAdmin);
+                var adminRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.SuperAdmin);
                 if (adminRoleInDb == null)
                 {
                     await _roleManager.CreateAsync(adminRole);
@@ -83,7 +85,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                 if (superUserInDb == null)
                 {
                     await _userManager.CreateAsync(superUser, UserConstants.DefaultPassword);
-                    var result = await _userManager.AddToRoleAsync(superUser, Roles.SuperAdmin.ToString());
+                    var result = await _userManager.AddToRoleAsync(superUser, RoleConstants.SuperAdmin);
                     if (result.Succeeded)
                     {
                         //TODO - add permissions
@@ -106,8 +108,8 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
             Task.Run(async () =>
             {
                 //Check if Role Exists
-                var basicRole = new ExtendedIdentityRole(Roles.Staff.ToString());
-                var basicRoleInDb = await _roleManager.FindByNameAsync(Roles.Staff.ToString());
+                var basicRole = new ExtendedIdentityRole(RoleConstants.Staff);
+                var basicRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.Staff);
                 if (basicRoleInDb == null)
                 {
                     await _roleManager.CreateAsync(basicRole);
@@ -127,7 +129,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                 if (basicUserInDb == null)
                 {
                     await _userManager.CreateAsync(basicUser, UserConstants.DefaultPassword);
-                    await _userManager.AddToRoleAsync(basicUser, Roles.Staff.ToString());
+                    await _userManager.AddToRoleAsync(basicUser, RoleConstants.Staff);
                     _logger.LogInformation(_localizer["Seeded Default Staff."]);
                 }
             }).GetAwaiter().GetResult();

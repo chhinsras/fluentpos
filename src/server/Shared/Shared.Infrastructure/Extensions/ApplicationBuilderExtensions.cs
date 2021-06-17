@@ -1,9 +1,20 @@
 ﻿using FluentPOS.Shared.Core.Interfaces.Services;
+using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.Infrastructure.Middlewares;
 using Hangfire;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using System;
+using System.Net;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("FluentPOS.Bootstrapper")]
 
@@ -16,6 +27,8 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             app.UseRouting();
             app.UseMiddleware<GlobalExceptionHandler>();
             app.UseSwaggerDocumentation();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -24,10 +37,11 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             {
                 DashboardTitle = "FluentPOS Jobs"
             });
+            
             app.Initialize();
             return app;
         }
-
+        
         internal static IApplicationBuilder Initialize(this IApplicationBuilder app)
         {
             using var serviceScope = app.ApplicationServices.CreateScope();

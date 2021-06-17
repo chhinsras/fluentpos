@@ -2,6 +2,8 @@
 using FluentPOS.Shared.Core.Wrapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -36,7 +38,7 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
                 switch (exception)
                 {
                     case CustomException e:
-                        response.StatusCode = responseModel.ErrorCode = (int)HttpStatusCode.BadRequest;
+                        response.StatusCode = responseModel.ErrorCode = (int)e.StatusCode;
                         responseModel.Messages = e.ErrorMessages;
                         break;
 
@@ -48,7 +50,10 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
                         response.StatusCode = responseModel.ErrorCode = (int)HttpStatusCode.InternalServerError;
                         break;
                 }
-                var result = JsonSerializer.Serialize(responseModel);
+                var result = JsonConvert.SerializeObject(responseModel, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                });
                 await response.WriteAsync(result);
             }
         }

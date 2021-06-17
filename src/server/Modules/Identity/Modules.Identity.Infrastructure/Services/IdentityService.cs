@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
-using FluentPOS.Modules.Identity.Core.Enums;
 using FluentPOS.Modules.Identity.Core.Exceptions;
+using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Identity;
@@ -71,7 +71,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 {
                     try
                     {
-                        await _userManager.AddToRoleAsync(user, Roles.Staff.ToString());
+                        await _userManager.AddToRoleAsync(user, RoleConstants.Staff);
                     }
                     catch
                     {

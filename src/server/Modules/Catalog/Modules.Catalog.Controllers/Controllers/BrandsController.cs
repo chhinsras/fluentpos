@@ -1,6 +1,8 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Features.Brands.Commands;
 using FluentPOS.Modules.Catalog.Core.Features.Brands.Queries;
+using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.DTOs.Catalogs.Brands;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -22,7 +24,7 @@ namespace FluentPOS.Modules.Catalog.Controllers
             var brand = await Mediator.Send(new GetBrandByIdQuery(id, bypassCache));
             return Ok(brand);
         }
-
+        [Authorize(Roles = RoleConstants.SuperAdmin)]
         [HttpPost]
         public async Task<IActionResult> Create(RegisterBrandCommand command)
         {
