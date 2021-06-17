@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.People.Core.Entities;
-using FluentPOS.Modules.People.Core.Features.Commands;
+using FluentPOS.Modules.People.Core.Features.Customers.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;

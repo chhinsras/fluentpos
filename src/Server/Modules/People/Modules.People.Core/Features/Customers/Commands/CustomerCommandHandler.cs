@@ -3,7 +3,7 @@ using FluentPOS.Modules.People.Core.Abstractions;
 using FluentPOS.Modules.People.Core.Constants;
 using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Core.Exceptions;
-using FluentPOS.Modules.People.Core.Features.Events;
+using FluentPOS.Modules.People.Core.Features.Customers.Events;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Core.Wrapper;
 using MediatR;
@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.People.Core.Features.Commands
+namespace FluentPOS.Modules.People.Core.Features.Customers.Commands
 {
     internal class CustomerCommandHandler :
         IRequestHandler<RegisterCustomerCommand, Result<Guid>>,

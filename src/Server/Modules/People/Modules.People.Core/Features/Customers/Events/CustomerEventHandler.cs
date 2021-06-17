@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.People.Core.Features.Events
+namespace FluentPOS.Modules.People.Core.Features.Customers.Events
 {
     public class CustomerEventHandler :
          INotificationHandler<CustomerRegisteredEvent>,

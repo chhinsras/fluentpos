@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.People.Core.Features.Commands
+namespace FluentPOS.Modules.People.Core.Features.Customers.Commands
 {
     public class RemoveCustomerCommand : IRequest<Result<Guid>>
     {

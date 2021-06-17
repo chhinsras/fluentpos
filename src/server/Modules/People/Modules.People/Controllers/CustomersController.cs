@@ -1,4 +1,4 @@
-﻿using FluentPOS.Modules.People.Core.Features.Commands;
+﻿using FluentPOS.Modules.People.Core.Features.Customers.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

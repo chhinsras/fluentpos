@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.People.Core.Features.Commands.Validators
+namespace FluentPOS.Modules.People.Core.Features.Customers.Commands.Validators
 {
     public class UpdateCustomerCommandValidator : AbstractValidator<UpdateCustomerCommand>
     {

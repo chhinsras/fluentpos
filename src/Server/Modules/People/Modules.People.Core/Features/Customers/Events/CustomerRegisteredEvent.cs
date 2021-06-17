@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.People.Core.Features.Events
+namespace FluentPOS.Modules.People.Core.Features.Customers.Events
 {
     public class CustomerRegisteredEvent : Event
     {

@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.People.Core.Features.Commands
+namespace FluentPOS.Modules.People.Core.Features.Customers.Commands
 {
-    public class RegisterCustomerCommand : IRequest<Result<Guid>>
+    public class UpdateCustomerCommand : IRequest<Result<Guid>>
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
