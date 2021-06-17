@@ -46,3 +46,9 @@ Navigate terminal to Modules.Identity.Infrastructure and run the following.
 Navigate terminal to Modules.Catalog.Infrastructure and run the following.
 
 `dotnet ef migrations add "initial" --startup-project ../../../API -o Persistence/Migrations/ --context CatalogDbContext`
+
+### People
+
+Navigate terminal to Modules.People.Infrastructure and run the following.
+
+`dotnet ef migrations add "initial" --startup-project ../../../API -o Persistence/Migrations/ --context PeopleDbContext`
