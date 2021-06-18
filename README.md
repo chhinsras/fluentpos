@@ -74,6 +74,7 @@ Since fluentpos is in it's early development stage, I have not been able to writ
 
 - Mukesh Murugan [@iammukeshm](https://github.com/iammukeshm/)
 - Chhin Sras [@chhinsras](https://github.com/chhinsras)
+- Nikolay Chebotov [@unchase](https://github.com/unchase)
 
 ### Community
 
