@@ -3,7 +3,7 @@ using System;
 
 namespace FluentPOS.Modules.Catalog.Core.Entities
 {
-    public class Product : BaseEntity<Guid> //IAuditableEntity
+    public class Product : BaseEntity //IAuditableEntity
     {
         public string Name { get; set; }
         public string LocaleName { get; set; }
@@ -20,10 +20,5 @@ namespace FluentPOS.Modules.Catalog.Core.Entities
         public bool IsAlert { get; set; }
         public decimal AlertQuantity { get; set; }
         public string Detail { get; set; }
-
-        protected override Guid GenerateNewId()
-        {
-            return Guid.NewGuid();
-        }
     }
 }

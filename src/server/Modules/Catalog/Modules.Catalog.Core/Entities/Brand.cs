@@ -1,17 +1,11 @@
-﻿using System;
-using FluentPOS.Shared.Core.Domain;
+﻿using FluentPOS.Shared.Core.Domain;
 
 namespace FluentPOS.Modules.Catalog.Core.Entities
 {
-    public class Brand : BaseEntity<Guid>
+    public class Brand : BaseEntity
     {
         public string Name { get; set; }
         public string ImageUrl { get; set; }
         public string Detail { get; set; }
-
-        protected override Guid GenerateNewId()
-        {
-            return Guid.NewGuid();
-        }
     }
 }
