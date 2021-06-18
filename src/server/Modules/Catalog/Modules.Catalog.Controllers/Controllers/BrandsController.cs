@@ -24,7 +24,7 @@ namespace FluentPOS.Modules.Catalog.Controllers
             var brand = await Mediator.Send(new GetBrandByIdQuery(id, bypassCache));
             return Ok(brand);
         }
-        [Authorize]
+        [Authorize(Roles = RoleConstants.PermissionToCreate)]
         [HttpPost]
         public async Task<IActionResult> Create(RegisterBrandCommand command)
         {

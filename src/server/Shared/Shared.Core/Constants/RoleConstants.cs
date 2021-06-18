@@ -14,5 +14,6 @@ namespace FluentPOS.Shared.Core.Constants
         public const string Accountant = "Accountant";
         public const string Cashier = "Cashier";
         public const string Staff = "Staff";
+        public const string PermissionToCreate = "SuperAdmin,Admin";
     }
 }
