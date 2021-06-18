@@ -1,17 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using FluentPOS.Shared.Core.Contracts;
 
 namespace FluentPOS.Shared.Core.Domain
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity<TId> : BaseEntity, IEntity<TId>
     {
-        public Guid Id { get; set; }
+        public TId Id { get; set; }
 
         protected BaseEntity()
         {
-            Id = Guid.NewGuid();
+            Id = GenerateNewId();
         }
 
+        protected abstract TId GenerateNewId();
+    }
+
+    public abstract class BaseEntity : IEntity
+    {
         private List<Event> _domainEvents;
         public IReadOnlyCollection<Event> DomainEvents => _domainEvents?.AsReadOnly();
 
