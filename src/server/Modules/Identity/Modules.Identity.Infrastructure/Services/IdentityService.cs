@@ -79,7 +79,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
 
                     var verificationUri = await SendVerificationEmail(user, origin);
                     _jobService.Enqueue(() => _mailService.SendAsync(new MailRequest() { From = "mail@codewithmukesh.com", To = user.Email, Body = $"Please confirm your account by <a href='{verificationUri}'>clicking here</a>.", Subject = "Confirm Registration" }));
-                    return await Result<int>.SuccessAsync(user.Id, message: $"User Registered. Please check your Mailbox to verify!");
+                    return await Result<string>.SuccessAsync(user.Id, message: $"User Registered. Please check your Mailbox to verify!");
                 }
                 else
                 {
@@ -103,7 +103,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             return verificationUri;
         }
 
-        public async Task<IResult<UserResponse>> GetAsync(int userId)
+        public async Task<IResult<UserResponse>> GetAsync(string userId)
         {
             var user = await _userManager.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
             var result = _mapper.Map<UserResponse>(user);
@@ -134,14 +134,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             return await Result<UserRolesResponse>.SuccessAsync(result);
         }
 
-        public async Task<IResult<int>> ConfirmEmailAsync(int userId, string code)
+        public async Task<IResult<string>> ConfirmEmailAsync(string userId, string code)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
             {
-                return await Result<int>.SuccessAsync(user.Id, message: $"Account Confirmed for {user.Email}.You can now use the /api/identity/token endpoint to generate JWT.");
+                return await Result<string>.SuccessAsync(user.Id, message: $"Account Confirmed for {user.Email}.You can now use the /api/identity/token endpoint to generate JWT.");
             }
             else
             {

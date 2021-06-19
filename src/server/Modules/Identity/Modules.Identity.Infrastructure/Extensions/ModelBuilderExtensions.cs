@@ -1,8 +1,7 @@
 ﻿using FluentPOS.Modules.Identity.Core.Entities;
+using FluentPOS.Shared.Core.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using FluentPOS.Shared.Infrastructure.Persistence;
-using FluentPOS.Shared.Core.Settings;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
 {
@@ -21,27 +20,27 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
             {
                 entity.ToTable(name: "Roles", "Identity");
             });
-            builder.Entity<IdentityUserRole<int>>(entity =>
+            builder.Entity<IdentityUserRole<string>>(entity =>
             {
                 entity.ToTable("UserRoles", "Identity");
             });
 
-            builder.Entity<IdentityUserClaim<int>>(entity =>
+            builder.Entity<IdentityUserClaim<string>>(entity =>
             {
                 entity.ToTable("UserClaims", "Identity");
             });
 
-            builder.Entity<IdentityUserLogin<int>>(entity =>
+            builder.Entity<IdentityUserLogin<string>>(entity =>
             {
                 entity.ToTable("UserLogins", "Identity");
             });
 
-            builder.Entity<IdentityRoleClaim<int>>(entity =>
+            builder.Entity<IdentityRoleClaim<string>>(entity =>
             {
                 entity.ToTable("RoleClaims", "Identity");
             });
 
-            builder.Entity<IdentityUserToken<int>>(entity =>
+            builder.Entity<IdentityUserToken<string>>(entity =>
             {
                 entity.ToTable("UserTokens", "Identity");
             });

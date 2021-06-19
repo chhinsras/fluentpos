@@ -8,7 +8,7 @@ namespace FluentPOS.Modules.Identity.Core.Abstractions
     {
         Task<IResult> RegisterAsync(RegisterRequest request, string origin);
 
-        Task<IResult<int>> ConfirmEmailAsync(int userId, string code);
+        Task<IResult<string>> ConfirmEmailAsync(string userId, string code);
 
         Task<IResult> ForgotPasswordAsync(string emailId, string origin);
 
