@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-card-content>
+        <form>
+            <h2>Log In</h2>
+            <mat-form-field appearance="fill">
+                <input matInput placeholder="Email" formControlName="username" required>
+                <mat-error>
+                    Please provide a valid email address
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <input matInput type="password" placeholder="Password" formControlName="password" required>
+                <mat-error>
+                    Please provide a valid password
+                </mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" routerLink="/dashboard">Login</button>
+        </form>
+    </mat-card-content>
+</mat-card>

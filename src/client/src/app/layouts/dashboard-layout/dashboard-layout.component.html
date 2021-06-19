@@ -1,0 +1,13 @@
+<mat-sidenav-container class='sidenav-container mat-app-background {{themeVariant}}'>
+    <mat-sidenav #sidenav class="sidenav" mode="push">
+        <app-side-navigation></app-side-navigation>
+    </mat-sidenav>
+    <app-toolbar [inputSideNav]="sidenav" (darkModelToggled)="onDarkModeToggled($event)"></app-toolbar>
+    <div class="content">
+        <div class="container">
+            <router-outlet>
+
+            </router-outlet>
+        </div>
+    </div>
+</mat-sidenav-container>

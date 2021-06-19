@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav'
+import { MatSidenav } from '@angular/material/sidenav';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 @Component({
@@ -8,6 +8,7 @@ import { LocalStorageService } from 'src/app/core/services/local-storage.service
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
+
   @Input() darkModeIcon: string;
   @Input() inputSideNav: MatSidenav;
   @Input() isDarkMode: boolean;

@@ -8,6 +8,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from "@angular/material/menu";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 const Modules =
   [
@@ -19,7 +21,9 @@ const Modules =
     MatListModule,
     MatTooltipModule,
     MatSlideToggleModule,
-    MatMenuModule
+    MatMenuModule,
+    MatFormFieldModule,
+    MatInputModule
   ];
 
 @NgModule({
