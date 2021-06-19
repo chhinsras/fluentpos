@@ -25,7 +25,7 @@ namespace FluentPOS.Modules.Identity.Controllers
 
         [HttpGet("/api/identity/confirm-email")]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmailAsync([FromQuery] int userId, [FromQuery] string code)
+        public async Task<IActionResult> ConfirmEmailAsync([FromQuery] string userId, [FromQuery] string code)
         {
             return Ok(await _identityService.ConfirmEmailAsync(userId, code));
         }

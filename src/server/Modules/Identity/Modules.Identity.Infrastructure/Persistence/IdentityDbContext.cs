@@ -5,10 +5,11 @@ using FluentPOS.Shared.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 {
-    public class IdentityDbContext : IdentityDbContext<ExtendedIdentityUser, ExtendedIdentityRole, int>
+    public class IdentityDbContext : IdentityDbContext<ExtendedIdentityUser, ExtendedIdentityRole, string>
     {
         private readonly PersistenceSettings _persistenceOptions;
 

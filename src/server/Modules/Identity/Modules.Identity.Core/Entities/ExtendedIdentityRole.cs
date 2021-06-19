@@ -2,16 +2,14 @@
 
 namespace FluentPOS.Modules.Identity.Core.Entities
 {
-    public sealed class ExtendedIdentityRole : IdentityRole<int>
+    public sealed class ExtendedIdentityRole : IdentityRole
     {
         public ExtendedIdentityRole()
         {
         }
 
-        public ExtendedIdentityRole(string roleName)
+        public ExtendedIdentityRole(string roleName) : base(roleName)
         {
-            Name = roleName;
-            NormalizedName = roleName.ToUpper();
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using FluentPOS.Modules.Identity.Core.Constants;
+﻿using BlazorHero.CleanArchitecture.Shared.Constants.Permission;
+using FluentPOS.Modules.Identity.Core.Constants;
 using FluentPOS.Modules.Identity.Core.Entities;
+using FluentPOS.Modules.Identity.Core.Helpers;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +9,9 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
@@ -64,11 +69,12 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
             Task.Run(async () =>
             {
                 //Check if Role Exists
-                var adminRole = new ExtendedIdentityRole(RoleConstants.SuperAdmin);
-                var adminRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.SuperAdmin);
-                if (adminRoleInDb == null)
+                var superAdminRole = new ExtendedIdentityRole(RoleConstants.SuperAdmin);
+                var superAdminRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.SuperAdmin);
+                if (superAdminRoleInDb == null)
                 {
-                    await _roleManager.CreateAsync(adminRole);
+                    await _roleManager.CreateAsync(superAdminRole);
+                    superAdminRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.SuperAdmin);
                 }
                 //Check if User Exists
                 var superUser = new ExtendedIdentityUser
@@ -88,8 +94,6 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                     var result = await _userManager.AddToRoleAsync(superUser, RoleConstants.SuperAdmin);
                     if (result.Succeeded)
                     {
-                        //TODO - add permissions
-
                         _logger.LogInformation(_localizer["Seeded Default SuperAdmin User."]);
                     }
                     else
@@ -100,9 +104,15 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                         }
                     }
                 }
+
+                foreach (var prop in typeof(Permissions).GetNestedTypes().SelectMany(c => c.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)))
+                {
+                    var propertyValue = prop.GetValue(null);
+                    if (propertyValue is not null)
+                        await _roleManager.AddPermissionClaim(superAdminRoleInDb, propertyValue.ToString());
+                }
             }).GetAwaiter().GetResult();
         }
-
         private void AddStaff()
         {
             Task.Run(async () =>
@@ -113,6 +123,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                 if (basicRoleInDb == null)
                 {
                     await _roleManager.CreateAsync(basicRole);
+                    basicRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.Staff);
                 }
                 //Check if User Exists
                 var basicUser = new ExtendedIdentityUser
