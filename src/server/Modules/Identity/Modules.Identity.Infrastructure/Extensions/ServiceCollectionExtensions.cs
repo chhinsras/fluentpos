@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
@@ -73,20 +74,12 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                     };
                     bearer.Events = new JwtBearerEvents
                     {
-                        OnAuthenticationFailed = c =>
-                        {
-#if DEBUG
-                            throw new IdentityException(c.Exception.Message, statusCode: HttpStatusCode.InternalServerError);
-#else
-                                throw new IdentityException("Failed to Authenticate.", statusCode: HttpStatusCode.InternalServerError);
-#endif
-                        },
                         OnChallenge = context =>
                         {
                             context.HandleResponse();
                             if (!context.Response.HasStarted)
                             {
-                                throw new IdentityException("You are not Authorized.", statusCode:HttpStatusCode.Unauthorized);
+                                throw new IdentityException("You are not Authorized.", statusCode:HttpStatusCode.Unauthorized,errors: new List<string> { context.Error, context.ErrorDescription });
                             }
                             return Task.CompletedTask;
                         },
