@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PosRoutingModule } from './pos-routing.module';
-import { BaseComponent } from './base/base.component';
+import { HomeRoutingModule } from './home-routing.module';
 import { MaterialModule } from 'src/app/core/material/material.module';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 
 @NgModule({
   declarations: [
-    BaseComponent
+    WelcomeComponent
   ],
   imports: [
     CommonModule,
-    PosRoutingModule,
+    HomeRoutingModule,
     MaterialModule
   ]
 })
-export class PosModule { }
+export class HomeModule { }
