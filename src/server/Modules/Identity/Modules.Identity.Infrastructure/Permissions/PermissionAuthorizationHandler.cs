@@ -1,4 +1,5 @@
 ﻿using BlazorHero.CleanArchitecture.Shared.Constants.Permission;
+using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Shared.Core.Constants;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;

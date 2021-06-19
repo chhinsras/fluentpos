@@ -11,7 +11,7 @@ namespace FluentPOS.Modules.Identity.Extensions
     {
         public static IServiceCollection AddIdentityModule(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddIdentityInfrastructure(configuration).AddPermissions(configuration);
+            services.AddIdentityInfrastructure(configuration);
             return services;
         }
 

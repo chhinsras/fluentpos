@@ -364,3 +364,4 @@ FodyWeavers.xsd
 
 # Project's xml-files
 *.xml
+/src/client/.vscode/settings.json

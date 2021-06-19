@@ -5,16 +5,18 @@
         public static class Brands
         {
             public const string View = "Permissions.Brands.View";
-            public const string Create = "Permissions.Brands.Create";
-            public const string Edit = "Permissions.Brands.Edit";
-            public const string Delete = "Permissions.Brands.Delete";
+            public const string ViewAll = "Permissions.Brands.ViewAll";
+            public const string Register = "Permissions.Brands.Register";
+            public const string Update = "Permissions.Brands.Update";
+            public const string Remove = "Permissions.Brands.Remove";
         }
         public static class Customers
         {
             public const string View = "Permissions.Customers.View";
-            public const string Create = "Permissions.Customers.Create";
-            public const string Edit = "Permissions.Customers.Edit";
-            public const string Delete = "Permissions.Customers.Delete";
+            public const string ViewAll = "Permissions.Customers.ViewAll";
+            public const string Register = "Permissions.Customers.Register";
+            public const string Update = "Permissions.Customers.Update";
+            public const string Remove = "Permissions.Customers.Remove";
         }
     }
 }

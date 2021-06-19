@@ -1,6 +1,7 @@
 ﻿using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Exceptions;
+using FluentPOS.Modules.Identity.Core.Permissions;
 using FluentPOS.Modules.Identity.Core.Settings;
 using FluentPOS.Modules.Identity.Infrastructure.Persistence;
 using FluentPOS.Modules.Identity.Infrastructure.Services;
@@ -9,6 +10,7 @@ using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,7 +47,15 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
             services.AddTransient<IDatabaseSeeder, IdentityDbSeeder>();
+            services.AddPermissions(configuration);
             services.AddJwtAuthentication(configuration);
+            return services;
+        }
+        public static IServiceCollection AddPermissions(this IServiceCollection services, IConfiguration configuration)
+        {
+
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>()
+                .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
             return services;
         }
         internal static IServiceCollection AddJwtAuthentication(
