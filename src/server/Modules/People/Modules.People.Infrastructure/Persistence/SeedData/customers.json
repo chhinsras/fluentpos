@@ -1,0 +1,162 @@
+﻿[
+  {
+    "Id": "cc28a528-3ffd-475d-8eb9-a0652409b479",
+    "Name": "Keeley Fang",
+    "Phone": "(85517999204)",
+    "Email": "keeleykeeley@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "dd6e8ff4-7231-4493-a8a5-a033dd9ec451",
+    "Name": "Galina Albus",
+    "Phone": "(85517999205)",
+    "Email": "galinagalina@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "VIP"
+  },
+  {
+    "Id": "01c8801c-e0a0-4d45-8e0a-d14d3f88eb27",
+    "Name": "Shayna Gaunce",
+    "Phone": "(85517999206)",
+    "Email": "shaynashayna@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "VIP"
+  },
+  {
+    "Id": "86d3df8b-0567-4fb9-9c2c-f161a1f0d60f",
+    "Name": "Karyl Wroten",
+    "Phone": "(85517999207)",
+    "Email": "karylkaryl@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "VIP"
+  },
+  {
+    "Id": "806bb636-7435-419f-961a-ee3a8048751a",
+    "Name": "Marvella Sloss",
+    "Phone": "(85517999208)",
+    "Email": "marvellamarvella@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "828be194-3598-4d79-aa48-873f4c9b2ade",
+    "Name": "Alan Tegeler",
+    "Phone": "(85517999209)",
+    "Email": "alanalan@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "09d5ebe3-af24-4aa2-9a31-ffd0e3417c2d",
+    "Name": "Lauralee Reno",
+    "Phone": "(85517999210)",
+    "Email": "lauraleelauralee@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "1bc0d62b-130c-4862-9a5a-402c3a223463",
+    "Name": "Rasheeda Lieberman",
+    "Phone": "(85517999211)",
+    "Email": "rasheedarasheeda@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "28dff420-3b34-4203-bce0-48ffc888d182",
+    "Name": "Yuko Klem",
+    "Phone": "(85517999212)",
+    "Email": "yukoyuko@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "2a182536-a20d-47d0-9821-2258e3e2ad2f",
+    "Name": "Hannah Kube",
+    "Phone": "(85517999213)",
+    "Email": "hannahhannah@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "60eec6da-bd97-48ff-967f-7298793a3397",
+    "Name": "Maria Cephus",
+    "Phone": "(85517999214)",
+    "Email": "mariamaria@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "4c1c0be0-90ff-40ea-ba4d-53889a59bc34",
+    "Name": "Kristie Murtagh",
+    "Phone": "(85517999215)",
+    "Email": "kristiekristie@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "8aff052d-2980-4bc1-af09-9a70add72096",
+    "Name": "Lenore Privett",
+    "Phone": "(85517999216)",
+    "Email": "lenorelenore@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "6b12741a-1c00-438b-89be-2ae2df479b53",
+    "Name": "Arianna Wawrzyniak",
+    "Phone": "(85517999217)",
+    "Email": "ariannaarianna@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "9b41bc43-0561-47ef-b29a-3a8c442ce891",
+    "Name": "Corliss Southworth",
+    "Phone": "(85517999218)",
+    "Email": "corlisscorliss@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "3b5acf44-e536-41ca-beb1-1121b5045cef",
+    "Name": "Paula Stimson",
+    "Phone": "(85517999219)",
+    "Email": "paulapaula@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "007a8ec9-7e6d-4381-aa45-2426e986a73c",
+    "Name": "Cecila Goebel",
+    "Phone": "(85517999220)",
+    "Email": "cecilacecila@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "a3e40714-a8b5-49c5-b12e-a0a29964f367",
+    "Name": "Anya Vonruden",
+    "Phone": "(85517999221)",
+    "Email": "anyaanya@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "1d4e2ba3-cf0f-41ac-89cc-daa266ca9863",
+    "Name": "Felica Shoults",
+    "Phone": "(85517999222)",
+    "Email": "felicafelica@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  },
+  {
+    "Id": "df27f32e-c5cb-4720-976d-995f82fae42a",
+    "Name": "Kellie Phenix",
+    "Phone": "(85517999223)",
+    "Email": "kelliekellie@gmail.com",
+    "ImageUrl": "Images\\Catalog\\Customers\\default.png",
+    "Type": "General"
+  }
+]
