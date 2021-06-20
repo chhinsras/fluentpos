@@ -14,6 +14,16 @@ namespace FluentPOS.Shared.Core.Constants
             public const string Update = "Permissions.Brands.Update";
             public const string Remove = "Permissions.Brands.Remove";
         }
+
+        public static class BrandsExtendedAttributes
+        {
+            public const string View = "Permissions.Brands.ExtendedAttributes.View";
+            public const string ViewAll = "Permissions.Brands.ExtendedAttributes.ViewAll";
+            public const string Add = "Permissions.Brands.ExtendedAttributes.Add";
+            public const string Update = "Permissions.Brands.ExtendedAttributes.Update";
+            public const string Remove = "Permissions.Brands.ExtendedAttributes.Remove";
+        }
+
         public static class Customers
         {
             public const string View = "Permissions.Customers.View";
@@ -22,6 +32,7 @@ namespace FluentPOS.Shared.Core.Constants
             public const string Update = "Permissions.Customers.Update";
             public const string Remove = "Permissions.Customers.Remove";
         }
+
         public static class Categories
         {
             public const string View = "Permissions.Categories.View";
@@ -30,6 +41,16 @@ namespace FluentPOS.Shared.Core.Constants
             public const string Update = "Permissions.Categories.Update";
             public const string Remove = "Permissions.Categories.Remove";
         }
+
+        public static class CategoriesExtendedAttributes
+        {
+            public const string View = "Permissions.Categories.ExtendedAttributes.View";
+            public const string ViewAll = "Permissions.Categories.ExtendedAttributes.ViewAll";
+            public const string Add = "Permissions.Categories.ExtendedAttributes.Add";
+            public const string Update = "Permissions.Categories.ExtendedAttributes.Update";
+            public const string Remove = "Permissions.Categories.ExtendedAttributes.Remove";
+        }
+
         public static class Products
         {
             public const string View = "Permissions.Products.View";
@@ -38,6 +59,7 @@ namespace FluentPOS.Shared.Core.Constants
             public const string Update = "Permissions.Products.Update";
             public const string Remove = "Permissions.Products.Remove";
         }
+
         public static List<string> GetRegisteredPermissions()
         {
             var permssions = new List<string>();

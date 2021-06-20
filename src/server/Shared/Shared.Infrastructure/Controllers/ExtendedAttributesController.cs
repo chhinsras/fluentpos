@@ -42,7 +42,7 @@ namespace FluentPOS.Shared.Infrastructure.Controllers
         }
 
         [HttpDelete("{id}")]
-        public virtual async Task<IActionResult> Delete(Guid id)
+        public virtual async Task<IActionResult> Remove(Guid id)
         {
             return Ok(await Mediator.Send(new RemoveExtendedAttributeCommand<TEntity>(id)));
         }

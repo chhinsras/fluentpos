@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentPOS.Modules.Catalog.Core.Entities;
+using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
 using FluentPOS.Shared.Infrastructure.Controllers;
@@ -17,34 +18,34 @@ namespace FluentPOS.Modules.Catalog.Controllers
         private IMediator _mediatorInstance;
         protected override IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
 
-        //[Authorize(Policy = Permissions.CategoryExtendedAttributes.View)]
+        [Authorize(Policy = Permissions.CategoriesExtendedAttributes.ViewAll)]
         public override Task<IActionResult> GetAll(PaginatedExtendedAttributeFilter filter)
         {
             return base.GetAll(filter);
         }
 
-        //[Authorize(Policy = Permissions.CategoryExtendedAttributes.View)]
+        [Authorize(Policy = Permissions.CategoriesExtendedAttributes.View)]
         public override Task<IActionResult> GetById(Guid id, bool bypassCache)
         {
             return base.GetById(id, bypassCache);
         }
 
-        //[Authorize(Policy = Permissions.CategoryExtendedAttributes.Create)]
+        [Authorize(Policy = Permissions.CategoriesExtendedAttributes.Add)]
         public override Task<IActionResult> Create(AddExtendedAttributeCommand<Category> command)
         {
             return base.Create(command);
         }
 
-        //[Authorize(Policy = Permissions.CategoryExtendedAttributes.Update)]
+        [Authorize(Policy = Permissions.CategoriesExtendedAttributes.Update)]
         public override Task<IActionResult> Update(UpdateExtendedAttributeCommand<Category> command)
         {
             return base.Update(command);
         }
 
-        //[Authorize(Policy = Permissions.CategoryExtendedAttributes.Delete)]
-        public override Task<IActionResult> Delete(Guid id)
+        [Authorize(Policy = Permissions.CategoriesExtendedAttributes.Remove)]
+        public override Task<IActionResult> Remove(Guid id)
         {
-            return base.Delete(id);
+            return base.Remove(id);
         }
     }
 }
