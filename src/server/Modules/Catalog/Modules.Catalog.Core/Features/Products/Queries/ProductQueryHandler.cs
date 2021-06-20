@@ -55,6 +55,8 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 
             if (!string.IsNullOrEmpty(query.SearchString)) queryable = queryable.Where(p => p.Name.Contains(query.SearchString) ||
                 p.BarcodeSymbology.Contains(query.SearchString) || p.Detail.Contains(query.SearchString));
+            if (query.BrandId != Guid.Empty) queryable = queryable.Where(p => p.BrandId == query.BrandId);
+            if (query.CategoryId != Guid.Empty) queryable = queryable.Where(p => p.CategoryId == query.CategoryId);
 
             var productList = await queryable
                 .Select(expression)
