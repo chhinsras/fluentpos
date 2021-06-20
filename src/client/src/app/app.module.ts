@@ -13,6 +13,7 @@ import { SideNavigationComponent } from './layouts/admin-layout/side-navigation/
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ToolbarComponent } from './layouts/admin-layout/toolbar/toolbar.component';
+import { CatalogRoutingModule } from './modules/admin/catalog/catalog-routing.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ToolbarComponent } from './layouts/admin-layout/toolbar/toolbar.compone
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    CatalogRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
