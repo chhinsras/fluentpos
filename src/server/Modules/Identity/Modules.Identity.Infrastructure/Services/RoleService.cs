@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
+using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Modules.Identity.Core.Helpers;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Identity;
+using FluentPOS.Shared.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
@@ -44,18 +44,12 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         }
         private static List<string> DefaultRoles()
         {
-            var permssions = new List<string>();
-            foreach (var prop in typeof(RoleConstants).GetNestedTypes().SelectMany(c => c.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)))
-            {
-                var propertyValue = prop.GetValue(null);
-                if (propertyValue is not null)
-                    permssions.Add(propertyValue.ToString());
-            }
-            return permssions;
+            return typeof(RoleConstants).GetAllPublicConstantValues<string>();
         }
         public async Task<Result<string>> DeleteAsync(string id)
         {
             var existingRole = await _roleManager.FindByIdAsync(id);
+            if (existingRole == null) throw new IdentityException("Role Not Found", statusCode: System.Net.HttpStatusCode.NotFound);
             if (DefaultRoles().Contains(existingRole.Name))
             {
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Not allowed to delete {0} Role."], existingRole.Name));

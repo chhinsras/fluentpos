@@ -19,18 +19,15 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
     {
         private readonly IStringLocalizer<RoleClaimService> _localizer;
         private readonly IMapper _mapper;
-        private readonly ICurrentUser _currentUserService;
         private readonly IdentityDbContext _db;
 
         public RoleClaimService(
             IStringLocalizer<RoleClaimService> localizer,
             IMapper mapper,
-            ICurrentUser currentUserService,
             IdentityDbContext db)
         {
             _localizer = localizer;
             _mapper = mapper;
-            _currentUserService = currentUserService;
             _db = db;
         }
 
@@ -84,7 +81,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 }
                 var roleClaim = _mapper.Map<FluentRoleClaim>(request);
                 await _db.RoleClaims.AddAsync(roleClaim);
-                await _db.SaveChangesAsync(_currentUserService.GetUserId().ToString());
+                await _db.SaveChangesAsync();
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Role Claim {0} created."], request.Value));
             }
             else
@@ -105,7 +102,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     existingRoleClaim.Description = request.Description;
                     existingRoleClaim.RoleId = request.RoleId;
                     _db.RoleClaims.Update(existingRoleClaim);
-                    await _db.SaveChangesAsync(_currentUserService.UserId);
+                    await _db.SaveChangesAsync();
                     return await Result<string>.SuccessAsync(string.Format(_localizer["Role Claim {0} for Role {1} updated."], request.Value, existingRoleClaim.Role.Name));
                 }
             }
@@ -119,7 +116,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             if (existingRoleClaim != null)
             {
                 _db.RoleClaims.Remove(existingRoleClaim);
-                await _db.SaveChangesAsync(_currentUserService.UserId);
+                await _db.SaveChangesAsync();
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Role Claim {0} for {1} Role deleted."], existingRoleClaim.ClaimValue, existingRoleClaim.Role.Name));
             }
             else

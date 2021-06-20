@@ -1,17 +1,13 @@
-﻿using BlazorHero.CleanArchitecture.Shared.Constants.Permission;
-using FluentPOS.Modules.Identity.Core.Constants;
+﻿using FluentPOS.Modules.Identity.Core.Constants;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Helpers;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Interfaces.Services;
+using FluentPOS.Shared.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
@@ -105,7 +101,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                     }
                 }
 
-                foreach (var permission in Permissions.GetRegisteredPermissions())
+                foreach (var permission in typeof(Permissions).GetNestedClassesStaticStringValues())
                 {
                     await _roleManager.AddPermissionClaim(superAdminRoleInDb, permission);
                 }
