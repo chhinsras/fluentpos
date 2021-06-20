@@ -3,17 +3,17 @@ using System;
 
 namespace FluentPOS.Modules.Identity.Core.Entities
 {
-    public class FluentPOSRoleClaim : IdentityRoleClaim<string>
+    public class FluentRoleClaim : IdentityRoleClaim<string>
     {
         public string Description { get; set; }
         public string Group { get; set; }
-        public virtual FluentPOSRole Role { get; set; }
+        public virtual FluentRole Role { get; set; }
 
-        public FluentPOSRoleClaim() : base()
+        public FluentRoleClaim() : base()
         {
         }
 
-        public FluentPOSRoleClaim(string roleClaimDescription = null, string roleClaimGroup = null) : base()
+        public FluentRoleClaim(string roleClaimDescription = null, string roleClaimGroup = null) : base()
         {
             Description = roleClaimDescription;
             Group = roleClaimGroup;

@@ -2,6 +2,7 @@
 using FluentPOS.Modules.Identity.Infrastructure.Extensions;
 using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -9,8 +10,8 @@ using System;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 {
-    public class IdentityDbContext : IdentityDbContext<FluentPOSUser, FluentPOSRole, string>
-    {
+    public class IdentityDbContext : IdentityDbContext<FluentUser, FluentRole, string, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, FluentRoleClaim, IdentityUserToken<string>>
+    { 
         private readonly PersistenceSettings _persistenceOptions;
 
         public IdentityDbContext(DbContextOptions<IdentityDbContext> options, IOptions<PersistenceSettings> persistenceOptions) : base(options)

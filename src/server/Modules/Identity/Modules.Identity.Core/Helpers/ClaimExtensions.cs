@@ -31,7 +31,7 @@ namespace FluentPOS.Modules.Identity.Core.Helpers
             }
 
         }
-        public static async Task<IdentityResult> AddPermissionClaim(this RoleManager<FluentPOSRole> roleManager, FluentPOSRole role, string permission)
+        public static async Task<IdentityResult> AddPermissionClaim(this RoleManager<FluentRole> roleManager, FluentRole role, string permission)
         {
             var allClaims = await roleManager.GetClaimsAsync(role);
             if (!allClaims.Any(a => a.Type == ApplicationClaimTypes.Permission && a.Value == permission))
@@ -42,7 +42,7 @@ namespace FluentPOS.Modules.Identity.Core.Helpers
             return IdentityResult.Failed();
         }
 
-        public static async Task AddCustomPermissionClaim(this RoleManager<FluentPOSRole> roleManager, FluentPOSRole role, string permission)
+        public static async Task AddCustomPermissionClaim(this RoleManager<FluentRole> roleManager, FluentRole role, string permission)
         {
             var allClaims = await roleManager.GetClaimsAsync(role);
             if (!allClaims.Any(a => a.Type == ApplicationClaimTypes.Permission && a.Value == permission))

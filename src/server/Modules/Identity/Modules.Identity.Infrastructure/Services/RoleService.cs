@@ -20,17 +20,17 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
     class RoleService : IRoleService
     {
-        private readonly RoleManager<FluentPOSRole> _roleManager;
-        private readonly UserManager<FluentPOSUser> _userManager;
+        private readonly RoleManager<FluentRole> _roleManager;
+        private readonly UserManager<FluentUser> _userManager;
         private readonly IRoleClaimService _roleClaimService;
         private readonly IStringLocalizer<RoleService> _localizer;
         private readonly ICurrentUser _currentUserService;
         private readonly IMapper _mapper;
 
         public RoleService(
-            RoleManager<FluentPOSRole> roleManager,
+            RoleManager<FluentRole> roleManager,
             IMapper mapper,
-            UserManager<FluentPOSUser> userManager,
+            UserManager<FluentUser> userManager,
             IRoleClaimService roleClaimService,
             IStringLocalizer<RoleService> localizer,
             ICurrentUser currentUserService)
@@ -156,7 +156,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             {
                 var existingRole = await _roleManager.FindByNameAsync(request.Name);
                 if (existingRole != null) return await Result<string>.FailAsync(_localizer["Similar Role already exists."]);
-                var response = await _roleManager.CreateAsync(new FluentPOSRole(request.Name));
+                var response = await _roleManager.CreateAsync(new FluentRole(request.Name));
                 if (response.Succeeded)
                 {
                     return await Result<string>.SuccessAsync(string.Format(_localizer["Role {0} Created."], request.Name));

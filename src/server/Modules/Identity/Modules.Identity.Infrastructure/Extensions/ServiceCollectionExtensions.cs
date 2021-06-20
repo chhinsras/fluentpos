@@ -37,7 +37,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                 .AddTransient<IRoleService, RoleService>()
                 .AddTransient<IRoleClaimService, RoleClaimService>()
                 .AddDatabaseContext<IdentityDbContext>()
-                .AddIdentity<FluentPOSUser, FluentPOSRole>(options =>
+                .AddIdentity<FluentUser, FluentRole>(options =>
                 {
                     options.Password.RequiredLength = 6;
                     options.Password.RequireDigit = false;

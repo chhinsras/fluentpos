@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Identity.Core.Abstractions;
+using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Infrastructure.Persistence;
 using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using FluentPOS.Shared.Core.Wrapper;
@@ -81,7 +82,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 {
                     return await Result<string>.FailAsync(_localizer["Similar Role Claim already exists."]);
                 }
-                var roleClaim = _mapper.Map<BlazorHeroRoleClaim>(request);
+                var roleClaim = _mapper.Map<FluentRoleClaim>(request);
                 await _db.RoleClaims.AddAsync(roleClaim);
                 await _db.SaveChangesAsync(_currentUserService.GetUserId().ToString());
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Role Claim {0} created."], request.Value));
