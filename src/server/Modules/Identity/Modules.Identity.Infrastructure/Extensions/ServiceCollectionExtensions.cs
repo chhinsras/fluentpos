@@ -93,7 +93,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                             context.HandleResponse();
                             if (!context.Response.HasStarted)
                             {
-                                throw new IdentityException("You are not Authorized.", statusCode:HttpStatusCode.Unauthorized,errors: new List<string> { context.Error, context.ErrorDescription });
+                                throw new IdentityException("You are not Authorized.", statusCode:HttpStatusCode.Unauthorized);
                             }
                             return Task.CompletedTask;
                         },
