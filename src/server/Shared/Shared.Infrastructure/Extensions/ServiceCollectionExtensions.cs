@@ -14,7 +14,10 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using FluentPOS.Shared.Core.Domain;
 
 [assembly: InternalsVisibleTo("Bootstrapper")]
 
@@ -53,6 +56,29 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             services.AddHangfireServer();
             services.AddSingleton<GlobalExceptionHandler>();
             services.AddSwaggerDocumentation();
+            return services;
+        }
+
+        public static IServiceCollection AddExtendedAttributeDbContextsFromAssembly(this IServiceCollection services, Type implementationType, Assembly assembly)
+        {
+            var extendedAttributeTypes = assembly
+                .GetExportedTypes()
+                .Where(t => t.IsClass && !t.IsAbstract && t.BaseType?.IsGenericType == true)
+                .Select(t => new
+                {
+                    BaseGenericType = t.BaseType,
+                    CurrentType = t
+                })
+                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(ExtendedAttribute<>))
+                .ToList();
+
+            foreach (var extendedAttributeType in extendedAttributeTypes)
+            {
+                var extendedAttributeTypeGenericArguments = extendedAttributeType.BaseGenericType.GetGenericArguments().ToList();
+                var serviceType = typeof(IExtendedAttributeDbContext<,>).MakeGenericType(extendedAttributeTypeGenericArguments[0], extendedAttributeType.CurrentType);
+                services.AddScoped(serviceType, provider => provider.GetService(implementationType));
+            }
+
             return services;
         }
 
