@@ -19,13 +19,16 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.ExtendedIdentityRole", b =>
+            modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.FluentRole", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -45,7 +48,42 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
                     b.ToTable("Roles", "Identity");
                 });
 
-            modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.ExtendedIdentityUser", b =>
+            modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.FluentRoleClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Group")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("RoleId1")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("RoleId1");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.FluentUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -144,12 +182,9 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("RoleId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
 
                     b.ToTable("RoleClaims", "Identity");
                 });
@@ -234,18 +269,24 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
                     b.ToTable("UserTokens", "Identity");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.FluentRoleClaim", b =>
                 {
-                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.ExtendedIdentityRole", null)
+                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.FluentRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.FluentRole", "Role")
+                        .WithMany("RoleClaims")
+                        .HasForeignKey("RoleId1");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.ExtendedIdentityUser", null)
+                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.FluentUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -254,7 +295,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.ExtendedIdentityUser", null)
+                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.FluentUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -263,13 +304,13 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.ExtendedIdentityRole", null)
+                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.FluentRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.ExtendedIdentityUser", null)
+                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.FluentUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -278,11 +319,16 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.ExtendedIdentityUser", null)
+                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.FluentUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.FluentRole", b =>
+                {
+                    b.Navigation("RoleClaims");
                 });
 #pragma warning restore 612, 618
         }
