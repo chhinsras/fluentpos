@@ -105,11 +105,9 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                     }
                 }
 
-                foreach (var prop in typeof(Permissions).GetNestedTypes().SelectMany(c => c.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)))
+                foreach (var permission in Permissions.GetRegisteredPermissions())
                 {
-                    var propertyValue = prop.GetValue(null);
-                    if (propertyValue is not null)
-                        await _roleManager.AddPermissionClaim(superAdminRoleInDb, propertyValue.ToString());
+                    await _roleManager.AddPermissionClaim(superAdminRoleInDb, permission);
                 }
             }).GetAwaiter().GetResult();
         }
