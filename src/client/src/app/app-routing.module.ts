@@ -1,7 +1,7 @@
 import { Host, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { PosLayoutComponent } from './layouts/pos-layout/pos-layout.component';
 
@@ -39,7 +39,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: DashboardLayoutComponent,
+    component: AdminLayoutComponent,
     children: [
       {
         path: '',

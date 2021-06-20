@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 @Component({
-  selector: 'app-dashboard-layout',
-  templateUrl: './dashboard-layout.component.html',
-  styleUrls: ['./dashboard-layout.component.scss']
+  selector: 'app-admin-layout',
+  templateUrl: './admin-layout.component.html',
+  styleUrls: ['./admin-layout.component.scss']
 })
-export class DashboardLayoutComponent implements OnInit {
+export class AdminLayoutComponent implements OnInit {
 
   title = 'angular-material-boilerplate';
   themeVariant: string = '';

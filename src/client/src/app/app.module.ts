@@ -8,21 +8,21 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 import { PosLayoutComponent } from './layouts/pos-layout/pos-layout.component';
-import { SideNavigationComponent } from './layouts/dashboard-layout/side-navigation/side-navigation.component';
-import { ToolbarComponent } from './layouts/dashboard-layout/toolbar/toolbar.component';
+import { SideNavigationComponent } from './layouts/admin-layout/side-navigation/side-navigation.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { ToolbarComponent } from './layouts/admin-layout/toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthLayoutComponent,
-    DashboardLayoutComponent,
     PosLayoutComponent,
     SideNavigationComponent,
     ToolbarComponent,
-    HomeLayoutComponent
+    HomeLayoutComponent,
+    AdminLayoutComponent
   ],
   imports: [
     BrowserModule,
