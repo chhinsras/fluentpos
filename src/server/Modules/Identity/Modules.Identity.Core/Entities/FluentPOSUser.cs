@@ -3,7 +3,7 @@ using System;
 
 namespace FluentPOS.Modules.Identity.Core.Entities
 {
-    public class ExtendedIdentityUser : IdentityUser
+    public class FluentPOSUser : IdentityUser
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

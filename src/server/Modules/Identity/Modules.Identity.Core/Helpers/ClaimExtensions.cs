@@ -1,5 +1,7 @@
 ﻿using BlazorHero.CleanArchitecture.Shared.Constants.Permission;
 using FluentPOS.Modules.Identity.Core.Entities;
+using FluentPOS.Shared.Core.Constants;
+using FluentPOS.Shared.DTOs.Identity;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +13,25 @@ namespace FluentPOS.Modules.Identity.Core.Helpers
 {
     public static class ClaimsHelper
     {
+        public static void GetAllPermissions(this List<RoleClaimResponse> allPermissions)
+        {
+            var modules = typeof(Permissions).GetNestedTypes();
 
-        public static async Task<IdentityResult> AddPermissionClaim(this RoleManager<ExtendedIdentityRole> roleManager, ExtendedIdentityRole role, string permission)
+            foreach (var module in modules)
+            {
+                var fields = module.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+
+                foreach (FieldInfo fi in fields)
+                {
+                    var propertyValue = fi.GetValue(null);
+
+                    if (propertyValue is not null)
+                        allPermissions.Add(new RoleClaimResponse { Value = propertyValue.ToString(), Type = ApplicationClaimTypes.Permission, Group = module.Name });
+                }
+            }
+
+        }
+        public static async Task<IdentityResult> AddPermissionClaim(this RoleManager<FluentPOSRole> roleManager, FluentPOSRole role, string permission)
         {
             var allClaims = await roleManager.GetClaimsAsync(role);
             if (!allClaims.Any(a => a.Type == ApplicationClaimTypes.Permission && a.Value == permission))
@@ -23,7 +42,7 @@ namespace FluentPOS.Modules.Identity.Core.Helpers
             return IdentityResult.Failed();
         }
 
-        public static async Task AddCustomPermissionClaim(this RoleManager<ExtendedIdentityRole> roleManager, ExtendedIdentityRole role, string permission)
+        public static async Task AddCustomPermissionClaim(this RoleManager<FluentPOSRole> roleManager, FluentPOSRole role, string permission)
         {
             var allClaims = await roleManager.GetClaimsAsync(role);
             if (!allClaims.Any(a => a.Type == ApplicationClaimTypes.Permission && a.Value == permission))

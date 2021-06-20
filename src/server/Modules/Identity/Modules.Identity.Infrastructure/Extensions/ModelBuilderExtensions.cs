@@ -11,12 +11,12 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
         {
             // build model for MSSQL and Postgres
 
-            builder.Entity<ExtendedIdentityUser>(entity =>
+            builder.Entity<FluentPOSUser>(entity =>
             {
                 entity.ToTable(name: "Users", "Identity");
             });
 
-            builder.Entity<ExtendedIdentityRole>(entity =>
+            builder.Entity<FluentPOSRole>(entity =>
             {
                 entity.ToTable(name: "Roles", "Identity");
             });

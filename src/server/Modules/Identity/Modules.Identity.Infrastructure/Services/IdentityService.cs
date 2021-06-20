@@ -21,15 +21,15 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
     public class IdentityService : IIdentityService
     {
-        private readonly UserManager<ExtendedIdentityUser> _userManager;
-        private readonly RoleManager<ExtendedIdentityRole> _roleManager;
+        private readonly UserManager<FluentPOSUser> _userManager;
+        private readonly RoleManager<FluentPOSRole> _roleManager;
         private readonly IJobService _jobService;
         private readonly IMailService _mailService;
 
         public IdentityService(
-            UserManager<ExtendedIdentityUser> userManager,
+            UserManager<FluentPOSUser> userManager,
             IMapper mapper,
-            RoleManager<ExtendedIdentityRole> roleManager, IJobService jobService, IMailService mailService)
+            RoleManager<FluentPOSRole> roleManager, IJobService jobService, IMailService mailService)
         {
             _userManager = userManager;
             _mapper = mapper;
@@ -54,7 +54,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             {
                 throw new IdentityException($"Username '{request.UserName}' is already taken.");
             }
-            var user = new ExtendedIdentityUser
+            var user = new FluentPOSUser
             {
                 Email = request.Email,
                 FirstName = request.FirstName,
@@ -92,7 +92,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             }
         }
 
-        private async Task<string> SendVerificationEmail(ExtendedIdentityUser user, string origin)
+        private async Task<string> SendVerificationEmail(FluentPOSUser user, string origin)
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

@@ -9,7 +9,7 @@ using System;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 {
-    public class IdentityDbContext : IdentityDbContext<ExtendedIdentityUser, ExtendedIdentityRole, string>
+    public class IdentityDbContext : IdentityDbContext<FluentPOSUser, FluentPOSRole, string>
     {
         private readonly PersistenceSettings _persistenceOptions;
 

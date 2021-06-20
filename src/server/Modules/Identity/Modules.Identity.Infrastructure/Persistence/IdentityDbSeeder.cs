@@ -20,15 +20,15 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
     {
         private readonly ILogger<IdentityDbSeeder> _logger;
         private readonly IdentityDbContext _db;
-        private readonly UserManager<ExtendedIdentityUser> _userManager;
+        private readonly UserManager<FluentPOSUser> _userManager;
         private readonly IStringLocalizer<IdentityDbSeeder> _localizer;
-        private readonly RoleManager<ExtendedIdentityRole> _roleManager;
+        private readonly RoleManager<FluentPOSRole> _roleManager;
 
         public IdentityDbSeeder(
             ILogger<IdentityDbSeeder> logger,
             IdentityDbContext db,
-            RoleManager<ExtendedIdentityRole> roleManager,
-            UserManager<ExtendedIdentityUser> userManager,
+            RoleManager<FluentPOSRole> roleManager,
+            UserManager<FluentPOSUser> userManager,
             IStringLocalizer<IdentityDbSeeder> localizer)
         {
             _logger = logger;
@@ -53,7 +53,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                 var roleList = new List<string> { RoleConstants.SuperAdmin, RoleConstants.Admin, RoleConstants.Manager, RoleConstants.Accountant, RoleConstants.Cashier, RoleConstants.Staff };
                 foreach (var roleName in roleList)
                 {
-                    var role = new ExtendedIdentityRole(roleName);
+                    var role = new FluentPOSRole(roleName);
                     var roleInDb = await _roleManager.FindByNameAsync(roleName);
                     if (roleInDb == null)
                     {
@@ -69,7 +69,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
             Task.Run(async () =>
             {
                 //Check if Role Exists
-                var superAdminRole = new ExtendedIdentityRole(RoleConstants.SuperAdmin);
+                var superAdminRole = new FluentPOSRole(RoleConstants.SuperAdmin);
                 var superAdminRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.SuperAdmin);
                 if (superAdminRoleInDb == null)
                 {
@@ -77,7 +77,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                     superAdminRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.SuperAdmin);
                 }
                 //Check if User Exists
-                var superUser = new ExtendedIdentityUser
+                var superUser = new FluentPOSUser
                 {
                     FirstName = "Mukesh",
                     LastName = "Murugan",
@@ -116,7 +116,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
             Task.Run(async () =>
             {
                 //Check if Role Exists
-                var basicRole = new ExtendedIdentityRole(RoleConstants.Staff);
+                var basicRole = new FluentPOSRole(RoleConstants.Staff);
                 var basicRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.Staff);
                 if (basicRoleInDb == null)
                 {
@@ -124,7 +124,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                     basicRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.Staff);
                 }
                 //Check if User Exists
-                var basicUser = new ExtendedIdentityUser
+                var basicUser = new FluentPOSUser
                 {
                     FirstName = "John",
                     LastName = "Doe",

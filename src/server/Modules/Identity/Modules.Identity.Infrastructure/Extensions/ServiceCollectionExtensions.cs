@@ -34,8 +34,10 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                 .Configure<JwtSettings>(configuration.GetSection("JwtSettings"))
                 .AddTransient<ITokenService, TokenService>()
                 .AddTransient<IIdentityService, IdentityService>()
+                .AddTransient<IRoleService, RoleService>()
+                .AddTransient<IRoleClaimService, RoleClaimService>()
                 .AddDatabaseContext<IdentityDbContext>()
-                .AddIdentity<ExtendedIdentityUser, ExtendedIdentityRole>(options =>
+                .AddIdentity<FluentPOSUser, FluentPOSRole>(options =>
                 {
                     options.Password.RequiredLength = 6;
                     options.Password.RequireDigit = false;

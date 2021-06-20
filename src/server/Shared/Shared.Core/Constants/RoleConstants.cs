@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FluentPOS.Shared.Core.Constants
+﻿namespace FluentPOS.Shared.Core.Constants
 {
     public static class RoleConstants
     {

@@ -6,6 +6,21 @@ namespace FluentPOS.Shared.Core.Constants
 {
     public static class Permissions
     {
+        public static class Roles
+        {
+            public const string View = "Permissions.Roles.View";
+            public const string Create = "Permissions.Roles.Create";
+            public const string Edit = "Permissions.Roles.Edit";
+            public const string Delete = "Permissions.Roles.Delete";
+        }
+
+        public static class RoleClaims
+        {
+            public const string View = "Permissions.RoleClaims.View";
+            public const string Create = "Permissions.RoleClaims.Create";
+            public const string Edit = "Permissions.RoleClaims.Edit";
+            public const string Delete = "Permissions.RoleClaims.Delete";
+        }
         public static class Brands
         {
             public const string View = "Permissions.Brands.View";
