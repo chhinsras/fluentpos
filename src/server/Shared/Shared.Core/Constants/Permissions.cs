@@ -1,11 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
-namespace FluentPOS.Shared.Core.Constants
+﻿namespace FluentPOS.Shared.Core.Constants
 {
     public static class Permissions
     {
+        public static class Roles
+        {
+            public const string View = "Permissions.Roles.View";
+            public const string Create = "Permissions.Roles.Create";
+            public const string Edit = "Permissions.Roles.Edit";
+            public const string Delete = "Permissions.Roles.Delete";
+        }
+
+        public static class RoleClaims
+        {
+            public const string View = "Permissions.RoleClaims.View";
+            public const string Create = "Permissions.RoleClaims.Create";
+            public const string Edit = "Permissions.RoleClaims.Edit";
+            public const string Delete = "Permissions.RoleClaims.Delete";
+        }
         public static class Brands
         {
             public const string View = "Permissions.Brands.View";
@@ -58,18 +69,6 @@ namespace FluentPOS.Shared.Core.Constants
             public const string Register = "Permissions.Products.Register";
             public const string Update = "Permissions.Products.Update";
             public const string Remove = "Permissions.Products.Remove";
-        }
-
-        public static List<string> GetRegisteredPermissions()
-        {
-            var permssions = new List<string>();
-            foreach (var prop in typeof(Permissions).GetNestedTypes().SelectMany(c => c.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)))
-            {
-                var propertyValue = prop.GetValue(null);
-                if (propertyValue is not null)
-                    permssions.Add(propertyValue.ToString());
-            }
-            return permssions;
         }
     }
 }

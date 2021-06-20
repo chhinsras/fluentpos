@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FluentPOS.Shared.Core.Constants
+﻿namespace FluentPOS.Shared.Core.Constants
 {
     public static class RoleConstants
     {
@@ -14,6 +8,5 @@ namespace FluentPOS.Shared.Core.Constants
         public const string Accountant = "Accountant";
         public const string Cashier = "Cashier";
         public const string Staff = "Staff";
-        public const string PermissionToCreate = "SuperAdmin,Admin";
     }
 }

@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,14 +29,17 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
     {
         public static IServiceCollection AddIdentityInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services
                 .AddHttpContextAccessor()
                 .AddScoped<ICurrentUser, CurrentUser>()
                 .Configure<JwtSettings>(configuration.GetSection("JwtSettings"))
                 .AddTransient<ITokenService, TokenService>()
                 .AddTransient<IIdentityService, IdentityService>()
+                .AddTransient<IRoleService, RoleService>()
+                .AddTransient<IRoleClaimService, RoleClaimService>()
                 .AddDatabaseContext<IdentityDbContext>()
-                .AddIdentity<ExtendedIdentityUser, ExtendedIdentityRole>(options =>
+                .AddIdentity<FluentUser, FluentRole>(options =>
                 {
                     options.Password.RequiredLength = 6;
                     options.Password.RequireDigit = false;

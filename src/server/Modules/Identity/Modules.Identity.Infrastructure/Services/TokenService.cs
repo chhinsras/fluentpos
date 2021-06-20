@@ -21,14 +21,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
     public class TokenService : ITokenService
     {
-        private readonly UserManager<ExtendedIdentityUser> _userManager;
-        private readonly RoleManager<ExtendedIdentityRole> _roleManager;
+        private readonly UserManager<FluentUser> _userManager;
+        private readonly RoleManager<FluentRole> _roleManager;
         private readonly IStringLocalizer<TokenService> _localizer;
         private readonly JwtSettings _config;
 
         public TokenService(
-            UserManager<ExtendedIdentityUser> userManager,
-            RoleManager<ExtendedIdentityRole> roleManager,
+            UserManager<FluentUser> userManager,
+            RoleManager<FluentRole> roleManager,
             IOptions<JwtSettings> config,
             IStringLocalizer<TokenService> localizer)
         {
@@ -77,13 +77,13 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             return await Result<TokenResponse>.SuccessAsync(response);
         }
 
-        private async Task<string> GenerateJwtAsync(ExtendedIdentityUser user, string ipAddress)
+        private async Task<string> GenerateJwtAsync(FluentUser user, string ipAddress)
         {
             var token = GenerateEncryptedToken(GetSigningCredentials(), await GetClaimsAsync(user, ipAddress));
             return token;
         }
 
-        private async Task<IEnumerable<Claim>> GetClaimsAsync(ExtendedIdentityUser user, string ipAddress)
+        private async Task<IEnumerable<Claim>> GetClaimsAsync(FluentUser user, string ipAddress)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
