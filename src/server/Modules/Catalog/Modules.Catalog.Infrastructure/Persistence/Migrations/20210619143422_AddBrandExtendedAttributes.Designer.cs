@@ -3,15 +3,17 @@ using System;
 using FluentPOS.Modules.Catalog.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    partial class CatalogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210619143422_AddBrandExtendedAttributes")]
+    partial class AddBrandExtendedAttributes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,53 +109,6 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.CategoryExtendedAttribute", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DateTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<decimal?>("Decimal")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("EntityId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("ExternalId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Group")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Json")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Key")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("text");
-
-                    b.Property<byte>("Type")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EntityId");
-
-                    b.ToTable("CategoryExtendedAttributes", "Catalog");
-                });
-
             modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -219,17 +174,6 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     b.Navigation("Entity");
                 });
 
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.CategoryExtendedAttribute", b =>
-                {
-                    b.HasOne("FluentPOS.Modules.Catalog.Core.Entities.Category", "Entity")
-                        .WithMany("ExtendedAttributes")
-                        .HasForeignKey("EntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Entity");
-                });
-
             modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.Product", b =>
                 {
                     b.HasOne("FluentPOS.Modules.Catalog.Core.Entities.Brand", "Brand")
@@ -250,11 +194,6 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                 });
 
             modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.Brand", b =>
-                {
-                    b.Navigation("ExtendedAttributes");
-                });
-
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.Category", b =>
                 {
                     b.Navigation("ExtendedAttributes");
                 });

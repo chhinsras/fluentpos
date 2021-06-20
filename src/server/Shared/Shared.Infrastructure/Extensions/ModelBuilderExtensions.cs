@@ -1,5 +1,4 @@
 ﻿using FluentPOS.Shared.Core.Settings;
-using FluentPOS.Shared.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace FluentPOS.Shared.Infrastructure.Extensions

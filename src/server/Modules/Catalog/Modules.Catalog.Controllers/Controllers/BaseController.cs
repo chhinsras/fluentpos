@@ -8,7 +8,7 @@ namespace FluentPOS.Modules.Catalog.Controllers
     [Route(BasePath + "/[controller]")]
     internal abstract class BaseController : ControllerBase
     {
-        protected const string BasePath = "api/catalog";
+        protected internal const string BasePath = "api/catalog";
 
         private IMediator _mediatorInstance;
         protected IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
