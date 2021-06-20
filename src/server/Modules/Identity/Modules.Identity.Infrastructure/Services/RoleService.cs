@@ -150,7 +150,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             {
                 var existingRole = await _roleManager.FindByNameAsync(request.Name);
                 if (existingRole != null) return await Result<string>.FailAsync(_localizer["Similar Role already exists."]);
-                var response = await _roleManager.CreateAsync(new FluentRole(request.Name));
+                var response = await _roleManager.CreateAsync(new FluentRole(request.Name,request.Description));
                 if (response.Succeeded)
                 {
                     return await Result<string>.SuccessAsync(string.Format(_localizer["Role {0} Created."], request.Name));
@@ -163,12 +163,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             else
             {
                 var existingRole = await _roleManager.FindByIdAsync(request.Id);
+                if (existingRole == null) return await Result<string>.FailAsync(_localizer["Role does not exist."]);
                 if (DefaultRoles().Contains(existingRole.Name))
                 {
                     return await Result<string>.SuccessAsync(string.Format(_localizer["Not allowed to modify {0} Role."], existingRole.Name));
                 }
                 existingRole.Name = request.Name;
                 existingRole.NormalizedName = request.Name.ToUpper();
+                existingRole.Description = request.Description;
                 await _roleManager.UpdateAsync(existingRole);
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Role {0} Updated."], existingRole.Name));
             }
