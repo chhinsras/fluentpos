@@ -1,5 +1,6 @@
 ﻿using FluentPOS.Shared.Core.Domain;
 using System;
+using System.Collections.Generic;
 
 namespace FluentPOS.Modules.Catalog.Core.Entities
 {
@@ -20,5 +21,12 @@ namespace FluentPOS.Modules.Catalog.Core.Entities
         public bool IsAlert { get; set; }
         public decimal AlertQuantity { get; set; }
         public string Detail { get; set; }
+
+        public virtual ICollection<ProductExtendedAttribute> ExtendedAttributes { get; set; }
+
+        public Product() : base()
+        {
+            ExtendedAttributes = new HashSet<ProductExtendedAttribute>();
+        }
     }
 }
