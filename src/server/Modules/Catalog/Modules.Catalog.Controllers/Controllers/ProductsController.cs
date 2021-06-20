@@ -12,7 +12,7 @@ namespace FluentPOS.Modules.Catalog.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] PaginatedProductFilter filter)
         {
-            var brands = await Mediator.Send(new GetAllPagedProductsQuery(filter.PageNumber, filter.PageSize, filter.SearchString));
+            var brands = await Mediator.Send(new GetAllPagedProductsQuery(filter.PageNumber, filter.PageSize, filter.SearchString, filter.BrandId, filter.CategoryId));
             return Ok(brands);
         }
 
