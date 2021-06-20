@@ -54,6 +54,21 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
                     //    .OnDelete(DeleteBehavior.Cascade);
                 }
             });
+
+            builder.Entity<ProductExtendedAttribute>(entity =>
+            {
+                entity.ToTable("ProductExtendedAttributes", "Catalog");
+
+                if (persistenceOptions.UseMsSql)
+                {
+                    entity.Property(p => p.Decimal)
+                        .HasColumnType("decimal(23, 2)");
+                    //entity.HasOne(p => p.Entity)
+                    //    .WithMany(p => p.ExtendedAttributes)
+                    //    .HasForeignKey(p => p.EntityId)
+                    //    .OnDelete(DeleteBehavior.Cascade);
+                }
+            });
         }
     }
 }

@@ -179,3 +179,42 @@ You can change route templates for actions using `HttpGet`, `HttpPost`, `HttpPut
 ```
 dotnet ef migrations add "initial" --startup-project ../../../API -o Persistence/Migrations/ --context CatalogDbContext
 ```
+
+9) Add `AddExtendedAttributeDbContextsFromAssembly` extension method in `ServiceCollectionExtensions` for |module-name| to register extended attribute handlers automatically for this module:
+
+```csharp
+namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
+{
+    public static class ServiceCollectionExtensions
+    {
+        public static IServiceCollection AddCatalogInfrastructure(this IServiceCollection services)
+        {
+            services
+                .AddDatabaseContext<CatalogDbContext>()
+                .AddScoped<ICatalogDbContext>(provider => provider.GetService<CatalogDbContext>());
+            services.AddExtendedAttributeDbContextsFromAssembly(typeof(CatalogDbContext), Assembly.GetAssembly(typeof(ICatalogDbContext)));
+            services.AddTransient<IDatabaseSeeder, CatalogDbSeeder>();
+            return services;
+        }
+    }
+}
+```
+
+10) Add `AddExtendedAttributeHandlersFromAssembly` extension method in `ServiceCollectionExtensions` for |module-name| to register extended attribute handlers automatically for this module:
+
+```csharp
+namespace FluentPOS.Modules.Catalog.Core.Extensions
+{
+    public static class ServiceCollectionExtensions
+    {
+        public static IServiceCollection AddCatalogCore(this IServiceCollection services)
+        {
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddExtendedAttributeHandlersFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            return services;
+        }
+    }
+}
+```

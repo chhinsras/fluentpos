@@ -44,6 +44,15 @@
             public const string Remove = "Permissions.Customers.Remove";
         }
 
+        public static class CustomersExtendedAttributes
+        {
+            public const string View = "Permissions.Customers.ExtendedAttributes.View";
+            public const string ViewAll = "Permissions.Customers.ExtendedAttributes.ViewAll";
+            public const string Add = "Permissions.Customers.ExtendedAttributes.Add";
+            public const string Update = "Permissions.Customers.ExtendedAttributes.Update";
+            public const string Remove = "Permissions.Customers.ExtendedAttributes.Remove";
+        }
+
         public static class Categories
         {
             public const string View = "Permissions.Categories.View";
@@ -69,6 +78,15 @@
             public const string Register = "Permissions.Products.Register";
             public const string Update = "Permissions.Products.Update";
             public const string Remove = "Permissions.Products.Remove";
+        }
+
+        public static class ProductsExtendedAttributes
+        {
+            public const string View = "Permissions.Products.ExtendedAttributes.View";
+            public const string ViewAll = "Permissions.Products.ExtendedAttributes.ViewAll";
+            public const string Add = "Permissions.Products.ExtendedAttributes.Add";
+            public const string Update = "Permissions.Products.ExtendedAttributes.Update";
+            public const string Remove = "Permissions.Products.ExtendedAttributes.Remove";
         }
     }
 }

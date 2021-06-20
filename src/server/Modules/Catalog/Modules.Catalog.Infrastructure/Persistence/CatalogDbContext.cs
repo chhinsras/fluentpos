@@ -13,7 +13,8 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
 {
     public class CatalogDbContext : ModuleDbContext, ICatalogDbContext,
         IExtendedAttributeDbContext<Brand, BrandExtendedAttribute>,
-        IExtendedAttributeDbContext<Category, CategoryExtendedAttribute>
+        IExtendedAttributeDbContext<Category, CategoryExtendedAttribute>,
+        IExtendedAttributeDbContext<Product, ProductExtendedAttribute>
     {
         private readonly PersistenceSettings _persistenceOptions;
 
@@ -40,7 +41,10 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
 
         DbSet<Brand> IExtendedAttributeDbContext<Brand, BrandExtendedAttribute>.GetEntities() => Brands;
         DbSet<Category> IExtendedAttributeDbContext<Category, CategoryExtendedAttribute>.GetEntities() => Categories;
+        DbSet<Product> IExtendedAttributeDbContext<Product, ProductExtendedAttribute>.GetEntities() => Products;
+
         DbSet<BrandExtendedAttribute> IExtendedAttributeDbContext<Brand, BrandExtendedAttribute>.ExtendedAttributes { get; set; }
         DbSet<CategoryExtendedAttribute> IExtendedAttributeDbContext<Category, CategoryExtendedAttribute>.ExtendedAttributes { get; set; }
+        DbSet<ProductExtendedAttribute> IExtendedAttributeDbContext<Product, ProductExtendedAttribute>.ExtendedAttributes { get; set; }
     }
 }
