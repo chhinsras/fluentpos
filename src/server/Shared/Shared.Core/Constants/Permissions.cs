@@ -44,6 +44,15 @@
             public const string Remove = "Permissions.Customers.Remove";
         }
 
+        public static class CustomersExtendedAttributes
+        {
+            public const string View = "Permissions.Customers.ExtendedAttributes.View";
+            public const string ViewAll = "Permissions.Customers.ExtendedAttributes.ViewAll";
+            public const string Add = "Permissions.Customers.ExtendedAttributes.Add";
+            public const string Update = "Permissions.Customers.ExtendedAttributes.Update";
+            public const string Remove = "Permissions.Customers.ExtendedAttributes.Remove";
+        }
+
         public static class Categories
         {
             public const string View = "Permissions.Categories.View";

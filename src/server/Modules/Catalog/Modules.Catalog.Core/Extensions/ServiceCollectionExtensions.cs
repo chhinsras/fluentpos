@@ -12,9 +12,7 @@ namespace FluentPOS.Modules.Catalog.Core.Extensions
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
             services.AddExtendedAttributeHandlersFromAssembly(Assembly.GetExecutingAssembly());
-
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;
         }

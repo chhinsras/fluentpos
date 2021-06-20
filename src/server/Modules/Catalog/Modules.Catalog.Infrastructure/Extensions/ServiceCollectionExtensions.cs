@@ -15,9 +15,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
             services
                 .AddDatabaseContext<CatalogDbContext>()
                 .AddScoped<ICatalogDbContext>(provider => provider.GetService<CatalogDbContext>());
-
             services.AddExtendedAttributeDbContextsFromAssembly(typeof(CatalogDbContext), Assembly.GetAssembly(typeof(ICatalogDbContext)));
-
             services.AddTransient<IDatabaseSeeder, CatalogDbSeeder>();
             return services;
         }
