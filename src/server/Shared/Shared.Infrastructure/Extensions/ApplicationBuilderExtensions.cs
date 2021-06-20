@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -64,6 +65,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                 options.RoutePrefix = "swagger";
                 options.DisplayRequestDuration();
+                options.DocExpansion(DocExpansion.None);
             });
             return app;
         }
