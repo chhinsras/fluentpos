@@ -70,5 +70,14 @@
             public const string Update = "Permissions.Products.Update";
             public const string Remove = "Permissions.Products.Remove";
         }
+
+        public static class ProductsExtendedAttributes
+        {
+            public const string View = "Permissions.Products.ExtendedAttributes.View";
+            public const string ViewAll = "Permissions.Products.ExtendedAttributes.ViewAll";
+            public const string Add = "Permissions.Products.ExtendedAttributes.Add";
+            public const string Update = "Permissions.Products.ExtendedAttributes.Update";
+            public const string Remove = "Permissions.Products.ExtendedAttributes.Remove";
+        }
     }
 }
