@@ -6,7 +6,7 @@ using FluentPOS.Shared.DTOs.ExtendedAttributes;
 namespace FluentPOS.Shared.Core.Domain
 {
     public abstract class ExtendedAttribute<TEntityId, TEntity>
-        : BaseEntity<Guid>, IExtendedAttribute<TEntityId>
+        : BaseEntity, IExtendedAttribute<TEntityId>
         where TEntity : class, IEntity<TEntityId>
     {
         public TEntityId EntityId { get; set; }

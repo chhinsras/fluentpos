@@ -16,20 +16,14 @@
 
 **Steps:**
 
-1) Add an extended attribute entity class named |ea-type-name| into **FluentPOS.Modules.|module-name|.Core.Entities** inherited from the abstract class `ExtendedAttribute<|related-entity-id-type|, |related-entity-type-name|>` with overriding `GenerateNewId` method:
+1) Add an extended attribute entity class named |ea-type-name| into **FluentPOS.Modules.|module-name|.Core.Entities** inherited from the abstract class `ExtendedAttribute<|related-entity-id-type|, |related-entity-type-name|>`:
 
 ```csharp
 using FluentPOS.Shared.Core.Domain;
 
 namespace FluentPOS.Modules.Catalog.Core.Entities
 {
-    public class BrandExtendedAttribute : ExtendedAttribute<Guid, Brand>
-    {
-        protected override Guid GenerateNewId()
-        {
-            return Guid.NewGuid();
-        }
-    }
+    public class BrandExtendedAttribute : ExtendedAttribute<Guid, Brand> { }
 }
 ```
 

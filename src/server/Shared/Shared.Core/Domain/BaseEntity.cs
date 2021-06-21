@@ -4,16 +4,14 @@ using FluentPOS.Shared.Core.Contracts;
 
 namespace FluentPOS.Shared.Core.Domain
 {
-    public abstract class BaseEntity<TEntityId> : IEntity<TEntityId>, IBaseEntity
+    public abstract class BaseEntity : IEntity<Guid>, IBaseEntity
     {
-        public TEntityId Id { get; set; }
+        public Guid Id { get; set; }
 
         protected BaseEntity()
         {
-            Id = GenerateNewId();
+            Id = Guid.NewGuid();
         }
-
-        protected abstract TEntityId GenerateNewId();
 
         private List<Event> _domainEvents;
         public IReadOnlyCollection<Event> DomainEvents => _domainEvents?.AsReadOnly();
@@ -32,14 +30,6 @@ namespace FluentPOS.Shared.Core.Domain
         public void ClearDomainEvents()
         {
             _domainEvents?.Clear();
-        }
-    }
-
-    public abstract class BaseEntity : BaseEntity<Guid>
-    {
-        protected override Guid GenerateNewId()
-        {
-            return Guid.NewGuid();
         }
     }
 }
