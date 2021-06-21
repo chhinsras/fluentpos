@@ -158,11 +158,12 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
     
         private static IServiceCollection AddCorsPolicy(this IServiceCollection services)
         {
+            var corsSettings = services.GetOptions<CorsSettings>(nameof(CorsSettings));
             return services.AddCors(opt =>
             {
-                opt.AddPolicy("AngularCorsPolicy", policy =>
+                opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200");
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(corsSettings.Url);
                 });
             });
         }
