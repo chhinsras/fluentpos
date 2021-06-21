@@ -56,6 +56,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             services.AddHangfireServer();
             services.AddSingleton<GlobalExceptionHandler>();
             services.AddSwaggerDocumentation();
+            services.AddCorsPolicy();
             return services;
         }
 
@@ -151,6 +152,18 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                             In = ParameterLocation.Header,
                         }, new List<string>()
                     },
+                });
+            });
+        }
+    
+        private static IServiceCollection AddCorsPolicy(this IServiceCollection services)
+        {
+            var corsSettings = services.GetOptions<CorsSettings>(nameof(CorsSettings));
+            return services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(corsSettings.Url);
                 });
             });
         }

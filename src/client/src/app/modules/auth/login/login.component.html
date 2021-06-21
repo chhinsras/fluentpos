@@ -1,9 +1,9 @@
 <mat-card>
     <mat-card-content>
-        <form>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <h2>Log In</h2>
             <mat-form-field appearance="fill">
-                <input matInput placeholder="Email" formControlName="username" required>
+                <input matInput placeholder="Email" formControlName="email" required>
                 <mat-error>
                     Please provide a valid email address
                 </mat-error>
@@ -14,7 +14,7 @@
                     Please provide a valid password
                 </mat-error>
             </mat-form-field>
-            <button mat-raised-button color="primary" routerLink="/home">Login</button>
+            <button mat-raised-button color="primary" type="submit">Login</button>
         </form>
     </mat-card-content>
 </mat-card>

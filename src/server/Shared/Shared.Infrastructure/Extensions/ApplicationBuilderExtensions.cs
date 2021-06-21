@@ -1,4 +1,5 @@
 ﻿using FluentPOS.Shared.Core.Interfaces.Services;
+using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.Infrastructure.Middlewares;
 using Hangfire;
@@ -27,6 +28,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
         {            
             app.UseMiddleware<GlobalExceptionHandler>();            
             app.UseRouting();
+            app.UseCors("CorsPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseHangfireDashboard("/jobs", new DashboardOptions
@@ -39,6 +41,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             });
             app.UseSwaggerDocumentation();
             app.Initialize();
+
             return app;
         }
         

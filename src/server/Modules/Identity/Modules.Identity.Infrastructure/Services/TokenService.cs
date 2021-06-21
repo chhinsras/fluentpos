@@ -16,6 +16,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
+using System.Net;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
@@ -42,14 +43,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
-                throw new IdentityException(_localizer["User Not Found."]);
+                throw new IdentityException(_localizer["User Not Found."], statusCode: HttpStatusCode.Unauthorized);
             if (!user.IsActive)
-                throw new IdentityException(_localizer["User Not Active. Please contact the administrator."]);
+                throw new IdentityException(_localizer["User Not Active. Please contact the administrator."], statusCode: HttpStatusCode.Unauthorized);
             if (!user.EmailConfirmed)
-                throw new IdentityException(_localizer["E-Mail not confirmed."]);
+                throw new IdentityException(_localizer["E-Mail not confirmed."], statusCode: HttpStatusCode.Unauthorized);
             var passwordValid = await _userManager.CheckPasswordAsync(user, request.Password);
             if (!passwordValid)
-                throw new IdentityException(_localizer["Invalid Credentials."]);
+                throw new IdentityException(_localizer["Invalid Credentials."], statusCode: HttpStatusCode.Unauthorized);
             user.RefreshToken = GenerateRefreshToken();
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.RefreshTokenExpirationInDays);
             await _userManager.UpdateAsync(user);
@@ -61,14 +62,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         public async Task<IResult<TokenResponse>> RefreshTokenAsync(RefreshTokenRequest request, string ipAddress)
         {
             if (request is null)
-                throw new IdentityException(_localizer["Invalid Client Token."]);
+                throw new IdentityException(_localizer["Invalid Client Token."], statusCode: HttpStatusCode.Unauthorized);
             var userPrincipal = GetPrincipalFromExpiredToken(request.Token);
             var userEmail = userPrincipal.FindFirstValue(ClaimTypes.Email);
             var user = await _userManager.FindByEmailAsync(userEmail);
             if (user == null)
-                throw new IdentityException(_localizer["User Not Found."]);
+                throw new IdentityException(_localizer["User Not Found."], statusCode: HttpStatusCode.NotFound);
             if (user.RefreshToken != request.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
-                throw new IdentityException(_localizer["Invalid Client Token."]);
+                throw new IdentityException(_localizer["Invalid Client Token."], statusCode: HttpStatusCode.Unauthorized);
             var token = GenerateEncryptedToken(GetSigningCredentials(), await GetClaimsAsync(user, ipAddress));
             user.RefreshToken = GenerateRefreshToken();
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.RefreshTokenExpirationInDays);
@@ -146,7 +147,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             if (securityToken is not JwtSecurityToken jwtSecurityToken ||
                 !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
                     StringComparison.InvariantCultureIgnoreCase))
-                throw new IdentityException(_localizer["Invalid Token."]);
+                throw new IdentityException(_localizer["Invalid Token."], statusCode: HttpStatusCode.Unauthorized);
             return principal;
         }
 
