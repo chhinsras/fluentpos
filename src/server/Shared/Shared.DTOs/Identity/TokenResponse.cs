@@ -2,5 +2,5 @@
 
 namespace FluentPOS.Shared.DTOs.Identity
 {
-    public record TokenResponse(string Token, string RefreshToken, DateTime RefreshTokenExpiryTime,string UserName, string EmailId, string UserId);
+    public record TokenResponse(string Token, string RefreshToken, DateTime RefreshTokenExpiryTime);
 }

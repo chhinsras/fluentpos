@@ -55,7 +55,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.RefreshTokenExpirationInDays);
             await _userManager.UpdateAsync(user);
             var token = await GenerateJwtAsync(user, ipAddress);
-            var response = new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime, user.UserName, user.Email, user.Id);
+            var response = new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime);
             return await Result<TokenResponse>.SuccessAsync(response);
         }
 
@@ -74,7 +74,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             user.RefreshToken = GenerateRefreshToken();
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.RefreshTokenExpirationInDays);
             await _userManager.UpdateAsync(user);
-            var response = new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime, user.UserName, user.Email, user.Id);
+            var response = new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime);
             return await Result<TokenResponse>.SuccessAsync(response);
         }
 
@@ -99,11 +99,11 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             }
             var claims = new List<Claim>
             {
-                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new(ClaimTypes.Email, user.Email),
-                new(ClaimTypes.Name, user.FirstName),
-                new(ClaimTypes.Surname, user.LastName),
-                new(ClaimTypes.MobilePhone, user.PhoneNumber ?? string.Empty),
+                new("userId",user.Id.ToString()),
+                new("emailId",user.Email),
+                new("fullName",$"{user.FirstName} {user.LastName}"),
+                new("firstName",user.FirstName),
+                new("lastName",user.LastName),
                 new("ipAddress", ipAddress)
             }
             .Union(userClaims)
