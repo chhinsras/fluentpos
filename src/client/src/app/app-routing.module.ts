@@ -1,5 +1,6 @@
 import { Host, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 import { NotFoundComponent } from './core/shared/components/not-found/not-found.component';
 import { ServerErrorComponent } from './core/shared/components/server-error/server-error.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
@@ -9,64 +10,30 @@ import { PosLayoutComponent } from './layouts/pos-layout/pos-layout.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: '', redirectTo: 'home', pathMatch: 'full'
+  },
+  {
+    path: 'auth', 
     component: AuthLayoutComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: '/login',
-        pathMatch: 'full'
-      },
-      {
-        path: 'login',
-        loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
-      }
-    ]
-  },
+    loadChildren: () => import('./modules/auth/auth.module').then(mod => mod.AuthModule),
+  },  
   {
-    path: '',
+    path: 'home',
+    canActivate: [AuthGuard],
     component: HomeLayoutComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: '/home',
-        pathMatch: 'full'
-      },
-      {
-        path: 'home',
-        loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
-      }
-    ]
-  },
+    loadChildren: () => import('./modules/home/home.module').then(mod => mod.HomeModule),
+  },  
   {
-    path: '',
+    path: 'admin',
+    canActivate: [AuthGuard],
     component: AdminLayoutComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: '/admin',
-        pathMatch: 'full'
-      },
-      {
-        path: 'admin',
-        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
-      }
-    ]
+    loadChildren: () => import('./modules/admin/admin.module').then(mod => mod.AdminModule),
   },
   {
-    path: '',
+    path: 'pos',
+    canActivate: [AuthGuard],
     component: PosLayoutComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: '/pos',
-        pathMatch: 'full'
-      },
-      {
-        path: 'pos',
-        loadChildren: () => import('./modules/pos/pos.module').then(m => m.PosModule)
-      }
-    ]
+    loadChildren: () => import('./modules/pos/pos.module').then(mod => mod.PosModule),
   },
   {
     path: 'not-found', component: NotFoundComponent
@@ -74,6 +41,9 @@ const routes: Routes = [
   {
     path: 'server-error', component: ServerErrorComponent
   },
+  { 
+    path: '**', redirectTo: 'not-found', pathMatch: 'full' 
+  }
 ];
 
 @NgModule({

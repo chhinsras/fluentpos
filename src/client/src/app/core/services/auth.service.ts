@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Result } from '../models/wrappers/Result';
+import { BehaviorSubject, of, ReplaySubject } from 'rxjs';
+import { JwtService } from './jwt.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +15,21 @@ import { Result } from '../models/wrappers/Result';
 export class AuthService {
 
   baseUrl = environment.apiUrl;
+  private currentUserTokenSource = new ReplaySubject<string>(1);
+  currentUserToken$ = this.currentUserTokenSource.asObservable();
 
   constructor(private http: HttpClient, private localStorage: LocalStorageService, private router: Router) { }
+
+  loadCurrentUser(token: string) {
+    if (token == null) {
+      this.currentUserTokenSource.next(null);
+    }
+    // TODO: var decodedToken = this.jwtService.DecodeToken(token);
+    // TODO: check if token is expired / invalid
+
+    this.currentUserTokenSource.next(token);
+    return of(null);
+  }
 
   login(values: any)
   {
@@ -23,6 +38,8 @@ export class AuthService {
         if (result.succeeded)
         {
           this.localStorage.setItem('token', result.data.token);
+          this.localStorage.setItem('refreshToken', result.data.refreshToken);
+          this.currentUserTokenSource.next(result.data.token);
         }
         return result;
       })
@@ -32,6 +49,8 @@ export class AuthService {
   logout()
   {
     this.localStorage.removeItem('token');
+    this.localStorage.removeItem('refreshToken');
+    this.currentUserTokenSource.next(null);
     this.router.navigateByUrl('/login');
   }
 }
