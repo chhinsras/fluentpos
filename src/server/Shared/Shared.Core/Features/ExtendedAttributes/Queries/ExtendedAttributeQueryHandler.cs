@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.Exceptions;
 using FluentPOS.Shared.Core.Extensions;
@@ -22,31 +23,31 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
         // for localization
     }
 
-    public class ExtendedAttributeQueryHandler<TEntity, TExtendedAttribute> :
-        IRequestHandler<GetAllPagedExtendedAttributesQuery<TEntity>, PaginatedResult<GetAllPagedExtendedAttributesResponse>>,
-        IRequestHandler<GetExtendedAttributeByIdQuery<TEntity>, Result<GetExtendedAttributeByIdResponse>>
-            where TEntity : BaseEntity
-            where TExtendedAttribute : ExtendedAttribute<TEntity>
+    public class ExtendedAttributeQueryHandler<TEntityId, TEntity, TExtendedAttribute> :
+        IRequestHandler<GetAllPagedExtendedAttributesQuery<TEntityId, TEntity>, PaginatedResult<GetAllPagedExtendedAttributesResponse<TEntityId>>>,
+        IRequestHandler<GetExtendedAttributeByIdQuery<TEntityId, TEntity>, Result<GetExtendedAttributeByIdResponse<TEntityId>>>
+            where TEntity : class, IEntity<TEntityId>
+            where TExtendedAttribute : ExtendedAttribute<TEntityId, TEntity>
     {
-        private readonly IExtendedAttributeDbContext<TEntity, TExtendedAttribute> _context;
+        private readonly IExtendedAttributeDbContext<TEntityId, TEntity, TExtendedAttribute> _context;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<ExtendedAttributeQueryHandler> _localizer;
 
-        public ExtendedAttributeQueryHandler(IExtendedAttributeDbContext<TEntity, TExtendedAttribute> context, IMapper mapper, IStringLocalizer<ExtendedAttributeQueryHandler> localizer)
+        public ExtendedAttributeQueryHandler(IExtendedAttributeDbContext<TEntityId, TEntity, TExtendedAttribute> context, IMapper mapper, IStringLocalizer<ExtendedAttributeQueryHandler> localizer)
         {
             _context = context;
             _mapper = mapper;
             _localizer = localizer;
         }
 
-        public async Task<PaginatedResult<GetAllPagedExtendedAttributesResponse>> Handle(GetAllPagedExtendedAttributesQuery<TEntity> request, CancellationToken cancellationToken)
+        public async Task<PaginatedResult<GetAllPagedExtendedAttributesResponse<TEntityId>>> Handle(GetAllPagedExtendedAttributesQuery<TEntityId, TEntity> request, CancellationToken cancellationToken)
         {
-            Expression<Func<TExtendedAttribute, GetAllPagedExtendedAttributesResponse>> expression = e => new GetAllPagedExtendedAttributesResponse(e.Id, e.EntityId, e.Type, e.Key, e.Decimal, e.Text, e.DateTime, e.Json, e.ExternalId, e.Group, e.Description, e.IsActive);
+            Expression<Func<TExtendedAttribute, GetAllPagedExtendedAttributesResponse<TEntityId>>> expression = e => new GetAllPagedExtendedAttributesResponse<TEntityId>(e.Id, e.EntityId, e.Type, e.Key, e.Decimal, e.Text, e.DateTime, e.Json, e.ExternalId, e.Group, e.Description, e.IsActive);
 
             var queryable = _context.ExtendedAttributes.OrderBy(x => x.Id).AsQueryable();
 
             // apply filter parameters
-            if (request.EntityId != null) queryable = queryable.Where(b => b.EntityId == request.EntityId);
+            if (request.EntityId != null && !request.EntityId.Equals(default(TEntityId))) queryable = queryable.Where(b => b.EntityId.Equals(request.EntityId));
             if (request.Type != null) queryable = queryable.Where(b => b.Type == request.Type);
             if (!string.IsNullOrEmpty(request.SearchString))
             {
@@ -68,17 +69,17 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
 
             if (extendedAttributeList == null) throw new CustomException(string.Format(_localizer["{0} Extended Attributes Not Found!"], typeof(TEntity).Name), statusCode: HttpStatusCode.NotFound);
 
-            var mappedExtendedAttributes = _mapper.Map<PaginatedResult<GetAllPagedExtendedAttributesResponse>>(extendedAttributeList);
+            var mappedExtendedAttributes = _mapper.Map<PaginatedResult<GetAllPagedExtendedAttributesResponse<TEntityId>>>(extendedAttributeList);
 
             return mappedExtendedAttributes;
         }
 
-        public async Task<Result<GetExtendedAttributeByIdResponse>> Handle(GetExtendedAttributeByIdQuery<TEntity> query, CancellationToken cancellationToken)
+        public async Task<Result<GetExtendedAttributeByIdResponse<TEntityId>>> Handle(GetExtendedAttributeByIdQuery<TEntityId, TEntity> query, CancellationToken cancellationToken)
         {
             var extendedAttribute = await _context.ExtendedAttributes.Where(b => b.Id == query.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
             if (extendedAttribute == null) throw new CustomException(string.Format(_localizer["{0} Extended Attribute Not Found!"], typeof(TEntity).Name), statusCode: HttpStatusCode.NotFound);
-            var mappedExtendedAttribute = _mapper.Map<GetExtendedAttributeByIdResponse>(extendedAttribute);
-            return await Result<GetExtendedAttributeByIdResponse>.SuccessAsync(mappedExtendedAttribute);
+            var mappedExtendedAttribute = _mapper.Map<GetExtendedAttributeByIdResponse<TEntityId>>(extendedAttribute);
+            return await Result<GetExtendedAttributeByIdResponse<TEntityId>>.SuccessAsync(mappedExtendedAttribute);
         }
     }
 }

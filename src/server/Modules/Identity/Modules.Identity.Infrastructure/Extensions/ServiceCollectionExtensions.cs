@@ -16,7 +16,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
 using System.Security.Claims;
@@ -50,6 +49,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                 })
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
+            services.AddExtendedAttributeDbContextsFromAssembly(typeof(IdentityDbContext), Assembly.GetAssembly(typeof(IIdentityService)));
             services.AddTransient<IDatabaseSeeder, IdentityDbSeeder>();
             services.AddPermissions(configuration);
             services.AddJwtAuthentication(configuration);

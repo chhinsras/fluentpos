@@ -4,9 +4,9 @@ using FluentPOS.Shared.DTOs.ExtendedAttributes;
 
 namespace FluentPOS.Shared.Core.Contracts
 {
-    public interface IExtendedAttribute
+    public interface IExtendedAttribute<TEntityId>
     {
-        public Guid EntityId { get; set; }
+        public TEntityId EntityId { get; set; }
 
         public ExtendedAttributeType Type { get; set; }
 

@@ -1,6 +1,5 @@
 ﻿using FluentPOS.Modules.Identity.Core.Extensions;
 using FluentPOS.Modules.Identity.Infrastructure.Extensions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,7 +10,9 @@ namespace FluentPOS.Modules.Identity.Extensions
     {
         public static IServiceCollection AddIdentityModule(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddIdentityInfrastructure(configuration);
+            services
+                .AddIdentityCore()
+                .AddIdentityInfrastructure(configuration);
             return services;
         }
 

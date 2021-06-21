@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace FluentPOS.Modules.Catalog.Core.Entities
 {
-    public class Product : BaseEntity //IAuditableEntity
+    public class Product : BaseEntity
     {
         public string Name { get; set; }
         public string LocaleName { get; set; }

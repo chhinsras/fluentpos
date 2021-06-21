@@ -1,9 +1,9 @@
 ﻿using System;
 using FluentPOS.Shared.Core.Domain;
 
-namespace FluentPOS.Modules.People.Core.Entities
+namespace FluentPOS.Modules.Identity.Core.Entities
 {
-    public class CustomerExtendedAttribute : ExtendedAttribute<Guid, Customer>
+    public class UserExtendedAttribute : ExtendedAttribute<string, FluentUser>
     {
         protected override Guid GenerateNewId()
         {

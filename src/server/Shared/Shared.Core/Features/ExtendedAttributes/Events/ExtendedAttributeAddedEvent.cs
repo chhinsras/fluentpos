@@ -5,13 +5,14 @@ using FluentPOS.Shared.DTOs.ExtendedAttributes;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
 {
-    public class ExtendedAttributeAddedEvent : Event
+    public class ExtendedAttributeAddedEvent<TEntityId, TEntity> : Event
     {
-        public ExtendedAttributeAddedEvent(Guid id, Guid entityId, ExtendedAttributeType type,
+        public ExtendedAttributeAddedEvent(Guid id, TEntityId entityId, ExtendedAttributeType type,
             string key, decimal? @decimal, string? text, DateTime? dateTime, string? json, string? externalId,
             string? group, string? description, bool isActive)
         {
             EntityId = entityId;
+            EntityName = typeof(TEntity).Name;
             Type = type;
             Key = key;
             Decimal = @decimal;
@@ -25,7 +26,8 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
             AggregateId = id;
         }
 
-        public Guid EntityId { get; set; }
+        public TEntityId EntityId { get; set; }
+        public string EntityName { get; set; }
         public ExtendedAttributeType Type { get; set; }
         public string Key { get; set; }
         public decimal? Decimal { get; set; }

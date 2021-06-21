@@ -13,13 +13,13 @@ using Microsoft.Extensions.DependencyInjection;
 namespace FluentPOS.Modules.People.Controllers
 {
     [Route(BaseController.BasePath + "/" + nameof(Customer) + "/attributes")]
-    public class CustomerExtendedAttributesController : ExtendedAttributesController<Customer>
+    public class CustomerExtendedAttributesController : ExtendedAttributesController<Guid, Customer>
     {
         private IMediator _mediatorInstance;
         protected override IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
 
         [Authorize(Policy = Permissions.CustomersExtendedAttributes.ViewAll)]
-        public override Task<IActionResult> GetAll(PaginatedExtendedAttributeFilter filter)
+        public override Task<IActionResult> GetAll(PaginatedExtendedAttributeFilter<Guid> filter)
         {
             return base.GetAll(filter);
         }
@@ -31,13 +31,13 @@ namespace FluentPOS.Modules.People.Controllers
         }
 
         [Authorize(Policy = Permissions.CustomersExtendedAttributes.Add)]
-        public override Task<IActionResult> Create(AddExtendedAttributeCommand<Customer> command)
+        public override Task<IActionResult> Create(AddExtendedAttributeCommand<Guid, Customer> command)
         {
             return base.Create(command);
         }
 
         [Authorize(Policy = Permissions.CustomersExtendedAttributes.Update)]
-        public override Task<IActionResult> Update(UpdateExtendedAttributeCommand<Customer> command)
+        public override Task<IActionResult> Update(UpdateExtendedAttributeCommand<Guid, Customer> command)
         {
             return base.Update(command);
         }

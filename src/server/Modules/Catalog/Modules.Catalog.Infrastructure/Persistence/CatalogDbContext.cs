@@ -1,4 +1,5 @@
-﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
+﻿using System;
+using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Infrastructure.Extensions;
 using FluentPOS.Shared.Core.EventLogging;
@@ -12,9 +13,9 @@ using Microsoft.Extensions.Options;
 namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
 {
     public class CatalogDbContext : ModuleDbContext, ICatalogDbContext,
-        IExtendedAttributeDbContext<Brand, BrandExtendedAttribute>,
-        IExtendedAttributeDbContext<Category, CategoryExtendedAttribute>,
-        IExtendedAttributeDbContext<Product, ProductExtendedAttribute>
+        IExtendedAttributeDbContext<Guid, Brand, BrandExtendedAttribute>,
+        IExtendedAttributeDbContext<Guid, Category, CategoryExtendedAttribute>,
+        IExtendedAttributeDbContext<Guid, Product, ProductExtendedAttribute>
     {
         private readonly PersistenceSettings _persistenceOptions;
 
@@ -39,12 +40,12 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
             modelBuilder.ApplyCatalogConfiguration(_persistenceOptions);
         }
 
-        DbSet<Brand> IExtendedAttributeDbContext<Brand, BrandExtendedAttribute>.GetEntities() => Brands;
-        DbSet<Category> IExtendedAttributeDbContext<Category, CategoryExtendedAttribute>.GetEntities() => Categories;
-        DbSet<Product> IExtendedAttributeDbContext<Product, ProductExtendedAttribute>.GetEntities() => Products;
+        DbSet<Brand> IExtendedAttributeDbContext<Guid, Brand, BrandExtendedAttribute>.GetEntities() => Brands;
+        DbSet<Category> IExtendedAttributeDbContext<Guid, Category, CategoryExtendedAttribute>.GetEntities() => Categories;
+        DbSet<Product> IExtendedAttributeDbContext<Guid, Product, ProductExtendedAttribute>.GetEntities() => Products;
 
-        DbSet<BrandExtendedAttribute> IExtendedAttributeDbContext<Brand, BrandExtendedAttribute>.ExtendedAttributes { get; set; }
-        DbSet<CategoryExtendedAttribute> IExtendedAttributeDbContext<Category, CategoryExtendedAttribute>.ExtendedAttributes { get; set; }
-        DbSet<ProductExtendedAttribute> IExtendedAttributeDbContext<Product, ProductExtendedAttribute>.ExtendedAttributes { get; set; }
+        DbSet<BrandExtendedAttribute> IExtendedAttributeDbContext<Guid, Brand, BrandExtendedAttribute>.ExtendedAttributes { get; set; }
+        DbSet<CategoryExtendedAttribute> IExtendedAttributeDbContext<Guid, Category, CategoryExtendedAttribute>.ExtendedAttributes { get; set; }
+        DbSet<ProductExtendedAttribute> IExtendedAttributeDbContext<Guid, Product, ProductExtendedAttribute>.ExtendedAttributes { get; set; }
     }
 }

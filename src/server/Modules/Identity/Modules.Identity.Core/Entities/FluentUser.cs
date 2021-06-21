@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
+using FluentPOS.Shared.Core.Contracts;
 
 namespace FluentPOS.Modules.Identity.Core.Entities
 {
-    public class FluentUser : IdentityUser
+    public class FluentUser : IdentityUser, IEntity<string>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -12,5 +14,12 @@ namespace FluentPOS.Modules.Identity.Core.Entities
         public bool IsActive { get; set; }
         public string RefreshToken { get; set; }
         public DateTime RefreshTokenExpiryTime { get; set; }
+
+        public virtual ICollection<UserExtendedAttribute> ExtendedAttributes { get; set; }
+
+        public FluentUser() : base()
+        {
+            ExtendedAttributes = new HashSet<UserExtendedAttribute>();
+        }
     }
 }

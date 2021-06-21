@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using Microsoft.Extensions.Options;
 using FluentPOS.Shared.Core.Settings;
@@ -39,7 +40,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var domainEntities = this.ChangeTracker
-                .Entries<BaseEntity>()
+                .Entries<IBaseEntity>()
                 .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any());
 
             var domainEvents = domainEntities

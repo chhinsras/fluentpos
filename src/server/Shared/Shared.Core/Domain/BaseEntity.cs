@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentPOS.Shared.Core.Contracts;
 
 namespace FluentPOS.Shared.Core.Domain
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity<TEntityId> : IEntity<TEntityId>, IBaseEntity
     {
-        public Guid Id { get; set; }
+        public TEntityId Id { get; set; }
 
         protected BaseEntity()
         {
-            Id = Guid.NewGuid();
+            Id = GenerateNewId();
         }
+
+        protected abstract TEntityId GenerateNewId();
 
         private List<Event> _domainEvents;
         public IReadOnlyCollection<Event> DomainEvents => _domainEvents?.AsReadOnly();
@@ -29,6 +32,14 @@ namespace FluentPOS.Shared.Core.Domain
         public void ClearDomainEvents()
         {
             _domainEvents?.Clear();
+        }
+    }
+
+    public abstract class BaseEntity : BaseEntity<Guid>
+    {
+        protected override Guid GenerateNewId()
+        {
+            return Guid.NewGuid();
         }
     }
 }

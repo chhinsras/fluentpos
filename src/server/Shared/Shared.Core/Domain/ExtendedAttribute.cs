@@ -5,11 +5,11 @@ using FluentPOS.Shared.DTOs.ExtendedAttributes;
 
 namespace FluentPOS.Shared.Core.Domain
 {
-    public abstract class ExtendedAttribute<TEntity>
-        : BaseEntity, IExtendedAttribute
-        where TEntity : BaseEntity
+    public abstract class ExtendedAttribute<TEntityId, TEntity>
+        : BaseEntity<Guid>, IExtendedAttribute<TEntityId>
+        where TEntity : class, IEntity<TEntityId>
     {
-        public Guid EntityId { get; set; }
+        public TEntityId EntityId { get; set; }
 
         public virtual TEntity Entity { get; set; }
 
