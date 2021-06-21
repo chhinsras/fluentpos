@@ -6,6 +6,8 @@
 // **Be sure that you only ever include this mixin once!**
 @include mat-core();
 
+@import '~ngx-toastr/toastr';
+
 // Define the default theme (same as the example above).
 $app-primary: mat-palette($mat-indigo);
 $app-accent:  mat-palette($mat-pink, A200, A100, A400);
