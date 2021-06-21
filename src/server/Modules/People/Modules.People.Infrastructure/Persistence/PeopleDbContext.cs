@@ -1,4 +1,5 @@
-﻿using FluentPOS.Modules.People.Core.Abstractions;
+﻿using System;
+using FluentPOS.Modules.People.Core.Abstractions;
 using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Infrastructure.Extensions;
 using FluentPOS.Shared.Core.EventLogging;
@@ -12,7 +13,7 @@ using Microsoft.Extensions.Options;
 namespace FluentPOS.Modules.People.Infrastructure.Persistence
 {
     public class PeopleDbContext : ModuleDbContext, IPeopleDbContext,
-        IExtendedAttributeDbContext<Customer, CustomerExtendedAttribute>
+        IExtendedAttributeDbContext<Guid, Customer, CustomerExtendedAttribute>
     {
         private readonly PersistenceSettings _persistenceOptions;
 
@@ -35,8 +36,8 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence
             modelBuilder.ApplyPeopleConfiguration(_persistenceOptions);
         }
 
-        DbSet<Customer> IExtendedAttributeDbContext<Customer, CustomerExtendedAttribute>.GetEntities() => Customers;
+        DbSet<Customer> IExtendedAttributeDbContext<Guid, Customer, CustomerExtendedAttribute>.GetEntities() => Customers;
 
-        DbSet<CustomerExtendedAttribute> IExtendedAttributeDbContext<Customer, CustomerExtendedAttribute>.ExtendedAttributes { get; set; }
+        DbSet<CustomerExtendedAttribute> IExtendedAttributeDbContext<Guid, Customer, CustomerExtendedAttribute>.ExtendedAttributes { get; set; }
     }
 }

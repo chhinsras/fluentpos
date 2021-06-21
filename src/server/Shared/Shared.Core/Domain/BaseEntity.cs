@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentPOS.Shared.Core.Contracts;
 
 namespace FluentPOS.Shared.Core.Domain
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity : IEntity<Guid>, IBaseEntity
     {
         public Guid Id { get; set; }
 

@@ -44,6 +44,17 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
             {
                 entity.ToTable("UserTokens", "Identity");
             });
+
+            builder.Entity<UserExtendedAttribute>(entity =>
+            {
+                entity.ToTable("UserExtendedAttributes", "Identity");
+
+                if (persistenceOptions.UseMsSql)
+                {
+                    entity.Property(p => p.Decimal)
+                        .HasColumnType("decimal(23, 2)");
+                }
+            });
         }
     }
 }

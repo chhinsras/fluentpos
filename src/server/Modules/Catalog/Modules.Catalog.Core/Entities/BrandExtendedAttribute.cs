@@ -1,6 +1,7 @@
-﻿using FluentPOS.Shared.Core.Domain;
+﻿using System;
+using FluentPOS.Shared.Core.Domain;
 
 namespace FluentPOS.Modules.Catalog.Core.Entities
 {
-    public class BrandExtendedAttribute : ExtendedAttribute<Brand> { }
+    public class BrandExtendedAttribute : ExtendedAttribute<Guid, Brand> { }
 }

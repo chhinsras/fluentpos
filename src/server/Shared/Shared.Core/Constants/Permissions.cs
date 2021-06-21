@@ -2,6 +2,23 @@
 {
     public static class Permissions
     {
+        public static class Users
+        {
+            public const string View = "Permissions.Users.View";
+            public const string Create = "Permissions.Users.Create";
+            public const string Edit = "Permissions.Users.Edit";
+            public const string Delete = "Permissions.Users.Delete";
+        }
+
+        public static class UsersExtendedAttributes
+        {
+            public const string View = "Permissions.Users.ExtendedAttributes.View";
+            public const string ViewAll = "Permissions.Users.ExtendedAttributes.ViewAll";
+            public const string Add = "Permissions.Users.ExtendedAttributes.Add";
+            public const string Update = "Permissions.Users.ExtendedAttributes.Update";
+            public const string Remove = "Permissions.Users.ExtendedAttributes.Remove";
+        }
+
         public static class Roles
         {
             public const string View = "Permissions.Roles.View";

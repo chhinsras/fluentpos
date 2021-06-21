@@ -1,13 +1,12 @@
 ﻿#nullable enable
-using System;
 using FluentPOS.Shared.DTOs.Filters;
 
 namespace FluentPOS.Shared.DTOs.ExtendedAttributes
 {
-    public class PaginatedExtendedAttributeFilter : PaginatedFilter
+    public class PaginatedExtendedAttributeFilter<TEntityId> : PaginatedFilter
     {
         public string? SearchString { get; set; }
-        public Guid? EntityId { get; set; }
+        public TEntityId? EntityId { get; set; }
         public ExtendedAttributeType? Type { get; set; }
     }
 }

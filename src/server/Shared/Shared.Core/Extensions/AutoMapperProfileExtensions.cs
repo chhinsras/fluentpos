@@ -19,7 +19,7 @@ namespace FluentPOS.Shared.Core.Extensions
                     BaseGenericType = t.BaseType,
                     CurrentType = t
                 })
-                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(ExtendedAttribute<>))
+                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(ExtendedAttribute<,>))
                 .ToList();
 
             foreach (var extendedAttributeType in extendedAttributeTypes)
@@ -28,27 +28,29 @@ namespace FluentPOS.Shared.Core.Extensions
 
                 #region AddExtendedAttributeCommand
 
-                var sourceType = typeof(AddExtendedAttributeCommand<>).MakeGenericType(extendedAttributeTypeGenericArguments[0]);
+                var sourceType = typeof(AddExtendedAttributeCommand<,>).MakeGenericType(extendedAttributeTypeGenericArguments.ToArray());
                 profile.CreateMap(sourceType, extendedAttributeType.CurrentType).ReverseMap();
 
                 #endregion AddExtendedAttributeCommand
 
                 #region UpdateExtendedAttributeCommand
 
-                sourceType = typeof(UpdateExtendedAttributeCommand<>).MakeGenericType(extendedAttributeTypeGenericArguments[0]);
+                sourceType = typeof(UpdateExtendedAttributeCommand<,>).MakeGenericType(extendedAttributeTypeGenericArguments.ToArray());
                 profile.CreateMap(sourceType, extendedAttributeType.CurrentType).ReverseMap();
 
                 #endregion UpdateExtendedAttributeCommand
 
                 #region GetExtendedAttributeByIdResponse
 
-                profile.CreateMap(typeof(GetExtendedAttributeByIdResponse), extendedAttributeType.CurrentType).ReverseMap();
+                sourceType = typeof(GetExtendedAttributeByIdResponse<>).MakeGenericType(extendedAttributeTypeGenericArguments[0]);
+                profile.CreateMap(sourceType, extendedAttributeType.CurrentType).ReverseMap();
 
                 #endregion GetExtendedAttributeByIdResponse
 
                 #region GetAllPagedExtendedAttributesResponse
 
-                profile.CreateMap(typeof(GetAllPagedExtendedAttributesResponse), extendedAttributeType.CurrentType).ReverseMap();
+                sourceType = typeof(GetAllPagedExtendedAttributesResponse<>).MakeGenericType(extendedAttributeTypeGenericArguments[0]);
+                profile.CreateMap(sourceType, extendedAttributeType.CurrentType).ReverseMap();
 
                 #endregion GetAllPagedExtendedAttributesResponse
             }

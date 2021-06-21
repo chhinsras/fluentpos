@@ -1,14 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace FluentPOS.Shared.Core.Interfaces
 {
-    public interface IExtendedAttributeDbContext<TEntity, TExtendedAttribute>
-        where TExtendedAttribute : ExtendedAttribute<TEntity>
-        where TEntity : BaseEntity
+    public interface IExtendedAttributeDbContext<TEntityId, TEntity, TExtendedAttribute>
+        where TExtendedAttribute : ExtendedAttribute<TEntityId, TEntity>
+        where TEntity : class, IEntity<TEntityId>
     {
         [NotMapped]
         public DbSet<TEntity> Entities => GetEntities();

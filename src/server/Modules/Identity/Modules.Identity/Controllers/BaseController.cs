@@ -6,6 +6,6 @@ namespace FluentPOS.Modules.Identity.Controllers
     [Route(BasePath + "/[controller]")]
     internal abstract class BaseController : ControllerBase
     {
-        protected const string BasePath = "api/identity";
+        protected internal const string BasePath = "api/identity";
     }
 }

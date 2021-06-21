@@ -1,16 +1,16 @@
 ﻿#nullable enable
 using System;
-using FluentPOS.Shared.Core.Domain;
+using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
 using MediatR;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands
 {
-    public class AddExtendedAttributeCommand<TEntity> : IRequest<Result<Guid>>
-        where TEntity : BaseEntity
+    public class AddExtendedAttributeCommand<TEntityId, TEntity> : IRequest<Result<Guid>>
+        where TEntity : class, IEntity<TEntityId>
     {
-        public Guid EntityId { get; set; }
+        public TEntityId EntityId { get; set; }
         public ExtendedAttributeType Type { get; set; }
         public string Key { get; set; }
         public decimal? Decimal { get; set; }

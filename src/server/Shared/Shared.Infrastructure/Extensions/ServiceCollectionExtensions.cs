@@ -70,13 +70,13 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                     BaseGenericType = t.BaseType,
                     CurrentType = t
                 })
-                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(ExtendedAttribute<>))
+                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(ExtendedAttribute<,>))
                 .ToList();
 
             foreach (var extendedAttributeType in extendedAttributeTypes)
             {
                 var extendedAttributeTypeGenericArguments = extendedAttributeType.BaseGenericType.GetGenericArguments().ToList();
-                var serviceType = typeof(IExtendedAttributeDbContext<,>).MakeGenericType(extendedAttributeTypeGenericArguments[0], extendedAttributeType.CurrentType);
+                var serviceType = typeof(IExtendedAttributeDbContext<,,>).MakeGenericType(extendedAttributeTypeGenericArguments[0], extendedAttributeTypeGenericArguments[1], extendedAttributeType.CurrentType);
                 services.AddScoped(serviceType, provider => provider.GetService(implementationType));
             }
 

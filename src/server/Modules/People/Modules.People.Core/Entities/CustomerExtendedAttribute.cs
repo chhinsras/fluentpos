@@ -1,6 +1,7 @@
-﻿using FluentPOS.Shared.Core.Domain;
+﻿using System;
+using FluentPOS.Shared.Core.Domain;
 
 namespace FluentPOS.Modules.People.Core.Entities
 {
-    public class CustomerExtendedAttribute : ExtendedAttribute<Customer> { }
+    public class CustomerExtendedAttribute : ExtendedAttribute<Guid, Customer> { }
 }
