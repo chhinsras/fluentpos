@@ -55,7 +55,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.RefreshTokenExpirationInDays);
             await _userManager.UpdateAsync(user);
             var token = await GenerateJwtAsync(user, ipAddress);
-            var response = new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime);
+            var response = new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime, user.UserName, user.Email, user.Id);
             return await Result<TokenResponse>.SuccessAsync(response);
         }
 
@@ -74,7 +74,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             user.RefreshToken = GenerateRefreshToken();
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_config.RefreshTokenExpirationInDays);
             await _userManager.UpdateAsync(user);
-            var response = new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime);
+            var response = new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime, user.UserName, user.Email, user.Id);
             return await Result<TokenResponse>.SuccessAsync(response);
         }
 
