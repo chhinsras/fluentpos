@@ -27,6 +27,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
         {            
             app.UseMiddleware<GlobalExceptionHandler>();            
             app.UseRouting();
+            app.UseCors("AngularCorsPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseHangfireDashboard("/jobs", new DashboardOptions
@@ -39,6 +40,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             });
             app.UseSwaggerDocumentation();
             app.Initialize();
+
             return app;
         }
         
