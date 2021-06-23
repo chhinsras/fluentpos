@@ -54,6 +54,6 @@ export class AuthService {
     this.localStorage.removeItem('refreshToken');
     this.currentUserTokenSource.next(null);
     this.toastr.warning('User Logged Out', "Authentincation");
-    this.router.navigateByUrl('/auth/login');
+    this.router.navigateByUrl('/login');
   }
 }

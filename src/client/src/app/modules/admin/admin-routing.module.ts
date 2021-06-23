@@ -14,7 +14,7 @@ const routes: Routes = [
     component: DashboardComponent
   },
   {
-    path: 'catalog/brand',
+    path: 'catalog/brands',
     component: BrandComponent
   }
 ];

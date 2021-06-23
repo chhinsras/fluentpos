@@ -13,7 +13,7 @@ const routes: Routes = [
     path: '', redirectTo: 'home', pathMatch: 'full'
   },
   {
-    path: 'auth', 
+    path: '', 
     component: AuthLayoutComponent,
     loadChildren: () => import('./modules/auth/auth.module').then(mod => mod.AuthModule),
   },  
