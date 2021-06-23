@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 
 namespace FluentPOS.Modules.Identity.Core.Entities
 {
