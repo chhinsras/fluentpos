@@ -90,6 +90,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             {
                 model.RoleId = role.Id;
                 model.RoleName = role.Name;
+                var allRoleClaims = await _roleClaimService.GetAllAsync();
                 var roleClaimsResult = await _roleClaimService.GetAllByRoleIdAsync(role.Id);
                 if (roleClaimsResult.Succeeded)
                 {
@@ -99,10 +100,12 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     var authorizedClaims = allClaimValues.Intersect(roleClaimValues).ToList();
                     foreach (var permission in allPermissions)
                     {
+                        permission.Id = allRoleClaims.Data?.SingleOrDefault(x => x.RoleId == roleId && x.Type == permission.Type && x.Value == permission.Value)?.Id ?? 0;
+                        permission.RoleId = roleId;
                         if (authorizedClaims.Any(a => a == permission.Value))
                         {
                             permission.Selected = true;
-                            var roleClaim = roleClaims.SingleOrDefault(a => a.Value == permission.Value);
+                            var roleClaim = roleClaims.SingleOrDefault(a => a.Type == permission.Type && a.Value == permission.Value);
                             if (roleClaim?.Description != null)
                             {
                                 permission.Description = roleClaim.Description;
