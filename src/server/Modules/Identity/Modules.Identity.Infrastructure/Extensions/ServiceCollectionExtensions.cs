@@ -35,6 +35,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                 .Configure<JwtSettings>(configuration.GetSection("JwtSettings"))
                 .AddTransient<ITokenService, TokenService>()
                 .AddTransient<IIdentityService, IdentityService>()
+                .AddTransient<IUserService, UserService>()
                 .AddTransient<IRoleService, RoleService>()
                 .AddTransient<IRoleClaimService, RoleClaimService>()
                 .AddDatabaseContext<IdentityDbContext>()

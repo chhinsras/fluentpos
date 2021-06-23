@@ -13,7 +13,7 @@ namespace FluentPOS.Modules.People.Controllers
     {
         [HttpGet]
         [Authorize(Policy = Permissions.Customers.ViewAll)]
-        public async Task<IActionResult> GetAll([FromQuery] PaginatedCustomerFilter filter)
+        public async Task<IActionResult> GetAllAsync([FromQuery] PaginatedCustomerFilter filter)
         {
             var brands = await Mediator.Send(new GetAllPagedCustomersQuery(filter.PageNumber, filter.PageSize, filter.SearchString));
             return Ok(brands);
@@ -21,29 +21,29 @@ namespace FluentPOS.Modules.People.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Policy = Permissions.Customers.View)]
-        public async Task<IActionResult> GetById(Guid id, bool bypassCache)
+        public async Task<IActionResult> GetByIdAsync(Guid id, bool bypassCache)
         {
             var brand = await Mediator.Send(new GetCustomerByIdQuery(id, bypassCache));
             return Ok(brand);
         }
 
-        [Authorize(Policy = Permissions.Customers.Register)]
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterCustomerCommand command)
+        [Authorize(Policy = Permissions.Customers.Register)]
+        public async Task<IActionResult> RegisterAsync(RegisterCustomerCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
 
-        [Authorize(Policy = Permissions.Customers.Update)]
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateCustomerCommand command)
+        [Authorize(Policy = Permissions.Customers.Update)]
+        public async Task<IActionResult> UpdateAsync(UpdateCustomerCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
 
-        [Authorize(Policy = Permissions.Customers.Remove)]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Remove(Guid id)
+        [Authorize(Policy = Permissions.Customers.Remove)]
+        public async Task<IActionResult> RemoveAsync(Guid id)
         {
             return Ok(await Mediator.Send(new RemoveCustomerCommand(id)));
         }

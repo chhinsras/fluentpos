@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FluentPOS.Modules.Identity.Core.Abstractions;
+﻿using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Shared.Core.Constants;
@@ -11,7 +10,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -23,34 +21,20 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<FluentUser> _userManager;
-        private readonly RoleManager<FluentRole> _roleManager;
         private readonly IJobService _jobService;
         private readonly IMailService _mailService;
         private readonly IStringLocalizer<IdentityService> _localizer;
 
         public IdentityService(
             UserManager<FluentUser> userManager,
-            IMapper mapper,
-            RoleManager<FluentRole> roleManager,
             IJobService jobService,
             IMailService mailService,
             IStringLocalizer<IdentityService> localizer)
         {
             _userManager = userManager;
-            _mapper = mapper;
-            _roleManager = roleManager;
             _jobService = jobService;
             _mailService = mailService;
             _localizer = localizer;
-        }
-
-        private readonly IMapper _mapper;
-
-        public async Task<Result<List<UserResponse>>> GetAllAsync()
-        {
-            var users = await _userManager.Users.AsNoTracking().ToListAsync();
-            var result = _mapper.Map<List<UserResponse>>(users);
-            return await Result<List<UserResponse>>.SuccessAsync(result);
         }
 
         public async Task<IResult> RegisterAsync(RegisterRequest request, string origin)
@@ -122,38 +106,6 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             var verificationUri = QueryHelpers.AddQueryString(endpointUri.ToString(), "userId", user.Id);
             verificationUri = QueryHelpers.AddQueryString(verificationUri, "code", code);
             return verificationUri;
-        }
-
-        public async Task<IResult<UserResponse>> GetAsync(string userId)
-        {
-            var user = await _userManager.Users.AsNoTracking().Where(u => u.Id == userId).FirstOrDefaultAsync();
-            var result = _mapper.Map<UserResponse>(user);
-            return await Result<UserResponse>.SuccessAsync(result);
-        }
-
-        public async Task<IResult<UserRolesResponse>> GetRolesAsync(string userId)
-        {
-            var viewModel = new List<UserRoleModel>();
-            var user = await _userManager.FindByIdAsync(userId);
-            var roles = await _roleManager.Roles.AsNoTracking().ToListAsync();
-            foreach (var role in roles)
-            {
-                var userRolesViewModel = new UserRoleModel
-                {
-                    RoleName = role.Name
-                };
-                if (await _userManager.IsInRoleAsync(user, role.Name))
-                {
-                    userRolesViewModel.Selected = true;
-                }
-                else
-                {
-                    userRolesViewModel.Selected = false;
-                }
-                viewModel.Add(userRolesViewModel);
-            }
-            var result = new UserRolesResponse { UserRoles = viewModel };
-            return await Result<UserRolesResponse>.SuccessAsync(result);
         }
 
         public async Task<IResult<string>> ConfirmEmailAsync(string userId, string code)

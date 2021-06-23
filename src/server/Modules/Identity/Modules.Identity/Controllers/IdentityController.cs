@@ -3,7 +3,6 @@ using FluentPOS.Shared.DTOs.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Constants;
 
 namespace FluentPOS.Modules.Identity.Controllers
 {
@@ -16,32 +15,8 @@ namespace FluentPOS.Modules.Identity.Controllers
             _identityService = identityService;
         }
 
-        [Authorize(Policy = Permissions.Users.View)]
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var users = await _identityService.GetAllAsync();
-            return Ok(users);
-        }
-
-        [Authorize(Policy = Permissions.Users.View)]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(string id)
-        {
-            var user = await _identityService.GetAsync(id);
-            return Ok(user);
-        }
-
-        [Authorize(Policy = Permissions.Users.View)]
-        [HttpGet("roles/{id}")]
-        public async Task<IActionResult> GetRolesAsync(string id)
-        {
-            var userRoles = await _identityService.GetRolesAsync(id);
-            return Ok(userRoles);
-        }
-
-        [AllowAnonymous]
         [HttpPost("/api/identity/register")]
+        [AllowAnonymous]
         public async Task<IActionResult> RegisterAsync(RegisterRequest request)
         {
             var origin = Request.Headers["origin"];

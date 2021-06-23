@@ -20,9 +20,9 @@ namespace FluentPOS.Modules.Identity.Controllers
         /// Get All Roles (basic, admin etc.)
         /// </summary>
         /// <returns>Status 200 OK</returns>
-        [Authorize(Policy = Permissions.Roles.View)]
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [Authorize(Policy = Permissions.Roles.View)]
+        public async Task<IActionResult> GetAllAsync()
         {
             var roles = await _roleService.GetAllAsync();
             return Ok(roles);
@@ -33,9 +33,9 @@ namespace FluentPOS.Modules.Identity.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns>Status 200 OK</returns>
-        [Authorize(Policy = Permissions.Roles.Create)]
         [HttpPost]
-        public async Task<IActionResult> Post(RoleRequest request)
+        [Authorize(Policy = Permissions.Roles.Create)]
+        public async Task<IActionResult> PostAsync(RoleRequest request)
         {
             var response = await _roleService.SaveAsync(request);
             return Ok(response);
@@ -46,9 +46,9 @@ namespace FluentPOS.Modules.Identity.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Status 200 OK</returns>
-        [Authorize(Policy = Permissions.Roles.Delete)]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
+        [Authorize(Policy = Permissions.Roles.Delete)]
+        public async Task<IActionResult> DeleteAsync(string id)
         {
             var response = await _roleService.DeleteAsync(id);
             return Ok(response);
@@ -59,9 +59,9 @@ namespace FluentPOS.Modules.Identity.Controllers
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns>Status 200 Ok</returns>
-        [Authorize(Policy = Permissions.RoleClaims.View)]
         [HttpGet("permissions/{roleId}")]
-        public async Task<IActionResult> GetPermissionsByRoleId([FromRoute] string roleId)
+        [Authorize(Policy = Permissions.RoleClaims.View)]
+        public async Task<IActionResult> GetPermissionsByRoleIdAsync([FromRoute] string roleId)
         {
             var response = await _roleService.GetAllPermissionsAsync(roleId);
             return Ok(response);
@@ -72,9 +72,9 @@ namespace FluentPOS.Modules.Identity.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [Authorize(Policy = Permissions.RoleClaims.Edit)]
         [HttpPut("permissions/update")]
-        public async Task<IActionResult> Update(PermissionRequest model)
+        [Authorize(Policy = Permissions.RoleClaims.Edit)]
+        public async Task<IActionResult> UpdateAsync(PermissionRequest model)
         {
             var response = await _roleService.UpdatePermissionsAsync(model);
             return Ok(response);
