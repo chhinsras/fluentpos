@@ -15,7 +15,7 @@
         <a mat-icon-button (click)="toggleDarkMode()">
             <mat-icon>{{darkModeIcon}}</mat-icon>
         </a>
-        <a mat-icon-button routerLink="/login">
+        <a mat-icon-button (click)="authService.logout()">
             <mat-icon class="fas fa-sign-out-alt"></mat-icon>
         </a>
     </mat-toolbar-row>

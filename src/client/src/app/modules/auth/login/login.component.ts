@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   returnUrl: string
 
-  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService, private activatedRoute: ActivatedRoute) {
+  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {
     this.initializeForm();
   }
 
@@ -33,10 +33,7 @@ export class LoginComponent implements OnInit {
   {
     this.authService.login(this.loginForm.value).subscribe((result) => {
       if (result.succeeded){
-        this.toastr.success('User Logged In', "Authentincation");
         this.router.navigateByUrl(this.returnUrl);
-      } else {
-        console.log('User login failed');
       }
     }, error => {
       console.log(error);

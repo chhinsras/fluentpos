@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Result } from '../models/wrappers/Result';
 import { BehaviorSubject, of, ReplaySubject } from 'rxjs';
 import { JwtService } from './jwt.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthService {
   private currentUserTokenSource = new ReplaySubject<string>(1);
   currentUserToken$ = this.currentUserTokenSource.asObservable();
 
-  constructor(private http: HttpClient, private localStorage: LocalStorageService, private router: Router) { }
+  constructor(private http: HttpClient, private localStorage: LocalStorageService, private router: Router, private toastr: ToastrService) { }
 
   loadCurrentUser(token: string) {
     if (token == null) {
@@ -40,6 +41,7 @@ export class AuthService {
           this.localStorage.setItem('token', result.data.token);
           this.localStorage.setItem('refreshToken', result.data.refreshToken);
           this.currentUserTokenSource.next(result.data.token);
+          this.toastr.success('User Logged In', "Authentincation");
         }
         return result;
       })
@@ -51,6 +53,7 @@ export class AuthService {
     this.localStorage.removeItem('token');
     this.localStorage.removeItem('refreshToken');
     this.currentUserTokenSource.next(null);
-    this.router.navigateByUrl('/login');
+    this.toastr.warning('User Logged Out', "Authentincation");
+    this.router.navigateByUrl('/auth/login');
   }
 }
