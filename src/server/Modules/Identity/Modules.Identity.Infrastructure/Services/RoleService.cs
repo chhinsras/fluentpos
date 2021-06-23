@@ -183,6 +183,11 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(request.RoleId))
+                {
+                    return await Result<string>.FailAsync(_localizer["Role is required."]);
+                }
+
                 var errors = new List<string>();
                 var role = await _roleManager.FindByIdAsync(request.RoleId);
                 if (role.Name == RoleConstants.SuperAdmin)
