@@ -15,8 +15,8 @@ namespace FluentPOS.Modules.Identity.Controllers
             _identityService = identityService;
         }
 
-        [AllowAnonymous]
         [HttpPost("/api/identity/register")]
+        [AllowAnonymous]
         public async Task<IActionResult> RegisterAsync(RegisterRequest request)
         {
             var origin = Request.Headers["origin"];
@@ -35,7 +35,7 @@ namespace FluentPOS.Modules.Identity.Controllers
         public async Task<IActionResult> ForgotPasswordAsync(ForgotPasswordRequest request)
         {
             var origin = Request.Headers["origin"];
-            return Ok(await _identityService.ForgotPasswordAsync(request.Email, origin));
+            return Ok(await _identityService.ForgotPasswordAsync(request, origin));
         }
 
         [HttpPost("/api/identity/reset-password")]

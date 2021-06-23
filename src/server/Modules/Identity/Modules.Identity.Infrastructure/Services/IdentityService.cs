@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FluentPOS.Modules.Identity.Core.Abstractions;
+﻿using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Shared.Core.Constants;
@@ -11,40 +10,31 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<FluentUser> _userManager;
-        private readonly RoleManager<FluentRole> _roleManager;
         private readonly IJobService _jobService;
         private readonly IMailService _mailService;
+        private readonly IStringLocalizer<IdentityService> _localizer;
 
         public IdentityService(
             UserManager<FluentUser> userManager,
-            IMapper mapper,
-            RoleManager<FluentRole> roleManager, IJobService jobService, IMailService mailService)
+            IJobService jobService,
+            IMailService mailService,
+            IStringLocalizer<IdentityService> localizer)
         {
             _userManager = userManager;
-            _mapper = mapper;
-            _roleManager = roleManager;
             _jobService = jobService;
             _mailService = mailService;
-        }
-
-        private readonly IMapper _mapper;
-
-        public async Task<Result<List<UserResponse>>> GetAllAsync()
-        {
-            var users = await _userManager.Users.ToListAsync();
-            var result = _mapper.Map<List<UserResponse>>(users);
-            return await Result<List<UserResponse>>.SuccessAsync(result);
+            _localizer = localizer;
         }
 
         public async Task<IResult> RegisterAsync(RegisterRequest request, string origin)
@@ -52,7 +42,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             var userWithSameUserName = await _userManager.FindByNameAsync(request.UserName);
             if (userWithSameUserName != null)
             {
-                throw new IdentityException($"Username '{request.UserName}' is already taken.");
+                throw new IdentityException(string.Format(_localizer["Username {0} is already taken."], request.UserName));
             }
             var user = new FluentUser
             {
@@ -63,6 +53,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 PhoneNumber = request.PhoneNumber,
                 IsActive = true
             };
+            if (!string.IsNullOrWhiteSpace(request.PhoneNumber))
+            {
+                var userWithSamePhoneNumber = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == request.PhoneNumber);
+                if (userWithSamePhoneNumber != null)
+                {
+                    throw new IdentityException(string.Format(_localizer["Phone number {0} is already registered."], request.PhoneNumber));
+                }
+            }
             var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
             if (userWithSameEmail == null)
             {
@@ -78,17 +76,24 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     }
 
                     var verificationUri = await SendVerificationEmail(user, origin);
-                    _jobService.Enqueue(() => _mailService.SendAsync(new MailRequest() { From = "mail@codewithmukesh.com", To = user.Email, Body = $"Please confirm your account by <a href='{verificationUri}'>clicking here</a>.", Subject = "Confirm Registration" }));
-                    return await Result<string>.SuccessAsync(user.Id, message: $"User Registered. Please check your Mailbox to verify!");
+                    var mailRequest = new MailRequest
+                    {
+                        From = "mail@codewithmukesh.com",
+                        To = user.Email,
+                        Body = string.Format(_localizer["Please confirm your account by <a href='{0}'>clicking here</a>."], verificationUri),
+                        Subject = _localizer["Confirm Registration"]
+                    };
+                    _jobService.Enqueue(() => _mailService.SendAsync(mailRequest));
+                    return await Result<string>.SuccessAsync(user.Id, message: string.Format(_localizer["User {0} Registered. Please check your Mailbox to verify!"], user.UserName));
                 }
                 else
                 {
-                    throw new IdentityException("Validation Errors Occurred.", result.Errors.Select(a => a.Description).ToList());
+                    throw new IdentityException(_localizer["Validation Errors Occurred."], result.Errors.Select(a => _localizer[a.Description].ToString()).ToList());
                 }
             }
             else
             {
-                throw new IdentityException($"Email {request.Email } is already registered.");
+                throw new IdentityException(string.Format(_localizer["Email {0} is already registered."], request.Email));
             }
         }
 
@@ -98,64 +103,33 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var route = "api/identity/confirm-email/";
             var endpointUri = new Uri(string.Concat($"{origin}/", route));
-            var verificationUri = QueryHelpers.AddQueryString(endpointUri.ToString(), "userId", user.Id.ToString());
+            var verificationUri = QueryHelpers.AddQueryString(endpointUri.ToString(), "userId", user.Id);
             verificationUri = QueryHelpers.AddQueryString(verificationUri, "code", code);
             return verificationUri;
         }
 
-        public async Task<IResult<UserResponse>> GetAsync(string userId)
-        {
-            var user = await _userManager.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
-            var result = _mapper.Map<UserResponse>(user);
-            return await Result<UserResponse>.SuccessAsync(result);
-        }
-
-        public async Task<IResult<UserRolesResponse>> GetRolesAsync(string userId)
-        {
-            var viewModel = new List<UserRoleModel>();
-            var user = await _userManager.FindByIdAsync(userId);
-            foreach (var role in _roleManager.Roles)
-            {
-                var userRolesViewModel = new UserRoleModel
-                {
-                    RoleName = role.Name
-                };
-                if (await _userManager.IsInRoleAsync(user, role.Name))
-                {
-                    userRolesViewModel.Selected = true;
-                }
-                else
-                {
-                    userRolesViewModel.Selected = false;
-                }
-                viewModel.Add(userRolesViewModel);
-            }
-            var result = new UserRolesResponse { UserRoles = viewModel };
-            return await Result<UserRolesResponse>.SuccessAsync(result);
-        }
-
         public async Task<IResult<string>> ConfirmEmailAsync(string userId, string code)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var user = await _userManager.FindByIdAsync(userId);
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
             {
-                return await Result<string>.SuccessAsync(user.Id, message: $"Account Confirmed for {user.Email}.You can now use the /api/identity/token endpoint to generate JWT.");
+                return await Result<string>.SuccessAsync(user.Id, string.Format(_localizer["Account Confirmed for {0}. You can now use the /api/identity/token endpoint to generate JWT."], user.Email));
             }
             else
             {
-                throw new IdentityException($"An error occurred while confirming user.Email.");
+                throw new IdentityException(string.Format(_localizer["An error occurred while confirming {0}"], user.Email));
             }
         }
 
-        public async Task<IResult> ForgotPasswordAsync(string emailId, string origin)
+        public async Task<IResult> ForgotPasswordAsync(ForgotPasswordRequest request, string origin)
         {
-            var user = await _userManager.FindByEmailAsync(emailId);
+            var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
             {
                 // Don't reveal that the user does not exist or is not confirmed
-                throw new IdentityException("An Error has occurred!");
+                throw new IdentityException(_localizer["An Error has occurred!"]);
             }
             // For more information on how to enable account confirmation and password reset please
             // visit https://go.microsoft.com/fwlink/?LinkID=532713
@@ -164,14 +138,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             var route = "account/reset-password";
             var endpointUri = new Uri(string.Concat($"{origin}/", route));
             var passwordResetURL = QueryHelpers.AddQueryString(endpointUri.ToString(), "Token", code);
-            var request = new MailRequest
+            var mailRequest = new MailRequest
             {
-                Body = $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(passwordResetURL)}'>clicking here.</a>.",
-                Subject = "Reset Password",
-                To = emailId
+                Body = string.Format(_localizer["Please reset your password by <a href='{0}>clicking here</a>."], HtmlEncoder.Default.Encode(passwordResetURL)),
+                Subject = _localizer["Reset Password"],
+                To = request.Email
             };
-            //BackgroundJob.Enqueue(() => _mailService.SendAsync(request));
-            return await Result.SuccessAsync("Password Reset Mail has been sent to your authorized EmailId.");
+            //BackgroundJob.Enqueue(() => _mailService.SendAsync(mailRequest));
+            return await Result.SuccessAsync(_localizer["Password Reset Mail has been sent to your authorized Email."]);
         }
 
         public async Task<IResult> ResetPasswordAsync(ResetPasswordRequest request)
@@ -180,17 +154,17 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                throw new IdentityException("An Error has occurred!");
+                throw new IdentityException(_localizer["An Error has occurred!"]);
             }
 
             var result = await _userManager.ResetPasswordAsync(user, request.Token, request.Password);
             if (result.Succeeded)
             {
-                return await Result.SuccessAsync("Password Reset Successful!");
+                return await Result.SuccessAsync(_localizer["Password Reset Successful!"]);
             }
             else
             {
-                throw new IdentityException("An Error has occurred!");
+                throw new IdentityException(_localizer["An Error has occurred!"]);
             }
         }
     }

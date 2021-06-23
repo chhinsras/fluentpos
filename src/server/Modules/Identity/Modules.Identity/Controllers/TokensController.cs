@@ -24,7 +24,7 @@ namespace FluentPOS.Modules.Identity.Controllers
         }
 
         [HttpPost("refresh")]
-        public async Task<ActionResult> Refresh([FromBody] RefreshTokenRequest request)
+        public async Task<ActionResult> RefreshAsync([FromBody] RefreshTokenRequest request)
         {
             var response = await _tokenService.RefreshTokenAsync(request, GenerateIPAddress());
             return Ok(response);

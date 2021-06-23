@@ -19,33 +19,33 @@ namespace FluentPOS.Modules.Identity.Controllers
         protected override IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
 
         [Authorize(Policy = Permissions.UsersExtendedAttributes.ViewAll)]
-        public override Task<IActionResult> GetAll(PaginatedExtendedAttributeFilter<string> filter)
+        public override Task<IActionResult> GetAllAsync(PaginatedExtendedAttributeFilter<string> filter)
         {
-            return base.GetAll(filter);
+            return base.GetAllAsync(filter);
         }
 
         [Authorize(Policy = Permissions.UsersExtendedAttributes.View)]
-        public override Task<IActionResult> GetById(Guid id, bool bypassCache)
+        public override Task<IActionResult> GetByIdAsync(Guid id, bool bypassCache)
         {
-            return base.GetById(id, bypassCache);
+            return base.GetByIdAsync(id, bypassCache);
         }
 
         [Authorize(Policy = Permissions.UsersExtendedAttributes.Add)]
-        public override Task<IActionResult> Create(AddExtendedAttributeCommand<string, FluentUser> command)
+        public override Task<IActionResult> CreateAsync(AddExtendedAttributeCommand<string, FluentUser> command)
         {
-            return base.Create(command);
+            return base.CreateAsync(command);
         }
 
         [Authorize(Policy = Permissions.UsersExtendedAttributes.Update)]
-        public override Task<IActionResult> Update(UpdateExtendedAttributeCommand<string, FluentUser> command)
+        public override Task<IActionResult> UpdateAsync(UpdateExtendedAttributeCommand<string, FluentUser> command)
         {
-            return base.Update(command);
+            return base.UpdateAsync(command);
         }
 
         [Authorize(Policy = Permissions.UsersExtendedAttributes.Remove)]
-        public override Task<IActionResult> Remove(Guid id)
+        public override Task<IActionResult> RemoveAsync(Guid id)
         {
-            return base.Remove(id);
+            return base.RemoveAsync(id);
         }
     }
 }

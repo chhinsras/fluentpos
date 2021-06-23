@@ -13,7 +13,7 @@ namespace FluentPOS.Modules.Catalog.Controllers
     {
         [HttpGet("{id}")]
         [Authorize(Policy = Permissions.Brands.View)]
-        public async Task<IActionResult> GetById(Guid id, bool bypassCache)
+        public async Task<IActionResult> GetByIdAsync(Guid id, bool bypassCache)
         {
             var brand = await Mediator.Send(new GetBrandByIdQuery(id, bypassCache));
             return Ok(brand);
@@ -21,7 +21,7 @@ namespace FluentPOS.Modules.Catalog.Controllers
 
         [HttpGet]
         [Authorize(Policy = Permissions.Brands.ViewAll)]
-        public async Task<IActionResult> GetAll([FromQuery] PaginatedBrandFilter filter)
+        public async Task<IActionResult> GetAllAsync([FromQuery] PaginatedBrandFilter filter)
         {
             var brands = await Mediator.Send(new GetAllPagedBrandsQuery(filter.PageNumber, filter.PageSize, filter.SearchString));
             return Ok(brands);
@@ -29,21 +29,21 @@ namespace FluentPOS.Modules.Catalog.Controllers
 
         [Authorize(Policy = Permissions.Brands.Register)]
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterBrandCommand command)
+        public async Task<IActionResult> RegisterAsync(RegisterBrandCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
 
         [HttpPut]
         [Authorize(Policy = Permissions.Brands.Update)]
-        public async Task<IActionResult> Update(UpdateBrandCommand command)
+        public async Task<IActionResult> UpdateAsync(UpdateBrandCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
 
         [HttpDelete("{id}")]
         [Authorize(Policy = Permissions.Brands.Remove)]
-        public async Task<IActionResult> Remove(Guid id)
+        public async Task<IActionResult> RemoveAsync(Guid id)
         {
             return Ok(await Mediator.Send(new RemoveBrandCommand(id)));
         }
