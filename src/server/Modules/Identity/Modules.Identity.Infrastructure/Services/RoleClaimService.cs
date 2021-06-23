@@ -9,6 +9,7 @@ using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Constants;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
@@ -113,9 +114,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 .FirstOrDefaultAsync(x => x.Id == id);
             if (existingRoleClaim != null)
             {
+                if (existingRoleClaim.Role?.Name == RoleConstants.SuperAdmin)
+                {
+                    return await Result<string>.FailAsync(string.Format(_localizer["Not allowed to delete Permissions for {0} Role."], existingRoleClaim.Role.Name));
+                }
+
                 _db.RoleClaims.Remove(existingRoleClaim);
                 await _db.SaveChangesAsync();
-                return await Result<string>.SuccessAsync(string.Format(_localizer["Role Claim {0} for {1} Role deleted."], existingRoleClaim.ClaimValue, existingRoleClaim.Role.Name));
+                return await Result<string>.SuccessAsync(string.Format(_localizer["Role Claim {0} for {1} Role deleted."], existingRoleClaim.ClaimValue, existingRoleClaim.Role?.Name));
             }
             else
             {

@@ -10,10 +10,12 @@ namespace FluentPOS.Modules.Identity.Controllers
     class RolesController : BaseController
     {
         private readonly IRoleService _roleService;
+        private readonly IRoleClaimService _roleClaimService;
 
-        public RolesController(IRoleService roleService)
+        public RolesController(IRoleService roleService, IRoleClaimService roleClaimService)
         {
             _roleService = roleService;
+            _roleClaimService = roleClaimService;
         }
 
         /// <summary>
@@ -55,7 +57,7 @@ namespace FluentPOS.Modules.Identity.Controllers
         }
 
         /// <summary>
-        /// Get Permission By Role Id
+        /// Get Permissions By Role Id
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns>Status 200 Ok</returns>
@@ -68,15 +70,28 @@ namespace FluentPOS.Modules.Identity.Controllers
         }
 
         /// <summary>
-        /// Edit a Role Claim
+        /// Edit a Role Claims
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
         [HttpPut("permissions/update")]
         [Authorize(Policy = Permissions.RoleClaims.Edit)]
-        public async Task<IActionResult> UpdateAsync(PermissionRequest model)
+        public async Task<IActionResult> UpdatePermissionsAsync(PermissionRequest request)
         {
-            var response = await _roleService.UpdatePermissionsAsync(model);
+            var response = await _roleService.UpdatePermissionsAsync(request);
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Delete a Role Claim By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Status 200 Ok</returns>
+        [HttpDelete("permissions/{id}")]
+        [Authorize(Policy = Permissions.RoleClaims.Delete)]
+        public async Task<IActionResult> DeleteClaimByIdAsync([FromRoute] int id)
+        {
+            var response = await _roleClaimService.DeleteAsync(id);
             return Ok(response);
         }
     }
