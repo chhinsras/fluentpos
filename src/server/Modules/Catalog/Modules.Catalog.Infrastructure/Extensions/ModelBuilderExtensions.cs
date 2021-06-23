@@ -12,7 +12,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
 
             builder.Entity<Product>(entity =>
             {
-                entity.ToTable(name: "Products", "Catalog");
+                entity.ToTable(name: "Products");
 
                 if (persistenceOptions.UseMsSql)
                 {
@@ -27,7 +27,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
 
             builder.Entity<BrandExtendedAttribute>(entity =>
             {
-                entity.ToTable("BrandExtendedAttributes", "Catalog");
+                entity.ToTable("BrandExtendedAttributes");
 
                 if (persistenceOptions.UseMsSql)
                 {
@@ -42,7 +42,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
 
             builder.Entity<CategoryExtendedAttribute>(entity =>
             {
-                entity.ToTable("CategoryExtendedAttributes", "Catalog");
+                entity.ToTable("CategoryExtendedAttributes");
 
                 if (persistenceOptions.UseMsSql)
                 {
@@ -57,7 +57,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
 
             builder.Entity<ProductExtendedAttribute>(entity =>
             {
-                entity.ToTable("ProductExtendedAttributes", "Catalog");
+                entity.ToTable("ProductExtendedAttributes");
 
                 if (persistenceOptions.UseMsSql)
                 {

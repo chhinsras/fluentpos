@@ -18,6 +18,8 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
         private readonly IEventLogger _eventLogger;
         private readonly PersistenceSettings _persistenceOptions;
 
+        protected abstract string Schema { get; }
+
         protected ModuleDbContext(
             DbContextOptions options,
             IMediator mediator,
@@ -31,6 +33,10 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            if (!string.IsNullOrWhiteSpace(Schema))
+            {
+                modelBuilder.HasDefaultSchema(Schema);
+            }
             modelBuilder.Ignore<Event>();
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
