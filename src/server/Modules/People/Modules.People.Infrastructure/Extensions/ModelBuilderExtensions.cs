@@ -12,7 +12,7 @@ namespace FluentPOS.Modules.People.Infrastructure.Extensions
 
             builder.Entity<CustomerExtendedAttribute>(entity =>
             {
-                entity.ToTable("CustomerExtendedAttributes", "People");
+                entity.ToTable("CustomerExtendedAttributes");
 
                 if (persistenceOptions.UseMsSql)
                 {

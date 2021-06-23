@@ -11,6 +11,8 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
     {
         private readonly PersistenceSettings _persistenceOptions;
 
+        protected string Schema => "Application";
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IOptions<PersistenceSettings> persistenceOptions) : base(options)
         {
             _persistenceOptions = persistenceOptions.Value;
@@ -20,7 +22,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("Application");
+            modelBuilder.HasDefaultSchema(Schema);
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyApplicationConfiguration(_persistenceOptions);
         }

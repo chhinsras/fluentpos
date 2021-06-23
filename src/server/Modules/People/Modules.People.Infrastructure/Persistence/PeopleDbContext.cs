@@ -17,6 +17,8 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence
     {
         private readonly PersistenceSettings _persistenceOptions;
 
+        protected override string Schema => "People";
+
         public PeopleDbContext(
             DbContextOptions<PeopleDbContext> options,
             IMediator mediator,
@@ -31,7 +33,6 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("People");
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyPeopleConfiguration(_persistenceOptions);
         }

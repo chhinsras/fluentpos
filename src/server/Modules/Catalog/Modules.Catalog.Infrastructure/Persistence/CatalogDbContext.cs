@@ -19,6 +19,8 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
     {
         private readonly PersistenceSettings _persistenceOptions;
 
+        protected override string Schema => "Catalog";
+
         public CatalogDbContext(
             DbContextOptions<CatalogDbContext> options,
             IMediator mediator,
@@ -35,7 +37,6 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("Catalog");
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyCatalogConfiguration(_persistenceOptions);
         }

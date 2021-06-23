@@ -12,8 +12,10 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 {
     public class IdentityDbContext : IdentityDbContext<FluentUser, FluentRole, string, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, FluentRoleClaim, IdentityUserToken<string>>,
         IExtendedAttributeDbContext<string, FluentUser, UserExtendedAttribute>
-    { 
+    {
         private readonly PersistenceSettings _persistenceOptions;
+
+        protected string Schema => "Identity";
 
         public IdentityDbContext(DbContextOptions<IdentityDbContext> options, IOptions<PersistenceSettings> persistenceOptions) : base(options)
         {
@@ -22,6 +24,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema(Schema);
             modelBuilder.Ignore<Event>();
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);

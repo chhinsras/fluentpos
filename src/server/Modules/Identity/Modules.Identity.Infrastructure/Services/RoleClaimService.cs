@@ -2,15 +2,12 @@
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Infrastructure.Persistence;
-using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
@@ -33,20 +30,20 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
 
         public async Task<Result<List<RoleClaimResponse>>> GetAllAsync()
         {
-            var roleClaims = await _db.RoleClaims.ToListAsync();
+            var roleClaims = await _db.RoleClaims.AsNoTracking().ToListAsync();
             var roleClaimsResponse = _mapper.Map<List<RoleClaimResponse>>(roleClaims);
             return await Result<List<RoleClaimResponse>>.SuccessAsync(roleClaimsResponse);
         }
 
         public async Task<int> GetCountAsync()
         {
-            var count = await _db.RoleClaims.CountAsync();
+            var count = await _db.RoleClaims.AsNoTracking().CountAsync();
             return count;
         }
 
         public async Task<Result<RoleClaimResponse>> GetByIdAsync(int id)
         {
-            var roleClaim = await _db.RoleClaims
+            var roleClaim = await _db.RoleClaims.AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
             var roleClaimResponse = _mapper.Map<RoleClaimResponse>(roleClaim);
             return await Result<RoleClaimResponse>.SuccessAsync(roleClaimResponse);
@@ -55,6 +52,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         public async Task<Result<List<RoleClaimResponse>>> GetAllByRoleIdAsync(string roleId)
         {
             var roleClaims = await _db.RoleClaims
+                .AsNoTracking()
                 .Include(x => x.Role)
                 .Where(x => x.RoleId == roleId)
                 .ToListAsync();

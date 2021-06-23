@@ -13,41 +13,44 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
 
             builder.Entity<FluentUser>(entity =>
             {
-                entity.ToTable(name: "Users", "Identity");
+                entity.ToTable(name: "Users");
             });
-
             builder.Entity<FluentRole>(entity =>
             {
-                entity.ToTable(name: "Roles", "Identity");
+                entity.ToTable(name: "Roles");
             });
+            builder.Entity<FluentRoleClaim>(entity =>
+            {
+                entity.ToTable(name: "RoleClaims");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.RoleClaims)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
             builder.Entity<IdentityUserRole<string>>(entity =>
             {
-                entity.ToTable("UserRoles", "Identity");
+                entity.ToTable("UserRoles");
             });
 
             builder.Entity<IdentityUserClaim<string>>(entity =>
             {
-                entity.ToTable("UserClaims", "Identity");
+                entity.ToTable("UserClaims");
             });
 
             builder.Entity<IdentityUserLogin<string>>(entity =>
             {
-                entity.ToTable("UserLogins", "Identity");
+                entity.ToTable("UserLogins");
             });
-
-            builder.Entity<IdentityRoleClaim<string>>(entity =>
-            {
-                entity.ToTable("RoleClaims", "Identity");
-            });
-
             builder.Entity<IdentityUserToken<string>>(entity =>
             {
-                entity.ToTable("UserTokens", "Identity");
+                entity.ToTable("UserTokens");
             });
 
             builder.Entity<UserExtendedAttribute>(entity =>
             {
-                entity.ToTable("UserExtendedAttributes", "Identity");
+                entity.ToTable("UserExtendedAttributes");
 
                 if (persistenceOptions.UseMsSql)
                 {
