@@ -61,11 +61,36 @@ namespace FluentPOS.Modules.Identity.Controllers
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns>Status 200 Ok</returns>
-        [HttpGet("permissions/{roleId}")]
+        [HttpGet("permissions/byrole/{roleId}")]
         [Authorize(Policy = Permissions.RoleClaims.View)]
         public async Task<IActionResult> GetPermissionsByRoleIdAsync([FromRoute] string roleId)
         {
             var response = await _roleService.GetAllPermissionsAsync(roleId);
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Get All Role Claims
+        /// </summary>
+        /// <returns>Status 200 Ok</returns>
+        [HttpGet("permissions")]
+        [Authorize(Policy = Permissions.RoleClaims.View)]
+        public async Task<IActionResult> GetAllClaimsAsync()
+        {
+            var response = await _roleClaimService.GetAllAsync();
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Get a Role Claim By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Status 200 Ok</returns>
+        [HttpGet("permissions/{id}")]
+        [Authorize(Policy = Permissions.RoleClaims.View)]
+        public async Task<IActionResult> GetClaimByIdAsync([FromRoute] int id)
+        {
+            var response = await _roleClaimService.GetByIdAsync(id);
             return Ok(response);
         }
 
