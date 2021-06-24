@@ -8,6 +8,10 @@
 
         DateTime = 3,
 
-        Json = 4
+        Json = 4,
+
+        Boolean = 5,
+
+        Integer = 6
     }
 }

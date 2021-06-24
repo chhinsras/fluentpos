@@ -8,7 +8,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
     public class ExtendedAttributeUpdatedEvent<TEntityId, TEntity> : Event
     {
         public ExtendedAttributeUpdatedEvent(Guid id, TEntityId entityId, ExtendedAttributeType type,
-            string key, decimal? @decimal, string? text, DateTime? dateTime, string? json, string? externalId,
+            string key, decimal? @decimal, string? text, DateTime? dateTime, string? json, bool? boolean, int? integer, string? externalId,
             string? group, string? description, bool isActive)
         {
             EntityId = entityId;
@@ -19,6 +19,8 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
             Text = text;
             DateTime = dateTime;
             Json = json;
+            Boolean = boolean;
+            Integer = integer;
             ExternalId = externalId;
             Group = @group;
             Description = description;
@@ -34,6 +36,8 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
         public string? Text { get; set; }
         public DateTime? DateTime { get; set; }
         public string? Json { get; set; }
+        public bool? Boolean { get; set; }
+        public int? Integer { get; set; }
         public string? ExternalId { get; set; }
         public string? Group { get; set; }
         public string? Description { get; set; }
