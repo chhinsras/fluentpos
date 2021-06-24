@@ -196,7 +196,48 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
 }
 ```
 
-9) Add `AddExtendedAttributeHandlersFromAssembly` extension method in `ServiceCollectionExtensions` for |module-name| to register extended attribute handlers automatically for this module:
+9) Add validators for added extended attribute into **FluentPOS.Modules.|module-name|.Core.*.Validators** inherited from each the abstract classes: `AddExtendedAttributeCommandValidator<|related-entity-id-type|, |related-entity-type-name|>`, `UpdateExtendedAttributeCommandValidator<|related-entity-id-type|, |related-entity-type-name|>` and `RemoveExtendedAttributeCommandValidator<|related-entity-id-type|, |related-entity-type-name|>`:
+
+```csharp
+namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
+{
+    public class AddBrandExtendedAttributeCommandValidator : AddExtendedAttributeCommandValidator<Guid, Brand>
+    {
+        public AddBrandExtendedAttributeCommandValidator(IStringLocalizer<AddBrandExtendedAttributeCommandValidator> localizer) : base(localizer)
+        {
+            // you can override the validation rules here
+        }
+    }
+}
+```
+
+```csharp
+namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
+{
+    public class UpdateBrandExtendedAttributeCommandValidator : UpdateExtendedAttributeCommandValidator<Guid, Brand>
+    {
+        public UpdateBrandExtendedAttributeCommandValidator(IStringLocalizer<UpdateBrandExtendedAttributeCommandValidator> localizer) : base(localizer)
+        {
+            // you can override the validation rules here
+        }
+    }
+}
+```
+
+```csharp
+namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
+{
+    public class RemoveBrandExtendedAttributeCommandValidator : RemoveExtendedAttributeCommandValidator<Guid, Brand>
+    {
+        public RemoveBrandExtendedAttributeCommandValidator(IStringLocalizer<RemoveBrandExtendedAttributeCommandValidator> localizer) : base(localizer)
+        {
+            // you can override the validation rules here
+        }
+    }
+}
+```
+
+10) Add `AddExtendedAttributeHandlersFromAssembly` and `AddExtendedAttributeCommandValidatorsFromAssembly` extension methods in `ServiceCollectionExtensions` for |module-name| to register extended attribute handlers and handler validators automatically for this module:
 
 ```csharp
 namespace FluentPOS.Modules.Catalog.Core.Extensions
@@ -207,7 +248,10 @@ namespace FluentPOS.Modules.Catalog.Core.Extensions
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
             services.AddExtendedAttributeHandlersFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddExtendedAttributeCommandValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;
         }
@@ -215,7 +259,7 @@ namespace FluentPOS.Modules.Catalog.Core.Extensions
 }
 ```
 
-10) Add the database migration using terminal: 
+11) Add the database migration using terminal: 
 
 ```
 dotnet ef migrations add "initial" --startup-project ../../../API -o Persistence/Migrations/ --context CatalogDbContext
