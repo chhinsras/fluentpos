@@ -47,7 +47,7 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Queries
                 .AsNoTracking()
                 .ToPaginatedListAsync(request.PageNumber, request.PageSize);
 
-            if (customerList == null) throw new PeopleException(_localizer["Customer Not Found!"]);
+            if (customerList == null) throw new PeopleException(_localizer["Customers Not Found!"]);
 
             var mappedCustomers = _mapper.Map<PaginatedResult<GetAllPagedCustomersResponse>>(customerList);
 

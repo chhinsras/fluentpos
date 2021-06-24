@@ -1,6 +1,6 @@
 ﻿using FluentPOS.Shared.Core.Wrapper;
-using FluentPOS.Shared.DTOs.Identity;
 using System.Threading.Tasks;
+using FluentPOS.Shared.DTOs.Identity.Tokens;
 
 namespace FluentPOS.Shared.Core.Interfaces.Services.Identity
 {
