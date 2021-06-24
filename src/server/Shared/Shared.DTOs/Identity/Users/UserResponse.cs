@@ -1,4 +1,4 @@
-﻿namespace FluentPOS.Shared.DTOs.Identity
+﻿namespace FluentPOS.Shared.DTOs.Identity.Users
 {
     public class UserResponse
     {

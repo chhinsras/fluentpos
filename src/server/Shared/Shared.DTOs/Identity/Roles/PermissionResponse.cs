@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FluentPOS.Shared.DTOs.Identity
+namespace FluentPOS.Shared.DTOs.Identity.Roles
 {
     public class PermissionResponse
     {

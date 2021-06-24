@@ -3,7 +3,6 @@ using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Modules.Identity.Core.Settings;
 using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using FluentPOS.Shared.Core.Wrapper;
-using FluentPOS.Shared.DTOs.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -17,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
 using System.Net;
+using FluentPOS.Shared.DTOs.Identity.Tokens;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {

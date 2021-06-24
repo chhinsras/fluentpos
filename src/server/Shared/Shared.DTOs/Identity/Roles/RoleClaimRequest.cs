@@ -1,6 +1,6 @@
-﻿namespace FluentPOS.Shared.DTOs.Identity
+﻿namespace FluentPOS.Shared.DTOs.Identity.Roles
 {
-    public class RoleClaimResponse
+    public class RoleClaimRequest
     {
         public int Id { get; set; }
         public string RoleId { get; set; }

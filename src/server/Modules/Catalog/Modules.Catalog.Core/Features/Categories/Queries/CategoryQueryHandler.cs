@@ -45,7 +45,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
                 .AsNoTracking()
                 .ToPaginatedListAsync(request.PageNumber, request.PageSize);
 
-            if (categoryList == null) throw new CatalogException(_localizer["Category Not Found!"]);
+            if (categoryList == null) throw new CatalogException(_localizer["Categories Not Found!"]);
 
             var mappedCategories = _mapper.Map<PaginatedResult<GetAllPagedCategoriesResponse>>(categoryList);
 

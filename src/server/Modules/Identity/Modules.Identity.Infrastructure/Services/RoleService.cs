@@ -6,7 +6,6 @@ using FluentPOS.Modules.Identity.Core.Helpers;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using FluentPOS.Shared.Core.Wrapper;
-using FluentPOS.Shared.DTOs.Identity;
 using FluentPOS.Shared.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentPOS.Shared.DTOs.Identity.Roles;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {

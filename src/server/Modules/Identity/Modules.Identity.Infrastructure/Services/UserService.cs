@@ -5,7 +5,7 @@ using AutoMapper;
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Shared.Core.Wrapper;
-using FluentPOS.Shared.DTOs.Identity;
+using FluentPOS.Shared.DTOs.Identity.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
