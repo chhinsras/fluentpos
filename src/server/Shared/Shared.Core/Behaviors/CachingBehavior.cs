@@ -9,19 +9,27 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Shared.Core.Behaviors
 {
+    public class CachingBehavior
+    {
+        // for localization
+    }
+
     public class CachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : ICacheable
     {
         private readonly IDistributedCache _cache;
         private readonly ILogger _logger;
+        private readonly IStringLocalizer<CachingBehavior> _localizer;
         private readonly CacheSettings _settings;
 
-        public CachingBehavior(IDistributedCache cache, ILogger<TResponse> logger, IOptions<CacheSettings> settings)
+        public CachingBehavior(IDistributedCache cache, ILogger<TResponse> logger, IOptions<CacheSettings> settings, IStringLocalizer<CachingBehavior> localizer)
         {
             _cache = cache ?? throw new ArgumentNullException(nameof(cache));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _localizer = localizer;
             _settings = settings.Value;
         }
 
@@ -30,7 +38,7 @@ namespace FluentPOS.Shared.Core.Behaviors
             TResponse response;
             if (request.BypassCache)
             {
-                _logger.LogInformation($"Bypassing Cache for -> '{request.CacheKey}'.");
+                _logger.LogInformation(string.Format(_localizer["Bypassing Cache for -> '{0}'."], request.CacheKey));
                 return await next();
             }
             async Task<TResponse> GetResponseAndAddToCache()
@@ -47,12 +55,12 @@ namespace FluentPOS.Shared.Core.Behaviors
             if (cachedResponse != null)
             {
                 response = JsonConvert.DeserializeObject<TResponse>(Encoding.Default.GetString(cachedResponse));
-                _logger.LogInformation($"Fetched from Cache -> '{request.CacheKey}'.");
+                _logger.LogInformation(string.Format(_localizer["Fetched from Cache -> '{0}'."], request.CacheKey));
             }
             else
             {
                 response = await GetResponseAndAddToCache();
-                _logger.LogInformation($"Added to Cache -> '{request.CacheKey}'.");
+                _logger.LogInformation(string.Format(_localizer["Added to Cache -> '{0}'."], request.CacheKey));
             }
 
             return response;
