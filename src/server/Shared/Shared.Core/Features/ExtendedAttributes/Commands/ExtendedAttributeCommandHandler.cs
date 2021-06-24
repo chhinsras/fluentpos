@@ -55,7 +55,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands
             var extendedAttribute = _mapper.Map<TExtendedAttribute>(command);
             extendedAttribute.AddDomainEvent(new ExtendedAttributeAddedEvent<TEntityId, TEntity>(extendedAttribute.Id,
                 extendedAttribute.EntityId, extendedAttribute.Type, extendedAttribute.Key, extendedAttribute.Decimal,
-                extendedAttribute.Text, extendedAttribute.DateTime, extendedAttribute.Json,
+                extendedAttribute.Text, extendedAttribute.DateTime, extendedAttribute.Json, extendedAttribute.Boolean, extendedAttribute.Integer,
                 extendedAttribute.ExternalId, extendedAttribute.Group, extendedAttribute.Description,
                 extendedAttribute.IsActive));
             await _context.ExtendedAttributes.AddAsync(extendedAttribute, cancellationToken);
@@ -89,7 +89,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands
             extendedAttribute = _mapper.Map<TExtendedAttribute>(command);
             extendedAttribute.AddDomainEvent(new ExtendedAttributeUpdatedEvent<TEntityId, TEntity>(extendedAttribute.Id,
                 extendedAttribute.EntityId, extendedAttribute.Type, extendedAttribute.Key, extendedAttribute.Decimal,
-                extendedAttribute.Text, extendedAttribute.DateTime, extendedAttribute.Json,
+                extendedAttribute.Text, extendedAttribute.DateTime, extendedAttribute.Json, extendedAttribute.Boolean, extendedAttribute.Integer,
                 extendedAttribute.ExternalId, extendedAttribute.Group, extendedAttribute.Description,
                 extendedAttribute.IsActive));
             _context.ExtendedAttributes.Update(extendedAttribute);

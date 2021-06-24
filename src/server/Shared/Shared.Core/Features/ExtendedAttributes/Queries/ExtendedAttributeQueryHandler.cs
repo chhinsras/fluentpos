@@ -42,7 +42,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
 
         public async Task<PaginatedResult<GetAllPagedExtendedAttributesResponse<TEntityId>>> Handle(GetAllPagedExtendedAttributesQuery<TEntityId, TEntity> request, CancellationToken cancellationToken)
         {
-            Expression<Func<TExtendedAttribute, GetAllPagedExtendedAttributesResponse<TEntityId>>> expression = e => new GetAllPagedExtendedAttributesResponse<TEntityId>(e.Id, e.EntityId, e.Type, e.Key, e.Decimal, e.Text, e.DateTime, e.Json, e.ExternalId, e.Group, e.Description, e.IsActive);
+            Expression<Func<TExtendedAttribute, GetAllPagedExtendedAttributesResponse<TEntityId>>> expression = e => new GetAllPagedExtendedAttributesResponse<TEntityId>(e.Id, e.EntityId, e.Type, e.Key, e.Decimal, e.Text, e.DateTime, e.Json, e.Boolean, e.Integer, e.ExternalId, e.Group, e.Description, e.IsActive);
 
             var queryable = _context.ExtendedAttributes.OrderBy(x => x.Id).AsQueryable();
 
@@ -56,6 +56,8 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
                         || (b.Text == null || b.Type == ExtendedAttributeType.Text && b.Text != null && b.Text.Contains(request.SearchString))
                         || (b.DateTime == null || b.Type == ExtendedAttributeType.DateTime && b.DateTime != null && b.DateTime.ToString().Contains(request.SearchString))
                         || (b.Json == null || b.Type == ExtendedAttributeType.Json && b.Json != null && b.Json.Contains(request.SearchString))
+                        || (b.Boolean == null || b.Type == ExtendedAttributeType.Boolean && b.Boolean != null && b.Boolean.ToString().Contains(request.SearchString))
+                        || (b.Integer == null || b.Type == ExtendedAttributeType.Integer && b.Integer != null && b.Integer.ToString().Contains(request.SearchString))
                         || (b.ExternalId == null || b.ExternalId != null && b.ExternalId.Contains(request.SearchString))
                         || (b.Group == null || b.Group != null && b.Group.Contains(request.SearchString))
                         || (b.Description == null || b.Description != null && b.Description.Contains(request.SearchString))

@@ -25,6 +25,10 @@ namespace FluentPOS.Shared.Core.Domain
 
         public string? Json { get; set; }
 
+        public bool? Boolean { get; set; }
+
+        public int? Integer { get; set; }
+
         public string? ExternalId { get; set; }
 
         public string? Group { get; set; }

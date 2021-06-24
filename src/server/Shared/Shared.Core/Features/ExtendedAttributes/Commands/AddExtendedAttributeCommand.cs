@@ -17,6 +17,8 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands
         public string? Text { get; set; }
         public DateTime? DateTime { get; set; }
         public string? Json { get; set; }
+        public bool? Boolean { get; set; }
+        public int? Integer { get; set; }
         public string? ExternalId { get; set; }
         public string? Group { get; set; }
         public string? Description { get; set; }
