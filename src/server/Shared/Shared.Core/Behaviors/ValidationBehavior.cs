@@ -28,7 +28,7 @@ namespace FluentPOS.Shared.Core.Behaviors
 
                 if (failures.Count != 0)
                 {
-                    var errorMessages = failures.Select(a => a.ErrorMessage).ToList();
+                    var errorMessages = failures.Select(a => a.ErrorMessage).Distinct().ToList();
                     throw new CustomValidationException(errorMessages);
                 }
             }
