@@ -13,6 +13,7 @@ namespace FluentPOS.Modules.People.Core.Extensions
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddExtendedAttributeHandlersFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddExtendedAttributeCommandValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;
         }

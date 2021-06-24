@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\ExtendedAttributes\Commands\Validators\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

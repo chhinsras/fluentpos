@@ -8,10 +8,12 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
+using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Events;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
+using FluentValidation;
 
 namespace FluentPOS.Shared.Core.Extensions
 {
@@ -111,7 +113,86 @@ namespace FluentPOS.Shared.Core.Extensions
                 services.AddScoped(serviceType, eventsImplementationType);
 
                 #endregion ExtendedAttributeRemovedEvent
+
+
             }
+
+            return services;
+        }
+
+        public static IServiceCollection AddExtendedAttributeCommandValidatorsFromAssembly(this IServiceCollection services, Assembly assembly)
+        {
+            #region AddExtendedAttributeCommandValidator
+
+            var addCommandValidatorTypes = assembly
+                .GetExportedTypes()
+                .Where(t => t.IsClass && !t.IsAbstract && t.BaseType?.IsGenericType == true)
+                .Select(t => new
+                {
+                    BaseGenericType = t.BaseType,
+                    CurrentType = t
+                })
+                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(AddExtendedAttributeCommandValidator<,>))
+                .ToList();
+
+            foreach (var addCommandValidatorType in addCommandValidatorTypes)
+            {
+                var addCommandValidatorTypeGenericArguments = addCommandValidatorType.BaseGenericType.GetGenericArguments().ToList();
+
+                var addCommandType = typeof(AddExtendedAttributeCommand<,>).MakeGenericType(addCommandValidatorTypeGenericArguments.ToArray());
+                var validatorServiceType = typeof(IValidator<>).MakeGenericType(addCommandType);
+                services.AddScoped(validatorServiceType, addCommandValidatorType.CurrentType);
+            }
+
+            #endregion AddExtendedAttributeCommandValidator
+
+            #region UpdateExtendedAttributeCommandValidator
+
+            var updateCommandValidatorTypes = assembly
+                .GetExportedTypes()
+                .Where(t => t.IsClass && !t.IsAbstract && t.BaseType?.IsGenericType == true)
+                .Select(t => new
+                {
+                    BaseGenericType = t.BaseType,
+                    CurrentType = t
+                })
+                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(UpdateExtendedAttributeCommandValidator<,>))
+                .ToList();
+
+            foreach (var updateCommandValidatorType in updateCommandValidatorTypes)
+            {
+                var updateCommandValidatorTypeGenericArguments = updateCommandValidatorType.BaseGenericType.GetGenericArguments().ToList();
+
+                var updateCommandType = typeof(UpdateExtendedAttributeCommand<,>).MakeGenericType(updateCommandValidatorTypeGenericArguments.ToArray());
+                var validatorServiceType = typeof(IValidator<>).MakeGenericType(updateCommandType);
+                services.AddScoped(validatorServiceType, updateCommandValidatorType.CurrentType);
+            }
+
+            #endregion UpdateExtendedAttributeCommandValidator
+
+            #region RemoveExtendedAttributeCommandValidator
+
+            var removeCommandValidatorTypes = assembly
+                .GetExportedTypes()
+                .Where(t => t.IsClass && !t.IsAbstract && t.BaseType?.IsGenericType == true)
+                .Select(t => new
+                {
+                    BaseGenericType = t.BaseType,
+                    CurrentType = t
+                })
+                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(RemoveExtendedAttributeCommandValidator<,>))
+                .ToList();
+
+            foreach (var removeCommandValidatorType in removeCommandValidatorTypes)
+            {
+                var removeCommandValidatorTypeGenericArguments = removeCommandValidatorType.BaseGenericType.GetGenericArguments().ToList();
+
+                var removeCommandType = typeof(RemoveExtendedAttributeCommand<,>).MakeGenericType(removeCommandValidatorTypeGenericArguments.ToArray());
+                var validatorServiceType = typeof(IValidator<>).MakeGenericType(removeCommandType);
+                services.AddScoped(validatorServiceType, removeCommandValidatorType.CurrentType);
+            }
+
+            #endregion RemoveExtendedAttributeCommandValidator
 
             return services;
         }

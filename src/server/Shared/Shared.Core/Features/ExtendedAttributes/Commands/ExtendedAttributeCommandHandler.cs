@@ -35,7 +35,11 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<ExtendedAttributeCommandHandler> _localizer;
 
-        public ExtendedAttributeCommandHandler(IExtendedAttributeDbContext<TEntityId, TEntity, TExtendedAttribute> context, IMapper mapper, IStringLocalizer<ExtendedAttributeCommandHandler> localizer, IDistributedCache cache)
+        public ExtendedAttributeCommandHandler(
+            IExtendedAttributeDbContext<TEntityId, TEntity, TExtendedAttribute> context,
+            IMapper mapper,
+            IStringLocalizer<ExtendedAttributeCommandHandler> localizer,
+            IDistributedCache cache)
         {
             _context = context;
             _mapper = mapper;
