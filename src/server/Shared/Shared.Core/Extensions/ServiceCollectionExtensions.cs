@@ -45,19 +45,12 @@ namespace FluentPOS.Shared.Core.Extensions
                     {
                         if (!configureOptions.JsonSerializerOptions.Converters.Any(c => c.GetType() == typeof(TimespanJsonConverter)))
                             configureOptions.JsonSerializerOptions.Converters.Add(new TimespanJsonConverter());
-                        //configureOptions.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
-                        //configureOptions.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     });
             }
             else if (options.UseNewtonsoftJson)
             {
                 services
                     .AddSingleton<IJsonSerializer, NewtonSoftJsonSerializer>()
-                    .Configure<JsonSerializerSettingsOptions>(configureSettings =>
-                    {
-                        //configureSettings.JsonSerializerSettings.ContractResolver =
-                        //    new CamelCasePropertyNamesContractResolver();
-                    });
             }
             return services;
         }
