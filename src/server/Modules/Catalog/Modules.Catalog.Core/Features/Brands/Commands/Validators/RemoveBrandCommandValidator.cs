@@ -9,7 +9,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands.Validators
         public RemoveBrandCommandValidator(IStringLocalizer<RemoveBrandCommandValidator> localizer)
         {
             RuleFor(c => c.Id)
-                .NotEqual(Guid.Empty);
+                .NotEqual(Guid.Empty).WithMessage(x => localizer["The {PropertyName} property cannot be empty."]);
         }
     }
 }
