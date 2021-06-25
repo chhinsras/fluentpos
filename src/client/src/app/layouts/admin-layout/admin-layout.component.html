@@ -1,6 +1,32 @@
 <mat-sidenav-container class='sidenav-container mat-app-background {{themeVariant}}'>
-    <mat-sidenav #sidenav class="sidenav" mode="push">
-        <app-side-navigation></app-side-navigation>
+    <mat-sidenav #sidenav class="sidenav" disableClose="false" mode="push">
+        <mat-nav-list style="padding-top: 0px;">
+            <mat-card class="user-card mat-elevation-z0">
+                <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>Super Admin</mat-card-title>
+                    <mat-card-subtitle>superadmin@fluentpos.com</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+            <hr>
+            <div style="margin-top: 20px">
+                <a mat-list-item routerLink="dashboard/" (click)="sidenav.close()">
+                    <mat-icon style="padding-right: 10px;">trending_up</mat-icon> Dashboard
+                </a>
+                <div class="nav-subheading">
+                    Catalog Management</div>
+                <a mat-list-item routerLink="catalog/brands" (click)="sidenav.close()">
+                    <mat-icon style="padding-right: 10px;">home</mat-icon> Brands
+                </a>
+                <a mat-list-item routerLink="catalog/categories" (click)="sidenav.close()">
+                    <mat-icon style="padding-right: 10px;">home</mat-icon> Categories
+                </a>
+                <a mat-list-item routerLink="catalog/products" (click)="sidenav.close()">
+                    <mat-icon style="padding-right: 10px;">home</mat-icon> Products
+                </a>
+            </div>
+        
+        </mat-nav-list>
     </mat-sidenav>
     <app-toolbar [inputSideNav]="sidenav" (darkModelToggled)="onDarkModeToggled($event)"></app-toolbar>
     <div class="content">

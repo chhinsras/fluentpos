@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { PosLayoutComponent } from './layouts/pos-layout/pos-layout.component';
-import { SideNavigationComponent } from './layouts/admin-layout/side-navigation/side-navigation.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ToolbarComponent } from './layouts/admin-layout/toolbar/toolbar.component';
@@ -23,7 +22,6 @@ import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
     AppComponent,
     AuthLayoutComponent,
     PosLayoutComponent,
-    SideNavigationComponent,
     ToolbarComponent,
     HomeLayoutComponent,
     AdminLayoutComponent
