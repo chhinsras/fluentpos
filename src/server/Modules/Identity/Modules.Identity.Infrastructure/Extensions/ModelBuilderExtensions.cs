@@ -58,6 +58,16 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                         .HasColumnType("decimal(23, 2)");
                 }
             });
+            builder.Entity<RoleExtendedAttribute>(entity =>
+            {
+                entity.ToTable("RoleExtendedAttributes");
+
+                if (persistenceOptions.UseMsSql)
+                {
+                    entity.Property(p => p.Decimal)
+                        .HasColumnType("decimal(23, 2)");
+                }
+            });
         }
     }
 }
