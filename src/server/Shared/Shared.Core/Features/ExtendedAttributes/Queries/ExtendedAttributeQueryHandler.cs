@@ -52,15 +52,15 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
             if (!string.IsNullOrEmpty(request.SearchString))
             {
                 queryable = queryable.Where(b => b.Key.Contains(request.SearchString)
-                        || (b.Decimal == null || b.Type == ExtendedAttributeType.Decimal && b.Decimal != null && b.Decimal.ToString().Contains(request.SearchString))
-                        || (b.Text == null || b.Type == ExtendedAttributeType.Text && b.Text != null && b.Text.Contains(request.SearchString))
-                        || (b.DateTime == null || b.Type == ExtendedAttributeType.DateTime && b.DateTime != null && b.DateTime.ToString().Contains(request.SearchString))
-                        || (b.Json == null || b.Type == ExtendedAttributeType.Json && b.Json != null && b.Json.Contains(request.SearchString))
-                        || (b.Boolean == null || b.Type == ExtendedAttributeType.Boolean && b.Boolean != null && b.Boolean.ToString().Contains(request.SearchString))
-                        || (b.Integer == null || b.Type == ExtendedAttributeType.Integer && b.Integer != null && b.Integer.ToString().Contains(request.SearchString))
-                        || (b.ExternalId == null || b.ExternalId != null && b.ExternalId.Contains(request.SearchString))
-                        || (b.Group == null || b.Group != null && b.Group.Contains(request.SearchString))
-                        || (b.Description == null || b.Description != null && b.Description.Contains(request.SearchString))
+                        || b.Type == ExtendedAttributeType.Decimal && b.Decimal != null && b.Decimal.ToString().Contains(request.SearchString)
+                        || b.Type == ExtendedAttributeType.Text && b.Text != null && b.Text.Contains(request.SearchString)
+                        || b.Type == ExtendedAttributeType.DateTime && b.DateTime != null && b.DateTime.ToString().Contains(request.SearchString)
+                        || b.Type == ExtendedAttributeType.Json && b.Json != null && b.Json.Contains(request.SearchString)
+                        || b.Type == ExtendedAttributeType.Boolean && b.Boolean != null && b.Boolean.ToString().Contains(request.SearchString)
+                        || b.Type == ExtendedAttributeType.Integer && b.Integer != null && b.Integer.ToString().Contains(request.SearchString)
+                        || b.ExternalId != null && b.ExternalId.Contains(request.SearchString)
+                        || b.Group != null && b.Group.Contains(request.SearchString)
+                        || b.Description != null && b.Description.Contains(request.SearchString)
                     );
             }
 
