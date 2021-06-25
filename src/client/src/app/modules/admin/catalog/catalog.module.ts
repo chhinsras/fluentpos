@@ -6,6 +6,7 @@ import { CatalogComponent } from './catalog.component';
 import { BrandComponent } from './components/brand/brand.component';
 import { ProductComponent } from './components/product/product.component';
 import { CategoryComponent } from './components/category/category.component';
+import { MaterialModule } from 'src/app/core/material/material.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { CategoryComponent } from './components/category/category.component';
   ],
   imports: [
     CommonModule,
-    CatalogRoutingModule
+    CatalogRoutingModule,
+    MaterialModule
   ]
 })
 export class CatalogModule { }

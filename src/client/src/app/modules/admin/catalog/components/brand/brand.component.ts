@@ -11,6 +11,7 @@ import { BrandService } from '../../services/brand.service';
 export class BrandComponent implements OnInit {
 
   brands: PaginatedResult<Brand>;
+  brandColumns: string[] = ['id', 'name', 'detail'];
 
   constructor(public brandService: BrandService) { }
 
