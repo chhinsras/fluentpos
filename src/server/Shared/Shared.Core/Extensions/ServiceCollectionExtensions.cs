@@ -50,7 +50,7 @@ namespace FluentPOS.Shared.Core.Extensions
             else if (options.UseNewtonsoftJson)
             {
                 services
-                    .AddSingleton<IJsonSerializer, NewtonSoftJsonSerializer>()
+                    .AddSingleton<IJsonSerializer, NewtonSoftJsonSerializer>();
             }
             return services;
         }
