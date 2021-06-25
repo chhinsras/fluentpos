@@ -6,6 +6,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ToolbarComponent } from 'src/app/layouts/admin-layout/toolbar/toolbar.component';
 import { SideNavigationComponent } from 'src/app/layouts/admin-layout/side-navigation/side-navigation.component';
 import { AdminLayoutComponent } from 'src/app/layouts/admin-layout/admin-layout.component';
+import { MaterialModule } from 'src/app/core/material/material.module';
+import { SharedModule } from 'src/app/core/shared/shared.module';
+import { CatalogModule } from './catalog/catalog.module';
 
 
 @NgModule({
@@ -14,7 +17,10 @@ import { AdminLayoutComponent } from 'src/app/layouts/admin-layout/admin-layout.
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    MaterialModule,
+    SharedModule,
+    CatalogModule
   ]
 })
 export class AdminModule { }

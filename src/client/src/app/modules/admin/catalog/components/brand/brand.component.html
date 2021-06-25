@@ -1,1 +1,7 @@
-<p>brand works!</p>
+<ng-container *ngIf="this.brands && this.brands.data">
+  <mat-list *ngFor="let brand of brands.data">
+    <mat-list-item> 
+      <p>{{brand.id}} - {{brand.name}}</p> 
+    </mat-list-item>
+   </mat-list>
+</ng-container>
