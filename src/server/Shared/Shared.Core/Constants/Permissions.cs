@@ -27,6 +27,15 @@
             public const string Delete = "Permissions.Roles.Delete";
         }
 
+        public static class RolesExtendedAttributes
+        {
+            public const string View = "Permissions.Roles.ExtendedAttributes.View";
+            public const string ViewAll = "Permissions.Roles.ExtendedAttributes.ViewAll";
+            public const string Add = "Permissions.Roles.ExtendedAttributes.Add";
+            public const string Update = "Permissions.Roles.ExtendedAttributes.Update";
+            public const string Remove = "Permissions.Roles.ExtendedAttributes.Remove";
+        }
+
         public static class RoleClaims
         {
             public const string View = "Permissions.RoleClaims.View";
