@@ -16,6 +16,7 @@ import { ToolbarComponent } from './layouts/admin-layout/toolbar/toolbar.compone
 import { CatalogRoutingModule } from './modules/admin/catalog/catalog-routing.module';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { SharedModule } from './core/shared/shared.module';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -36,8 +37,9 @@ import { SharedModule } from './core/shared/shared.module';
     HttpClientModule,
     CatalogRoutingModule
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  providers: [,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
