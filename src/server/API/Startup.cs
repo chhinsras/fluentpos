@@ -23,6 +23,7 @@ namespace FluentPOS.Bootstrapper
         {
             services
                 .AddDistributedMemoryCache()
+                .AddSerialization(_config)
                 .AddIdentityModule(_config)
                 .AddSharedInfrastructure(_config)
                 .AddSharedApplication(_config)

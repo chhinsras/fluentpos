@@ -2,12 +2,12 @@
 using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
@@ -17,12 +17,14 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
         private readonly ILogger<CatalogDbSeeder> _logger;
         private readonly CatalogDbContext _db;
         private readonly IStringLocalizer<CatalogDbSeeder> _localizer;
+        private readonly IJsonSerializer _jsonSerializer;
 
-        public CatalogDbSeeder(ILogger<CatalogDbSeeder> logger, CatalogDbContext db, IStringLocalizer<CatalogDbSeeder> localizer)
+        public CatalogDbSeeder(ILogger<CatalogDbSeeder> logger, CatalogDbContext db, IStringLocalizer<CatalogDbSeeder> localizer, IJsonSerializer jsonSerializer)
         {
             _logger = logger;
             _db = db;
             _localizer = localizer;
+            _jsonSerializer = jsonSerializer;
         }
 
         public void Initialize()
@@ -48,7 +50,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
                 if (!_db.Brands.Any())
                 {
                     var brandData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/brands.json");
-                    var brands = JsonConvert.DeserializeObject<List<Brand>>(brandData);
+                    var brands = _jsonSerializer.Deserialize<List<Brand>>(brandData);
 
                     if (brands != null)
                     {
@@ -72,7 +74,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
                 if (!_db.Categories.Any())
                 {
                     var categoryData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/categories.json");
-                    var categories = JsonConvert.DeserializeObject<List<Category>>(categoryData);
+                    var categories = _jsonSerializer.Deserialize<List<Category>>(categoryData);
 
                     if (categories != null)
                     {
@@ -96,7 +98,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
                 if (!_db.Products.Any())
                 {
                     var productData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/products.json");
-                    var products = JsonConvert.DeserializeObject<List<Product>>(productData);
+                    var products = _jsonSerializer.Deserialize<List<Product>>(productData);
 
                     if (products != null)
                     {

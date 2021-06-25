@@ -18,6 +18,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using FluentPOS.Shared.Core.Domain;
+using FluentPOS.Shared.Core.Extensions;
 
 [assembly: InternalsVisibleTo("Bootstrapper")]
 
@@ -83,17 +84,6 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             return services;
         }
 
-        public static T GetOptions<T>(this IServiceCollection services, string sectionName) where T : new()
-        {
-            using var serviceProvider = services.BuildServiceProvider();
-            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            var section = configuration.GetSection(sectionName);
-            var options = new T();
-            section.Bind(options);
-
-            return options;
-        }
-
         private static IServiceCollection AddPersistenceSettings(this IServiceCollection services, IConfiguration config)
         {
             return services
@@ -155,7 +145,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                 });
             });
         }
-    
+
         private static IServiceCollection AddCorsPolicy(this IServiceCollection services)
         {
             var corsSettings = services.GetOptions<CorsSettings>(nameof(CorsSettings));

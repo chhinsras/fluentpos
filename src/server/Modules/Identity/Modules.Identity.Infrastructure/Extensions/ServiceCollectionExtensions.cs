@@ -21,6 +21,7 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Extensions;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
 {

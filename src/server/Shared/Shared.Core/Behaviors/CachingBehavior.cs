@@ -4,11 +4,11 @@ using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Shared.Core.Behaviors
@@ -23,13 +23,15 @@ namespace FluentPOS.Shared.Core.Behaviors
         private readonly IDistributedCache _cache;
         private readonly ILogger _logger;
         private readonly IStringLocalizer<CachingBehavior> _localizer;
+        private readonly IJsonSerializer _jsonSerializer;
         private readonly CacheSettings _settings;
 
-        public CachingBehavior(IDistributedCache cache, ILogger<TResponse> logger, IOptions<CacheSettings> settings, IStringLocalizer<CachingBehavior> localizer)
+        public CachingBehavior(IDistributedCache cache, ILogger<TResponse> logger, IOptions<CacheSettings> settings, IStringLocalizer<CachingBehavior> localizer, IJsonSerializer jsonSerializer)
         {
             _cache = cache ?? throw new ArgumentNullException(nameof(cache));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _localizer = localizer;
+            _jsonSerializer = jsonSerializer;
             _settings = settings.Value;
         }
 
@@ -46,7 +48,7 @@ namespace FluentPOS.Shared.Core.Behaviors
                 response = await next();
                 var slidingExpiration = request.SlidingExpiration ?? TimeSpan.FromHours(_settings.SlidingExpiration);
                 var options = new DistributedCacheEntryOptions { SlidingExpiration = slidingExpiration };
-                var serializedData = Encoding.Default.GetBytes(JsonConvert.SerializeObject(response));
+                var serializedData = Encoding.Default.GetBytes(_jsonSerializer.Serialize(response));
                 await _cache.SetAsync((string)request.CacheKey, serializedData, options, cancellationToken);
                 return response;
             }
@@ -54,7 +56,7 @@ namespace FluentPOS.Shared.Core.Behaviors
             var cachedResponse = await _cache.GetAsync((string)request.CacheKey, cancellationToken);
             if (cachedResponse != null)
             {
-                response = JsonConvert.DeserializeObject<TResponse>(Encoding.Default.GetString(cachedResponse));
+                response = _jsonSerializer.Deserialize<TResponse>(Encoding.Default.GetString(cachedResponse));
                 _logger.LogInformation(string.Format(_localizer["Fetched from Cache -> '{0}'."], request.CacheKey));
             }
             else
