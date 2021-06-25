@@ -2,8 +2,8 @@
 using FluentPOS.Shared.Core.EventLogging;
 using FluentPOS.Shared.Core.Interfaces;
 using FluentPOS.Shared.Core.Interfaces.Services.Identity;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 
 namespace FluentPOS.Shared.Infrastructure.EventLogging
 {
@@ -11,16 +11,18 @@ namespace FluentPOS.Shared.Infrastructure.EventLogging
     {
         private readonly ICurrentUser _user;
         private readonly IApplicationDbContext _context;
+        private readonly IJsonSerializer _jsonSerializer;
 
-        public EventLogger(ICurrentUser user, IApplicationDbContext context)
+        public EventLogger(ICurrentUser user, IApplicationDbContext context, IJsonSerializer jsonSerializer)
         {
             _user = user;
             _context = context;
+            _jsonSerializer = jsonSerializer;
         }
 
         public async Task Save<T>(T @event) where T : Event
         {
-            var serializedData = JsonConvert.SerializeObject(@event);
+            var serializedData = _jsonSerializer.Serialize(@event);
 
             var thisEvent = new EventLog(
                 @event,

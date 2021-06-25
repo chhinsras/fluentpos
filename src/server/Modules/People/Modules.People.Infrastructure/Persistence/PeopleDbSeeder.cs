@@ -1,13 +1,13 @@
 ﻿using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.People.Infrastructure.Persistence
@@ -17,12 +17,14 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence
         private readonly ILogger<PeopleDbSeeder> _logger;
         private readonly PeopleDbContext _db;
         private readonly IStringLocalizer<PeopleDbContext> _localizer;
+        private readonly IJsonSerializer _jsonSerializer;
 
-        public PeopleDbSeeder(ILogger<PeopleDbSeeder> logger, PeopleDbContext db, IStringLocalizer<PeopleDbContext> localizer)
+        public PeopleDbSeeder(ILogger<PeopleDbSeeder> logger, PeopleDbContext db, IStringLocalizer<PeopleDbContext> localizer, IJsonSerializer jsonSerializer)
         {
             _logger = logger;
             _db = db;
             _localizer = localizer;
+            _jsonSerializer = jsonSerializer;
         }
 
         public void Initialize()
@@ -46,7 +48,7 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence
                 if (!_db.Customers.Any())
                 {
                     var customerData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/customers.json");
-                    var customers = JsonConvert.DeserializeObject<List<Customer>>(customerData);
+                    var customers = _jsonSerializer.Deserialize<List<Customer>>(customerData);
 
                     if (customers != null)
                     {
