@@ -6,7 +6,6 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using System.Text.Json;
 using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators;
@@ -17,7 +16,6 @@ using FluentPOS.Shared.Core.Serialization;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
 using FluentValidation;
-using Newtonsoft.Json.Serialization;
 
 namespace FluentPOS.Shared.Core.Extensions
 {
