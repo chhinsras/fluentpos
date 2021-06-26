@@ -40,6 +40,11 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
 
         public async Task<Result<Guid>> Handle(RegisterCategoryCommand command, CancellationToken cancellationToken)
         {
+            if (await _context.Categories.AnyAsync(c => c.Name == command.Name, cancellationToken))
+            {
+                throw new CatalogException(_localizer["Category with this name already exists."]);
+            }
+
             var category = _mapper.Map<Category>(command);
             var uploadRequest = command.UploadRequest;
             if (uploadRequest != null)
@@ -58,6 +63,11 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
             var category = await _context.Categories.Where(c => c.Id == command.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
             if (category != null)
             {
+                if (await _context.Categories.AnyAsync(c => c.Id != command.Id && c.Name == command.Name, cancellationToken))
+                {
+                    throw new CatalogException(_localizer["Category with this name already exists."]);
+                }
+
                 category = _mapper.Map<Category>(command);
                 var uploadRequest = command.UploadRequest;
                 if (uploadRequest != null)

@@ -41,6 +41,11 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
 
         public async Task<Result<Guid>> Handle(RegisterBrandCommand command, CancellationToken cancellationToken)
         {
+            if (await _context.Brands.AnyAsync(c => c.Name == command.Name, cancellationToken))
+            {
+                throw new CatalogException(_localizer["Brand with this name already exists."]);
+            }
+
             var brand = _mapper.Map<Brand>(command);
             var uploadRequest = command.UploadRequest;
             if (uploadRequest != null)
@@ -71,6 +76,12 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
         {
             var brand = await _context.Brands.Where(b => b.Id == command.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
             if (brand == null) throw new CatalogException(_localizer["Brand Not Found!"]);
+
+            if (await _context.Brands.AnyAsync(c => c.Id != command.Id && c.Name == command.Name, cancellationToken))
+            {
+                throw new CatalogException(_localizer["Brand with this name already exists."]);
+            }
+
             brand = _mapper.Map<Brand>(command);
             var uploadRequest = command.UploadRequest;
             if (uploadRequest != null)
