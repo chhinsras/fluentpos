@@ -42,7 +42,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
         {
             if (await _context.Categories.AnyAsync(c => c.Name == command.Name, cancellationToken))
             {
-                throw new CatalogException(_localizer["Category with this name already exists."]);
+                throw new CatalogException(_localizer["Category with the same name already exists."]);
             }
 
             var category = _mapper.Map<Category>(command);
@@ -65,7 +65,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
             {
                 if (await _context.Categories.AnyAsync(c => c.Id != command.Id && c.Name == command.Name, cancellationToken))
                 {
-                    throw new CatalogException(_localizer["Category with this name already exists."]);
+                    throw new CatalogException(_localizer["Category with the same name already exists."]);
                 }
 
                 category = _mapper.Map<Category>(command);
