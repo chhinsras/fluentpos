@@ -1,5 +1,7 @@
 ﻿using System;
 using FluentPOS.Shared.Core.Contracts;
+using FluentPOS.Shared.Core.Extensions;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
@@ -9,7 +11,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators
     public abstract class UpdateExtendedAttributeCommandValidator<TEntityId, TEntity> : AbstractValidator<UpdateExtendedAttributeCommand<TEntityId, TEntity>>
         where TEntity : class, IEntity<TEntityId>
     {
-        public UpdateExtendedAttributeCommandValidator(IStringLocalizer localizer)
+        public UpdateExtendedAttributeCommandValidator(IStringLocalizer localizer, IJsonSerializer jsonSerializer)
         {
             RuleFor(request => request.Id)
                 .NotEqual(Guid.Empty).WithMessage(x => localizer["The {PropertyName} property cannot be empty."]);
@@ -47,6 +49,8 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators
             });
             When(request => request.Type == ExtendedAttributeType.Json, () =>
             {
+                RuleFor(request => request.Json).MustBeJson(jsonSerializer)
+                    .WithMessage(x => string.Format(localizer["Json value must be a valid JSON string using {0} type!"], x.Type.ToString()));
                 RuleFor(request => request.Json).NotNull().WithMessage(x => string.Format(localizer["Json value is required using {0} type!"], x.Type.ToString()));
                 RuleFor(request => request.Decimal).Null().WithMessage(x => string.Format(localizer["Decimal value should be null using {0} type!"], x.Type.ToString()));
                 RuleFor(request => request.Text).Null().WithMessage(x => string.Format(localizer["Text value should be null using {0} type!"], x.Type.ToString()));

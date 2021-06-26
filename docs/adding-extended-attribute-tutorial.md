@@ -203,7 +203,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
 {
     public class AddBrandExtendedAttributeCommandValidator : AddExtendedAttributeCommandValidator<Guid, Brand>
     {
-        public AddBrandExtendedAttributeCommandValidator(IStringLocalizer<AddBrandExtendedAttributeCommandValidator> localizer) : base(localizer)
+        public AddBrandExtendedAttributeCommandValidator(IStringLocalizer<AddBrandExtendedAttributeCommandValidator> localizer, IJsonSerializer jsonSerializer) : base(localizer, jsonSerializer)
         {
             // you can override the validation rules here
         }
@@ -216,7 +216,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
 {
     public class UpdateBrandExtendedAttributeCommandValidator : UpdateExtendedAttributeCommandValidator<Guid, Brand>
     {
-        public UpdateBrandExtendedAttributeCommandValidator(IStringLocalizer<UpdateBrandExtendedAttributeCommandValidator> localizer) : base(localizer)
+        public UpdateBrandExtendedAttributeCommandValidator(IStringLocalizer<UpdateBrandExtendedAttributeCommandValidator> localizer, IJsonSerializer jsonSerializer) : base(localizer, jsonSerializer)
         {
             // you can override the validation rules here
         }
@@ -229,7 +229,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
 {
     public class RemoveBrandExtendedAttributeCommandValidator : RemoveExtendedAttributeCommandValidator<Guid, Brand>
     {
-        public RemoveBrandExtendedAttributeCommandValidator(IStringLocalizer<RemoveBrandExtendedAttributeCommandValidator> localizer) : base(localizer)
+        public RemoveBrandExtendedAttributeCommandValidator(IStringLocalizer<RemoveBrandExtendedAttributeCommandValidator> localizer, IJsonSerializer jsonSerializer) : base(localizer, jsonSerializer)
         {
             // you can override the validation rules here
         }
