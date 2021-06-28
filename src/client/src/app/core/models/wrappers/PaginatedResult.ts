@@ -8,7 +8,7 @@ export class PaginatedResult<T> implements IResult<T>
     exception: string;
     errorCode: number;
     currentPage: number;
-    pageSzie: number;
+    pageSize: number;
     totalPages: number;
     totalCount: number;
 }

@@ -1,4 +1,4 @@
-<div class="mat-elevation-z2">
+<div class="mat-elevation-z2" *ngIf="brands">
   <table mat-table mat-table-stripped [dataSource]="brands && brands.data">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> Id. </th>
@@ -17,4 +17,11 @@
     <tr mat-header-row *matHeaderRowDef="brandColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: brandColumns;"></tr>
   </table>
+  <mat-paginator [length]="brands.totalCount"
+              [pageSize]="brands.pageSize"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              (page)="handlePageEvent($event)"
+              showFirstLastButtons
+              >
+  </mat-paginator>
 </div>

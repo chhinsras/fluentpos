@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
 import { environment } from 'src/environments/environment';
@@ -13,8 +13,8 @@ export class BrandApiService {
 
   constructor(private http: HttpClient) { }
 
-  getAlls() {
-    return this.http.get(this.baseUrl + 'catalog/brands');
+  getAlls(params: HttpParams) {
+    return this.http.get(this.baseUrl + 'catalog/brands', { params: params });
   }
 
   getById(id: string) {
