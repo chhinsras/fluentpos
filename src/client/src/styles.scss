@@ -11,10 +11,12 @@
 // Define the default theme (same as the example above).
 $app-primary: mat-palette($mat-indigo);
 $app-accent:  mat-palette($mat-pink, A200, A100, A400);
+$app-warn:    mat-palette($mat-yellow, A400, A400, A400);
 $app-theme:   mat-light-theme((
   color: (
     primary: $app-primary,
     accent: $app-accent,
+    warn:$app-warn
   )
 ));
 
@@ -25,7 +27,7 @@ $app-theme:   mat-light-theme((
 // Define an alternate dark theme.
 $dark-primary: mat-palette($mat-grey,A800);
 $dark-accent:  mat-palette($mat-grey,A800);
-$dark-warn:    mat-palette($mat-deep-orange);
+$dark-warn:    mat-palette($mat-yellow);
 $dark-theme:   mat-dark-theme((
   color: (
     primary: $dark-primary,

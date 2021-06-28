@@ -1,3 +1,5 @@
+<h1>Brands</h1>
+<h3>Manage, Register, Update or Remove Brands here.</h3>
 <div class="mat-elevation-z2" *ngIf="brands">
   <table mat-table mat-table-stripped [dataSource]="brands && brands.data">
     <ng-container matColumnDef="id">
@@ -16,18 +18,17 @@
 
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef style="text-align: right;"> Action </th>
-      <td mat-cell *matCellDef="let element" style="text-align: right;"> 
-        <button mat-flat-button color="warn" (click)="openEditForm()"><mat-icon>edit</mat-icon> Edit</button>
-        <button mat-button color="danger">Delete</button>
+      <td mat-cell *matCellDef="let element" style="text-align: right;">
+        <button mat-flat-button color="primary" (click)="openEditForm()">
+          <mat-icon>edit</mat-icon> Edit
+        </button>
+        <button mat-flat-button>Delete</button>
       </td>
     </ng-container>
-    
+
     <tr mat-header-row *matHeaderRowDef="brandColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: brandColumns;"></tr>
   </table>
-  <app-pagination
-    [totalCount]="brands.totalCount"
-    [pageSize]="brands.pageSize"
-    (pageChangeEvent)="handlePageChange($event)"
-  ></app-pagination>
+  <app-pagination [totalCount]="brands.totalCount" [pageSize]="brands.pageSize"
+    (pageChangeEvent)="handlePageChange($event)"></app-pagination>
 </div>
