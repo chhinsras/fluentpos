@@ -39,4 +39,18 @@ export class LoginComponent implements OnInit {
       console.log(error);
     });
   }
+  fillSuperAdminCredentials()
+  {
+    this.loginForm = new FormGroup({
+      email: new FormControl('superadmin@fluentpos.com', Validators.required && Validators.email),
+      password: new FormControl('123Pa$$word!', Validators.required)
+    });
+  }
+  fillStaffCredentials()
+  {
+    this.loginForm = new FormGroup({
+      email: new FormControl('staff@fluentpos.com', Validators.required && Validators.email),
+      password: new FormControl('123Pa$$word!', Validators.required)
+    });
+  }
 }
