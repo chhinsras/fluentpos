@@ -7,6 +7,7 @@ import { BrandComponent } from './components/brand/brand.component';
 import { ProductComponent } from './components/product/product.component';
 import { CategoryComponent } from './components/category/category.component';
 import { MaterialModule } from 'src/app/core/material/material.module';
+import { SharedModule } from 'src/app/core/shared/shared.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { MaterialModule } from 'src/app/core/material/material.module';
   imports: [
     CommonModule,
     CatalogRoutingModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ]
 })
 export class CatalogModule { }

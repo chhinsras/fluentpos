@@ -1,5 +1,7 @@
-export class BrandParams {
+import { PaginatedFilter } from "src/app/core/models/Filters/PaginatedFilter";
+
+export class BrandParams implements PaginatedFilter {
     searchString: string;
-    pageNumber = 1;
-    pageSize = 10;
+    pageNumber: number;
+    pageSize: number;
 }

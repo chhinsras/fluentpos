@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
 import { Brand } from '../../models/brand';
 import { BrandParams } from '../../models/brandParams';
@@ -26,9 +27,8 @@ export class BrandComponent implements OnInit {
     this.brandService.getBrands(this.brandParams).subscribe(brands => this.brands = brands && brands);
   }
 
-  handlePageEvent(event: PageEvent){
-   
-    this.brandParams.pageNumber = event.pageIndex + 1;
+  handlePageChange(event: PaginatedFilter){
+    this.brandParams.pageNumber = event.pageNumber;
     this.brandParams.pageSize = event.pageSize;
     this.getBrands();
   }
