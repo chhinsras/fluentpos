@@ -8,6 +8,7 @@ import { ProductComponent } from './components/product/product.component';
 import { CategoryComponent } from './components/category/category.component';
 import { MaterialModule } from 'src/app/core/material/material.module';
 import { SharedModule } from 'src/app/core/shared/shared.module';
+import { BrandFormComponent } from './components/brand/brand-form/brand-form.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SharedModule } from 'src/app/core/shared/shared.module';
     CatalogComponent,
     BrandComponent,
     ProductComponent,
-    CategoryComponent
+    CategoryComponent,
+    BrandFormComponent
   ],
   imports: [
     CommonModule,
