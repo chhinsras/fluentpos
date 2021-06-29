@@ -41,7 +41,7 @@ export class AuthService {
           this.localStorage.setItem('token', result.data.token);
           this.localStorage.setItem('refreshToken', result.data.refreshToken);
           this.currentUserTokenSource.next(result.data.token);
-          this.toastr.success('User Logged In', "Authentincation");
+          this.toastr.success('User Logged In', "Authentication");
         }
         return result;
       })
