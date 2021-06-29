@@ -32,9 +32,9 @@ namespace FluentPOS.Modules.Identity.Controllers
 
         [HttpGet("/api/identity/confirm-phone-number")]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmSmsAsync([FromQuery] string userId, [FromQuery] string code)
+        public async Task<IActionResult> ConfirmPhoneNumberAsync([FromQuery] string userId, [FromQuery] string code)
         {
-            return Ok(await _identityService.ConfirmSmsAsync(userId, code));
+            return Ok(await _identityService.ConfirmPhoneNumberAsync(userId, code));
         }
 
         [HttpPost("/api/identity/forgot-password")]

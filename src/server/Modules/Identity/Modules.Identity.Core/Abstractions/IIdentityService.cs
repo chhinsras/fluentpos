@@ -10,7 +10,7 @@ namespace FluentPOS.Modules.Identity.Core.Abstractions
 
         Task<IResult<string>> ConfirmEmailAsync(string userId, string code);
 
-        Task<IResult<string>> ConfirmSmsAsync(string userId, string code);
+        Task<IResult<string>> ConfirmPhoneNumberAsync(string userId, string code);
 
         Task<IResult> ForgotPasswordAsync(ForgotPasswordRequest request, string origin);
 

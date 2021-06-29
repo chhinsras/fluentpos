@@ -179,7 +179,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             }
         }
 
-        public async Task<IResult<string>> ConfirmSmsAsync(string userId, string code)
+        public async Task<IResult<string>> ConfirmPhoneNumberAsync(string userId, string code)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
