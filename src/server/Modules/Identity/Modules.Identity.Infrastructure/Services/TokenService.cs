@@ -99,11 +99,11 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             }
             var claims = new List<Claim>
             {
-                new("userId",user.Id.ToString()),
-                new("emailId",user.Email),
+                new(ClaimTypes.NameIdentifier, user.Id),
+                new(ClaimTypes.Email, user.Email),
                 new("fullName",$"{user.FirstName} {user.LastName}"),
-                new("firstName",user.FirstName),
-                new("lastName",user.LastName),
+                new(ClaimTypes.Name, user.FirstName),
+                new(ClaimTypes.Surname, user.LastName),
                 new("ipAddress", ipAddress)
             }
             .Union(userClaims)
