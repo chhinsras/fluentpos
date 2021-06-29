@@ -25,15 +25,14 @@ $app-theme:   mat-light-theme((
 
 
 // Define an alternate dark theme.
-$dark-primary: mat-palette($mat-grey,A800);
-$dark-accent:  mat-palette($mat-grey,A800);
-$dark-warn:    mat-palette($mat-yellow);
+$dark-primary: mat-palette($mat-indigo);
+$dark-accent:  mat-palette($mat-pink, A400, A400, A400);
+$dark-warn:    mat-palette($mat-deep-orange);
 $dark-theme:   mat-dark-theme((
   color: (
     primary: $dark-primary,
     accent: $dark-accent,
-    warn: $dark-warn,
-
+    warn: $dark-warn
   )
 ));
 
@@ -76,4 +75,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 table {
   width: 100%;
+}
+.mat-flat-button {
+  margin:8px 8px 8px 0!important;
 }

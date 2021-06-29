@@ -1,34 +1,46 @@
-<h1>Brands</h1>
-<h3>Manage, Register, Update or Remove Brands here.</h3>
-<div class="mat-elevation-z3" *ngIf="brands">
-  <table mat-table mat-table-stripped [dataSource]="brands && brands.data">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> Id. </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Brands</mat-card-title>
+    <mat-card-subtitle>Manage, Register, Update or Remove Brands here.</mat-card-subtitle>
+  </mat-card-header>
+  <div style="margin: 0px 0px 0px 16px;">
+    <a mat-flat-button color="primary">
+      <mat-icon>add</mat-icon> Register New Brand
+    </a>
+    <a mat-flat-button color="accent" (click)="getBrands()">
+      <mat-icon>refresh</mat-icon> Reload
+    </a>
+  </div>
+  <div *ngIf="brands">
+    <table mat-table mat-table-stripped [dataSource]="brands && brands.data">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="detail">
-      <th mat-header-cell *matHeaderCellDef> Detail </th>
-      <td mat-cell *matCellDef="let element"> {{element.detail}} </td>
-    </ng-container>
+      <ng-container matColumnDef="detail">
+        <th mat-header-cell *matHeaderCellDef> Detail </th>
+        <td mat-cell *matCellDef="let element"> {{element.detail}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef style="text-align: right;"> Action </th>
-      <td mat-cell *matCellDef="let element" style="text-align: right;">
-        <button mat-flat-button color="primary" (click)="openEditForm()">
-          Edit
-        </button>
-        <button mat-flat-button>Delete</button>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef style="text-align: right;"> Action </th>
+        <td mat-cell *matCellDef="let element" style="text-align: right;">
+          <button mat-flat-button color="primary" (click)="openEditForm()">
+            Edit
+          </button>
+          <button mat-flat-button>Delete</button>
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="brandColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: brandColumns;"></tr>
-  </table>
-  <app-pagination [totalCount]="brands.totalCount" [pageSize]="brands.pageSize"
-    (pageChangeEvent)="handlePageChange($event)"></app-pagination>
-</div>
+      <tr mat-header-row *matHeaderRowDef="brandColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: brandColumns;"></tr>
+    </table>
+    <app-pagination [totalCount]="brands.totalCount" [pageSize]="brands.pageSize"
+      (pageChangeEvent)="handlePageChange($event)"></app-pagination>
+  </div>
+</mat-card>
