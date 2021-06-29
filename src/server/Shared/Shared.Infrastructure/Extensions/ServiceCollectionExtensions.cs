@@ -30,8 +30,10 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
         {
             services.AddTransient<IUploadService, UploadService>();
             services.AddTransient<IMailService, SmtpMailService>();
+            services.AddTransient<ISmsService, TwilioSmsService>();
             services.AddScoped<IJobService, HangfireService>();
             services.Configure<MailSettings>(config.GetSection(nameof(MailSettings)));
+            services.Configure<SmsSettings>(config.GetSection(nameof(SmsSettings)));
             return services;
         }
 

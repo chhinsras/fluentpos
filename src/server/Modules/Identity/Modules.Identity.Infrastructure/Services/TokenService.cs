@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
 using System.Net;
+using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.DTOs.Identity.Tokens;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
@@ -25,17 +26,23 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         private readonly UserManager<FluentUser> _userManager;
         private readonly RoleManager<FluentRole> _roleManager;
         private readonly IStringLocalizer<TokenService> _localizer;
+        private readonly SmsSettings _smsSettings;
+        private readonly MailSettings _mailSettings;
         private readonly JwtSettings _config;
 
         public TokenService(
             UserManager<FluentUser> userManager,
             RoleManager<FluentRole> roleManager,
             IOptions<JwtSettings> config,
-            IStringLocalizer<TokenService> localizer)
+            IStringLocalizer<TokenService> localizer,
+            IOptions<SmsSettings> smsSettings,
+            IOptions<MailSettings> mailSettings)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _localizer = localizer;
+            _smsSettings = smsSettings.Value;
+            _mailSettings = mailSettings.Value;
             _config = config.Value;
         }
 
@@ -46,8 +53,10 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 throw new IdentityException(_localizer["User Not Found."], statusCode: HttpStatusCode.Unauthorized);
             if (!user.IsActive)
                 throw new IdentityException(_localizer["User Not Active. Please contact the administrator."], statusCode: HttpStatusCode.Unauthorized);
-            if (!user.EmailConfirmed)
+            if (_mailSettings.EnableVerification && !user.EmailConfirmed)
                 throw new IdentityException(_localizer["E-Mail not confirmed."], statusCode: HttpStatusCode.Unauthorized);
+            if (_smsSettings.EnableVerification && !user.PhoneNumberConfirmed)
+                throw new IdentityException(_localizer["Phone Number not confirmed."], statusCode: HttpStatusCode.Unauthorized);
             var passwordValid = await _userManager.CheckPasswordAsync(user, request.Password);
             if (!passwordValid)
                 throw new IdentityException(_localizer["Invalid Credentials."], statusCode: HttpStatusCode.Unauthorized);

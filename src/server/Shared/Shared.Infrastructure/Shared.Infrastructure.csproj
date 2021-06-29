@@ -31,5 +31,6 @@
     <PackageReference Include="MimeKit" Version="2.13.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+    <PackageReference Include="Twilio" Version="5.62.0" />
   </ItemGroup>
 </Project>
