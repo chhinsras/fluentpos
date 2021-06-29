@@ -3,12 +3,12 @@ using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Helpers;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Interfaces.Services;
-using FluentPOS.Shared.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Infrastructure.Utilities;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 {
