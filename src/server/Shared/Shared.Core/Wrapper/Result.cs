@@ -109,6 +109,11 @@ namespace FluentPOS.Shared.Core.Wrapper
             return new() { Succeeded = false, Messages = messages };
         }
 
+        public static ErrorResult<T> ReturnError(List<string> messages)
+        {
+            return new() { Succeeded = false, Messages = messages, ErrorCode = 500 };
+        }
+
         public new static Task<Result<T>> FailAsync()
         {
             return Task.FromResult(Fail());
@@ -127,6 +132,11 @@ namespace FluentPOS.Shared.Core.Wrapper
         public new static Task<Result<T>> FailAsync(List<string> messages)
         {
             return Task.FromResult(Fail(messages));
+        }
+
+        public static Task<ErrorResult<T>> ReturnErrorAsync(List<string> messages)
+        {
+            return Task.FromResult(ReturnError(messages));
         }
 
         public new static Result<T> Success()

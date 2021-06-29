@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace FluentPOS.Shared.Infrastructure
+namespace FluentPOS.Shared.Infrastructure.Utilities
 {
     public static class TypeUtilities
     {
@@ -15,6 +15,7 @@ namespace FluentPOS.Shared.Infrastructure
                 .Select(x => (T)x.GetRawConstantValue())
                 .ToList();
         }
+
         public static List<string> GetNestedClassesStaticStringValues(this Type type)
         {
             var values = new List<string>();
