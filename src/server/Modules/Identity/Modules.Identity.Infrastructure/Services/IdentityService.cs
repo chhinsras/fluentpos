@@ -10,11 +10,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Settings;
+using FluentPOS.Shared.DTOs.Sms;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
@@ -23,17 +27,26 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         private readonly UserManager<FluentUser> _userManager;
         private readonly IJobService _jobService;
         private readonly IMailService _mailService;
+        private readonly MailSettings _mailSettings;
+        private readonly SmsSettings _smsSettings;
+        private readonly ISmsService _smsService;
         private readonly IStringLocalizer<IdentityService> _localizer;
 
         public IdentityService(
             UserManager<FluentUser> userManager,
             IJobService jobService,
             IMailService mailService,
+            IOptions<MailSettings> mailSettings,
+            IOptions<SmsSettings> smsSettings,
+            ISmsService smsService,
             IStringLocalizer<IdentityService> localizer)
         {
             _userManager = userManager;
             _jobService = jobService;
             _mailService = mailService;
+            _mailSettings = mailSettings.Value;
+            _smsSettings = smsSettings.Value;
+            _smsService = smsService;
             _localizer = localizer;
         }
 
@@ -75,16 +88,43 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     {
                     }
 
-                    var verificationUri = await SendVerificationEmail(user, origin);
-                    var mailRequest = new MailRequest
+                    if (!_mailSettings.EnableVerification && !_smsSettings.EnableVerification)
                     {
-                        From = "mail@codewithmukesh.com",
-                        To = user.Email,
-                        Body = string.Format(_localizer["Please confirm your account by <a href='{0}'>clicking here</a>."], verificationUri),
-                        Subject = _localizer["Confirm Registration"]
-                    };
-                    _jobService.Enqueue(() => _mailService.SendAsync(mailRequest));
-                    return await Result<string>.SuccessAsync(user.Id, message: string.Format(_localizer["User {0} Registered. Please check your Mailbox to verify!"], user.UserName));
+                        return await Result<string>.SuccessAsync(user.Id, message: string.Format(_localizer["User {0} Registered."], user.UserName));
+                    }
+
+                    var messages = new List<string> {string.Format(_localizer["User {0} Registered."], user.UserName)};
+                    if (_mailSettings.EnableVerification)
+                    {
+                        // send verification email
+                        var emailVerificationUri = await GetEmailVerificationUri(user, origin);
+                        var mailRequest = new MailRequest
+                        {
+                            From = "mail@codewithmukesh.com",
+                            To = user.Email,
+                            Body = string.Format(_localizer["Please confirm your FluentPOS account by <a href='{0}'>clicking here</a>."], emailVerificationUri),
+                            Subject = _localizer["Confirm Registration"]
+                        };
+                        _jobService.Enqueue(() => _mailService.SendAsync(mailRequest));
+
+                        messages.Add(_localizer["Please check your Mailbox to verify!"]);
+                    }
+
+                    if (_smsSettings.EnableVerification)
+                    {
+                        // send verification sms
+                        var mobilePhoneVerificationCode = await GetMobilePhoneVerificationCode(user);
+                        var smsRequest = new SmsRequest
+                        {
+                            Number = user.PhoneNumber,
+                            Message = string.Format(_localizer["Please confirm your FluentPOS account by this code: {0}"], mobilePhoneVerificationCode)
+                        };
+                        _jobService.Enqueue(() => _smsService.SendAsync(smsRequest));
+
+                        messages.Add(_localizer["Please check your Phone for code in SMS to verify!"]);
+                    }
+
+                    return await Result<string>.SuccessAsync(user.Id, messages: messages);
                 }
                 else
                 {
@@ -97,7 +137,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             }
         }
 
-        private async Task<string> SendVerificationEmail(FluentUser user, string origin)
+        private async Task<string> GetEmailVerificationUri(FluentUser user, string origin)
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -108,18 +148,59 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             return verificationUri;
         }
 
+        private async Task<string> GetMobilePhoneVerificationCode(FluentUser user)
+        {
+            return await _userManager.GenerateChangePhoneNumberTokenAsync(user, user.PhoneNumber);
+        }
+
         public async Task<IResult<string>> ConfirmEmailAsync(string userId, string code)
         {
             var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new IdentityException(_localizer["An error occurred while confirming E-Mail."]);
+            }
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
             {
-                return await Result<string>.SuccessAsync(user.Id, string.Format(_localizer["Account Confirmed for {0}. You can now use the /api/identity/token endpoint to generate JWT."], user.Email));
+                if (user.PhoneNumberConfirmed)
+                {
+                    return await Result<string>.SuccessAsync(user.Id, string.Format(_localizer["Account Confirmed for E-Mail {0}. You can now use the /api/identity/token endpoint to generate JWT."], user.Email));
+                }
+                else
+                {
+                    return await Result<string>.SuccessAsync(user.Id, string.Format(_localizer["Account Confirmed for E-Mail {0}. You should confirm your Phone Number before using the /api/identity/token endpoint to generate JWT."], user.Email));
+                }
             }
             else
             {
                 throw new IdentityException(string.Format(_localizer["An error occurred while confirming {0}"], user.Email));
+            }
+        }
+
+        public async Task<IResult<string>> ConfirmPhoneNumberAsync(string userId, string code)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new IdentityException(_localizer["An error occurred while confirming Mobile Phone."]);
+            }
+            var result = await _userManager.ChangePhoneNumberAsync(user, user.PhoneNumber, code);
+            if (result.Succeeded)
+            {
+                if (user.EmailConfirmed)
+                {
+                    return await Result<string>.SuccessAsync(user.Id, string.Format(_localizer["Account Confirmed for Phone Number {0}. You can now use the /api/identity/token endpoint to generate JWT."], user.PhoneNumber));
+                }
+                else
+                {
+                    return await Result<string>.SuccessAsync(user.Id, string.Format(_localizer["Account Confirmed for Phone Number {0}. You should confirm your E-mail before using the /api/identity/token endpoint to generate JWT."], user.PhoneNumber));
+                }
+            }
+            else
+            {
+                throw new IdentityException(string.Format(_localizer["An error occurred while confirming {0}"], user.PhoneNumber));
             }
         }
 
@@ -137,10 +218,10 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var route = "account/reset-password";
             var endpointUri = new Uri(string.Concat($"{origin}/", route));
-            var passwordResetURL = QueryHelpers.AddQueryString(endpointUri.ToString(), "Token", code);
+            var passwordResetUrl = QueryHelpers.AddQueryString(endpointUri.ToString(), "Token", code);
             var mailRequest = new MailRequest
             {
-                Body = string.Format(_localizer["Please reset your password by <a href='{0}>clicking here</a>."], HtmlEncoder.Default.Encode(passwordResetURL)),
+                Body = string.Format(_localizer["Please reset your password by <a href='{0}>clicking here</a>."], HtmlEncoder.Default.Encode(passwordResetUrl)),
                 Subject = _localizer["Reset Password"],
                 To = request.Email
             };
