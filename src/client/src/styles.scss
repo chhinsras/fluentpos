@@ -79,3 +79,12 @@ table {
 .mat-flat-button {
   margin:8px 8px 8px 0!important;
 }
+
+.toast-container .ngx-toastr {
+  box-shadow: none;
+}
+
+.toast-container .ngx-toastr:hover {
+  box-shadow: none;
+}
+
