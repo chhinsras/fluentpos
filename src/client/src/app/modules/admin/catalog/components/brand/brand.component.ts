@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
+import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
 import { Brand } from '../../models/brand';
 import { BrandParams } from '../../models/brandParams';
 import { BrandService } from '../../services/brand.service';
@@ -25,11 +26,11 @@ export class BrandComponent implements OnInit {
     this.getBrands();
   }
 
-  getBrands(){
+  getBrands() {
     this.brandService.getBrands(this.brandParams).subscribe(brands => this.brands = brands && brands);
   }
 
-  handlePageChange(event: PaginatedFilter){
+  handlePageChange(event: PaginatedFilter) {
     this.brandParams.pageNumber = event.pageNumber;
     this.brandParams.pageSize = event.pageSize;
     this.getBrands();
@@ -39,6 +40,18 @@ export class BrandComponent implements OnInit {
     const dialogRef = this.dialog.open(BrandFormComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+    });
+  }
+  openDeleteConfirmationDialog(id : string) {
+    console.log(id);
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: "Do you confirm the removal of this brand?"
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.brandService.deleteBrand(id);
+        this.getBrands();
+      }
     });
   }
 

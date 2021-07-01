@@ -20,6 +20,7 @@ $app-theme:   mat-light-theme((
   )
 ));
 
+
 // Include the default theme styles (color and default density)
 @include angular-material-theme($app-theme);
 
@@ -41,6 +42,13 @@ $dark-theme:   mat-dark-theme((
 // `.unicorn-dark-theme` will be affected by this alternate dark theme instead of the default theme.
 .dark-theme {
   @include angular-material-color($dark-theme);
+}
+
+
+
+.mat-danger {
+  background-color: red;
+  color:white ;
 }
 
 /* You can add global styles to this file, and also import other style files */

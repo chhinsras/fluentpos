@@ -1,6 +1,8 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Brands</mat-card-title>
+    <mat-card-title>
+      Brands
+    </mat-card-title>
     <mat-card-subtitle>Manage, Register, Update or Remove Brands here.</mat-card-subtitle>
   </mat-card-header>
   <div style="margin: 0px 0px 0px 16px;">
@@ -33,7 +35,7 @@
           <button mat-flat-button color="primary" (click)="openEditForm()">
             Edit
           </button>
-          <button mat-flat-button>Delete</button>
+          <button mat-flat-button (click)="openDeleteConfirmationDialog(element.id)" >Delete</button>
         </td>
       </ng-container>
 

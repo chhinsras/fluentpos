@@ -30,7 +30,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.router.navigateByUrl('/not-found');
         }
         if (response.error.errorCode === 500) {
-          this.router.navigateByUrl('/server-error');
+          this.toastr.error(response.error.exception)
         }
         return throwError(response.error);
       })  

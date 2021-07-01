@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Delete Confirmation</h2>
+  <mat-dialog-content class="mat-typography">
+    {{message}}
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button (click)="onNoClick()">Cancel</button>
+    <button mat-flat-button [mat-dialog-close]="true" cdkFocusInitial color="danger">Confirm</button>
+  </mat-dialog-actions>

@@ -14,7 +14,7 @@ export class BrandService {
   constructor(private api: BrandApiService) {
   }
 
-  getBrands(brandParams: BrandParams){
+  getBrands(brandParams: BrandParams) {
     let params = new HttpParams();
     if (brandParams.searchString) params = params.append('searchString', brandParams.searchString)
     if (brandParams.pageNumber) params = params.append('pageNumber', brandParams.pageNumber.toString())
@@ -24,9 +24,12 @@ export class BrandService {
     );
   }
 
-  getBrandById(id: string){
+  getBrandById(id: string) {
     return this.api.getById(id).pipe(
       map((response: Brand) => response)
     );
+  }
+  deleteBrand(id: string) {
+    return this.api.delete(id);
   }
 }
