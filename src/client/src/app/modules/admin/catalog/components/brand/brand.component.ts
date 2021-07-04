@@ -8,6 +8,7 @@ import { Brand } from '../../models/brand';
 import { BrandParams } from '../../models/brandParams';
 import { BrandService } from '../../services/brand.service';
 import { BrandFormComponent } from './brand-form/brand-form.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-brand',
@@ -20,7 +21,7 @@ export class BrandComponent implements OnInit {
   brandColumns: string[] = ['id', 'name', 'detail', 'action'];
   brandParams = new BrandParams();
 
-  constructor(public brandService: BrandService, public dialog: MatDialog) { }
+  constructor(public brandService: BrandService, public dialog: MatDialog, public toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getBrands();
@@ -45,16 +46,17 @@ export class BrandComponent implements OnInit {
     });
   }
   openDeleteConfirmationDialog(id : string) {
-    console.log(id);
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: "Do you confirm the removal of this brand?"
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.brandService.deleteBrand(id);
-        this.getBrands();
-      }
+      if (result) this.deleteUser(id);
     });
+  }
+
+  deleteUser(id : string) : void
+  {
+    this.brandService.deleteBrand(id).subscribe(() => { this.getBrands(); this.toastr.info('Brand Removed');});
   }
 
 }

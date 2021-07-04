@@ -30,6 +30,6 @@ export class BrandApiService {
   }
 
   delete(id: string) {
-    return this.http.delete(this.baseUrl + `catalog/brands/${id}`).subscribe(() => console.log('Delete successful'));
+    return this.http.delete(this.baseUrl + `catalog/brands/${id}`);
   }
 }

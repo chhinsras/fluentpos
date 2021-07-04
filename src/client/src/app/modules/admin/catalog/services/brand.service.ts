@@ -1,5 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { IResult } from 'src/app/core/models/wrappers/IResult';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
@@ -42,7 +43,9 @@ export class BrandService {
     );
   }
 
-  deleteBrand(id: string) {
-    return this.api.delete(id);
+  deleteBrand(id: string) : Observable<IResult<string>> {
+    return this.api.delete(id).pipe(
+      map((response: IResult<string>) => response)
+    );
   }
 }
