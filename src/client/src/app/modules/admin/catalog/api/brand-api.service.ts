@@ -20,6 +20,11 @@ export class BrandApiService {
   getById(id: string) {
     return this.http.get<Brand>(this.baseUrl + `catalog/brands/${id}`);
   }
+
+  update(brand: Brand) {
+    return this.http.put(this.baseUrl + 'catalog/brands', brand);
+  }
+
   delete(id: string) {
     return this.http.delete(this.baseUrl + `catalog/brands/${id}`).subscribe(() => console.log('Delete successful'));
   }

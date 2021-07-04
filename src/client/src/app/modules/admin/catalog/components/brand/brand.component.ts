@@ -36,8 +36,10 @@ export class BrandComponent implements OnInit {
     this.getBrands();
   }
 
-  openEditForm() {
-    const dialogRef = this.dialog.open(BrandFormComponent);
+  openEditForm(brand: Brand) {
+    const dialogRef = this.dialog.open(BrandFormComponent, {
+      data: brand
+    });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });

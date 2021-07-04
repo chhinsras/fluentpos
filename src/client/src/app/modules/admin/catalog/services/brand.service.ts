@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/internal/operators/map';
+import { IResult } from 'src/app/core/models/wrappers/IResult';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
 import { BrandApiService } from '../api/brand-api.service';
 import { Brand } from '../models/brand';
@@ -29,6 +30,13 @@ export class BrandService {
       map((response: Brand) => response)
     );
   }
+
+  updateBrand(brand: Brand) {
+    return this.api.update(brand).pipe(
+      map((response: IResult<Brand>) => response)
+    );
+  }
+
   deleteBrand(id: string) {
     return this.api.delete(id);
   }

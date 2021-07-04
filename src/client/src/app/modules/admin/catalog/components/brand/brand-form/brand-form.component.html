@@ -1,6 +1,7 @@
 <h2 mat-dialog-title>Brand Form</h2>
 <form [formGroup]="brandForm" (ngSubmit)="onSubmit()">
   <mat-dialog-content class="mat-typography" [style.width.px]=420>
+    <input mat type="hidden" formControlName="id">
     <mat-grid-list cols="2" rowHeight="2:0.5">
       <mat-grid-tile>
         <mat-form-field appearance="fill">
