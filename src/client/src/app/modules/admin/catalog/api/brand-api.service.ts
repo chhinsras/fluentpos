@@ -21,6 +21,10 @@ export class BrandApiService {
     return this.http.get<Brand>(this.baseUrl + `catalog/brands/${id}`);
   }
 
+  create(brand: Brand){
+    return this.http.post(this.baseUrl + 'catalog/brands', brand);
+  }
+
   update(brand: Brand) {
     return this.http.put(this.baseUrl + 'catalog/brands', brand);
   }

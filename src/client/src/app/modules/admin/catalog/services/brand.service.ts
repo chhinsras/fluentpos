@@ -11,7 +11,6 @@ import { BrandParams } from '../models/brandParams';
   providedIn: 'root'
 })
 export class BrandService {
-
   constructor(private api: BrandApiService) {
   }
 
@@ -28,6 +27,12 @@ export class BrandService {
   getBrandById(id: string) {
     return this.api.getById(id).pipe(
       map((response: Brand) => response)
+    );
+  }
+
+  createBrand(brand: Brand){
+    return this.api.create(brand).pipe(
+      map((response: IResult<Brand>) => response)
     );
   }
 
