@@ -41,7 +41,7 @@ export class BrandComponent implements OnInit {
       data: brand
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      if (result) this.getBrands();
     });
   }
   openDeleteConfirmationDialog(id : string) {
