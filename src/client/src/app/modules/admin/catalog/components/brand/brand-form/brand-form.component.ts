@@ -12,6 +12,7 @@ import { BrandService } from '../../../services/brand.service';
 })
 export class BrandFormComponent implements OnInit {
   brandForm: FormGroup;
+  formTitle: string;
   constructor(@Inject(MAT_DIALOG_DATA) public data: Brand, private brandService: BrandService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -24,10 +25,16 @@ export class BrandFormComponent implements OnInit {
       name: new FormControl(this.data && this.data.name, Validators.required),
       detail: new FormControl(this.data && this.data.detail, Validators.required)
     })
+    if (this.brandForm.get('id').value === "" || this.brandForm.get('id').value == null) {
+      this.formTitle = "Register Brand";
+    }
+    else {
+      this.formTitle = "Edit Brand";
+    }
   }
 
-  onFileChange(event: any){
-    
+  onFileChange(event: any) {
+
   }
 
   onSubmit() {
