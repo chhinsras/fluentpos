@@ -1,23 +1,32 @@
-<mat-card>
-    <mat-card-content>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <h2>Log In</h2>
-            <mat-form-field appearance="fill">
-                <input matInput placeholder="Email" formControlName="email" required>
-                <mat-error>
-                    Please provide a valid email address
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <input matInput type="password" placeholder="Password" formControlName="password" required>
-                <mat-error>
-                    Please provide a valid password
-                </mat-error>
-            </mat-form-field>
-            <button mat-flat-button color="primary" type="submit">Login</button>
-        </form>
-    </mat-card-content>
-    <button mat-button color="surface" (click)="fillSuperAdminCredentials()">fill superadmin credentials</button>
-    
-    <button mat-button color="surface" (click)="fillStaffCredentials()">fill staff credentials</button>
-</mat-card>
+<div class="center-screen">
+    <mat-card>
+        <mat-card-content>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <h2>Log In</h2>
+                <mat-form-field>
+                    <input matInput placeholder="Email" formControlName="email" required>
+                    <mat-error>
+                        Please provide a valid email address
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="password" placeholder="Password" formControlName="password" required>
+                    <mat-error>
+                        Please provide a valid password
+                    </mat-error>
+                </mat-form-field>
+                <button mat-flat-button color="primary" style="width:100%" [disabled]="!loginForm.valid"
+                    type="submit">Login</button>
+            </form>
+        </mat-card-content>
+
+    </mat-card>
+    <mat-card>
+        <mat-card-content>
+            <button mat-flat-button color="accent" (click)="fillSuperAdminCredentials()">fill superadmin
+                credentials</button>
+
+            <button mat-flat-button color="accent" (click)="fillStaffCredentials()">fill staff credentials</button>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
       email: new FormControl('superadmin@fluentpos.com', Validators.required && Validators.email),
       password: new FormControl('123Pa$$word!', Validators.required)
     });
+    this.loginForm.valid;
   }
   fillStaffCredentials()
   {
