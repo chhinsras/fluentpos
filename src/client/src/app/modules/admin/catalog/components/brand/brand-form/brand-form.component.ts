@@ -32,7 +32,7 @@ export class BrandFormComponent implements OnInit {
 
   onSubmit() {
     if (this.brandForm.valid) {
-      if (this.brandForm.get('id').value == "") {
+      if (this.brandForm.get('id').value === "" || this.brandForm.get('id').value == null) {
         this.brandService.createBrand(this.brandForm.value).subscribe(response => {
           this.toastr.success(response.messages[0]);
         })
