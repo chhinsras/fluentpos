@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { Brand } from '../../../models/brand';
@@ -13,17 +13,17 @@ import { BrandService } from '../../../services/brand.service';
 export class BrandFormComponent implements OnInit {
   brandForm: FormGroup;
   formTitle: string;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Brand, private brandService: BrandService, private toastr: ToastrService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Brand, private brandService: BrandService, private toastr: ToastrService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initializeForm();
   }
 
   initializeForm() {
-    this.brandForm = new FormGroup({
-      id: new FormControl(this.data && this.data.id),
-      name: new FormControl(this.data && this.data.name, Validators.required),
-      detail: new FormControl(this.data && this.data.detail, Validators.required)
+    this.brandForm = this.fb.group({
+      id: [this.data && this.data.id],
+      name: [this.data && this.data.name, Validators.required],
+      detail: [this.data && this.data.detail, Validators.required]
     })
     if (this.brandForm.get('id').value === "" || this.brandForm.get('id').value == null) {
       this.formTitle = "Register Brand";
