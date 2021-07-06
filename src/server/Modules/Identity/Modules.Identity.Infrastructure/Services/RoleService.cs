@@ -152,7 +152,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             if (string.IsNullOrEmpty(request.Id))
             {
                 var existingRole = await _roleManager.FindByNameAsync(request.Name);
-                if (existingRole != null) return await Result<string>.FailAsync(_localizer["Similar Role already exists."]);
+                if (existingRole != null) throw new IdentityException(_localizer["Similar Role already exists."], statusCode: System.Net.HttpStatusCode.BadRequest);
                 var response = await _roleManager.CreateAsync(new FluentRole(request.Name,request.Description));
                 if (response.Succeeded)
                 {
