@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
@@ -34,24 +35,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 
         public async Task<PaginatedResult<GetAllPagedProductsResponse>> Handle(GetAllPagedProductsQuery query, CancellationToken cancellationToken)
         {
-            Expression<Func<Product, GetAllPagedProductsResponse>> expression = e => new GetAllPagedProductsResponse
-            (
-                e.Id,
-                e.Name,
-                e.LocaleName,
-                e.BarcodeSymbology,
-                e.Detail,
-                e.BrandId,
-                e.CategoryId,
-                e.Price,
-                e.Cost,
-                e.ImageUrl,
-                e.Tax,
-                e.TaxMethod,
-                e.IsAlert,
-                e.AlertQuantity
-            );
-            var queryable = _context.Products.OrderBy(x => x.Id).AsQueryable();
+            var queryable = _context.Products.ProjectTo<GetAllPagedProductsResponse>(_mapper.ConfigurationProvider).OrderBy(x => x.Id).AsQueryable();
 
             if (!string.IsNullOrEmpty(query.SearchString)) queryable = queryable.Where(p => p.Name.Contains(query.SearchString) ||
                 p.BarcodeSymbology.Contains(query.SearchString) || p.Detail.Contains(query.SearchString));
@@ -59,7 +43,6 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
             if (query.CategoryId != Guid.Empty) queryable = queryable.Where(p => p.CategoryId == query.CategoryId);
 
             var productList = await queryable
-                .Select(expression)
                 .AsNoTracking()
                 .ToPaginatedListAsync(query.PageNumber, query.PageSize);
 
