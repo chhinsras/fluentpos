@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
@@ -9,6 +9,8 @@ import { BrandParams } from '../../models/brandParams';
 import { BrandService } from '../../services/brand.service';
 import { BrandFormComponent } from './brand-form/brand-form.component';
 import { ToastrService } from 'ngx-toastr';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-brand',
@@ -20,15 +22,21 @@ export class BrandComponent implements OnInit {
   brands: PaginatedResult<Brand>;
   brandColumns: string[] = ['id', 'name', 'detail', 'action'];
   brandParams = new BrandParams();
-
+  dataSource = new MatTableDataSource<Brand>([]);
+  @ViewChild(MatSort) sort: MatSort;
   constructor(public brandService: BrandService, public dialog: MatDialog, public toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getBrands();
   }
-
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+  }
   getBrands() {
-    this.brandService.getBrands(this.brandParams).subscribe(brands => this.brands = brands && brands);
+    this.brandService.getBrands(this.brandParams).subscribe((result)=> {
+      this.brands = result;
+      this.dataSource.data =this.brands.data;
+    });
   }
 
   handlePageChange(event: PaginatedFilter) {
