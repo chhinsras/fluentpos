@@ -86,8 +86,11 @@ table {
 }
 .mat-flat-button {
   margin:8px 8px 8px 0!important;
+  border-radius: 0px!important;  
 }
-
+.mat-raised-button {
+  margin:8px 8px 8px 0!important; 
+}
 .toast-container .ngx-toastr {
   box-shadow: none;
 }
@@ -108,14 +111,18 @@ table {
   margin-left: -15em;
 }
 
-.mat-container
-{
-  background: ghostwhite;
-}
 
 .left {
   float: left;
 }
 .right {
   float: right;
+}
+.mat-card
+{
+  border-radius: 0px!important;
+  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 0%), 0px 5px 8px 0px rgb(0 0 0 / 0%), 0px 1px 14px 0px rgb(0 0 0 / 8%)!important;
+}
+.mat-card-header-text {
+  margin: 16px 0px 0px 16px!important;
 }

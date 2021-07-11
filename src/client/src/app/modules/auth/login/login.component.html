@@ -16,7 +16,7 @@
                         Please provide a valid password
                     </mat-error>
                 </mat-form-field>
-                <button mat-flat-button color="primary" style="width:100%" [disabled]="!loginForm.valid"
+                <button mat-raised-button color="primary" style="width:100%" [disabled]="!loginForm.valid"
                     type="submit">Login</button>
             </form>
         </mat-card-content>
@@ -24,10 +24,10 @@
     </mat-card>
     <mat-card>
         <mat-card-content>
-            <button mat-flat-button color="accent" (click)="fillSuperAdminCredentials()">fill superadmin
+            <button mat-raised-button color="accent" (click)="fillSuperAdminCredentials()">fill superadmin
                 credentials</button>
 
-            <button mat-flat-button color="accent" (click)="fillStaffCredentials()">fill staff credentials</button>
+            <button mat-raised-button color="accent" (click)="fillStaffCredentials()">fill staff credentials</button>
         </mat-card-content>
     </mat-card>
 </div>

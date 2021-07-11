@@ -41,7 +41,8 @@ export class AuthService {
           this.localStorage.setItem('token', result.data.token);
           this.localStorage.setItem('refreshToken', result.data.refreshToken);
           this.currentUserTokenSource.next(result.data.token);
-          this.toastr.success('User Logged In', "Authentication");
+          this.toastr.clear();
+          this.toastr.success('User Logged In');
         }
         return result;
       })
@@ -53,7 +54,8 @@ export class AuthService {
     this.localStorage.removeItem('token');
     this.localStorage.removeItem('refreshToken');
     this.currentUserTokenSource.next(null);
-    this.toastr.warning('User Logged Out', "Authentincation");
+    this.toastr.clear();
+    this.toastr.warning('User Logged Out');
     this.router.navigateByUrl('/login');
   }
 }
