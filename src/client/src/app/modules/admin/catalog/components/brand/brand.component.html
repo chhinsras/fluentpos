@@ -11,13 +11,13 @@
         <a mat-raised-button color="primary" (click)="openBrandForm()">
           <mat-icon>add</mat-icon> Register New Brand
         </a>
-        <a mat-raised-button color="accent" (click)="getBrands()">
+        <a mat-raised-button color="accent" (click)="reload()">
           <mat-icon>refresh</mat-icon> Reload
         </a>
       </div>
       <div class="right">
         <mat-form-field>
-          <input matInput type="text" autocomplete="off" (keyup)="doFilter($event.target.value)"
+          <input matInput [(ngModel)]="searchString" name="searchString" type="text" autocomplete="off" (keyup)="doFilter()"
             placeholder="Filter Brands">
         </mat-form-field>
       </div>

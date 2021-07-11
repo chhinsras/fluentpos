@@ -11,6 +11,7 @@ import { BrandFormComponent } from './brand-form/brand-form.component';
 import { ToastrService } from 'ngx-toastr';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-brand',
@@ -23,6 +24,7 @@ export class BrandComponent implements OnInit {
   brandColumns: string[] = ['id', 'name', 'detail', 'action'];
   brandParams = new BrandParams();
   dataSource = new MatTableDataSource<Brand>([]);
+  searchString: string;
   @ViewChild(MatSort) sort: MatSort;
   constructor(public brandService: BrandService, public dialog: MatDialog, public toastr: ToastrService) { }
 
@@ -69,8 +71,16 @@ export class BrandComponent implements OnInit {
     this.brandParams.orderBy = sort.active + " " + sort.direction;
     this.getBrands();
   }
-  public doFilter = (value: string) => {
-    this.brandParams.searchString = value.trim().toLocaleLowerCase();
+  public doFilter() {
+    this.brandParams.searchString = this.searchString.trim().toLocaleLowerCase();
+    this.brandParams.pageNumber = 0;
+    this.brandParams.pageSize = 0;
+    this.getBrands();
+  }
+  public reload(){
+    this.searchString = this.brandParams.searchString = "";
+    this.brandParams.pageNumber = 0;
+    this.brandParams.pageSize = 0;
     this.getBrands();
   }
 }
