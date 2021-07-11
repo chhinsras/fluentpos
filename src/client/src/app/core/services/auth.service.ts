@@ -7,9 +7,7 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Result } from '../models/wrappers/Result';
 import { BehaviorSubject, of, ReplaySubject } from 'rxjs';
-import { JwtService } from './jwt.service';
 import { ToastrService } from 'ngx-toastr';
-import { RefreshTokenRequest } from '../models/identity/refreshTokenRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +24,6 @@ export class AuthService {
     if (token == null) {
       this.currentUserTokenSource.next(null);
     }
-    // TODO: var decodedToken = this.jwtService.DecodeToken(token);
-    // TODO: check if token is expired / invalid
-
     this.currentUserTokenSource.next(token);
     return of(null);
   }
@@ -59,28 +54,28 @@ export class AuthService {
   tryRefreshingToken() {
     var jwtToken = this.localStorage.getItem('token');
     var refreshToken = this.localStorage.getItem('refreshToken');
-    this.http.post(this.baseUrl + 'identity/tokens/refresh', {
-      "refreshToken": "mSmcD3c5adXehpqdJOMGQdxlgOdBW5wJQbSdE3jo1bQ=",
-      "token": "1233"
-    }).subscribe(
-      (result: Result<Token>) => {
-        if (result.succeeded) {
-          this.localStorage.setItem('token', result.data.token);
-          this.localStorage.setItem('refreshToken', result.data.refreshToken);
-          this.currentUserTokenSource.next(result.data.token);
-          this.toastr.clear();
-          this.toastr.success('User Logged In');
+    this.http.post(this.baseUrl + 'identity/tokens/refresh',
+      {
+        "refreshToken": refreshToken,
+        "token": jwtToken
+      }).subscribe(
+        (result: Result<Token>) => {
+          if (result.succeeded) {
+            this.localStorage.setItem('token', result.data.token);
+            this.localStorage.setItem('refreshToken', result.data.refreshToken);
+            this.currentUserTokenSource.next(result.data.token);
+            this.toastr.clear();
+            this.toastr.success('Refreshed Token');
+          }
+          else {
+            this.logout();
+            this.toastr.error("Something went wrong!");
+          }
+        },
+        (error: Result<Token>) => {
+          this.logout();
         }
-        else {
-          this.router.navigate(['login']);
-          this.toastr.error("Something went wrong!");
-        }
-      },
-      (error: Result<Token>) => {
-        this.router.navigate(['login']); 
-      }
 
-    );
-    return true;
+      );
   }
 }
