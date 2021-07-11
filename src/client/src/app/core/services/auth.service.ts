@@ -9,6 +9,7 @@ import { Result } from '../models/wrappers/Result';
 import { BehaviorSubject, of, ReplaySubject } from 'rxjs';
 import { JwtService } from './jwt.service';
 import { ToastrService } from 'ngx-toastr';
+import { RefreshTokenRequest } from '../models/identity/refreshTokenRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -32,12 +33,10 @@ export class AuthService {
     return of(null);
   }
 
-  login(values: any)
-  {
+  login(values: any) {
     return this.http.post(this.baseUrl + 'identity/tokens', values).pipe(
       map((result: Result<Token>) => {
-        if (result.succeeded)
-        {
+        if (result.succeeded) {
           this.localStorage.setItem('token', result.data.token);
           this.localStorage.setItem('refreshToken', result.data.refreshToken);
           this.currentUserTokenSource.next(result.data.token);
@@ -49,13 +48,39 @@ export class AuthService {
     );
   }
 
-  logout()
-  {
+  logout() {
     this.localStorage.removeItem('token');
     this.localStorage.removeItem('refreshToken');
     this.currentUserTokenSource.next(null);
     this.toastr.clear();
     this.toastr.warning('User Logged Out');
     this.router.navigateByUrl('/login');
+  }
+  tryRefreshingToken() {
+    var jwtToken = this.localStorage.getItem('token');
+    var refreshToken = this.localStorage.getItem('refreshToken');
+    this.http.post(this.baseUrl + 'identity/tokens/refresh', {
+      "refreshToken": "mSmcD3c5adXehpqdJOMGQdxlgOdBW5wJQbSdE3jo1bQ=",
+      "token": "1233"
+    }).subscribe(
+      (result: Result<Token>) => {
+        if (result.succeeded) {
+          this.localStorage.setItem('token', result.data.token);
+          this.localStorage.setItem('refreshToken', result.data.refreshToken);
+          this.currentUserTokenSource.next(result.data.token);
+          this.toastr.clear();
+          this.toastr.success('User Logged In');
+        }
+        else {
+          this.router.navigate(['login']);
+          this.toastr.error("Something went wrong!");
+        }
+      },
+      (error: Result<Token>) => {
+        this.router.navigate(['login']); 
+      }
+
+    );
+    return true;
   }
 }

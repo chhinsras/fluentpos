@@ -9,11 +9,12 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router, RouterStateSnapshot } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router, private toastr: ToastrService) { }
+  constructor(private router: Router, private toastr: ToastrService, private authService: AuthService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
@@ -24,8 +25,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           }
         }
         if (response.error.errorCode === 401) {
-          this.router.navigate(['login']);
-          this.toastr.error(response.error.exception);
+          this.authService.tryRefreshingToken();
         }
         if (response.error.errorCode === 403) {
           this.toastr.error(response.error.exception);
@@ -34,7 +34,8 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.router.navigateByUrl('/not-found');
         }
         if (response.error.errorCode === 500) {
-          this.toastr.error(response.error.exception)
+          console.log(response.error.exception);
+          this.toastr.error("Something Went Wrong")
         }
         return throwError(response.error);
       })

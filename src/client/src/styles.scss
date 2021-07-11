@@ -19,7 +19,8 @@ $app-theme:   mat-light-theme((
     warn:$app-warn
   )
 ));
-
+$custom-typography: mat-typography-config($font-family: 'Roboto,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif');
+@include mat-core($custom-typography);
 
 // Include the default theme styles (color and default density)
 @include angular-material-theme($app-theme);
@@ -50,11 +51,10 @@ $dark-theme:   mat-dark-theme((
   background-color: red;
   color:white ;
 }
-
 /* You can add global styles to this file, and also import other style files */
 
 /* html, body { height: 100%; } */
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0;}
 .flex-stretch
 {
     flex: 1 0 auto;
@@ -123,6 +123,7 @@ table {
   border-radius: 0px!important;
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 0%), 0px 5px 8px 0px rgb(0 0 0 / 0%), 0px 1px 14px 0px rgb(0 0 0 / 8%)!important;
 }
-.mat-card-header-text {
-  margin: 16px 0px 0px 16px!important;
+.mat-list-item
+{
+  font-size: 14px!important;
 }
