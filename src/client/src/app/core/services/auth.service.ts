@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { Result } from '../models/wrappers/Result';
 import { BehaviorSubject, of, ReplaySubject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +29,22 @@ export class AuthService {
     this.currentUserTokenSource.next(token);
     return of(null);
   }
-
+  private getDecodedToken() {
+    let token: string;
+    token = this.localStorage.getItem('token');
+    const jwtService = new JwtHelperService();
+    const decodedToken = jwtService.decodeToken(token);
+    console.log(decodedToken);
+    return decodedToken;
+  }
+  getFullName() {
+    var decodedToken = this.getDecodedToken();
+    return decodedToken.fullName;
+  }
+  getEmail() {
+    var decodedToken = this.getDecodedToken();
+    return decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'];
+  }
   login(values: any) {
     return this.http.post(this.baseUrl + 'identity/tokens', values).pipe(
       map((result: Result<Token>) => {
