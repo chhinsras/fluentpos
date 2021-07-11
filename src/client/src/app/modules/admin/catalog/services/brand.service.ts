@@ -20,6 +20,7 @@ export class BrandService {
     if (brandParams.searchString) params = params.append('searchString', brandParams.searchString)
     if (brandParams.pageNumber) params = params.append('pageNumber', brandParams.pageNumber.toString())
     if (brandParams.pageSize) params = params.append('pageSize', brandParams.pageSize.toString());
+    if (brandParams.orderBy) params = params.append('orderBy', brandParams.orderBy.toString());
     return this.api.getAlls(params).pipe(
       map((response: PaginatedResult<Brand>) => response)
     );

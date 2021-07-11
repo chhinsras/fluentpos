@@ -10,7 +10,7 @@ import { BrandService } from '../../services/brand.service';
 import { BrandFormComponent } from './brand-form/brand-form.component';
 import { ToastrService } from 'ngx-toastr';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-brand',
@@ -33,9 +33,9 @@ export class BrandComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
   getBrands() {
-    this.brandService.getBrands(this.brandParams).subscribe((result)=> {
+    this.brandService.getBrands(this.brandParams).subscribe((result) => {
       this.brands = result;
-      this.dataSource.data =this.brands.data;
+      this.dataSource.data = this.brands.data;
     });
   }
 
@@ -53,7 +53,7 @@ export class BrandComponent implements OnInit {
       if (result) this.getBrands();
     });
   }
-  openDeleteConfirmationDialog(id : string) {
+  openDeleteConfirmationDialog(id: string) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: "Do you confirm the removal of this brand?"
     });
@@ -62,9 +62,11 @@ export class BrandComponent implements OnInit {
     });
   }
 
-  deleteUser(id : string) : void
-  {
-    this.brandService.deleteBrand(id).subscribe(() => { this.getBrands(); this.toastr.info('Brand Removed');});
+  deleteUser(id: string): void {
+    this.brandService.deleteBrand(id).subscribe(() => { this.getBrands(); this.toastr.info('Brand Removed'); });
   }
-
+  customSort(sort: Sort) {
+    this.brandParams.orderBy = sort.active + " " + sort.direction;
+    this.getBrands();
+  }
 }
