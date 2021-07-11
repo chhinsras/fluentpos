@@ -1,29 +1,27 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>
-      Brands
-    </mat-card-title>
-    <mat-card-subtitle>Manage, Register, Update or Remove Brands here.</mat-card-subtitle>
-  </mat-card-header>
-  <div style="margin: 0px 0px 0px 16px;">
-    <div class="left"> 
-      <a mat-flat-button color="primary" (click)="openBrandForm()">
-        <mat-icon>add</mat-icon> Register New Brand
-      </a>
-      <a mat-flat-button color="accent" (click)="getBrands()">
-        <mat-icon>refresh</mat-icon> Reload
-      </a>
+<div [hidden]="!brands">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Brands
+      </mat-card-title>
+      <mat-card-subtitle>Manage, Register, Update or Remove Brands here.</mat-card-subtitle>
+    </mat-card-header>
+    <div style="margin: 0px 0px 0px 16px;">
+      <div class="left">
+        <a mat-flat-button color="primary" (click)="openBrandForm()">
+          <mat-icon>add</mat-icon> Register New Brand
+        </a>
+        <a mat-flat-button color="accent" (click)="getBrands()">
+          <mat-icon>refresh</mat-icon> Reload
+        </a>
+      </div>
+      <div class="right">
+        <mat-form-field>
+          <input matInput type="text" autocomplete="off" (keyup)="doFilter($event.target.value)"
+            placeholder="Filter Brands">
+        </mat-form-field>
+      </div>
     </div>
-    
-    <div class="right">
-      <mat-form-field>
-        <input matInput type="text" autocomplete="off" (keyup)="doFilter($event.target.value)" placeholder="Filter Brands">
-      </mat-form-field>
-    </div>
-    
-  </div>
-  
-  <div [hidden]="!brands">
     <table mat-table mat-table-stripped [dataSource]="dataSource" matSort (matSortChange)="doSort($event)">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
@@ -52,7 +50,7 @@
       <tr mat-header-row *matHeaderRowDef="brandColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: brandColumns;"></tr>
     </table>
-    <app-pagination [totalCount]="brands.totalCount" [pageSize]="brands.pageSize"
+    <app-pagination [totalCount]="brands && brands.totalCount" [pageSize]="brands && brands.pageSize"
       (pageChangeEvent)="handlePageChange($event)"></app-pagination>
-  </div>
-</mat-card>
+  </mat-card>
+</div>

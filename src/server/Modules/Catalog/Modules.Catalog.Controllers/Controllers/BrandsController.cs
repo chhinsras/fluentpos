@@ -27,8 +27,9 @@ namespace FluentPOS.Modules.Catalog.Controllers
             return Ok(brands);
         }
 
-        [Authorize(Policy = Permissions.Brands.Register)]
+        
         [HttpPost]
+        [Authorize(Policy = Permissions.Brands.Register)]
         public async Task<IActionResult> RegisterAsync(RegisterBrandCommand command)
         {
             return Ok(await Mediator.Send(command));
