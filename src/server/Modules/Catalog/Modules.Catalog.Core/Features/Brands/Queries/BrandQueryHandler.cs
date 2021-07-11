@@ -14,6 +14,7 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
 {
@@ -36,20 +37,18 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
         public async Task<PaginatedResult<GetAllPagedBrandsResponse>> Handle(GetAllPagedBrandsQuery request, CancellationToken cancellationToken)
         {
             Expression<Func<Brand, GetAllPagedBrandsResponse>> expression = e => new GetAllPagedBrandsResponse(e.Id, e.Name, e.Detail);
-
-            var queryable = _context.Brands.OrderBy(x => x.Id).AsQueryable();
-
+            var queryable = _context.Brands.AsQueryable();
             if (!string.IsNullOrEmpty(request.SearchString)) queryable = queryable.Where(b => b.Name.Contains(request.SearchString) || b.Detail.Contains(request.SearchString));
-
+            if (request.OrderBy?.Any() == true)
+            {
+                var ordering = string.Join(",", request.OrderBy);
+                queryable = queryable.OrderBy(ordering);
+            }
             var brandList = await queryable
-                .Select(expression)
-                .AsNoTracking()
-                .ToPaginatedListAsync(request.PageNumber, request.PageSize);
-
+            .Select(expression)
+            .ToPaginatedListAsync(request.PageNumber, request.PageSize);
             if (brandList == null) throw new CatalogException(_localizer["Brands Not Found!"]);
-
             var mappedBrands = _mapper.Map<PaginatedResult<GetAllPagedBrandsResponse>>(brandList);
-
             return mappedBrands;
         }
 
