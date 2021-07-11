@@ -6,15 +6,25 @@
     <mat-card-subtitle>Manage, Register, Update or Remove Brands here.</mat-card-subtitle>
   </mat-card-header>
   <div style="margin: 0px 0px 0px 16px;">
-    <a mat-flat-button color="primary" (click)="openBrandForm()">
-      <mat-icon>add</mat-icon> Register New Brand
-    </a>
-    <a mat-flat-button color="accent" (click)="getBrands()">
-      <mat-icon>refresh</mat-icon> Reload
-    </a>
+    <div class="left"> 
+      <a mat-flat-button color="primary" (click)="openBrandForm()">
+        <mat-icon>add</mat-icon> Register New Brand
+      </a>
+      <a mat-flat-button color="accent" (click)="getBrands()">
+        <mat-icon>refresh</mat-icon> Reload
+      </a>
+    </div>
+    
+    <div class="right">
+      <mat-form-field>
+        <input matInput type="text" autocomplete="off" (keyup)="doFilter($event.target.value)" placeholder="Filter Brands">
+      </mat-form-field>
+    </div>
+    
   </div>
+  
   <div [hidden]="!brands">
-    <table mat-table mat-table-stripped [dataSource]="dataSource" matSort (matSortChange)="customSort($event)">
+    <table mat-table mat-table-stripped [dataSource]="dataSource" matSort (matSortChange)="doSort($event)">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
         <td mat-cell *matCellDef="let element"> {{element.id}} </td>

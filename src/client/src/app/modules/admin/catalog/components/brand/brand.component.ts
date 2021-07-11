@@ -58,15 +58,19 @@ export class BrandComponent implements OnInit {
       data: "Do you confirm the removal of this brand?"
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) this.deleteUser(id);
+      if (result) this.removeBrand(id);
     });
   }
 
-  deleteUser(id: string): void {
+  removeBrand(id: string): void {
     this.brandService.deleteBrand(id).subscribe(() => { this.getBrands(); this.toastr.info('Brand Removed'); });
   }
-  customSort(sort: Sort) {
+  doSort(sort: Sort) {
     this.brandParams.orderBy = sort.active + " " + sort.direction;
+    this.getBrands();
+  }
+  public doFilter = (value: string) => {
+    this.brandParams.searchString = value.trim().toLocaleLowerCase();
     this.getBrands();
   }
 }

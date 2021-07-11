@@ -38,11 +38,22 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
         {
             Expression<Func<Brand, GetAllPagedBrandsResponse>> expression = e => new GetAllPagedBrandsResponse(e.Id, e.Name, e.Detail);
             var queryable = _context.Brands.AsQueryable();
-            if (!string.IsNullOrEmpty(request.SearchString)) queryable = queryable.Where(b => b.Name.Contains(request.SearchString) || b.Detail.Contains(request.SearchString));
+
             if (request.OrderBy?.Any() == true)
             {
                 var ordering = string.Join(",", request.OrderBy);
                 queryable = queryable.OrderBy(ordering);
+            }
+            else
+            {
+                queryable = queryable.OrderBy(a=>a.Id);
+            }
+
+            if (!string.IsNullOrEmpty(request.SearchString))
+            {
+                queryable = queryable.Where(x => EF.Functions.Like(x.Name.ToLower(), $"%{request.SearchString.ToLower()}%")
+                || EF.Functions.Like(x.Detail.ToLower(), $"%{request.SearchString.ToLower()}%")
+                || EF.Functions.Like(x.Id.ToString().ToLower(), $"%{request.SearchString.ToLower()}%"));
             }
             var brandList = await queryable
             .Select(expression)
