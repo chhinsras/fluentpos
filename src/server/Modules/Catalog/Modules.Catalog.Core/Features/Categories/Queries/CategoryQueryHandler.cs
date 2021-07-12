@@ -13,6 +13,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
+
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
 {
@@ -36,19 +38,29 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
         {
             Expression<Func<Category, GetAllPagedCategoriesResponse>> expression = e => new GetAllPagedCategoriesResponse(e.Id, e.Name, e.Detail);
 
-            var queryable = _context.Categories.OrderBy(x => x.Id).AsQueryable();
+            var queryable = _context.Categories.AsQueryable();
 
-            if (!string.IsNullOrEmpty(request.SearchString)) queryable = queryable.Where(c => c.Name.Contains(request.SearchString) || c.Detail.Contains(request.SearchString));
+            if (request.OrderBy?.Any() == true)
+            {
+                var ordering = string.Join(",", request.OrderBy);
+                queryable = queryable.OrderBy(ordering);
+            }
+            else
+            {
+                queryable = queryable.OrderBy(a => a.Id);
+            }
 
+            if (!string.IsNullOrEmpty(request.SearchString))
+            {
+                queryable = queryable.Where(x => EF.Functions.Like(x.Name.ToLower(), $"%{request.SearchString.ToLower()}%")
+                || EF.Functions.Like(x.Detail.ToLower(), $"%{request.SearchString.ToLower()}%")
+                || EF.Functions.Like(x.Id.ToString().ToLower(), $"%{request.SearchString.ToLower()}%"));
+            }
             var categoryList = await queryable
-                .Select(expression)
-                .AsNoTracking()
-                .ToPaginatedListAsync(request.PageNumber, request.PageSize);
-
-            if (categoryList == null) throw new CatalogException(_localizer["Categories Not Found!"]);
-
+            .Select(expression)
+            .ToPaginatedListAsync(request.PageNumber, request.PageSize);
+            if (categoryList == null) throw new CatalogException(_localizer["Brands Not Found!"]);
             var mappedCategories = _mapper.Map<PaginatedResult<GetAllPagedCategoriesResponse>>(categoryList);
-
             return mappedCategories;
         }
 
