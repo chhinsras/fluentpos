@@ -1,4 +1,4 @@
-﻿namespace BlazorHero.CleanArchitecture.Shared.Constants.Permission
+﻿namespace FluentPOS.Shared.Core.Constants
 {
     public static class ApplicationClaimTypes
     {

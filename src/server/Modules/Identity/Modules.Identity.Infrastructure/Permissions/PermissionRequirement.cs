@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace FluentPOS.Modules.Identity.Core.Permissions
+namespace FluentPOS.Modules.Identity.Infrastructure.Permissions
 {
     internal class PermissionRequirement : IAuthorizationRequirement
     {

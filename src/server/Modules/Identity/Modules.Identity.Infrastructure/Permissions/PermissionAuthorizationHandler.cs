@@ -1,11 +1,9 @@
-﻿using BlazorHero.CleanArchitecture.Shared.Constants.Permission;
-using FluentPOS.Modules.Identity.Core.Exceptions;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using FluentPOS.Shared.Core.Constants;
 using Microsoft.AspNetCore.Authorization;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.Identity.Core.Permissions
+namespace FluentPOS.Modules.Identity.Infrastructure.Permissions
 {
     internal class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
     {

@@ -1,5 +1,4 @@
-﻿using BlazorHero.CleanArchitecture.Shared.Constants.Permission;
-using FluentPOS.Modules.Identity.Core.Entities;
+﻿using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Shared.Core.Constants;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
