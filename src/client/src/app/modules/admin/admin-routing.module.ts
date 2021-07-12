@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CatalogComponent } from './catalog/catalog.component';
 import { BrandComponent } from './catalog/components/brand/brand.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import {CategoryComponent} from "./catalog/components/category/category.component";
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'catalog/brands',
     component: BrandComponent
+  },
+  {
+    path: 'catalog/categories',
+    component: CategoryComponent
   }
 ];
 @NgModule({
