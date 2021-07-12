@@ -101,7 +101,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                     }
                 }
 
-                foreach (var permission in typeof(Permissions).GetNestedClassesStaticStringValues())
+                foreach (var permission in typeof(Shared.Core.Constants.Permissions).GetNestedClassesStaticStringValues())
                 {
                     await _roleManager.AddPermissionClaim(superAdminRoleInDb, permission);
                 }
