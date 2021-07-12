@@ -1,7 +1,6 @@
 ﻿using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Exceptions;
-using FluentPOS.Modules.Identity.Core.Permissions;
 using FluentPOS.Modules.Identity.Core.Settings;
 using FluentPOS.Modules.Identity.Infrastructure.Persistence;
 using FluentPOS.Modules.Identity.Infrastructure.Services;
@@ -21,6 +20,7 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using FluentPOS.Modules.Identity.Infrastructure.Permissions;
 using FluentPOS.Shared.Core.Extensions;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Extensions

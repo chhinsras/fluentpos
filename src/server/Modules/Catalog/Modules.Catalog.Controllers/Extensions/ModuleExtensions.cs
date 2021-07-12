@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentPOS.Modules.Catalog
+namespace FluentPOS.Modules.Catalog.Extensions
 {
     public static class ModuleExtensions
     {

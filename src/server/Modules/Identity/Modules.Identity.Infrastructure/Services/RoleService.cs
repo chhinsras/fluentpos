@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Exceptions;
@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentPOS.Shared.DTOs.Identity.Roles;
 using FluentPOS.Shared.Infrastructure.Utilities;
+using static FluentPOS.Shared.Core.Constants.Permissions;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
@@ -202,13 +203,13 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 var selectedClaims = request.RoleClaims.Where(a => a.Selected).ToList();
                 if (role.Name == RoleConstants.SuperAdmin)
                 {
-                    if (!selectedClaims.Any(x => x.Value == Permissions.Roles.View)
-                       || !selectedClaims.Any(x => x.Value == Permissions.RoleClaims.View)
-                       || !selectedClaims.Any(x => x.Value == Permissions.RoleClaims.Edit))
+                    if (selectedClaims.All(x => x.Value != Roles.View) || 
+                        selectedClaims.All(x => x.Value != RoleClaims.View) || 
+                        selectedClaims.All(x => x.Value != RoleClaims.Edit))
                     {
                         return await Result<string>.FailAsync(string.Format(
                             _localizer["Not allowed to deselect {0} or {1} or {2} for this Role."],
-                            Permissions.Roles.View, Permissions.RoleClaims.View, Permissions.RoleClaims.Edit));
+                            Roles.View, RoleClaims.View, RoleClaims.Edit));
                     }
                 }
 
