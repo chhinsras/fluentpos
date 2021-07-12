@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../../../core/services/auth.service";
 
 @Component({
   selector: 'app-welcome',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor() { }
+  fullName: string = '';
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.getUserDetails();
+  }
+
+  getUserDetails() {
+    this.fullName = this.authService.getFullName();
   }
 
 }
