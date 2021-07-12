@@ -110,7 +110,12 @@ table {
   margin-top: -9em;
   margin-left: -15em;
 }
-
+.mat-row:hover {
+  background-color: whitesmoke;
+}
+.dark-theme .mat-row:hover {
+  background-color: rgb(58, 58, 58);
+}
 .mat-dialog-container 
 {
   min-width: 500px!important;
