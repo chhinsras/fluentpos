@@ -66,6 +66,13 @@ Clone this repository to your local machine.
 
 You can use these credentials to generate jwt tokens in the `api/identity/tokens` endpoint.
 
+#### Running Angular
+
+- Navigate to fluentpos\src\client via terminal.
+- Run `npm install` to install all the required packages
+- Run `ng serve`
+- Navigate to localhost:4200 on your browser
+
 ### Note
 
 Since fluentpos is in it's early development stage, I have not been able to write detailed documentation about the implementation. You can expect quite a lot of content around this architecture on my blog [@codewithmukesh](https://codewithmukesh.com/) in the upcoming days.
