@@ -1,0 +1,37 @@
+{
+    "site": {
+        "title": "fluentpos"
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "subtitle": "Краткий обзор вашего бизнеса."
+    },
+    "settings": {
+        "title": "Настройки",
+        "subtitle": "Управление настройками приложения.",
+        "generalSettings": "Общие настройки",
+        "language": "Язык",
+        "english": "Английский",
+        "russian": "Русский",
+        "french": "Французский",
+        "spanish": "Испанский"
+    },
+    "userCard": {
+        "profile": "Профиль",
+        "settings": "Настройки",
+        "logout": "Выход"
+    },
+    "dialogs": {
+        "logout": {
+            "title": "Выход",
+            "message": "Вы хотите выйти из системы?",
+            "button": "Выход"
+        }
+    },
+    "common": {
+        "cancel": "Отмена",
+        "ok": "Ок",
+        "yes": "Да",
+        "no": "Нет"
+    }
+}
