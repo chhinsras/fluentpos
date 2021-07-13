@@ -22,14 +22,14 @@ export class ToolbarComponent implements OnInit {
   constructor(private localStorageService: LocalStorageService, public authService: AuthService, public dialog: MatDialog) { }
   ngOnInit() {
     let themeVariant = this.localStorageService.getItem('themeVariant');
-    this.darkModeIcon = themeVariant === 'dark-theme' ? 'bedtime' : 'brightness_5';
+    this.darkModeIcon = themeVariant === 'dark-theme' ? 'bedtime' : 'wb_sunny';
     this.isDarkMode = themeVariant === 'dark-theme' ? true : false;
     this.fullName = this.authService.getFullName();
     this.email = this.authService.getEmail();
   }
   toggleDarkMode() {
     this.isDarkMode = !this.isDarkMode;
-    this.darkModeIcon = this.isDarkMode ? 'bedtime' : 'brightness_5'
+    this.darkModeIcon = this.isDarkMode ? 'bedtime' : 'wb_sunny'
     this.darkModelToggled.emit({ isDarkMode: this.isDarkMode, darkModelIcon: this.darkModeIcon });
   }
   openLogoutDialog() {
