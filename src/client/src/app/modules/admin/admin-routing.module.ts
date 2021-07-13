@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CatalogComponent } from './catalog/catalog.component';
-import { BrandComponent } from './catalog/components/brand/brand.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { CategoryComponent } from "./catalog/components/category/category.component";
-import { SettingsComponent } from './settings/settings.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {BrandComponent} from './catalog/components/brand/brand.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {CategoryComponent} from './catalog/components/category/category.component';
+import {SettingsComponent} from './settings/settings.component';
+import {ProductComponent} from './catalog/components/product/product.component';
 
 const routes: Routes = [
   {
@@ -26,6 +26,10 @@ const routes: Routes = [
   {
     path: 'catalog/categories',
     component: CategoryComponent
+  },
+  {
+    path: 'catalog/products',
+    component: ProductComponent
   }
 ];
 @NgModule({

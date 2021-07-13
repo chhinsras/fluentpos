@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSortModule } from '@angular/material/sort';
 import {MatSelectModule} from '@angular/material/select'
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 const Modules =
   [
@@ -35,6 +36,7 @@ const Modules =
     MatDialogModule,
     MatGridListModule,
     MatSortModule,
+    MatCheckboxModule,
     MatSelectModule
   ];
 
