@@ -1,0 +1,33 @@
+{
+    "site": {
+        "title": "fluentpos"
+    },
+    "dashboard": {
+        "title": "tableau de bord",
+        "subtitle": "Aperçu rapide de votre entreprise."
+    },
+    "settings": {
+        "title": "Paramètres",
+        "subtitle": "Gérer les paramètres de l’application.",
+        "generalSettings": "Paramètres généraux",
+        "language": "Langue"
+    },
+    "userCard": {
+        "profile": "profil",
+        "settings": "réglage",
+        "logout": "Logout"
+    },
+    "dialogs": {
+        "logout": {
+            "title": "Logout",
+            "message": "Voulez-vous vous déconnecter ?",
+            "button": "Logout"
+        }
+    },
+    "common": {
+        "cancel": "Annuler",
+        "ok": "D'accord",
+        "yes": "oui",
+        "no": "Non,"
+    }
+}

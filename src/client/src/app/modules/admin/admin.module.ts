@@ -9,6 +9,7 @@ import { CatalogModule } from './catalog/catalog.module';
 import { DeleteDialogComponent } from './shared/components/delete-dialog/delete-dialog.component';
 import { LogoutDialogComponent } from './shared/components/logout-dialog/logout-dialog.component';
 import { SettingsComponent } from './settings/settings.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { SettingsComponent } from './settings/settings.component';
     AdminRoutingModule,
     MaterialModule,
     SharedModule,
-    CatalogModule
+    CatalogModule,
+    TranslateModule
   ]
 })
 export class AdminModule { }

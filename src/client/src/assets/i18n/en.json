@@ -1,0 +1,33 @@
+{
+    "site": {
+        "title": "fluentpos"
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "subtitle": "Quick Overview of your Business."
+    },
+    "settings": {
+        "title": "Settings",
+        "subtitle": "Manage Application Settings.",
+        "generalSettings": "General Settings",
+        "language": "Language"
+    },
+    "userCard": {
+        "profile": "Profile",
+        "settings": "Setting",
+        "logout": "Logout"
+    },
+    "dialogs": {
+        "logout": {
+            "title": "Logout",
+            "message": "Do you want to logout?",
+            "button": "Logout"
+        }
+    },
+    "common": {
+        "cancel": "Cancel",
+        "ok": "Ok",
+        "yes": "Yes",
+        "no": "No"
+    }
+}

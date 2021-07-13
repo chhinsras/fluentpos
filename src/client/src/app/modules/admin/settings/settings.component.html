@@ -1,8 +1,22 @@
-<mat-card>
+<mat-card  class="module-card">
     <mat-card-header>
-        <mat-card-title>
-            Settings
-        </mat-card-title>
-        <mat-card-subtitle>Quick Overview of your Business.</mat-card-subtitle>
+        <mat-card-title translate>settings.title</mat-card-title>
+        <mat-card-subtitle translate>settings.subtitle</mat-card-subtitle>
     </mat-card-header>
+    <mat-card-content>
+        <div class="row">
+            <h4 translate>settings.generalSettings</h4>
+            <div class="col-sm-3">
+                <mat-form-field appearance="fill">
+                    <mat-label translate>settings.language</mat-label>
+                    <mat-select [(value)]="selected" (selectionChange)=changeLanguage()>
+                        <mat-option value="en">English</mat-option>
+                        <mat-option value="fr">French</mat-option>
+                        <mat-option value="es">Spanish</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-card-content>
+
 </mat-card>
