@@ -10,6 +10,7 @@ import {MaterialModule} from 'src/app/core/material/material.module';
 import {SharedModule} from 'src/app/core/shared/shared.module';
 import {BrandFormComponent} from './components/brand/brand-form/brand-form.component';
 import {CategoryFormComponent} from './components/category/category-form/category-form.component';
+import {ProductFormComponent} from './components/product/product-form/product-form.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {CategoryFormComponent} from './components/category/category-form/categor
     ProductComponent,
     CategoryComponent,
     BrandFormComponent,
-    CategoryFormComponent
+    CategoryFormComponent,
+    ProductFormComponent
   ],
   imports: [
     CommonModule,
