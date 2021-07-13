@@ -12,6 +12,18 @@
             target="_blank">
             <mat-icon class="fab fa-github"></mat-icon>
         </a>
+        <ng-container>
+            <mat-icon>language</mat-icon>
+            <button mat-button [matMenuTriggerFor]="menu">
+                {{siteLanguage}}
+                <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <a mat-menu-item href="/en">English</a>
+                <a mat-menu-item href="/km">Khmer</a>
+                <a mat-menu-item href="/fr">Français</a>
+            </mat-menu>
+        </ng-container>
         <a mat-icon-button (click)="toggleDarkMode()">
             <mat-icon>{{darkModeIcon}}</mat-icon>
         </a>

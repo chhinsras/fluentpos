@@ -13,6 +13,13 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "km": "src/locale/messages.km.json",
+          "fr": "src/locale/messages.fr.json"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -67,6 +74,15 @@
                   "maximumError": "10kb"
                 }
               ]
+            }, 
+            "en": {
+              "localize": ["en"]
+            },
+            "km": {
+              "localize": ["km"]
+            },
+            "fr": {
+              "localize": ["fr"]
             }
           },
           "defaultConfiguration": ""
@@ -79,6 +95,15 @@
           "configurations": {
             "production": {
               "browserTarget": "client:build:production"
+            },
+            "en": {
+              "browserTarget": "client:build:en"
+            },
+            "km": {
+              "browserTarget": "client:build:km"
+            },
+            "fr": {
+              "browserTarget": "client:build:fr"
             }
           }
         },

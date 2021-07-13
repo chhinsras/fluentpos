@@ -1,13 +1,11 @@
 <mat-card>
     <mat-card-content>
-        <h2>Welcome {{fullName}}</h2>
-        <button mat-raised-button color="primary" routerLink="/admin">Dashboard</button>
-        <button mat-raised-button color="secondary" routerLink="/pos">POS</button>
+        <h2 i18n>Welcome {{fullName}}</h2>
+        <button mat-raised-button color="primary" routerLink="/admin" i18n>Dashboard</button>
+        <button mat-raised-button color="secondary" routerLink="/pos" i18n>POS</button>
 
-        <p style="margin-top: 20px;">
+        <p style="margin-top: 20px;" i18n>
             If user is superadmin, show dashboard and pos button.</p>
         <p>Else show only POS Button</p>
-
-
     </mat-card-content>
 </mat-card>
