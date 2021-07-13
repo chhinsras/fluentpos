@@ -1,12 +1,13 @@
-@import '~@angular/material/theming';
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// **Be sure that you only ever include this mixin once!**
-@include mat-core();
-
 @import '~ngx-toastr/toastr';
+@import '~@angular/material/theming';
+@import '~bootstrap/scss/bootstrap-grid';
+.container {
+  all:revert;
+}
+.a{
+  all:revert;
+}
+@include mat-core();
 
 // Define the default theme (same as the example above).
 $app-primary: mat-palette($mat-indigo);
@@ -37,23 +38,13 @@ $dark-theme:   mat-dark-theme((
     warn: $dark-warn
   )
 ));
-
-// Include the dark color styles inside of a block with a CSS class. You can make this
-// CSS class whatever you want. In this example, any component inside of an element with
-// `.unicorn-dark-theme` will be affected by this alternate dark theme instead of the default theme.
 .dark-theme {
   @include angular-material-color($dark-theme);
 }
-
-
-
 .mat-danger {
   background-color: red;
   color:white ;
 }
-/* You can add global styles to this file, and also import other style files */
-
-/* html, body { height: 100%; } */
 body { margin: 0;}
 .flex-stretch
 {
@@ -72,7 +63,6 @@ body { margin: 0;}
     background: gainsboro;
     border-radius: 10px;
 }
-
 .dark-theme .mat-drawer.mat-drawer-push
 {
   background-color: #212121!important;
@@ -80,7 +70,6 @@ body { margin: 0;}
 .dark-theme .mat-drawer-backdrop.mat-drawer-shown {
     background-color: rgb(0 0 0 / 82%);
 }
-
 table {
   width: 100%;
 }
@@ -129,6 +118,7 @@ table {
 }
 .mat-card
 {
+  padding-top: 32px!important;
   border-radius: 0px!important;
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 0%), 0px 5px 8px 0px rgb(0 0 0 / 0%), 0px 1px 14px 0px rgb(0 0 0 / 8%)!important;
 }
@@ -152,3 +142,19 @@ table {
 {
   opacity: 50%;
 }
+.mat-card-row-column {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  padding-right: 15px;
+}
+@media (max-width: 850px) {
+  .mat-card-row-column  {
+    width: 100%;
+  }
+}
+.mat-card-content
+{
+  padding: 16px!important;
+}
+
