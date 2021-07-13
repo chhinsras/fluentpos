@@ -11,13 +11,13 @@ import { LogoutDialogComponent } from 'src/app/modules/admin/shared/components/l
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  fullName: string;
-  email: string;
+ 
   @Input() darkModeIcon: string;
   @Input() inputSideNav: MatSidenav;
   @Input() isDarkMode: boolean;
   @Output('darkModelToggled') darkModelToggled = new EventEmitter<{ isDarkMode: boolean, darkModelIcon: string }>();
-
+  fullName: string;
+  email: string;
   siteLanguage: string = 'English';
   siteLocale: string;
   languageList = [
@@ -33,7 +33,6 @@ export class ToolbarComponent implements OnInit {
     this.isDarkMode = themeVariant === 'dark-theme' ? true : false;
     this.fullName = this.authService.getFullName();
     this.email = this.authService.getEmail();
-
     this.siteLocale = window.location.pathname.split('/')[1];
     this.siteLanguage = this.languageList.find(f => f.code === this.siteLocale).label;
   }
