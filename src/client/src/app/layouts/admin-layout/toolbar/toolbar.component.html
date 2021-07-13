@@ -15,8 +15,29 @@
         <a mat-icon-button (click)="toggleDarkMode()">
             <mat-icon>{{darkModeIcon}}</mat-icon>
         </a>
-        <a mat-icon-button (click)="openLogoutDialog()">
+        <!-- <a mat-icon-button>
+            <mat-icon class="fas fa-cog"></mat-icon>
+        </a> -->
+
+        <!-- <a mat-icon-button (click)="openLogoutDialog()">
             <mat-icon class="fas fa-sign-out-alt"></mat-icon>
-        </a>
+        </a> -->
+        <mat-divider vertical style="height:50%;margin: 10px;"></mat-divider>
+        <button mat-button style="background: rgba(0,0,0,.2);" [matMenuTriggerFor]="menu">
+            <span style="font-weight:lighter;font-size: small;">{{fullName}}</span>
+        </button>
+        <mat-menu #menu="matMenu" style="padding-top: 0px!important;">
+            <mat-card>
+                <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title style="margin-bottom: 10px;font-size:medium">{{fullName}}</mat-card-title>
+                    <mat-card-subtitle style="margin-bottom: 5px;font-size:small">{{email}}</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+            <button mat-menu-item>Profile</button>
+            <button mat-menu-item>Settings</button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="openLogoutDialog()">Logout</button>
+        </mat-menu>
     </mat-toolbar-row>
 </mat-toolbar>

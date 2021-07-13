@@ -11,24 +11,26 @@ import { LogoutDialogComponent } from 'src/app/modules/admin/shared/components/l
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-
+  fullName: string;
+  email: string;
   @Input() darkModeIcon: string;
   @Input() inputSideNav: MatSidenav;
   @Input() isDarkMode: boolean;
   @Output('darkModelToggled') darkModelToggled = new EventEmitter<{ isDarkMode: boolean, darkModelIcon: string }>();
-  constructor(private localStorageService: LocalStorageService, public authService: AuthService,public dialog: MatDialog) { }
+  constructor(private localStorageService: LocalStorageService, public authService: AuthService, public dialog: MatDialog) { }
   ngOnInit() {
     let themeVariant = this.localStorageService.getItem('themeVariant');
     this.darkModeIcon = themeVariant === 'dark-theme' ? 'bedtime' : 'brightness_5';
     this.isDarkMode = themeVariant === 'dark-theme' ? true : false;
+    this.fullName = this.authService.getFullName();
+    this.email= this.authService.getEmail();
   }
   toggleDarkMode() {
     this.isDarkMode = !this.isDarkMode;
     this.darkModeIcon = this.isDarkMode ? 'bedtime' : 'brightness_5'
     this.darkModelToggled.emit({ isDarkMode: this.isDarkMode, darkModelIcon: this.darkModeIcon });
   }
-  openLogoutDialog()
-  {
+  openLogoutDialog() {
     const dialogRef = this.dialog.open(LogoutDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) this.authService.logout();
