@@ -1,0 +1,14 @@
+{
+    "site":{
+        "title":"fluentpos"
+    },
+    "settings" :{
+        "title":"Settings",
+        "subtitle":"Quick Overview of your Business."
+    },
+    "userCard":{
+        "profile":"Profile",
+        "settings":"Setting",
+        "logout":"Logout"
+    }
+}

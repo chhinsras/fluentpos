@@ -1,0 +1,14 @@
+{
+    "site":{
+        "title":"fluentpos"
+    },
+    "settings" :{
+        "title":"Les paramètres",
+        "subtitle":"Aperçu rapide de votre entreprise."
+    },
+    "userCard":{
+        "profile":"Profil",
+        "settings":"Les paramètres",
+        "logout":"Se déconnecter"
+    }
+}

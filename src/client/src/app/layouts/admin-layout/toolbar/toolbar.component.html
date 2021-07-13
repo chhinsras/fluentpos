@@ -5,7 +5,7 @@
         </button>
         <a mat-button routerLink="/" aria-label="fluentpos">
             <img class="angular-logo" src="../assets/angular-white-transparent.svg">
-            <span style="font-weight:lighter;font-size: larger;">fluentpos</span>
+            <span style="font-weight:lighter;font-size: larger;" translate>site.title</span>
         </a>
         <span class="nav-spacer"></span>
         <a mat-icon-button matTooltip="Fork this repository!" href="https://github.com/fluentpos/fluentpos/"
@@ -21,17 +21,17 @@
             <span style="font-weight:lighter;font-size: small;">{{fullName}}</span>
         </button>
         <mat-menu #userMenu="matMenu" style="padding-top: 0px!important;">
-            <mat-card>
+            <mat-card style="padding-top: 16px!important;">
                 <mat-card-header>
                     <div mat-card-avatar class="example-header-image"></div>
                     <mat-card-title style="margin-bottom: 10px;font-size:medium">{{fullName}}</mat-card-title>
                     <mat-card-subtitle style="margin-bottom: 5px;font-size:small">{{email}}</mat-card-subtitle>
                 </mat-card-header>
             </mat-card>
-            <button mat-menu-item>Profile</button>
-            <button mat-menu-item routerLink="/admin/settings">Settings</button>
+            <button mat-menu-item translate>userCard.profile</button>
+            <button mat-menu-item routerLink="/admin/settings" translate>userCard.settings</button>
             <mat-divider></mat-divider>
-            <button mat-menu-item (click)="openLogoutDialog()">Logout</button>
+            <button mat-menu-item (click)="openLogoutDialog()" translate>userCard.logout</button>
         </mat-menu>
     </mat-toolbar-row>
 </mat-toolbar>

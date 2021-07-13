@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{formTitle}}</h2>
 <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-  <mat-dialog-content class="mat-typography" [style.width.px]=420>
+  <mat-dialog-content class="mat-typography">
     <input mat type="hidden" formControlName="id">
     <mat-form-field>
       <mat-label>Name</mat-label>
