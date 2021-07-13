@@ -16,24 +16,6 @@
         <a mat-icon-button (click)="toggleDarkMode()">
             <mat-icon>{{darkModeIcon}}</mat-icon>
         </a>
-        <ng-container>
-            <button mat-button  [matMenuTriggerFor]="menu">
-                {{siteLanguage}}
-                <mat-icon>arrow_drop_down</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <a mat-menu-item href="/en">English</a>
-                <a mat-menu-item href="/km">Khmer</a>
-                <a mat-menu-item href="/fr">Français</a>
-            </mat-menu>
-        </ng-container>
-        <!-- <a mat-icon-button>
-            <mat-icon class="fas fa-cog"></mat-icon>
-        </a> -->
-
-        <!-- <a mat-icon-button (click)="openLogoutDialog()">
-            <mat-icon class="fas fa-sign-out-alt"></mat-icon>
-        </a> -->
         <mat-divider vertical style="height:50%;margin: 10px;"></mat-divider>
         <button mat-button style="background: rgba(0,0,0,.2);" [matMenuTriggerFor]="userMenu">
             <span style="font-weight:lighter;font-size: small;">{{fullName}}</span>
@@ -47,7 +29,7 @@
                 </mat-card-header>
             </mat-card>
             <button mat-menu-item>Profile</button>
-            <button mat-menu-item>Settings</button>
+            <button mat-menu-item routerLink="/admin/settings">Settings</button>
             <mat-divider></mat-divider>
             <button mat-menu-item (click)="openLogoutDialog()">Logout</button>
         </mat-menu>

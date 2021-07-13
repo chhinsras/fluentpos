@@ -8,13 +8,15 @@ import { SharedModule } from 'src/app/core/shared/shared.module';
 import { CatalogModule } from './catalog/catalog.module';
 import { DeleteDialogComponent } from './shared/components/delete-dialog/delete-dialog.component';
 import { LogoutDialogComponent } from './shared/components/logout-dialog/logout-dialog.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
     DeleteDialogComponent,
-    LogoutDialogComponent
+    LogoutDialogComponent,
+    SettingsComponent
   ],
   imports: [
     CommonModule,

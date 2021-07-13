@@ -18,13 +18,6 @@ export class ToolbarComponent implements OnInit {
   @Output('darkModelToggled') darkModelToggled = new EventEmitter<{ isDarkMode: boolean, darkModelIcon: string }>();
   fullName: string;
   email: string;
-  siteLanguage: string = 'English';
-  siteLocale: string;
-  languageList = [
-    { code: 'en', label: 'English' },
-    { code: 'km', label: 'Khmer' },
-    { code: 'fr', label: 'Français' }
-  ];
 
   constructor(private localStorageService: LocalStorageService, public authService: AuthService, public dialog: MatDialog) { }
   ngOnInit() {
@@ -33,8 +26,6 @@ export class ToolbarComponent implements OnInit {
     this.isDarkMode = themeVariant === 'dark-theme' ? true : false;
     this.fullName = this.authService.getFullName();
     this.email = this.authService.getEmail();
-    this.siteLocale = window.location.pathname.split('/')[1];
-    this.siteLanguage = this.languageList.find(f => f.code === this.siteLocale).label;
   }
   toggleDarkMode() {
     this.isDarkMode = !this.isDarkMode;
