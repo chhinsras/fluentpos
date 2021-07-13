@@ -65,7 +65,7 @@ namespace FluentPOS.Modules.Identity.Controllers
         [Authorize(Policy = Permissions.RoleClaims.View)]
         public async Task<IActionResult> GetPermissionsByRoleIdAsync([FromRoute] string roleId)
         {
-            var response = await _roleService.GetAllPermissionsAsync(roleId);
+            var response = await _roleClaimService.GetAllPermissionsAsync(roleId);
             return Ok(response);
         }
 
@@ -103,7 +103,7 @@ namespace FluentPOS.Modules.Identity.Controllers
         [Authorize(Policy = Permissions.RoleClaims.Edit)]
         public async Task<IActionResult> UpdatePermissionsAsync(PermissionRequest request)
         {
-            var response = await _roleService.UpdatePermissionsAsync(request);
+            var response = await _roleClaimService.UpdatePermissionsAsync(request);
             return Ok(response);
         }
 

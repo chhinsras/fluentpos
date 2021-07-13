@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Infrastructure.Persistence;
@@ -8,22 +9,34 @@ using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentPOS.Modules.Identity.Core.Helpers;
 using FluentPOS.Shared.Core.Constants;
+using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using FluentPOS.Shared.DTOs.Identity.Roles;
+using Microsoft.AspNetCore.Identity;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
     public class RoleClaimService : IRoleClaimService
     {
+        private readonly RoleManager<FluentRole> _roleManager;
+        private readonly UserManager<FluentUser> _userManager;
+        private readonly ICurrentUser _currentUserService;
         private readonly IStringLocalizer<RoleClaimService> _localizer;
         private readonly IMapper _mapper;
         private readonly IdentityDbContext _db;
 
         public RoleClaimService(
+            RoleManager<FluentRole> roleManager,
+            UserManager<FluentUser> userManager,
+            ICurrentUser currentUserService,
             IStringLocalizer<RoleClaimService> localizer,
             IMapper mapper,
             IdentityDbContext db)
         {
+            _roleManager = roleManager;
+            _userManager = userManager;
+            _currentUserService = currentUserService;
             _localizer = localizer;
             _mapper = mapper;
             _db = db;
@@ -126,6 +139,136 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             else
             {
                 return await Result<string>.FailAsync(_localizer["Role Claim does not exist."]);
+            }
+        }
+
+        public async Task<Result<PermissionResponse>> GetAllPermissionsAsync(string roleId)
+        {
+            var model = new PermissionResponse();
+            var allPermissions = new List<RoleClaimResponse>();
+            allPermissions.GetAllPermissions();
+            var role = await _roleManager.FindByIdAsync(roleId);
+            if (role != null)
+            {
+                model.RoleId = role.Id;
+                model.RoleName = role.Name;
+                var allRoleClaims = await GetAllAsync();
+                var roleClaimsResult = await GetAllByRoleIdAsync(role.Id);
+                if (roleClaimsResult.Succeeded)
+                {
+                    var roleClaims = roleClaimsResult.Data;
+                    var allClaimValues = allPermissions.Select(a => a.Value).ToList();
+                    var roleClaimValues = roleClaims.Select(a => a.Value).ToList();
+                    var authorizedClaims = allClaimValues.Intersect(roleClaimValues).ToList();
+                    foreach (var permission in allPermissions)
+                    {
+                        permission.Id = allRoleClaims.Data?.SingleOrDefault(x => x.RoleId == roleId && x.Type == permission.Type && x.Value == permission.Value)?.Id ?? 0;
+                        permission.RoleId = roleId;
+                        if (authorizedClaims.Any(a => a == permission.Value))
+                        {
+                            permission.Selected = true;
+                            var roleClaim = roleClaims.SingleOrDefault(a => a.Type == permission.Type && a.Value == permission.Value);
+                            if (roleClaim?.Description != null)
+                            {
+                                permission.Description = roleClaim.Description;
+                            }
+                            if (roleClaim?.Group != null)
+                            {
+                                permission.Group = roleClaim.Group;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    model.RoleClaims = new List<RoleClaimResponse>();
+                    return await Result<PermissionResponse>.FailAsync(roleClaimsResult.Messages);
+                }
+            }
+            model.RoleClaims = allPermissions;
+            return await Result<PermissionResponse>.SuccessAsync(model);
+        }
+
+        public async Task<Result<string>> UpdatePermissionsAsync(PermissionRequest request)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(request.RoleId))
+                {
+                    return await Result<string>.FailAsync(_localizer["Role is required."]);
+                }
+
+                var errors = new List<string>();
+                var role = await _roleManager.FindByIdAsync(request.RoleId);
+                if (role.Name == RoleConstants.SuperAdmin)
+                {
+                    var currentUser = await _userManager.Users.SingleAsync(x => x.Id == _currentUserService.GetUserId().ToString());
+                    if (!await _userManager.IsInRoleAsync(currentUser, RoleConstants.SuperAdmin))
+                    {
+                        return await Result<string>.FailAsync(_localizer["Not allowed to modify Permissions for this Role."]);
+                    }
+                }
+
+                var selectedClaims = request.RoleClaims.Where(a => a.Selected).ToList();
+                if (role.Name == RoleConstants.SuperAdmin)
+                {
+                    if (selectedClaims.All(x => x.Value != Shared.Core.Constants.Permissions.Roles.View) ||
+                        selectedClaims.All(x => x.Value != Shared.Core.Constants.Permissions.RoleClaims.View) ||
+                        selectedClaims.All(x => x.Value != Shared.Core.Constants.Permissions.RoleClaims.Edit))
+                    {
+                        return await Result<string>.FailAsync(string.Format(
+                            _localizer["Not allowed to deselect {0} or {1} or {2} for this Role."],
+                            Shared.Core.Constants.Permissions.Roles.View, Shared.Core.Constants.Permissions.RoleClaims.View, Shared.Core.Constants.Permissions.RoleClaims.Edit));
+                    }
+                }
+
+                var claims = await _roleManager.GetClaimsAsync(role);
+                foreach (var claim in claims)
+                {
+                    await _roleManager.RemoveClaimAsync(role, claim);
+                }
+                foreach (var claim in selectedClaims)
+                {
+                    var addResult = await _roleManager.AddPermissionClaim(role, claim.Value);
+                    if (!addResult.Succeeded)
+                    {
+                        errors.AddRange(addResult.Errors.Select(e => _localizer[e.Description].ToString()));
+                    }
+                }
+
+                var addedClaims = await GetAllByRoleIdAsync(role.Id);
+                if (addedClaims.Succeeded)
+                {
+                    foreach (var claim in selectedClaims)
+                    {
+                        var addedClaim = addedClaims.Data.SingleOrDefault(x => x.Type == claim.Type && x.Value == claim.Value);
+                        if (addedClaim != null)
+                        {
+                            claim.Id = addedClaim.Id;
+                            claim.RoleId = addedClaim.RoleId;
+                            var saveResult = await SaveAsync(claim);
+                            if (!saveResult.Succeeded)
+                            {
+                                errors.AddRange(saveResult.Messages);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    errors.AddRange(addedClaims.Messages);
+                }
+
+                if (errors.Any())
+                {
+                    return await Result<string>.FailAsync(errors);
+                }
+
+                return await Result<string>.SuccessAsync(_localizer["Permissions Updated."]);
+            }
+            catch (Exception ex)
+            {
+                return await Result<string>.FailAsync(ex.Message);
             }
         }
     }
