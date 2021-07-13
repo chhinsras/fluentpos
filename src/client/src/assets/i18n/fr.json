@@ -10,7 +10,11 @@
         "title": "Paramètres",
         "subtitle": "Gérer les paramètres de l’application.",
         "generalSettings": "Paramètres généraux",
-        "language": "Langue"
+        "language": "Langue",
+        "english": "Anglais",
+        "russian": "Russe",
+        "french": "Français",
+        "spanish": "Espagnol"
     },
     "userCard": {
         "profile": "profil",

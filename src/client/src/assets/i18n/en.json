@@ -10,7 +10,11 @@
         "title": "Settings",
         "subtitle": "Manage Application Settings.",
         "generalSettings": "General Settings",
-        "language": "Language"
+        "language": "Language",
+        "english": "English",
+        "russian": "Russian",
+        "french": "French",
+        "spanish": "Spanish"
     },
     "userCard": {
         "profile": "Profile",
