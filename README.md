@@ -59,6 +59,15 @@ Clone this repository to your local machine.
 
 > Not interested with PostgreSQL? You can easily switch to MSSQL by following this [guide]( https://github.com/fluentpos/fluentpos/blob/master/docs/api-switching-database-provider-tutorial.md).
 
+#### Running Angular
+
+- Navigate to fluentpos\src\client via terminal.
+- Run `npm install` to install all the required packages
+- Run `ng serve`
+- Navigate to localhost:4200 on your browser
+
+https://user-images.githubusercontent.com/31455818/125523164-91ddb337-75cd-4911-bc46-2f12f04f9476.mp4
+
 #### Default Credentials
 
 - superadmin - superadmin@fluentpos.com / 123Pa$$word!
@@ -66,12 +75,8 @@ Clone this repository to your local machine.
 
 You can use these credentials to generate jwt tokens in the `api/identity/tokens` endpoint.
 
-#### Running Angular
 
-- Navigate to fluentpos\src\client via terminal.
-- Run `npm install` to install all the required packages
-- Run `ng serve`
-- Navigate to localhost:4200 on your browser
+
 
 ### Note
 
