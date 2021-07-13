@@ -16,9 +16,5 @@ namespace FluentPOS.Modules.Identity.Core.Abstractions
         Task<Result<string>> SaveAsync(RoleRequest request);
 
         Task<Result<string>> DeleteAsync(string id);
-
-        Task<Result<PermissionResponse>> GetAllPermissionsAsync(string roleId);
-
-        Task<Result<string>> UpdatePermissionsAsync(PermissionRequest request);
     }
 }
