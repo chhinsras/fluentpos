@@ -11,7 +11,7 @@ import { LogoutDialogComponent } from 'src/app/modules/admin/shared/components/l
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
- 
+
   @Input() darkModeIcon: string;
   @Input() inputSideNav: MatSidenav;
   @Input() isDarkMode: boolean;
