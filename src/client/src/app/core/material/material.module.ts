@@ -15,6 +15,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSortModule } from '@angular/material/sort';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 const Modules =
   [
@@ -33,7 +34,8 @@ const Modules =
     MatPaginatorModule,
     MatDialogModule,
     MatGridListModule,
-    MatSortModule
+    MatSortModule,
+    MatCheckboxModule
   ];
 
 @NgModule({
