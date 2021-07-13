@@ -101,7 +101,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
             }
             else
             {
-                throw new CatalogException(_localizer["Deletion Not Allowed"]);
+                throw new CatalogException(_localizer["Deletion Not Allowed"],System.Net.HttpStatusCode.BadRequest);
             }
         }
 

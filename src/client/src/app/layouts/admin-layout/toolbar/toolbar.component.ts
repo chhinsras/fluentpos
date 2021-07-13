@@ -16,19 +16,32 @@ export class ToolbarComponent implements OnInit {
   @Input() inputSideNav: MatSidenav;
   @Input() isDarkMode: boolean;
   @Output('darkModelToggled') darkModelToggled = new EventEmitter<{ isDarkMode: boolean, darkModelIcon: string }>();
-  constructor(private localStorageService: LocalStorageService, public authService: AuthService,public dialog: MatDialog) { }
+  fullName: string;
+  email: string;
+  siteLanguage: string = 'English';
+  siteLocale: string;
+  languageList = [
+    { code: 'en', label: 'English' },
+    { code: 'km', label: 'Khmer' },
+    { code: 'fr', label: 'Français' }
+  ];
+
+  constructor(private localStorageService: LocalStorageService, public authService: AuthService, public dialog: MatDialog) { }
   ngOnInit() {
     let themeVariant = this.localStorageService.getItem('themeVariant');
     this.darkModeIcon = themeVariant === 'dark-theme' ? 'bedtime' : 'brightness_5';
     this.isDarkMode = themeVariant === 'dark-theme' ? true : false;
+    this.fullName = this.authService.getFullName();
+    this.email = this.authService.getEmail();
+    this.siteLocale = window.location.pathname.split('/')[1];
+    this.siteLanguage = this.languageList.find(f => f.code === this.siteLocale).label;
   }
   toggleDarkMode() {
     this.isDarkMode = !this.isDarkMode;
     this.darkModeIcon = this.isDarkMode ? 'bedtime' : 'brightness_5'
     this.darkModelToggled.emit({ isDarkMode: this.isDarkMode, darkModelIcon: this.darkModeIcon });
   }
-  openLogoutDialog()
-  {
+  openLogoutDialog() {
     const dialogRef = this.dialog.open(LogoutDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) this.authService.logout();

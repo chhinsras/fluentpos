@@ -62,7 +62,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
         public async Task<Result<Guid>> Handle(RemoveBrandCommand command, CancellationToken cancellationToken)
         {
             var isBrandUsed = await IsBrandUsed(command.Id);
-            if (isBrandUsed) throw new CatalogException(_localizer["Deletion Not Allowed"]);
+            if (isBrandUsed) throw new CatalogException(_localizer["Deletion Not Allowed"], System.Net.HttpStatusCode.BadRequest);
             var brand = await _context.Brands.FirstOrDefaultAsync(b => b.Id == command.Id, cancellationToken);
             if (brand == null) throw new CatalogException(_localizer["Brand Not Found"], HttpStatusCode.NotFound);
             _context.Brands.Remove(brand);
