@@ -1,0 +1,33 @@
+{
+    "site": {
+        "title": "fluentpos"
+    },
+    "dashboard": {
+        "title": "salpicadero",
+        "subtitle": "Visión general rápida de su negocio."
+    },
+    "settings": {
+        "title": "Configuración",
+        "subtitle": "Administrar la configuración de la aplicación.",
+        "generalSettings": "Configuración general",
+        "language": "Idioma"
+    },
+    "userCard": {
+        "profile": "perfil",
+        "settings": "ajuste",
+        "logout": "Cerrar sesión"
+    },
+    "dialogs": {
+        "logout": {
+            "title": "Cerrar sesión",
+            "message": "¿Desea cerrar la sesión?",
+            "button": "Cerrar sesión"
+        }
+    },
+    "common": {
+        "cancel": "Cancelar",
+        "ok": "De acuerdo",
+        "yes": "Sí",
+        "no": "No"
+    }
+}
