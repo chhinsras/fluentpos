@@ -8,7 +8,7 @@ import {ProductService} from '../../services/product.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ToastrService} from 'ngx-toastr';
 import {PaginatedFilter} from '../../../../../core/models/Filters/PaginatedFilter';
-import {ProductFormComponent} from '../product/product-form/product-form.component';
+import {ProductFormComponent} from './product-form/product-form.component';
 import {DeleteDialogComponent} from '../../../shared/components/delete-dialog/delete-dialog.component';
 
 @Component({

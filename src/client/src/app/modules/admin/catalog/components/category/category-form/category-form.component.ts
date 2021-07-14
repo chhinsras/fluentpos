@@ -34,10 +34,6 @@ export class CategoryFormComponent implements OnInit {
     }
   }
 
-  onFileChange(event: any) {
-
-  }
-
   onSubmit() {
     if (this.categoryForm.valid) {
       if (this.categoryForm.get('id').value === '' || this.categoryForm.get('id').value == null) {

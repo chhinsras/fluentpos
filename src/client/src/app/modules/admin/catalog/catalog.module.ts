@@ -11,6 +11,12 @@ import {SharedModule} from 'src/app/core/shared/shared.module';
 import {BrandFormComponent} from './components/brand/brand-form/brand-form.component';
 import {CategoryFormComponent} from './components/category/category-form/category-form.component';
 import {ProductFormComponent} from './components/product/product-form/product-form.component';
+import {BrandApiService} from './api/brand-api.service';
+import {CategoryApiService} from './api/category-api.service';
+import {ProductApiService} from './api/product-api.service';
+import {BrandService} from './services/brand.service';
+import {CategoryService} from './services/category.service';
+import {ProductService} from './services/product.service';
 
 
 @NgModule({
@@ -28,6 +34,10 @@ import {ProductFormComponent} from './components/product/product-form/product-fo
     CatalogRoutingModule,
     MaterialModule,
     SharedModule
+  ],
+  providers: [
+    BrandApiService, CategoryApiService, ProductApiService,
+    BrandService, CategoryService, ProductService
   ]
 })
 export class CatalogModule {

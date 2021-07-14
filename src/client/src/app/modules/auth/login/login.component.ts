@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/core/services/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +11,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  returnUrl: string
+  returnUrl: string;
 
   constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {
     this.initializeForm();
@@ -26,29 +25,28 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       email: new FormControl('', Validators.required && Validators.email),
       password: new FormControl('', Validators.required)
-    })
+    });
   }
 
-  onSubmit()
-  {
+  onSubmit() {
     this.authService.login(this.loginForm.value).subscribe((result) => {
-      if (result.succeeded){
+      if (result.succeeded) {
         this.router.navigateByUrl(this.returnUrl);
       }
     }, error => {
       console.log(error);
     });
   }
-  fillSuperAdminCredentials()
-  {
+
+  fillSuperAdminCredentials() {
     this.loginForm = new FormGroup({
       email: new FormControl('superadmin@fluentpos.com', Validators.required && Validators.email),
       password: new FormControl('123Pa$$word!', Validators.required)
     });
     this.loginForm.valid;
   }
-  fillStaffCredentials()
-  {
+
+  fillStaffCredentials() {
     this.loginForm = new FormGroup({
       email: new FormControl('staff@fluentpos.com', Validators.required && Validators.email),
       password: new FormControl('123Pa$$word!', Validators.required)

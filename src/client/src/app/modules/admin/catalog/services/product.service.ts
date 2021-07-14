@@ -8,9 +8,7 @@ import {ProductApiService} from '../api/product-api.service';
 import {Product} from '../models/product';
 import {ProductParams} from '../models/productParams';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ProductService {
   constructor(private api: ProductApiService) {
   }

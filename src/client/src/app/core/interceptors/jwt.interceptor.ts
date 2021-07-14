@@ -28,8 +28,8 @@ export class JwtInterceptor implements HttpInterceptor {
         const jwtService = new JwtHelperService();
         const expirationDate = jwtService.getTokenExpirationDate(currentUserToken);
         const currentDate = new Date();
-        var difference = expirationDate.getTime() - currentDate.getTime(); // This will give difference in milliseconds
-        var resultInMinutes = Math.round(difference / 60000);
+        const difference = expirationDate.getTime() - currentDate.getTime(); // This will give difference in milliseconds
+        const resultInMinutes = Math.round(difference / 60000);
         if (resultInMinutes < 10) {
           this.authService.tryRefreshingToken();
         }

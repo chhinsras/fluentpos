@@ -3,9 +3,7 @@ import {environment} from '../../../../../environments/environment';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Category} from '../models/category';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CategoryApiService {
   baseUrl = environment.apiUrl;
 

@@ -1,5 +1,5 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { Brand } from '../../../models/brand';
@@ -31,10 +31,6 @@ export class BrandFormComponent implements OnInit {
     else {
       this.formTitle = "Edit Brand";
     }
-  }
-
-  onFileChange(event: any) {
-
   }
 
   onSubmit() {
