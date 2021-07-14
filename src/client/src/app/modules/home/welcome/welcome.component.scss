@@ -1,0 +1,38 @@
+.home-center-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .u-ml-auto {
+    margin-left: auto !important
+  }
+  .u-mr-auto {
+    margin-right: auto !important
+  }
+  .c-card {
+    margin-bottom: 30px;
+    padding: 40px;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 10px 60px 0 rgba(29, 29, 31, .09)
+  }
+  
+  .c-card.is-animated {
+    transition: -webkit-transform .3s;
+    transition: transform .3s;
+    transition: transform .3s, -webkit-transform .3s
+  }
+  
+  .c-card.is-animated:hover {
+    -webkit-transform: scale(1.03);
+    transform: scale(1.03)
+  }
+  
+  .c-card--center {
+    text-align: center
+  }
+  
+  .c-card__title {
+    margin-bottom: 10px
+  }

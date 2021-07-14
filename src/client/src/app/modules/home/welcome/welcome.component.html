@@ -1,20 +1,54 @@
-<div class="row" style="place-content: center;">
-    <div class="col-md-6">
-        <mat-card>
-            <mat-card-content>
-                <h1 class="u-mb-xsmall">Dashboard</h1>
-                <p class="u-mb-medium">Management of products, stock and configuration of POS.</p>
-                <button mat-raised-button color="primary" routerLink="/admin">Dashboard</button>
-            </mat-card-content>
-        </mat-card>
+<div class="home-center-screen">    
+    <div class="row">
+        <div class="col-md-12 col-xl-12" >
+            <div class="c-card background-color-primary" style="color: white;">
+                <div>
+                    <h1>Hi, {{fullName}}</h1>
+                    <p style="opacity: 75%;">Welcome to fluentPOS. Choose a Module to continue.</p>
+                    <button mat-raised-button color="primary" disabled>Dashboard</button>
+                    <button mat-button color="danger" style="float:right;" (click)="onClickLogout()" >Logout</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-6" > 
-        <mat-card style="background-color: #3f51b5;color: white;">
-            <mat-card-content>
-                <h1 class="u-mb-xsmall u-text-white">POS</h1>
-                <p class="u-mb-medium u-text-white">Start selling items from your store/warehouse inventory and generate invoices.</p>
-                <button mat-raised-button color="secondary" routerLink="/pos">POS</button>
-            </mat-card-content>
-        </mat-card>
+    <div class="row">
+        <div class="col-md-6 col-xl-6 u-ml-auto">
+            <div class="c-card is-animated">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p style="opacity: 50%;">Management of products, stock and configuration of POS.</p>
+                    <button mat-raised-button color="primary" routerLink="/admin">Dashboard</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-6 u-mr-auto">
+            <div class="c-card is-animated">
+                <div>
+                    <h1>Reporting</h1>
+                    <p style="opacity: 50%;">Generate Intelligent Reports for your business.</p>
+                    <button mat-raised-button color="primary" disabled>Reports</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row " style="place-content: center;">
+        <div class="col-md-6 col-xl-6 u-ml-auto">
+            <div class="c-card is-animated">
+                <div>
+                    <h1>Timelog</h1>
+                    <p style="opacity: 50%;">Mark your timelogs here.</p>
+                    <button mat-raised-button color="primary" disabled>Timelog</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-6 u-mr-auto">
+            <div class="c-card is-animated background-color-primary" style="color: white;">
+                <div>
+                    <h1>POS</h1>
+                    <p style="opacity: 50%;">Start selling items from your store/warehouse inventory.</p>
+                    <button mat-raised-button color="secondary" routerLink="/pos">POS</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

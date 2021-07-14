@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../../core/services/auth.service";
+import { AuthService } from "../../../core/services/auth.service";
 
 @Component({
   selector: 'app-welcome',
@@ -9,7 +9,7 @@ import {AuthService} from "../../../core/services/auth.service";
 export class WelcomeComponent implements OnInit {
 
   fullName: string = '';
-
+  email: string;
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
@@ -18,6 +18,9 @@ export class WelcomeComponent implements OnInit {
 
   getUserDetails() {
     this.fullName = this.authService.getFullName();
+    this.email = this.authService.getEmail();
   }
-
+  onClickLogout() {
+    this.authService.logout();
+  }
 }
