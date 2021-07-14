@@ -8,9 +8,7 @@ import {HttpParams} from '@angular/common/http';
 import {map} from 'rxjs/internal/operators/map';
 import {IResult} from '../../../../core/models/wrappers/IResult';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CategoryService {
 
   constructor(private api: CategoryApiService) {
