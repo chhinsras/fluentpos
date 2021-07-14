@@ -1,13 +1,25 @@
-<mat-card>
-    <mat-card-content>
-        <h2>Welcome {{fullName}}</h2>
-        <button mat-raised-button color="primary" routerLink="/admin">Dashboard</button>
-        <button mat-raised-button color="secondary" routerLink="/pos">POS</button>
+<h2>Welcome {{fullName}}</h2>
+<p style="margin-top: 20px;">
+    If user is superadmin, show dashboard and pos button.</p>
+<p>Else show only POS Button</p>
 
-        <p style="margin-top: 20px;">
-            If user is superadmin, show dashboard and pos button.</p>
-        <p>Else show only POS Button</p>
-
-
-    </mat-card-content>
-</mat-card>
+<div class="row" style="place-content: center;">
+    <div class="col-sm-6">
+        <mat-card>
+            <mat-card-content>
+                <h1 class="u-mb-xsmall">Dashboard</h1>
+                <p class="u-mb-medium">Management of products, stock and configuration of POS</p>
+                <button mat-raised-button color="primary" routerLink="/admin">Dashboard</button>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="col-sm-6">
+        <mat-card>
+            <mat-card-content>
+                <h1 class="u-mb-xsmall u-text-white">Start POS</h1>
+                <p class="u-mb-medium u-text-white">Start selling and cash out of payments now with Mobile Money</p>
+                <button mat-raised-button color="secondary" routerLink="/pos">POS</button>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
