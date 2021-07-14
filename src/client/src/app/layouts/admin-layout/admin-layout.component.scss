@@ -1,10 +1,10 @@
 
 .sidenav-container {
   height: 100vh;
-} 
+}
 .sidenav {
   min-width: 250px;
-  border: 0px solid rgba(0, 0, 0, 0.5);
+  border: 0 solid rgba(0, 0, 0, 0.5);
 }
 .container
 {
@@ -33,7 +33,7 @@ hr {
 }
 .mat-card-subtitle
 {
-    margin-bottom: 0px!important;
+    margin-bottom: 0 !important;
 }
 .mat-card-title{
 font-weight: lighter;
@@ -42,7 +42,7 @@ font-weight: lighter;
 {
   font-weight: lighter;
   padding-left: 10px;
-  margin: 0px!important;
+  margin: 0 !important;
   margin-bottom: 10px!important;
   margin-top: 10px!important;
   color: grey;
