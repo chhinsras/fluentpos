@@ -31,8 +31,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.authService.login(this.loginForm.value).subscribe((result) => {
       if (result.succeeded) {
-        this.router.navigateByUrl('/');
-        console.log(this.returnUrl);
+        this.router.navigateByUrl(this.returnUrl);
       }
     }, error => {
       console.log(error);

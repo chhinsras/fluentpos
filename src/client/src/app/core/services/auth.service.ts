@@ -35,7 +35,11 @@ export class AuthService {
     // console.log(decodedToken);
     return decodedToken;
   }
-
+  public isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    const jwtService = new JwtHelperService();
+    return !jwtService.isTokenExpired(token);
+  }
   getFullName() {
     const decodedToken = this.getDecodedToken();
     return decodedToken.fullName;
