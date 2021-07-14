@@ -16,13 +16,16 @@ export class AdminLayoutComponent implements OnInit {
   darkModeIcon: string = '';
   fullName: string;
   email: string;
+
   constructor(private localStorageService: LocalStorageService, private dialog: MatDialog, private overlay: OverlayContainer, private authService: AuthService) { }
+
   ngOnInit() {
     this.themeVariant = this.localStorageService.getItem('themeVariant');
     this.getUserDetails();
   }
+
   onDarkModeToggled(data: { isDarkMode: boolean, darkModeIcon: string }) {
-    console.log(data.isDarkMode);
+    // console.log(data.isDarkMode);
 
     this.themeVariant = data.isDarkMode ? 'dark-theme' : 'light-theme';
     if (data.isDarkMode) {
@@ -33,6 +36,7 @@ export class AdminLayoutComponent implements OnInit {
     this.localStorageService.setItem('themeVariant', this.themeVariant);
     this.darkModeIcon = data.darkModeIcon;
   }
+
   getUserDetails() {
     this.fullName = this.authService.getFullName();
     this.email = this.authService.getEmail();

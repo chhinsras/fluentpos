@@ -1,6 +1,6 @@
 <mat-sidenav-container class='sidenav-container mat-app-background {{themeVariant}}'>
     <mat-sidenav #sidenav class="sidenav" disableClose="false" mode="push">
-        <mat-nav-list style="padding-top: 0px;">
+        <mat-nav-list style="padding-top: 0;">
             <mat-card>
                 <mat-card-header>
                     <div mat-card-avatar class="example-header-image"></div>
@@ -24,15 +24,12 @@
                     <mat-icon style="padding-right: 10px;">home</mat-icon> Products
                 </a>
             </div>
-
         </mat-nav-list>
     </mat-sidenav>
     <app-toolbar [inputSideNav]="sidenav" (darkModelToggled)="onDarkModeToggled($event)"></app-toolbar>
     <div class="content">
         <div class="container">
-            <router-outlet>
-
-            </router-outlet>
+            <router-outlet></router-outlet>
         </div>
     </div>
 </mat-sidenav-container>

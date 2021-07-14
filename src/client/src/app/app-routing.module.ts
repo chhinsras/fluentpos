@@ -1,4 +1,4 @@
-import { Host, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NotFoundComponent } from './core/shared/components/not-found/not-found.component';
@@ -13,16 +13,16 @@ const routes: Routes = [
     path: '', redirectTo: 'home', pathMatch: 'full'
   },
   {
-    path: '', 
+    path: '',
     component: AuthLayoutComponent,
     loadChildren: () => import('./modules/auth/auth.module').then(mod => mod.AuthModule),
-  },  
+  },
   {
     path: 'home',
     canActivate: [AuthGuard],
     component: HomeLayoutComponent,
     loadChildren: () => import('./modules/home/home.module').then(mod => mod.HomeModule),
-  },  
+  },
   {
     path: 'admin',
     canActivate: [AuthGuard],
@@ -41,8 +41,8 @@ const routes: Routes = [
   {
     path: 'server-error', component: ServerErrorComponent
   },
-  { 
-    path: '**', redirectTo: 'not-found', pathMatch: 'full' 
+  {
+    path: '**', redirectTo: 'not-found', pathMatch: 'full'
   }
 ];
 

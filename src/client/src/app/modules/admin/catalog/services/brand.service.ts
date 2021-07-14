@@ -8,9 +8,7 @@ import {BrandApiService} from '../api/brand-api.service';
 import {Brand} from '../models/brand';
 import {BrandParams} from '../models/brandParams';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BrandService {
   constructor(private api: BrandApiService) {
   }

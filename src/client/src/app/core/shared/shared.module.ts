@@ -7,6 +7,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ServerErrorComponent } from './components/server-error/server-error.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { MaterialModule } from '../material/material.module';
+import {AuthService} from '../services/auth.service';
+import {LocalStorageService} from '../services/local-storage.service';
+import {MultilingualService} from '../services/multilingual.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import { MaterialModule } from '../material/material.module';
     ReactiveFormsModule,
     FormsModule,
     PaginationComponent
+  ],
+  providers: [
+    AuthService, LocalStorageService, MultilingualService
   ]
 })
 export class SharedModule { }

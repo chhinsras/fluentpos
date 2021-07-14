@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {PageEvent} from '@angular/material/paginator';
+import {PaginatedFilter} from 'src/app/core/models/Filters/PaginatedFilter';
 
 @Component({
   selector: 'app-pagination',
@@ -12,16 +12,17 @@ export class PaginationComponent implements OnInit {
   @Input() pageSize: number;
   @Output() pageChangeEvent = new EventEmitter<PaginatedFilter>();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
 
-  onPageChange(pageEvent: PageEvent){
-    var event: PaginatedFilter = {
+  onPageChange(pageEvent: PageEvent) {
+    const event: PaginatedFilter = {
       pageNumber: pageEvent.pageIndex + 1 ?? 1,
       pageSize: pageEvent.pageSize ?? 10
-    } 
+    };
     this.pageChangeEvent.emit(event);
   }
 

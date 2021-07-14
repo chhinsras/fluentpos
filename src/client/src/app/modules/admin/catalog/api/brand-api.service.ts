@@ -3,9 +3,7 @@ import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
 import {Brand} from '../models/brand';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BrandApiService {
 
   baseUrl = environment.apiUrl;

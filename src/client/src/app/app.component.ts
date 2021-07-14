@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from './core/services/auth.service';
 import { MultilingualService } from './core/services/multilingual.service';
 
@@ -8,7 +8,7 @@ import { MultilingualService } from './core/services/multilingual.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  
+
   constructor(private authService: AuthService, private translationService: MultilingualService) { }
 
   ngOnInit(): void {
