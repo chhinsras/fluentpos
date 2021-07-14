@@ -19,19 +19,16 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    canActivate: [AuthGuard],
     component: HomeLayoutComponent,
     loadChildren: () => import('./modules/home/home.module').then(mod => mod.HomeModule),
   },
   {
     path: 'admin',
-    canActivate: [AuthGuard],
     component: AdminLayoutComponent,
     loadChildren: () => import('./modules/admin/admin.module').then(mod => mod.AdminModule),
   },
   {
     path: 'pos',
-    canActivate: [AuthGuard],
     component: PosLayoutComponent,
     loadChildren: () => import('./modules/pos/pos.module').then(mod => mod.PosModule),
   },
