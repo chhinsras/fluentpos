@@ -18,6 +18,7 @@ import { SharedModule } from './core/shared/shared.module';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import {AuthGuard} from './core/guards/auth.guard';
 
 export function rootLoaderFactory(http: HttpClient)
 {
@@ -50,6 +51,7 @@ export function rootLoaderFactory(http: HttpClient)
     })
   ],
   providers: [
+    AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
