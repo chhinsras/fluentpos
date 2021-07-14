@@ -20,14 +20,12 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (response.error.messages) {
               this.toastr.error(response.error.exception);
             }
-            this.authService.logout();
             break;
           case 401:
             this.authService.tryRefreshingToken();
             break;
           case 403:
             this.toastr.error(response.error.exception);
-            this.authService.logout();
             break;
           case 404:
             this.router.navigateByUrl('/not-found');
@@ -35,6 +33,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           case 500:
             console.log(response.error.exception);
             this.toastr.error('Something Went Wrong');
+            this.router.navigateByUrl('/server-error');
             break;
           default:
             this.toastr.error('Something Went Wrong');
