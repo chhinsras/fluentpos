@@ -11,7 +11,7 @@ import { LocalStorageService } from 'src/app/core/services/local-storage.service
 })
 export class AdminLayoutComponent implements OnInit {
 
-  title = 'angular-material-boilerplate';
+  title = 'fluentpos';
   themeVariant: string = '';
   darkModeIcon: string = '';
   fullName: string;
