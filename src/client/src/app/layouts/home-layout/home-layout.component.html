@@ -1,17 +1,12 @@
-<div class="content">
-    <mat-card style="padding: 0px!important;">
-        <mat-card-content>
-            <div class="row" style="place-content: center;text-align: center;margin: 15px;">
-                <div class="col-lg-6">
-                    <h2 style="
-                    font-size: xxx-large;
-                    font-weight: 300;
-                ">fluentpos</h2>
-                    <p>Built with Angular 12 & ASP.NET Core 5.0</p>
-                </div>
-            </div>
-        </mat-card-content>
-    </mat-card>
+<mat-toolbar color="primary">
+    <mat-toolbar-row style="place-content: center;">
+        <a mat-button routerLink="/" aria-label="fluentpos">
+            <img class="angular-logo" src="/assets/angular-white-transparent.svg" alt="Angular Logo White">
+            <span style="font-weight:lighter;font-size: larger;" translate>site.title</span>
+        </a>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div class="content" >
     <div class="container">
         <router-outlet>
 
