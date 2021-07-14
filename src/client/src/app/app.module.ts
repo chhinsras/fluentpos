@@ -49,7 +49,7 @@ export function rootLoaderFactory(http: HttpClient)
       }
     })
   ],
-  providers: [,
+  providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
