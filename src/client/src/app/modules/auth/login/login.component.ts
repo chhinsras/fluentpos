@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthService} from 'src/app/core/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.authService.login(this.loginForm.value).subscribe((result) => {
       if (result.succeeded) {
-        this.router.navigateByUrl(this.returnUrl);
+        this.router.navigateByUrl('/');
         console.log(this.returnUrl);
       }
     }, error => {
