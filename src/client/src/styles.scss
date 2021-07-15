@@ -78,7 +78,7 @@ table {
 .mat-dialog-container 
 {
   min-width: 500px!important;
-  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 0%), 0px 5px 8px 0px rgb(0 0 0 / 0%), 0px 1px 14px 0px rgb(0 0 0 / 8%)!important;
+  box-shadow: 0 10px 60px 0 rgba(29, 29, 31, .09)!important;
 }
 .left {
   float: left;
@@ -89,13 +89,11 @@ table {
 .mat-card
 {
   border-radius: 4px!important;
-  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 0%), 0px 5px 8px 0px rgb(0 0 0 / 0%), 0px 1px 14px 0px rgb(0 0 0 / 8%)!important;
+  box-shadow: 0 10px 60px 0 rgba(29, 29, 31, .09)!important;
 }
 .module-card
 {
   padding-top: 32px!important;
-  border-radius: 4px!important;
-  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 0%), 0px 5px 8px 0px rgb(0 0 0 / 0%), 0px 1px 14px 0px rgb(0 0 0 / 8%)!important;
 }
 .mat-list-item
 {
