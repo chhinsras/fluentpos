@@ -21,8 +21,8 @@ export class WelcomeComponent implements OnInit {
   }
 
   getUserDetails() {
-    this.fullName = this.authService.getFullName();
-    this.email = this.authService.getEmail();
+    this.fullName = this.authService.getFullName;
+    this.email = this.authService.getEmail;
   }
   onClickLogout() {
     this.authService.logout();

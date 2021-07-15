@@ -25,8 +25,8 @@ export class ToolbarComponent implements OnInit {
     let themeVariant = this.localStorageService.getItem('themeVariant');
     this.darkModeIcon = themeVariant === 'dark-theme' ? 'bedtime' : 'wb_sunny';
     this.isDarkMode = themeVariant === 'dark-theme';
-    this.fullName = this.authService.getFullName();
-    this.email = this.authService.getEmail();
+    this.fullName = this.authService.getFullName;
+    this.email = this.authService.getEmail;
   }
 
   toggleDarkMode() {
