@@ -21,6 +21,9 @@ export class AuthService {
   }
 
   get getToken(): string {
+    if (this.currentUserTokenSource.getValue() == null) {
+      return this.getLocalToken;
+    }
     return this.currentUserTokenSource.getValue();
   }
 
