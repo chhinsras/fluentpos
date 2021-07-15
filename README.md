@@ -30,7 +30,7 @@ fluentpos was meant for retail businesses. The modular monolith architecture wou
 ### Project Status
 
 - API - `In Progress`
-- Angular Project - `Not Yet Started`
+- Angular Project - `In Progress`
 - Seperate Website to maintain documentation - `Coming Soon!`
 - Docker Container - `Coming Soon!`
 
