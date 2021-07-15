@@ -12,14 +12,19 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
         public string SearchString { get; }
         public Guid BrandId { get; }
         public Guid CategoryId { get; }
+        public string[] OrderBy { get; set; }
 
-        public GetAllPagedProductsQuery(int pageNumber, int pageSize, string searchString, Guid brandId, Guid categoryId)
+        public GetAllPagedProductsQuery(int pageNumber, int pageSize, string searchString, Guid brandId, Guid categoryId, string orderBy)
         {
             PageNumber = pageNumber;
             PageSize = pageSize;
             SearchString = searchString;
             BrandId = brandId;
             CategoryId = categoryId;
+            if (!string.IsNullOrWhiteSpace(orderBy))
+            {
+                OrderBy = orderBy.Split(',');
+            }
         }
     }
 }

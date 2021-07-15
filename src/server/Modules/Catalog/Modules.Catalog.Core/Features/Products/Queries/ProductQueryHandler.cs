@@ -14,6 +14,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 {
@@ -33,18 +34,32 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
             _localizer = localizer;
         }
 
-        public async Task<PaginatedResult<GetAllPagedProductsResponse>> Handle(GetAllPagedProductsQuery query, CancellationToken cancellationToken)
+        public async Task<PaginatedResult<GetAllPagedProductsResponse>> Handle(GetAllPagedProductsQuery request, CancellationToken cancellationToken)
         {
             var queryable = _context.Products.ProjectTo<GetAllPagedProductsResponse>(_mapper.ConfigurationProvider).OrderBy(x => x.Id).AsQueryable();
 
-            if (!string.IsNullOrEmpty(query.SearchString)) queryable = queryable.Where(p => p.Name.Contains(query.SearchString) ||
-                p.BarcodeSymbology.Contains(query.SearchString) || p.Detail.Contains(query.SearchString));
-            if (query.BrandId != Guid.Empty) queryable = queryable.Where(p => p.BrandId == query.BrandId);
-            if (query.CategoryId != Guid.Empty) queryable = queryable.Where(p => p.CategoryId == query.CategoryId);
+            if (request.OrderBy?.Any() == true)
+            {
+                var ordering = string.Join(",", request.OrderBy);
+                queryable = queryable.OrderBy(ordering);
+            }
+            else
+            {
+                queryable = queryable.OrderBy(a => a.Id);
+            }
+
+            if (!string.IsNullOrEmpty(request.SearchString))
+            {
+                queryable = queryable.Where(x => EF.Functions.Like(x.Name.ToLower(), $"%{request.SearchString.ToLower()}%")
+                || EF.Functions.Like(x.LocaleName.ToLower(), $"%{request.SearchString.ToLower()}%")
+                || EF.Functions.Like(x.Detail.ToLower(), $"%{request.SearchString.ToLower()}%")
+                || EF.Functions.Like(x.BarcodeSymbology.ToLower(), $"%{request.SearchString.ToLower()}%")
+                || EF.Functions.Like(x.Id.ToString().ToLower(), $"%{request.SearchString.ToLower()}%"));
+            }
 
             var productList = await queryable
                 .AsNoTracking()
-                .ToPaginatedListAsync(query.PageNumber, query.PageSize);
+                .ToPaginatedListAsync(request.PageNumber, request.PageSize);
 
             if (productList == null) throw new CatalogException(_localizer["Products Not Found!"]);
 
