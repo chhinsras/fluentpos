@@ -24,7 +24,6 @@ export class AppComponent {
   loadCurrentUser() {
     this.authService.loadCurrentUser()
       .subscribe(() => {
-        console.log('User Loaded...');
       }, error => {
         console.log(error);
       });

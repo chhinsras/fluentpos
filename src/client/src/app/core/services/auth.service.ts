@@ -1,14 +1,14 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Token} from 'src/app/core/models/identity/token';
-import {LocalStorageService} from 'src/app/core/services/local-storage.service';
-import {environment} from 'src/environments/environment';
-import {catchError, map, tap} from 'rxjs/operators';
-import {Router} from '@angular/router';
-import {Result} from '../models/wrappers/Result';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {ToastrService} from 'ngx-toastr';
-import {JwtHelperService} from '@auth0/angular-jwt';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Token } from 'src/app/core/models/identity/token';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { environment } from 'src/environments/environment';
+import { catchError, map, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { Result } from '../models/wrappers/Result';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthService {
@@ -108,7 +108,6 @@ export class AuthService {
 
   private setToken(token: string | null) {
     this.currentUserTokenSource.next(token);
-    console.log(`Token updated: ${token}`);
   }
 
   private setStorageToken(data: Token | null) {
@@ -129,10 +128,8 @@ export class AuthService {
     if (!(token)) {
       return null;
     }
-
     const jwtService = new JwtHelperService();
     const decodedToken = jwtService.decodeToken(token);
-    console.log(decodedToken);
     return decodedToken;
   }
 

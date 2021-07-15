@@ -25,8 +25,6 @@ export class AdminLayoutComponent implements OnInit {
   }
 
   onDarkModeToggled(data: { isDarkMode: boolean, darkModeIcon: string }) {
-    // console.log(data.isDarkMode);
-
     this.themeVariant = data.isDarkMode ? 'dark-theme' : 'light-theme';
     if (data.isDarkMode) {
       this.overlay.getContainerElement().classList.add('dark-theme');
