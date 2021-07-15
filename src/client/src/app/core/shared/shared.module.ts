@@ -32,9 +32,6 @@ import {MultilingualService} from '../services/multilingual.service';
     ReactiveFormsModule,
     FormsModule,
     PaginationComponent
-  ],
-  providers: [
-    AuthService, LocalStorageService, MultilingualService
   ]
 })
 export class SharedModule { }

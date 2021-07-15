@@ -6,38 +6,39 @@ import {environment} from 'src/environments/environment';
 import {catchError, map, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {Result} from '../models/wrappers/Result';
-import {BehaviorSubject, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthService {
 
-  baseUrl = environment.apiUrl;
-  private currentUserTokenSource = new BehaviorSubject<string>(this.getLocalToken);
+  private baseUrl = environment.apiUrl;
+  private currentUserTokenSource = new BehaviorSubject<string>(this.getStorageToken);
   public currentUserToken$ = this.currentUserTokenSource.asObservable();
 
   constructor(private http: HttpClient, private localStorage: LocalStorageService, private router: Router, private toastr: ToastrService) {
   }
 
-  get getToken(): string {
-    if (this.currentUserTokenSource.getValue() == null) {
-      return this.getLocalToken;
-    }
+  public get getToken(): string {
     return this.currentUserTokenSource.getValue();
   }
 
-  get getLocalToken(): string {
+  public get getStorageToken(): string {
     return localStorage.getItem('token') ?? null;
   }
 
-  loadCurrentUser(token: string) {
-    const currentUserToken = !!(token) ? token : null;
-    this.currentUserTokenSource.next(currentUserToken);
-    return of(currentUserToken);
+  public get getFullName(): string {
+    const decodedToken = this.getDecodedToken();
+    return decodedToken?.fullName ?? '';
   }
 
-  public isAuthenticated(): boolean {
+  public get getEmail(): string {
+    const decodedToken = this.getDecodedToken();
+    return !!(decodedToken) ? decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'] : '';
+  }
+
+  public get isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
     if (!!(token)) {
       const jwtService = new JwtHelperService();
@@ -46,24 +47,23 @@ export class AuthService {
     return false;
   }
 
-  getFullName() {
-    const decodedToken = this.getDecodedToken();
-    return decodedToken?.fullName ?? '';
+  private get getStorageRefreshToken(): string {
+    return this.localStorage.getItem('refreshToken');
   }
 
-  getEmail() {
-    const decodedToken = this.getDecodedToken();
-    return !!(decodedToken) ? decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'] : '';
+  public loadCurrentUser(): Observable<string> {
+    const token = this.getStorageToken;
+    const currentUserToken = !!(token) ? token : null;
+    this.setToken(currentUserToken);
+    return of(currentUserToken);
   }
 
-  login(values: any) {
+  public login(values: { email: string, password: string }): Observable<Result<Token>> {
     return this.http.post(this.baseUrl + 'identity/tokens', values)
       .pipe(
         tap((result: Result<Token>) => {
           if (result?.succeeded === true) {
-            this.localStorage.setItem('token', result.data.token);
-            this.localStorage.setItem('refreshToken', result.data.refreshToken);
-            this.currentUserTokenSource.next(result.data.token);
+            this.setStorageToken(result.data);
             this.toastr.clear();
             this.toastr.info('User Logged In');
           }
@@ -72,18 +72,16 @@ export class AuthService {
       );
   }
 
-  logout() {
-    this.localStorage.removeItem('token');
-    this.localStorage.removeItem('refreshToken');
-    this.currentUserTokenSource.next(null);
+  public logout(): void {
+    this.setStorageToken(null);
     this.toastr.clear();
     this.toastr.info('User Logged Out');
     this.router.navigateByUrl('/login');
   }
 
-  tryRefreshingToken() {
-    const jwtToken = this.localStorage.getItem('token');
-    const refreshToken = this.localStorage.getItem('refreshToken');
+  public tryRefreshingToken(): void {
+    const jwtToken = this.getStorageToken ?? '';
+    const refreshToken = this.getStorageRefreshToken ?? '';
 
     this.http.post(this.baseUrl + 'identity/tokens/refresh', {
       'refreshToken': refreshToken,
@@ -92,9 +90,7 @@ export class AuthService {
       .pipe(
         tap((result: Result<Token>) => {
           if (result.succeeded) {
-            this.localStorage.setItem('token', result.data.token);
-            this.localStorage.setItem('refreshToken', result.data.refreshToken);
-            this.currentUserTokenSource.next(result.data.token);
+            this.setStorageToken(result.data);
             this.toastr.clear();
             this.toastr.info('Refreshed Token');
           } else {
@@ -110,11 +106,28 @@ export class AuthService {
       .subscribe();
   }
 
+  private setToken(token: string | null) {
+    this.currentUserTokenSource.next(token);
+    console.log(`Token updated: ${token}`);
+  }
+
+  private setStorageToken(data: Token | null) {
+    if (data != null && data?.token?.length > 0) {
+      this.localStorage.setItem('token', data.token);
+      this.localStorage.setItem('refreshToken', data.refreshToken);
+      this.setToken(data.token);
+    } else {
+      this.localStorage.removeItem('token');
+      this.localStorage.removeItem('refreshToken');
+      this.setToken(null);
+    }
+  }
+
   private getDecodedToken() {
-    let token = this.localStorage.getItem('token');
+    let token = this.getStorageToken;
     // if token is undefined, avoid exception
     if (!(token)) {
-      return undefined;
+      return null;
     }
 
     const jwtService = new JwtHelperService();

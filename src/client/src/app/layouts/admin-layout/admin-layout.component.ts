@@ -38,7 +38,7 @@ export class AdminLayoutComponent implements OnInit {
   }
 
   getUserDetails() {
-    this.fullName = this.authService.getFullName();
-    this.email = this.authService.getEmail();
+    this.fullName = this.authService.getFullName;
+    this.email = this.authService.getEmail;
   }
 }

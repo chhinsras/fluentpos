@@ -19,6 +19,9 @@ import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import {AuthGuard} from './core/guards/auth.guard';
+import {AuthService} from './core/services/auth.service';
+import {LocalStorageService} from './core/services/local-storage.service';
+import {MultilingualService} from './core/services/multilingual.service';
 
 export function rootLoaderFactory(http: HttpClient)
 {
@@ -52,6 +55,7 @@ export function rootLoaderFactory(http: HttpClient)
   ],
   providers: [
     AuthGuard,
+    AuthService, LocalStorageService, MultilingualService,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],

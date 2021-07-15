@@ -10,30 +10,35 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {
   }
 
-  private static addToken(request: HttpRequest<any>, token: string) {
-    return request.clone({setHeaders: {'Authorization': `Bearer ${token}`}});
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    request = this.addToken(request);
+    this.refreshToken(request);
+    return next.handle(request);
   }
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
-    if (this.authService.isAuthenticated()) {
+  private addToken(request: HttpRequest<any>) {
+    if (this.authService.isAuthenticated) {
       const localToken = this.authService.getToken;
-      request = JwtInterceptor.addToken(request, localToken);
+      request = request.clone({setHeaders: {'Authorization': `Bearer ${localToken}`}});
     }
+    return request;
+  }
 
+  private refreshToken(request: HttpRequest<any>) {
     if (!request.url.includes('token')) {
       const localToken = this.authService.getToken;
+      // if token is null
+      if (!(localToken)) {
+        return;
+      }
+
       const jwtService = new JwtHelperService();
-      const expiringSoon =
-        // has not expired
+      const willExpireSoon =
         !jwtService.isTokenExpired(localToken) &&
-        // will expire in 10 min
-        jwtService.isTokenExpired(localToken, -10 * 60);
-      if (expiringSoon) {
+        jwtService.isTokenExpired(localToken, 10 * 60);
+      if (willExpireSoon) {
         this.authService.tryRefreshingToken();
       }
     }
-
-    return next.handle(request);
   }
 }
