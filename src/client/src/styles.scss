@@ -1,6 +1,9 @@
 @import '~ngx-toastr/toastr';
 @import '~@angular/material/theming';
 @import '~bootstrap/scss/bootstrap-grid';
+$material-design-icons-font-directory-path: '~material-design-icons-iconfont/dist/fonts/';
+
+@import '~material-design-icons-iconfont/src/material-design-icons';
 .container {
   all:revert;
 }
