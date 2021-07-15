@@ -22,6 +22,8 @@ import {AuthGuard} from './core/guards/auth.guard';
 import {AuthService} from './core/services/auth.service';
 import {LocalStorageService} from './core/services/local-storage.service';
 import {MultilingualService} from './core/services/multilingual.service';
+import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
+import { BusyService } from './core/services/busy.service';
 
 export function rootLoaderFactory(http: HttpClient)
 {
@@ -55,9 +57,13 @@ export function rootLoaderFactory(http: HttpClient)
   ],
   providers: [
     AuthGuard,
-    AuthService, LocalStorageService, MultilingualService,
+    AuthService, 
+    LocalStorageService, 
+    MultilingualService, 
+    BusyService,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

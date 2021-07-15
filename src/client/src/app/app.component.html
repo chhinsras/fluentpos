@@ -1,1 +1,4 @@
+<div *ngIf="isHttpRequestBusy() | async" class="loading-overlay">
+    <mat-spinner class="loading"></mat-spinner>
+</div>
 <router-outlet></router-outlet>
