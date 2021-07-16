@@ -10,12 +10,16 @@ import { MaterialModule } from '../material/material.module';
 import {AuthService} from '../services/auth.service';
 import {LocalStorageService} from '../services/local-storage.service';
 import {MultilingualService} from '../services/multilingual.service';
+import { TableComponent } from './components/table/table.component';
+import { DataPropertyGetterPipe } from './components/table/pipes/data-property-getter.pipe';
 
 @NgModule({
   declarations: [
     NotFoundComponent,
     ServerErrorComponent,
-    PaginationComponent
+    PaginationComponent,
+    TableComponent,
+    DataPropertyGetterPipe
   ],
   imports: [
     CommonModule,
@@ -31,7 +35,8 @@ import {MultilingualService} from '../services/multilingual.service';
   exports: [
     ReactiveFormsModule,
     FormsModule,
-    PaginationComponent
+    PaginationComponent,
+    TableComponent
   ]
 })
 export class SharedModule { }

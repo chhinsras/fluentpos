@@ -1,56 +1,18 @@
 <div [hidden]="!brands">
-  <mat-card class="module-card">
-    <mat-card-header>
-      <mat-card-title>
-        Brands
-      </mat-card-title>
-      <mat-card-subtitle>Manage, Register, Update or Remove Brands here.</mat-card-subtitle>
-    </mat-card-header>
-    <div style="margin: 0 26px 0 16px;">
-      <div class="left">
-        <a mat-raised-button color="primary" (click)="openBrandForm()">
-          <mat-icon>add</mat-icon> Register New Brand
-        </a>
-        <a mat-raised-button color="accent" (click)="reload()">
-          <mat-icon>refresh</mat-icon> Reload
-        </a>
-      </div>
-      <div class="right">
-        <mat-form-field>
-          <input matInput [(ngModel)]="searchString" name="searchString" type="text" autocomplete="off" (keyup)="doFilter()"
-            placeholder="Filter Brands">
-        </mat-form-field>
-      </div>
-    </div>
-    <table mat-table mat-table-stripped [dataSource]="dataSource" matSort (matSortChange)="doSort($event)">
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="detail">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Detail </th>
-        <td mat-cell *matCellDef="let element"> {{element.detail}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef style="text-align: right;"> Action </th>
-        <td mat-cell *matCellDef="let element" style="text-align: right;">
-          <button mat-raised-button color="primary" (click)="openBrandForm(element)">
-            Edit
-          </button>
-          <button mat-raised-button (click)="openDeleteConfirmationDialog(element.id)">Delete</button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="brandColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: brandColumns;"></tr>
-    </table>
-    <app-pagination [totalCount]="brands && brands.totalCount" [pageSize]="brands && brands.pageSize"
-      (pageChangeEvent)="handlePageChange($event)"></app-pagination>
-  </mat-card>
+  <app-table
+    [title]="'Brands'"
+    [subtitle]="'Manage, Register, Update or Remove Brands here.'"
+    [tableData]="brands && brands.data"
+    [tableColumns]="brandColumns"
+    [isFilterable]='true'
+    (onFilter)="doFilter($event)"
+    (onReload)="reload()"
+    (onCreateForm)="openBrandForm()"
+    (onEditForm)="openBrandForm($event)"
+    (onSort)="doSort($event)"
+    (onDelete)="removeBrand($event)"
+    >
+  </app-table>
+  <app-pagination [totalCount]="brands && brands.totalCount" [pageSize]="brands && brands.pageSize"
+        (pageChangeEvent)="handlePageChange($event)"></app-pagination>
 </div>
