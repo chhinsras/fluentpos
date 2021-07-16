@@ -6,28 +6,28 @@ import {Product} from '../models/product';
 @Injectable()
 export class ProductApiService {
 
-  baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl + 'catalog/products';
 
   constructor(private http: HttpClient) {
   }
 
   getAlls(params: HttpParams) {
-    return this.http.get(this.baseUrl + 'catalog/products', {params: params});
+    return this.http.get(this.baseUrl, {params: params});
   }
 
   getById(id: string) {
-    return this.http.get<Product>(this.baseUrl + `catalog/products/${id}`);
+    return this.http.get<Product>(this.baseUrl + `/${id}`);
   }
 
   create(product: Product) {
-    return this.http.post(this.baseUrl + 'catalog/products', product);
+    return this.http.post(this.baseUrl, product);
   }
 
   update(product: Product) {
-    return this.http.put(this.baseUrl + 'catalog/products', product);
+    return this.http.put(this.baseUrl, product);
   }
 
   delete(id: string) {
-    return this.http.delete(this.baseUrl + `catalog/products/${id}`);
+    return this.http.delete(this.baseUrl + `/${id}`);
   }
 }

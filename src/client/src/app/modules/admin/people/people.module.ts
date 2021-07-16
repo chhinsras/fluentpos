@@ -2,13 +2,32 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PeopleRoutingModule } from './people-routing.module';
+import { CustomerComponent } from './components/customer/customer.component';
+import { SupplierComponent } from './components/supplier/supplier.component';
+import { MaterialModule } from 'src/app/core/material/material.module';
+import { SharedModule } from 'src/app/core/shared/shared.module';
+import { CustomerApiService } from './api/customer-api.service';
+import { CustomerService } from './services/customer.service';
+import { CustomerFormComponent } from './components/customer/customer-form/customer-form.component';
+import { PeopleComponent } from './people.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    CustomerComponent,
+    SupplierComponent,
+    CustomerFormComponent,
+    PeopleComponent
+  ],
   imports: [
     CommonModule,
-    PeopleRoutingModule
+    PeopleRoutingModule,
+    MaterialModule,
+    SharedModule
+  ],
+  providers: [
+    CustomerApiService,
+    CustomerService,
   ]
 })
 export class PeopleModule { }

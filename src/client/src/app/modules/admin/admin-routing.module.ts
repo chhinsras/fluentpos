@@ -4,6 +4,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {SettingsComponent} from './settings/settings.component';
 import {AuthGuard} from '../../core/guards/auth.guard';
 import {CatalogComponent} from './catalog/catalog.component';
+import { PeopleComponent } from './people/people.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: CatalogComponent,
     loadChildren: () => import('./catalog/catalog.module').then(mod => mod.CatalogModule),
+  },
+  {
+    path: 'people',
+    canActivate: [AuthGuard],
+    component: PeopleComponent,
+    loadChildren: () => import('./people/people.module').then(mod => mod.PeopleModule),
   }
 ];
 
