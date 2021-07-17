@@ -10,6 +10,7 @@ import { CustomerSelectionComponent } from './customer-selection/customer-select
 import { CustomerInfoComponent } from './customer-info/customer-info.component';
 import { ProductInfoComponent } from './product-info/product-info.component';
 
+import { SharedModule } from 'src/app/core/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ProductInfoComponent } from './product-info/product-info.component';
   imports: [
     CommonModule,
     PosRoutingModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ]
 })
 export class PosModule { }
