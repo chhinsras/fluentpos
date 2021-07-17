@@ -1,10 +1,10 @@
-﻿using System;
-using FluentPOS.Shared.Core.Constants;
+﻿using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Queries;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
 using MediatR;
+using System;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
 {

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
-using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Shared.Core.Extensions;
 using FluentPOS.Shared.Core.Wrapper;
@@ -9,12 +8,10 @@ using FluentPOS.Shared.DTOs.Catalogs.Products;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using System;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq.Dynamic.Core;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 {

@@ -1,4 +1,5 @@
 ﻿#nullable enable
+
 using System;
 
 namespace FluentPOS.Shared.DTOs.ExtendedAttributes

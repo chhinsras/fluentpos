@@ -1,13 +1,13 @@
 ﻿using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Shared.Core.Constants;
+using FluentPOS.Shared.DTOs.Identity.Roles;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using FluentPOS.Shared.DTOs.Identity.Roles;
 
 namespace FluentPOS.Modules.Identity.Controllers
 {
-    class RolesController : BaseController
+    internal class RolesController : BaseController
     {
         private readonly IRoleService _roleService;
         private readonly IRoleClaimService _roleClaimService;

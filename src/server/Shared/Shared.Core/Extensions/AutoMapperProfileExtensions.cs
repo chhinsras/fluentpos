@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using System.Reflection;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
+using System.Linq;
+using System.Reflection;
 
 namespace FluentPOS.Shared.Core.Extensions
 {

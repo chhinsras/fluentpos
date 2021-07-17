@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Wrapper;
+﻿using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Identity.Users;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Core.Abstractions
 {

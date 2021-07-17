@@ -1,9 +1,9 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Contracts;
+﻿using FluentPOS.Shared.Core.Contracts;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
 {

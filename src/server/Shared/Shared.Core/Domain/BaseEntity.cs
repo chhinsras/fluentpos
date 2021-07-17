@@ -1,6 +1,6 @@
-﻿using System;
+﻿using FluentPOS.Shared.Core.Contracts;
+using System;
 using System.Collections.Generic;
-using FluentPOS.Shared.Core.Contracts;
 
 namespace FluentPOS.Shared.Core.Domain
 {

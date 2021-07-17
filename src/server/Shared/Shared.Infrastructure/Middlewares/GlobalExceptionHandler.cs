@@ -1,17 +1,17 @@
 ﻿using FluentPOS.Shared.Core.Exceptions;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
+using FluentPOS.Shared.Core.Serialization;
+using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Core.Wrapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Interfaces.Serialization;
-using FluentPOS.Shared.Core.Serialization;
-using FluentPOS.Shared.Core.Settings;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Serialization;
 
 namespace FluentPOS.Shared.Infrastructure.Middlewares
 {
@@ -63,10 +63,10 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
                 {
                     result = _jsonSerializer.Serialize(responseModel, new JsonSerializerSettingsOptions
                     {
-                        JsonSerializerSettings = {ContractResolver = new CamelCasePropertyNamesContractResolver()}
+                        JsonSerializerSettings = { ContractResolver = new CamelCasePropertyNamesContractResolver() }
                     });
                 }
-                else if(_serializationSettings.UseSystemTextJson)
+                else if (_serializationSettings.UseSystemTextJson)
                 {
                     result = _jsonSerializer.Serialize(responseModel, new JsonSerializerSettingsOptions
                     {

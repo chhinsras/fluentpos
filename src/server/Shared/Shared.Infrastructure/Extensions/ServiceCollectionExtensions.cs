@@ -1,4 +1,6 @@
-﻿using FluentPOS.Shared.Core.EventLogging;
+﻿using FluentPOS.Shared.Core.Domain;
+using FluentPOS.Shared.Core.EventLogging;
+using FluentPOS.Shared.Core.Extensions;
 using FluentPOS.Shared.Core.Interfaces;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Core.Settings;
@@ -17,8 +19,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using FluentPOS.Shared.Core.Domain;
-using FluentPOS.Shared.Core.Extensions;
 
 [assembly: InternalsVisibleTo("Bootstrapper")]
 

@@ -1,4 +1,5 @@
 ﻿#nullable enable
+
 using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;

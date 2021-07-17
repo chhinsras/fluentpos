@@ -1,4 +1,3 @@
-using FluentPOS.Modules.Catalog;
 using FluentPOS.Modules.Catalog.Extensions;
 using FluentPOS.Modules.Identity.Extensions;
 using FluentPOS.Modules.People.Extensions;

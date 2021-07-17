@@ -4,18 +4,18 @@ using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Wrapper;
+using FluentPOS.Shared.DTOs.Identity.Roles;
+using FluentPOS.Shared.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FluentPOS.Shared.DTOs.Identity.Roles;
-using FluentPOS.Shared.Infrastructure.Utilities;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
-    class RoleService : IRoleService
+    internal class RoleService : IRoleService
     {
         private readonly RoleManager<FluentRole> _roleManager;
         private readonly UserManager<FluentUser> _userManager;
@@ -87,7 +87,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             {
                 var existingRole = await _roleManager.FindByNameAsync(request.Name);
                 if (existingRole != null) throw new IdentityException(_localizer["Similar Role already exists."], statusCode: System.Net.HttpStatusCode.BadRequest);
-                var response = await _roleManager.CreateAsync(new FluentRole(request.Name,request.Description));
+                var response = await _roleManager.CreateAsync(new FluentRole(request.Name, request.Description));
                 if (response.Succeeded)
                 {
                     return await Result<string>.SuccessAsync(string.Format(_localizer["Role {0} Created."], request.Name));

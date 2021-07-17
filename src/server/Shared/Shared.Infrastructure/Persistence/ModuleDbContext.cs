@@ -1,14 +1,14 @@
-﻿using FluentPOS.Shared.Core.Domain;
+﻿using FluentPOS.Shared.Core.Contracts;
+using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.EventLogging;
+using FluentPOS.Shared.Core.Settings;
+using FluentPOS.Shared.Infrastructure.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Contracts;
-using FluentPOS.Shared.Infrastructure.Extensions;
-using Microsoft.Extensions.Options;
-using FluentPOS.Shared.Core.Settings;
 
 namespace FluentPOS.Shared.Infrastructure.Persistence
 {

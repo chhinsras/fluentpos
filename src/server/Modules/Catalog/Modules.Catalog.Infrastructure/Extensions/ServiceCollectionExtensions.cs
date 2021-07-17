@@ -1,10 +1,10 @@
-﻿using System.Reflection;
-using FluentPOS.Modules.Catalog.Core.Abstractions;
+﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Infrastructure.Persistence;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
 {

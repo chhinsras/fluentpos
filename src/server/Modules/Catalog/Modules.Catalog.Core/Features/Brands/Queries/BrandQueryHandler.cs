@@ -10,11 +10,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq.Dynamic.Core;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
 {
@@ -46,7 +46,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
             }
             else
             {
-                queryable = queryable.OrderBy(a=>a.Id);
+                queryable = queryable.OrderBy(a => a.Id);
             }
 
             if (!string.IsNullOrEmpty(request.SearchString))

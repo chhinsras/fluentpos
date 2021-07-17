@@ -1,9 +1,9 @@
 ﻿using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.EventLogging;
 using FluentPOS.Shared.Core.Interfaces;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Interfaces.Serialization;
 
 namespace FluentPOS.Shared.Infrastructure.EventLogging
 {

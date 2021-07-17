@@ -1,9 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Domain;
@@ -15,6 +10,11 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Localization;
+using System;
+using System.Linq;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands
 {

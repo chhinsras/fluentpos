@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Constants;
+﻿using FluentPOS.Shared.Core.Constants;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Permissions
 {

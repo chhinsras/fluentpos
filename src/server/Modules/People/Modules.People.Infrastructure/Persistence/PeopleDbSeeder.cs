@@ -1,5 +1,7 @@
 ﻿using FluentPOS.Modules.People.Core.Entities;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using FluentPOS.Shared.Core.Interfaces.Services;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -7,8 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Interfaces.Serialization;
-using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.People.Infrastructure.Persistence
 {
@@ -63,6 +63,5 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence
                 }
             }).GetAwaiter().GetResult();
         }
-
     }
 }

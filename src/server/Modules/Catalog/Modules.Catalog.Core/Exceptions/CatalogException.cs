@@ -5,7 +5,7 @@ namespace FluentPOS.Modules.Catalog.Core.Exceptions
 {
     public class CatalogException : CustomException
     {
-        public CatalogException(string message,HttpStatusCode statusCode = HttpStatusCode.InternalServerError) : base(message,statusCode:statusCode)
+        public CatalogException(string message, HttpStatusCode statusCode = HttpStatusCode.InternalServerError) : base(message, statusCode: statusCode)
         {
         }
     }

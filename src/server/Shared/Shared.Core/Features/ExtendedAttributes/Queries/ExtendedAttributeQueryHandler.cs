@@ -1,10 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.Exceptions;
@@ -15,6 +9,12 @@ using FluentPOS.Shared.DTOs.ExtendedAttributes;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
 {

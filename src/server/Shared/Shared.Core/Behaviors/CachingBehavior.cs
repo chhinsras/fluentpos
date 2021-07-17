@@ -1,15 +1,15 @@
-﻿using FluentPOS.Shared.Core.Queries;
+﻿using FluentPOS.Shared.Core.Interfaces.Serialization;
+using FluentPOS.Shared.Core.Queries;
 using FluentPOS.Shared.Core.Settings;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Interfaces.Serialization;
-using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Shared.Core.Behaviors
 {

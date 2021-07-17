@@ -1,5 +1,4 @@
-﻿using System;
-using FluentPOS.Modules.Catalog.Core.Abstractions;
+﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Infrastructure.Extensions;
 using FluentPOS.Shared.Core.EventLogging;
@@ -9,6 +8,7 @@ using FluentPOS.Shared.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
 {
@@ -42,7 +42,9 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
         }
 
         DbSet<Brand> IExtendedAttributeDbContext<Guid, Brand, BrandExtendedAttribute>.GetEntities() => Brands;
+
         DbSet<Category> IExtendedAttributeDbContext<Guid, Category, CategoryExtendedAttribute>.GetEntities() => Categories;
+
         DbSet<Product> IExtendedAttributeDbContext<Guid, Product, ProductExtendedAttribute>.GetEntities() => Products;
 
         DbSet<BrandExtendedAttribute> IExtendedAttributeDbContext<Guid, Brand, BrandExtendedAttribute>.ExtendedAttributes { get; set; }

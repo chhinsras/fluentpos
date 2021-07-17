@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Localization;
+using System.Collections.Generic;
 using System.Net;
-using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Shared.Core.Exceptions
 {

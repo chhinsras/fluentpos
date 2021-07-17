@@ -1,11 +1,11 @@
 ﻿using FluentPOS.Shared.Core.Exceptions;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Shared.Core.Behaviors
 {

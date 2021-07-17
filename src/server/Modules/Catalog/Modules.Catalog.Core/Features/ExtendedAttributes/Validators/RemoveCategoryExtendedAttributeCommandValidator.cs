@@ -1,7 +1,7 @@
-﻿using System;
-using FluentPOS.Modules.Catalog.Core.Entities;
+﻿using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators;
 using Microsoft.Extensions.Localization;
+using System;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
 {

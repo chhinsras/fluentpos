@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentPOS.Shared.Core.Extensions;
+using System.Reflection;
 
 namespace FluentPOS.Modules.Identity.Core.Mappings
 {

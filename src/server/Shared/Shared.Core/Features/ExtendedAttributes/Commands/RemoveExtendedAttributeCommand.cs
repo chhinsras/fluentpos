@@ -1,7 +1,7 @@
-﻿using System;
-using FluentPOS.Shared.Core.Contracts;
+﻿using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Wrapper;
 using MediatR;
+using System;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands
 {

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Contracts;
+﻿using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace FluentPOS.Shared.Infrastructure.Controllers
 {

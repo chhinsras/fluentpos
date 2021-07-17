@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Shared.Core.Wrapper;
@@ -9,6 +6,9 @@ using FluentPOS.Shared.DTOs.Identity.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {

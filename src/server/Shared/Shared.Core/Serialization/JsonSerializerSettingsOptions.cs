@@ -1,6 +1,6 @@
-﻿using System.Text.Json;
-using FluentPOS.Shared.Core.Interfaces.Serialization;
+﻿using FluentPOS.Shared.Core.Interfaces.Serialization;
 using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace FluentPOS.Shared.Core.Serialization
 {

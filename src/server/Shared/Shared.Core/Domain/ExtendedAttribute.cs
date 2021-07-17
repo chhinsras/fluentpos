@@ -1,7 +1,8 @@
 ﻿#nullable enable
-using System;
+
 using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
+using System;
 
 namespace FluentPOS.Shared.Core.Domain
 {

@@ -1,19 +1,19 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
+using FluentPOS.Modules.Identity.Core.Helpers;
 using FluentPOS.Modules.Identity.Infrastructure.Persistence;
+using FluentPOS.Shared.Core.Constants;
+using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using FluentPOS.Shared.Core.Wrapper;
+using FluentPOS.Shared.DTOs.Identity.Roles;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FluentPOS.Modules.Identity.Core.Helpers;
-using FluentPOS.Shared.Core.Constants;
-using FluentPOS.Shared.Core.Interfaces.Services.Identity;
-using FluentPOS.Shared.DTOs.Identity.Roles;
-using Microsoft.AspNetCore.Identity;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {

@@ -3,22 +3,22 @@ using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Interfaces.Services;
+using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Identity;
 using FluentPOS.Shared.DTOs.Mails;
+using FluentPOS.Shared.DTOs.Sms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Settings;
-using FluentPOS.Shared.DTOs.Sms;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Options;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
@@ -93,7 +93,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                         return await Result<string>.SuccessAsync(user.Id, message: string.Format(_localizer["User {0} Registered."], user.UserName));
                     }
 
-                    var messages = new List<string> {string.Format(_localizer["User {0} Registered."], user.UserName)};
+                    var messages = new List<string> { string.Format(_localizer["User {0} Registered."], user.UserName) };
                     if (_mailSettings.EnableVerification)
                     {
                         // send verification email

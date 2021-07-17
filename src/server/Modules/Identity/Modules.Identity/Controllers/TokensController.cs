@@ -1,8 +1,8 @@
 ﻿using FluentPOS.Shared.Core.Interfaces.Services.Identity;
+using FluentPOS.Shared.DTOs.Identity.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using FluentPOS.Shared.DTOs.Identity.Tokens;
 
 namespace FluentPOS.Modules.Identity.Controllers
 {
@@ -27,7 +27,6 @@ namespace FluentPOS.Modules.Identity.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> RefreshAsync(RefreshTokenRequest request)
         {
-            
             var response = await _tokenService.RefreshTokenAsync(request, GenerateIPAddress());
             return Ok(response);
         }

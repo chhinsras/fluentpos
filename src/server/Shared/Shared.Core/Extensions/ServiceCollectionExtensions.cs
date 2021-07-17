@@ -1,11 +1,4 @@
-﻿using System;
-using System.Linq;
-using FluentPOS.Shared.Core.Behaviors;
-using FluentPOS.Shared.Core.Settings;
-using MediatR;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
+﻿using FluentPOS.Shared.Core.Behaviors;
 using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators;
@@ -13,9 +6,16 @@ using FluentPOS.Shared.Core.Features.ExtendedAttributes.Events;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries;
 using FluentPOS.Shared.Core.Interfaces.Serialization;
 using FluentPOS.Shared.Core.Serialization;
+using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
 using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace FluentPOS.Shared.Core.Extensions
 {
@@ -149,8 +149,6 @@ namespace FluentPOS.Shared.Core.Extensions
                 services.AddScoped(serviceType, eventsImplementationType);
 
                 #endregion ExtendedAttributeRemovedEvent
-
-
             }
 
             return services;

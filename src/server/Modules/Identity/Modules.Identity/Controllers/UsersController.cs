@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using FluentPOS.Modules.Identity.Core.Abstractions;
+﻿using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Shared.Core.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Controllers
 {

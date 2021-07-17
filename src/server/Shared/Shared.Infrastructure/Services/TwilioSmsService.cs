@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Interfaces.Services;
+﻿using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.DTOs.Sms;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Threading.Tasks;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;

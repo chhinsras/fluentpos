@@ -1,7 +1,7 @@
-﻿using System;
-using FluentPOS.Shared.Core.Contracts;
+﻿using FluentPOS.Shared.Core.Contracts;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
+using System;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators
 {

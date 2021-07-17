@@ -2,8 +2,10 @@
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Modules.Identity.Core.Settings;
+using FluentPOS.Modules.Identity.Infrastructure.Permissions;
 using FluentPOS.Modules.Identity.Infrastructure.Persistence;
 using FluentPOS.Modules.Identity.Infrastructure.Services;
+using FluentPOS.Shared.Core.Extensions;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using FluentPOS.Shared.Infrastructure.Extensions;
@@ -20,8 +22,6 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using FluentPOS.Modules.Identity.Infrastructure.Permissions;
-using FluentPOS.Shared.Core.Extensions;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
 {
@@ -57,13 +57,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
             services.AddJwtAuthentication(configuration);
             return services;
         }
+
         public static IServiceCollection AddPermissions(this IServiceCollection services, IConfiguration configuration)
         {
-
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>()
                 .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
             return services;
         }
+
         internal static IServiceCollection AddJwtAuthentication(
             this IServiceCollection services, IConfiguration config)
         {
@@ -95,7 +96,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                             context.HandleResponse();
                             if (!context.Response.HasStarted)
                             {
-                                throw new IdentityException("You are not Authorized.", statusCode:HttpStatusCode.Unauthorized);
+                                throw new IdentityException("You are not Authorized.", statusCode: HttpStatusCode.Unauthorized);
                             }
                             return Task.CompletedTask;
                         },

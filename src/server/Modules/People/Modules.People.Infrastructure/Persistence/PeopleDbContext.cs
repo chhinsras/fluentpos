@@ -1,5 +1,4 @@
-﻿using System;
-using FluentPOS.Modules.People.Core.Abstractions;
+﻿using FluentPOS.Modules.People.Core.Abstractions;
 using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Infrastructure.Extensions;
 using FluentPOS.Shared.Core.EventLogging;
@@ -9,6 +8,7 @@ using FluentPOS.Shared.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace FluentPOS.Modules.People.Infrastructure.Persistence
 {

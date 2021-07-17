@@ -1,11 +1,11 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Features.Products.Commands;
 using FluentPOS.Modules.Catalog.Core.Features.Products.Queries;
+using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.DTOs.Catalogs.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Constants;
-using Microsoft.AspNetCore.Authorization;
 
 namespace FluentPOS.Modules.Catalog.Controllers
 {
@@ -15,7 +15,7 @@ namespace FluentPOS.Modules.Catalog.Controllers
         [Authorize(Policy = Permissions.Products.ViewAll)]
         public async Task<IActionResult> GetAllAsync([FromQuery] PaginatedProductFilter filter)
         {
-            var brands = await Mediator.Send(new GetAllPagedProductsQuery(filter.PageNumber, filter.PageSize, filter.SearchString, filter.BrandId, filter.CategoryId,filter.OrderBy));
+            var brands = await Mediator.Send(new GetAllPagedProductsQuery(filter.PageNumber, filter.PageSize, filter.SearchString, filter.BrandId, filter.CategoryId, filter.OrderBy));
             return Ok(brands);
         }
 

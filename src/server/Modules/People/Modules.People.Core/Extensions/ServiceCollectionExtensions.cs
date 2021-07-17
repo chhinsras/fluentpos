@@ -1,8 +1,8 @@
-﻿using FluentValidation;
+﻿using FluentPOS.Shared.Core.Extensions;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using FluentPOS.Shared.Core.Extensions;
 
 namespace FluentPOS.Modules.People.Core.Extensions
 {

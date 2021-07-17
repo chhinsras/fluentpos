@@ -8,6 +8,7 @@ namespace FluentPOS.Modules.People.Core.Abstractions
     public interface IPeopleDbContext
     {
         public DbSet<Customer> Customers { get; set; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

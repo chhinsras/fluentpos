@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using FluentPOS.Modules.Identity.Core.Entities;
+﻿using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
@@ -9,6 +7,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Controllers
 {

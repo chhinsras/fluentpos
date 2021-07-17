@@ -1,7 +1,8 @@
 ﻿#nullable enable
-using System;
+
 using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
+using System;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
 {

@@ -1,14 +1,14 @@
-﻿using System;
-using FluentPOS.Modules.Catalog.Core.Entities;
+﻿using FluentPOS.Modules.Catalog.Core.Entities;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using FluentPOS.Shared.Core.Interfaces.Services;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Interfaces.Serialization;
-using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
 {

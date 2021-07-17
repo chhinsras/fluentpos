@@ -10,11 +10,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq.Dynamic.Core;
-
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
 {

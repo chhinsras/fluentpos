@@ -2,22 +2,22 @@
 using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Modules.Identity.Core.Settings;
 using FluentPOS.Shared.Core.Interfaces.Services.Identity;
+using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Core.Wrapper;
+using FluentPOS.Shared.DTOs.Identity.Tokens;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Localization;
-using System.Net;
-using FluentPOS.Shared.Core.Settings;
-using FluentPOS.Shared.DTOs.Identity.Tokens;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {

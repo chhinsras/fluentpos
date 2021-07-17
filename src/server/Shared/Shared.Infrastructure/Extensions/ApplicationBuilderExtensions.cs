@@ -32,6 +32,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 
             return app;
         }
+
         internal static IApplicationBuilder Initialize(this IApplicationBuilder app)
         {
             using var serviceScope = app.ApplicationServices.CreateScope();

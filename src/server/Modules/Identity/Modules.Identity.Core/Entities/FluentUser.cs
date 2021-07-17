@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FluentPOS.Shared.Core.Contracts;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using FluentPOS.Shared.Core.Contracts;
 
 namespace FluentPOS.Modules.Identity.Core.Entities
 {

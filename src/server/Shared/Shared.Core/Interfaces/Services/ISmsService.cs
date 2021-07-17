@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using FluentPOS.Shared.DTOs.Sms;
+﻿using FluentPOS.Shared.DTOs.Sms;
+using System.Threading.Tasks;
 
 namespace FluentPOS.Shared.Core.Interfaces.Services
 {
