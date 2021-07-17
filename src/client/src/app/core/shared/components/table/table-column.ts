@@ -3,4 +3,5 @@ export interface TableColumn {
   dataKey: string;
   position?: 'right' | 'left';
   isSortable?: boolean;
+  isShowable?: boolean;
 }

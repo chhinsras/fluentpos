@@ -1,92 +1,21 @@
 <div [hidden]="!products">
-  <mat-card class="module-card">
-    <mat-card-header>
-      <mat-card-title>
-        Products
-      </mat-card-title>
-      <mat-card-subtitle>Manage, Register, Update or Remove Products here.</mat-card-subtitle>
-    </mat-card-header>
-    <div style="margin: 0 26px 0 16px;">
-      <div class="left">
-        <a (click)="openProductForm()" color="primary" mat-raised-button>
-          <mat-icon>add</mat-icon>
-          Register New Product
-        </a>
-        <a (click)="reload()" color="accent" mat-raised-button>
-          <mat-icon>refresh</mat-icon>
-          Reload
-        </a>
-      </div>
-      <div class="right">
-        <mat-form-field>
-          <input (keyup)="doFilter()" [(ngModel)]="searchString" autocomplete="off" matInput name="searchString"
-                 placeholder="Filter Products"
-                 type="text">
-        </mat-form-field>
-      </div>
-    </div>
-    <table (matSortChange)="doSort($event)" [dataSource]="dataSource" mat-table mat-table-stripped matSort>
-      <ng-container matColumnDef="id">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header> Id.</th>
-        <td *matCellDef="let element" mat-cell> {{element.id}} </td>
-      </ng-container>
-      <ng-container matColumnDef="name">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header> Name</th>
-        <td *matCellDef="let element" mat-cell> {{element.name}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="localeName">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header> Locale Name</th>
-        <td *matCellDef="let element" mat-cell> {{element.localeName}} </td>
-      </ng-container>
-      <ng-container matColumnDef="brandId">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header> Brand Id</th>
-        <td *matCellDef="let element" mat-cell> {{element.brandId}} </td>
-      </ng-container>
-      <ng-container matColumnDef="categoryId">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header> Category Id</th>
-        <td *matCellDef="let element" mat-cell> {{element.categoryId}} </td>
-      </ng-container>
-      <ng-container matColumnDef="price">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header> Price</th>
-        <td *matCellDef="let element" mat-cell> {{element.price}} </td>
-      </ng-container>
-      <ng-container matColumnDef="cost">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header> Cost</th>
-        <td *matCellDef="let element" mat-cell> {{element.cost}} </td>
-      </ng-container>
-      <ng-container matColumnDef="tax">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header> Tax (Method)</th>
-        <td *matCellDef="let element" mat-cell> {{element.tax}} ({{element.taxMethod}})</td>
-      </ng-container>
-      <ng-container matColumnDef="barcodeSymbology">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header> Barcode Symbology</th>
-        <td *matCellDef="let element" mat-cell> {{element.barcodeSymbology}}</td>
-      </ng-container>
-      <ng-container matColumnDef="isAlert">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header> Stock (Alert Quantity)</th>
-        <td *matCellDef="let element" mat-cell> {{element.isAlert ? '&#10060;' : '&#9989;'}} ({{element.alertQuantity}}
-          )
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="detail">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header> Detail</th>
-        <td *matCellDef="let element" mat-cell> {{element.detail}} </td>
-      </ng-container>
-      <ng-container matColumnDef="action">
-        <th *matHeaderCellDef mat-header-cell style="text-align: right;"> Action</th>
-        <td *matCellDef="let element" mat-cell style="text-align: right;">
-          <button (click)="openProductForm(element)" color="primary" mat-raised-button>
-            Edit
-          </button>
-          <button (click)="openDeleteConfirmationDialog(element.id)" mat-raised-button>Delete</button>
-        </td>
-      </ng-container>
-      <tr *matHeaderRowDef="productColumns" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: productColumns;" mat-row></tr>
-    </table>
-    <app-pagination (pageChangeEvent)="handlePageChange($event)" [pageSize]="products && products.pageSize"
-                    [totalCount]="products && products.totalCount"></app-pagination>
-  </mat-card>
+  <app-table
+    [title]="'Products'"
+    [subtitle]="'Manage, Register, Update or Remove Products here.'"
+    [data]="products && products.data"
+    [columns]="productColumns"
+    [isFilterable]="true"
+    (onFilter)="filter($event)"
+    (onReload)="reload()"
+    (onCreateForm)="openForm()"
+    (onEditForm)="openForm($event)"
+    (onSort)="sort($event)"
+    (onDelete)="remove($event)"
+  >
+  </app-table>
+  <app-pagination
+    [totalCount]="products && products.totalCount"
+    [pageSize]="products && products.pageSize"
+    (onPageChanged)="pageChanged($event)"
+  ></app-pagination>
 </div>

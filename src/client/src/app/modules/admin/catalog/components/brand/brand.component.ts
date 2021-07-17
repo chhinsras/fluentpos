@@ -40,9 +40,9 @@ export class BrandComponent implements OnInit {
 
   initColumns(): void {
     this.brandColumns = [
-      { name: 'Id', dataKey: 'id', isSortable: true },
-      { name: 'Name', dataKey: 'name', isSortable: true },
-      { name: 'Detail', dataKey: 'detail', isSortable: true },
+      { name: 'Id', dataKey: 'id', isSortable: true, isShowable: true },
+      { name: 'Name', dataKey: 'name', isSortable: true, isShowable: true },
+      { name: 'Detail', dataKey: 'detail', isSortable: true, isShowable: true },
       { name: 'Action', dataKey: 'action', position: 'right' },
     ];
   }

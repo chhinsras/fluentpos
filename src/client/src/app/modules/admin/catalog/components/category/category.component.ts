@@ -33,16 +33,18 @@ export class CategoryComponent implements OnInit {
   }
 
   getCategorys(): void {
-    this.categoryService.getCategories(this.categoryParams).subscribe((result) => {
-      this.categories = result;
-    });
+    this.categoryService
+      .getCategories(this.categoryParams)
+      .subscribe((result) => {
+        this.categories = result;
+      });
   }
 
   initColumns(): void {
     this.categoryColumns = [
-      { name: 'Id', dataKey: 'id', isSortable: true },
-      { name: 'Name', dataKey: 'name', isSortable: true },
-      { name: 'Detail', dataKey: 'detail', isSortable: true },
+      { name: 'Id', dataKey: 'id', isSortable: true, isShowable: true },
+      { name: 'Name', dataKey: 'name', isSortable: true, isShowable: true },
+      { name: 'Detail', dataKey: 'detail', isSortable: true, isShowable: true },
       { name: 'Action', dataKey: 'action', position: 'right' },
     ];
   }
