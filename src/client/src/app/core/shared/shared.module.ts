@@ -7,11 +7,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ServerErrorComponent } from './components/server-error/server-error.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { MaterialModule } from '../material/material.module';
-import {AuthService} from '../services/auth.service';
-import {LocalStorageService} from '../services/local-storage.service';
-import {MultilingualService} from '../services/multilingual.service';
 import { TableComponent } from './components/table/table.component';
-import { DataPropertyGetterPipe } from './components/table/pipes/data-property-getter.pipe';
+import { DataPropertyGetterPipe } from '../pipes/data-property-getter.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +16,7 @@ import { DataPropertyGetterPipe } from './components/table/pipes/data-property-g
     ServerErrorComponent,
     PaginationComponent,
     TableComponent,
-    DataPropertyGetterPipe
+    DataPropertyGetterPipe,
   ],
   imports: [
     CommonModule,
@@ -29,14 +26,14 @@ import { DataPropertyGetterPipe } from './components/table/pipes/data-property-g
     FormsModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
-      preventDuplicates: true
-    })
+      preventDuplicates: true,
+    }),
   ],
   exports: [
     ReactiveFormsModule,
     FormsModule,
     PaginationComponent,
-    TableComponent
-  ]
+    TableComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}
