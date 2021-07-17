@@ -6,13 +6,19 @@ import { MaterialModule } from 'src/app/core/material/material.module';
 import { PosComponent } from './pos.component';
 import { CustomerComponent } from './customer/customer.component';
 import { CatalogComponent } from './catalog/catalog.component';
+import { CustomerSelectionComponent } from './customer-selection/customer-selection.component';
+import { CustomerInfoComponent } from './customer-info/customer-info.component';
+import { ProductInfoComponent } from './product-info/product-info.component';
 
 
 @NgModule({
   declarations: [
     PosComponent,
     CustomerComponent,
-    CatalogComponent
+    CatalogComponent,
+    CustomerSelectionComponent,
+    CustomerInfoComponent,
+    ProductInfoComponent
   ],
   imports: [
     CommonModule,

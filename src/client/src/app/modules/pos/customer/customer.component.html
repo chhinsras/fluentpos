@@ -1,9 +1,27 @@
-<div class="c-card background-color-primary" style="color: white;display: flex;padding: 0px;">
-
-    <button mat-button style="min-width:-webkit-fill-available;padding: 30px;">
+<div class="c-card background-color-primary" style="color: white;">
+    <button *ngIf="!customer" mat-button style="min-width:-webkit-fill-available;padding: 30px;" (click)="openForm()">
         <span style="font-weight:300;font-size: 20px;"><span
                 style="margin-right: 10px;width: 20px!important;height: 20px!important;"
                 class="fas fa-user-circle"></span>
             Tap to choose or a add new customer</span>
     </button>
+    <div *ngIf="customer" class="row">
+
+        <div class="col-6">
+            #41
+            <br>
+            <h1 style="margin: 0px!important;">Mukesh Murugan</h1>
+            789456123
+            <br>
+            iammukeshm@gmail.com
+        </div>
+        <div style="align-self: center;text-align: right;" class="col-6">
+            <button mat-raised-button>
+                <span><span style="margin-right: 10px;" class="fas fa-info"></span>Info</span>
+            </button>
+            <button mat-raised-button (click)="removeCustomer()" color="danger">
+                <span><span style="margin-right: 10px;" class="fas fa-trash"></span>Remove</span>
+            </button>
+        </div>
+    </div>
 </div>
