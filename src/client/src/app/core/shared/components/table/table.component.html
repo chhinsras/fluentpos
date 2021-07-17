@@ -22,7 +22,7 @@
       </div>
     </div>
   <!-- Table -->
-  <table mat-table mat-table-stripped [dataSource]="tableDataSource" matSort (matSortChange)="handleSort($event)">
+  <table fixedLayout="true" mat-table mat-table-stripped [dataSource]="tableDataSource" matSort (matSortChange)="handleSort($event)">
     <ng-container *ngFor="let tableColumn of tableColumns" [matColumnDef]="tableColumn.name">
       <!-- if sortable column header -->
       <ng-container *ngIf="tableColumn.isSortable; else notSortable">
