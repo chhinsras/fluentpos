@@ -1,100 +1,93 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {PaginatedResult} from '../../../../../core/models/wrappers/PaginatedResult';
-import {Category} from '../../models/category';
-import {CategoryParams} from '../../models/categoryParams';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatSort, Sort} from '@angular/material/sort';
-import {CategoryService} from '../../services/category.service';
-import {MatDialog} from '@angular/material/dialog';
-import {ToastrService} from 'ngx-toastr';
-import {PaginatedFilter} from '../../../../../core/models/Filters/PaginatedFilter';
-import {CategoryFormComponent} from './category-form/category-form.component';
-import {DeleteDialogComponent} from '../../../shared/components/delete-dialog/delete-dialog.component';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
+import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
+import { Category } from '../../models/category';
+import { CategoryParams } from '../../models/categoryParams';
+import { CategoryService } from '../../services/category.service';
+import { CategoryFormComponent } from './category-form/category-form.component';
+import { ToastrService } from 'ngx-toastr';
+import { Sort } from '@angular/material/sort';
+import { TableColumn } from 'src/app/core/shared/components/table/table-column';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  styleUrls: ['./category.component.scss'],
 })
-export class CategoryComponent implements OnInit, AfterViewInit {
-
+export class CategoryComponent implements OnInit {
   categories: PaginatedResult<Category>;
-  categoryColumns: string[] = ['id', 'name', 'detail', 'action'];
+  categoryColumns: TableColumn[];
   categoryParams = new CategoryParams();
-  dataSource = new MatTableDataSource<Category>([]);
   searchString: string;
-  @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public categoryService: CategoryService, public dialog: MatDialog, public toastr: ToastrService) {
-  }
+  constructor(
+    public categoryService: CategoryService,
+    public dialog: MatDialog,
+    public toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
-    this.getCategories();
+    this.getCategorys();
+    this.initColumns();
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-  }
-
-  getCategories(): void {
+  getCategorys(): void {
     this.categoryService.getCategories(this.categoryParams).subscribe((result) => {
       this.categories = result;
-      this.dataSource.data = this.categories.data;
     });
   }
 
-  handlePageChange(event: PaginatedFilter): void {
+  initColumns(): void {
+    this.categoryColumns = [
+      { name: 'Id', dataKey: 'id', isSortable: true },
+      { name: 'Name', dataKey: 'name', isSortable: true },
+      { name: 'Detail', dataKey: 'detail', isSortable: true },
+      { name: 'Action', dataKey: 'action', position: 'right' },
+    ];
+  }
+
+  pageChanged(event: PaginatedFilter): void {
     this.categoryParams.pageNumber = event.pageNumber;
     this.categoryParams.pageSize = event.pageSize;
-    this.getCategories();
+    this.getCategorys();
   }
 
-  openCategoryForm(category?: Category): void {
+  openForm(category?: Category): void {
     const dialogRef = this.dialog.open(CategoryFormComponent, {
-      data: category
+      data: category,
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.getCategories();
+        this.getCategorys();
       }
     });
   }
 
-  openDeleteConfirmationDialog(id: string): void {
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: 'Do you confirm the removal of this category?'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.removeCategory(id);
-      }
-    });
-  }
-
-  removeCategory(id: string): void {
-    this.categoryService.deleteCategory(id).subscribe(() => {
-      this.getCategories();
+  remove($event: string): void {
+    this.categoryService.deleteCategory($event).subscribe(() => {
+      this.getCategorys();
       this.toastr.info('Category Removed');
     });
   }
 
-  doSort(sort: Sort): void {
-    this.categoryParams.orderBy = sort.active + ' ' + sort.direction;
-    this.getCategories();
+  sort($event: Sort): void {
+    this.categoryParams.orderBy = $event.active + ' ' + $event.direction;
+    console.log(this.categoryParams.orderBy);
+    this.getCategorys();
   }
 
-  public doFilter(): void {
-    this.categoryParams.searchString = this.searchString.trim().toLocaleLowerCase();
+  filter($event: string): void {
+    this.categoryParams.searchString = $event.trim().toLocaleLowerCase();
     this.categoryParams.pageNumber = 0;
     this.categoryParams.pageSize = 0;
-    this.getCategories();
+    this.getCategorys();
   }
 
-  public reload(): void {
-    this.searchString = this.categoryParams.searchString = '';
+  reload(): void {
+    this.categoryParams.searchString = '';
     this.categoryParams.pageNumber = 0;
     this.categoryParams.pageSize = 0;
-    this.getCategories();
+    this.getCategorys();
   }
-
 }

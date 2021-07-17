@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
