@@ -1,22 +1,29 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {TableColumn} from "./table-column";
-import {MatSort, Sort} from "@angular/material/sort";
-import {MatTableDataSource} from "@angular/material/table";
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { TableColumn } from './table-column';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { DeleteDialogComponent } from 'src/app/modules/admin/shared/components/delete-dialog/delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit, AfterViewInit {
-
   public tableDataSource = new MatTableDataSource([]);
   public displayedColumns: string[];
   searchString: string;
 
-  @ViewChild(MatSort, {static: true}) matSort: MatSort;
+  @ViewChild(MatSort, { static: true }) matSort: MatSort;
 
   @Input() title: string;
   @Input() subtitle: string;
@@ -37,50 +44,52 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Output() onEditForm: EventEmitter<any> = new EventEmitter();
   @Output() onDelete: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(public dialog: MatDialog) {
-  }
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    const columnNames = this.columns.map((tableColumn: TableColumn) => tableColumn.name);
+    const columnNames = this.columns.map(
+      (tableColumn: TableColumn) => tableColumn.name
+    );
     this.displayedColumns = columnNames;
   }
 
   ngAfterViewInit(): void {
-     this.tableDataSource.sort = this.matSort;
+    this.tableDataSource.sort = this.matSort;
   }
 
   setTableDataSource(data: any) {
     this.tableDataSource = new MatTableDataSource<any>(data);
   }
 
-  openCreateForm(){
+  openCreateForm() {
     this.onCreateForm.emit();
   }
 
-  openEditForm($event?){
+  openEditForm($event?) {
     this.onEditForm.emit($event);
   }
 
-  handleReload(){
+  handleReload() {
     this.searchString = '';
     this.onReload.emit();
   }
 
-  handleFilter(){
+  handleFilter() {
     this.onFilter.emit(this.searchString);
   }
 
   handleSort(sortParams: Sort) {
-    sortParams.active = this.columns.find(column => column.name === sortParams.active).dataKey;
+    sortParams.active = this.columns.find(
+      (column) => column.name === sortParams.active
+    ).dataKey;
     this.onSort.emit(sortParams);
   }
 
-  openDeleteConfirmationDialog($event: string)
-  {
+  openDeleteConfirmationDialog($event: string) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: 'Do you confirm the removal of this brand?'
+      data: 'Do you confirm the removal of this brand?',
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.onDelete.emit($event);
       }

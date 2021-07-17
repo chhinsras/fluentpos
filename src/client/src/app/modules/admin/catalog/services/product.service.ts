@@ -1,19 +1,20 @@
-import {HttpParams} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/internal/operators/map';
-import {IResult} from 'src/app/core/models/wrappers/IResult';
-import {PaginatedResult} from 'src/app/core/models/wrappers/PaginatedResult';
-import {ProductApiService} from '../api/product-api.service';
-import {Product} from '../models/product';
-import {ProductParams} from '../models/productParams';
+import { HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/internal/operators/map';
+import { IResult } from 'src/app/core/models/wrappers/IResult';
+import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
+import { ProductApiService } from '../api/product-api.service';
+import { Product } from '../models/product';
+import { ProductParams } from '../models/productParams';
 
 @Injectable()
 export class ProductService {
-  constructor(private api: ProductApiService) {
-  }
+  constructor(private api: ProductApiService) {}
 
-  getProducts(productParams: ProductParams): Observable<PaginatedResult<Product>> {
+  getProducts(
+    productParams: ProductParams
+  ): Observable<PaginatedResult<Product>> {
     let params = new HttpParams();
     if (productParams.searchString) {
       params = params.append('searchString', productParams.searchString);
@@ -27,31 +28,30 @@ export class ProductService {
     if (productParams.orderBy) {
       params = params.append('orderBy', productParams.orderBy.toString());
     }
-    return this.api.getAlls(params)
+    return this.api
+      .getAlls(params)
       .pipe(map((response: PaginatedResult<Product>) => response));
   }
 
   getProductById(id: string): Observable<Product> {
-    return this.api.getById(id).pipe(
-      map((response: Product) => response)
-    );
+    return this.api.getById(id).pipe(map((response: Product) => response));
   }
 
   createProduct(product: Product): Observable<IResult<Product>> {
-    return this.api.create(product).pipe(
-      map((response: IResult<Product>) => response)
-    );
+    return this.api
+      .create(product)
+      .pipe(map((response: IResult<Product>) => response));
   }
 
   updateProduct(product: Product): Observable<IResult<Product>> {
-    return this.api.update(product).pipe(
-      map((response: IResult<Product>) => response)
-    );
+    return this.api
+      .update(product)
+      .pipe(map((response: IResult<Product>) => response));
   }
 
   deleteProduct(id: string): Observable<IResult<string>> {
-    return this.api.delete(id).pipe(
-      map((response: IResult<string>) => response)
-    );
+    return this.api
+      .delete(id)
+      .pipe(map((response: IResult<string>) => response));
   }
 }

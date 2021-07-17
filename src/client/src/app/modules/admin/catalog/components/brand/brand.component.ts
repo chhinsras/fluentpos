@@ -1,29 +1,31 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {PaginatedFilter} from 'src/app/core/models/Filters/PaginatedFilter';
-import {PaginatedResult} from 'src/app/core/models/wrappers/PaginatedResult';
-import {Brand} from '../../models/brand';
-import {BrandParams} from '../../models/brandParams';
-import {BrandService} from '../../services/brand.service';
-import {BrandFormComponent} from './brand-form/brand-form.component';
-import {ToastrService} from 'ngx-toastr';
-import {Sort} from '@angular/material/sort';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
+import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
+import { Brand } from '../../models/brand';
+import { BrandParams } from '../../models/brandParams';
+import { BrandService } from '../../services/brand.service';
+import { BrandFormComponent } from './brand-form/brand-form.component';
+import { ToastrService } from 'ngx-toastr';
+import { Sort } from '@angular/material/sort';
 import { TableColumn } from 'src/app/core/shared/components/table/table-column';
 
 @Component({
   selector: 'app-brand',
   templateUrl: './brand.component.html',
-  styleUrls: ['./brand.component.scss']
+  styleUrls: ['./brand.component.scss'],
 })
 export class BrandComponent implements OnInit {
-
   brands: PaginatedResult<Brand>;
   brandColumns: TableColumn[];
   brandParams = new BrandParams();
   searchString: string;
 
-  constructor(public brandService: BrandService, public dialog: MatDialog, public toastr: ToastrService) {
-  }
+  constructor(
+    public brandService: BrandService,
+    public dialog: MatDialog,
+    public toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getBrands();
@@ -41,7 +43,7 @@ export class BrandComponent implements OnInit {
       { name: 'Id', dataKey: 'id', isSortable: true },
       { name: 'Name', dataKey: 'name', isSortable: true },
       { name: 'Detail', dataKey: 'detail', isSortable: true },
-      { name: 'Action', dataKey: 'action', position: 'right' }
+      { name: 'Action', dataKey: 'action', position: 'right' },
     ];
   }
 
@@ -53,9 +55,9 @@ export class BrandComponent implements OnInit {
 
   openForm(brand?: Brand): void {
     const dialogRef = this.dialog.open(BrandFormComponent, {
-      data: brand
+      data: brand,
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.getBrands();
       }
@@ -70,7 +72,7 @@ export class BrandComponent implements OnInit {
   }
 
   sort($event: Sort): void {
-    this.brandParams.orderBy =  $event.active + ' ' + $event.direction;
+    this.brandParams.orderBy = $event.active + ' ' + $event.direction;
     console.log(this.brandParams.orderBy);
     this.getBrands();
   }

@@ -1,4 +1,4 @@
-import {PaginatedFilter} from 'src/app/core/models/Filters/PaginatedFilter';
+import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
 
 export class CategoryParams implements PaginatedFilter {
   searchString: string;
