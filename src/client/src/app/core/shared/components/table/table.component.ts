@@ -23,9 +23,9 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   @Input() isSortable = false;
   @Input() isFilterable = false;
-  @Input() tableColumns: TableColumn[];
+  @Input() columns: TableColumn[];
 
-  @Input() set tableData(data: any[]) {
+  @Input() set data(data: any[]) {
     this.setTableDataSource(data);
   }
 
@@ -41,7 +41,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    const columnNames = this.tableColumns.map((tableColumn: TableColumn) => tableColumn.name);
+    const columnNames = this.columns.map((tableColumn: TableColumn) => tableColumn.name);
     this.displayedColumns = columnNames;
   }
 
@@ -71,7 +71,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   handleSort(sortParams: Sort) {
-    sortParams.active = this.tableColumns.find(column => column.name === sortParams.active).dataKey;
+    sortParams.active = this.columns.find(column => column.name === sortParams.active).dataKey;
     this.onSort.emit(sortParams);
   }
 

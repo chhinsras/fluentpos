@@ -10,7 +10,7 @@ import {PaginatedFilter} from 'src/app/core/models/Filters/PaginatedFilter';
 export class PaginationComponent implements OnInit {
   @Input() totalCount: number;
   @Input() pageSize: number;
-  @Output() pageChangeEvent = new EventEmitter<PaginatedFilter>();
+  @Output() onPageChanged = new EventEmitter<PaginatedFilter>();
 
   constructor() {
   }
@@ -23,7 +23,7 @@ export class PaginationComponent implements OnInit {
       pageNumber: pageEvent.pageIndex + 1 ?? 1,
       pageSize: pageEvent.pageSize ?? 10
     };
-    this.pageChangeEvent.emit(event);
+    this.onPageChanged.emit(event);
   }
 
 }

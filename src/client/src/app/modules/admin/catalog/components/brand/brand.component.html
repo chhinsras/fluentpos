@@ -2,17 +2,17 @@
   <app-table
     [title]="'Brands'"
     [subtitle]="'Manage, Register, Update or Remove Brands here.'"
-    [tableData]="brands && brands.data"
-    [tableColumns]="brandColumns"
+    [data]="brands && brands.data"
+    [columns]="brandColumns"
     [isFilterable]='true'
-    (onFilter)="doFilter($event)"
+    (onFilter)="filter($event)"
     (onReload)="reload()"
-    (onCreateForm)="openBrandForm()"
-    (onEditForm)="openBrandForm($event)"
-    (onSort)="doSort($event)"
-    (onDelete)="removeBrand($event)"
+    (onCreateForm)="openForm()"
+    (onEditForm)="openForm($event)"
+    (onSort)="sort($event)"
+    (onDelete)="remove($event)"
     >
   </app-table>
   <app-pagination [totalCount]="brands && brands.totalCount" [pageSize]="brands && brands.pageSize"
-        (pageChangeEvent)="handlePageChange($event)"></app-pagination>
+        (onPageChanged)="pageChanged($event)"></app-pagination>
 </div>

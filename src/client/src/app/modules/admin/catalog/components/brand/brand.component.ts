@@ -7,8 +7,7 @@ import {BrandParams} from '../../models/brandParams';
 import {BrandService} from '../../services/brand.service';
 import {BrandFormComponent} from './brand-form/brand-form.component';
 import {ToastrService} from 'ngx-toastr';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatSort, Sort} from '@angular/material/sort';
+import {Sort} from '@angular/material/sort';
 import { TableColumn } from 'src/app/core/shared/components/table/table-column';
 
 @Component({
@@ -46,13 +45,13 @@ export class BrandComponent implements OnInit {
     ];
   }
 
-  handlePageChange(event: PaginatedFilter): void {
+  pageChanged(event: PaginatedFilter): void {
     this.brandParams.pageNumber = event.pageNumber;
     this.brandParams.pageSize = event.pageSize;
     this.getBrands();
   }
 
-  openBrandForm(brand?: Brand): void {
+  openForm(brand?: Brand): void {
     const dialogRef = this.dialog.open(BrandFormComponent, {
       data: brand
     });
@@ -63,27 +62,27 @@ export class BrandComponent implements OnInit {
     });
   }
 
-  removeBrand($event: string): void {
+  remove($event: string): void {
     this.brandService.deleteBrand($event).subscribe(() => {
       this.getBrands();
       this.toastr.info('Brand Removed');
     });
   }
 
-  doSort($event: Sort): void {
+  sort($event: Sort): void {
     this.brandParams.orderBy =  $event.active + ' ' + $event.direction;
     console.log(this.brandParams.orderBy);
     this.getBrands();
   }
 
-  public doFilter($event: string): void {
+  filter($event: string): void {
     this.brandParams.searchString = $event.trim().toLocaleLowerCase();
     this.brandParams.pageNumber = 0;
     this.brandParams.pageSize = 0;
     this.getBrands();
   }
 
-  public reload(): void {
+  reload(): void {
     this.brandParams.searchString = '';
     this.brandParams.pageNumber = 0;
     this.brandParams.pageSize = 0;
