@@ -6,7 +6,7 @@ import {Product} from '../models/product';
 @Injectable()
 export class ProductApiService {
 
-  baseUrl = environment.apiUrl + 'catalog/products';
+  baseUrl = environment.apiUrl + 'catalog/products/';
 
   constructor(private http: HttpClient) {
   }
@@ -16,7 +16,7 @@ export class ProductApiService {
   }
 
   getById(id: string) {
-    return this.http.get<Product>(this.baseUrl + `/${id}`);
+    return this.http.get<Product>(this.baseUrl + id);
   }
 
   create(product: Product) {
@@ -28,6 +28,6 @@ export class ProductApiService {
   }
 
   delete(id: string) {
-    return this.http.delete(this.baseUrl + `/${id}`);
+    return this.http.delete(this.baseUrl + id);
   }
 }

@@ -6,7 +6,7 @@ import {Brand} from '../models/brand';
 @Injectable()
 export class BrandApiService {
 
-  baseUrl = environment.apiUrl + 'catalog/brands';
+  baseUrl = environment.apiUrl + 'catalog/brands/';
 
   constructor(private http: HttpClient) {
   }
@@ -16,7 +16,7 @@ export class BrandApiService {
   }
 
   getById(id: string) {
-    return this.http.get<Brand>(this.baseUrl + `/${id}`);
+    return this.http.get<Brand>(this.baseUrl + id);
   }
 
   create(brand: Brand) {
@@ -28,6 +28,6 @@ export class BrandApiService {
   }
 
   delete(id: string) {
-    return this.http.delete(this.baseUrl + `/${id}`);
+    return this.http.delete(this.baseUrl + id);
   }
 }

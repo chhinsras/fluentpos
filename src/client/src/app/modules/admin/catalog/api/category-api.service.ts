@@ -5,7 +5,7 @@ import {Category} from '../models/category';
 
 @Injectable()
 export class CategoryApiService {
-  baseUrl = environment.apiUrl + 'catalog/categories';
+  baseUrl = environment.apiUrl + 'catalog/categories/';
 
   constructor(private http: HttpClient) {
   }
@@ -15,7 +15,7 @@ export class CategoryApiService {
   }
 
   getById(id: string) {
-    return this.http.get<Category>(this.baseUrl + `/${id}`);
+    return this.http.get<Category>(this.baseUrl + id);
   }
 
   create(category: Category) {
@@ -27,6 +27,6 @@ export class CategoryApiService {
   }
 
   delete(id: string) {
-    return this.http.delete(this.baseUrl + `/${id}`);
+    return this.http.delete(this.baseUrl + id);
   }
 }
