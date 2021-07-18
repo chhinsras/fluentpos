@@ -31,7 +31,7 @@ export class CustomerSelectionComponent implements OnInit {
     this.customerParams.searchString = this.searchString.trim().toLocaleLowerCase();
     this.getCustomers();
   }
-  selectCustomer(customerId) {
-    this.dialogRef.close(customerId);
+  selectCustomer(customer) {
+    this.dialogRef.close(customer);
   }
 }

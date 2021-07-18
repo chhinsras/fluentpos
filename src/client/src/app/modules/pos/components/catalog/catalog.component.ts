@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { map, startWith } from 'rxjs/operators';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
 import { Brand } from '../../models/brand';
 import { BrandParams } from '../../models/brandParams';
@@ -17,6 +19,7 @@ export class CatalogComponent implements OnInit {
   products: PaginatedResult<Product>;
   productParams = new ProductParams();
   searchString: string;
+  brandAutoComplete = new FormControl();
   constructor(private posService: PosService) { }
 
   ngOnInit(): void {
@@ -24,15 +27,27 @@ export class CatalogComponent implements OnInit {
     this.brandParams.pageSize = 5;
     this.getProducts();
     this.getBrands();
+    this.brandAutoComplete.valueChanges.subscribe((value) => this._filterBrand(value));
   }
   getProducts() {
     this.posService.getProducts(this.productParams).subscribe((res) => { this.products = res });
   }
   getBrands() {
-    this.posService.getBrands(this.brandParams).subscribe((res) => { this.brands = res; console.log(res); });
+    this.posService.getBrands(this.brandParams).subscribe((res) => { this.brands = res; });
+  }
+
+  private _filterBrand(value: string) {
+    const filterValue = value.toLowerCase();
+    this.brandParams.searchString = filterValue;
+    this.getBrands();
   }
   public doFilter(): void {
     this.productParams.searchString = this.searchString.trim().toLocaleLowerCase();
     this.getProducts();
+  }
+  getBrandName(brandId: string) {
+    if (this.brands && this.brands.data && this.brands.data.find(book => book.id === brandId)) {
+      return this.brands.data.find(brand => brand.id === brandId).name;
+    }
   }
 }
