@@ -5,27 +5,3 @@
 .mat-row:nth-child(odd){
     background-color: black;
 }
-
-
-.loading-wrapper {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    opacity: 0.8;
-    z-index: 99;
-}
-
-.loading-overlay {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background: black;
-    opacity: 0.8;
-    z-index: 99;
-}
-
-.loading {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}

@@ -32,6 +32,7 @@
         </mat-nav-list>
     </mat-sidenav>
     <app-toolbar [inputSideNav]="sidenav" (darkModelToggled)="onDarkModeToggled($event)"></app-toolbar>
+    <mat-progress-bar *ngIf="busyService.isLoading | async" mode="indeterminate" color="accent"></mat-progress-bar>
     <div class="content">
         <div class="container">
             <router-outlet></router-outlet>

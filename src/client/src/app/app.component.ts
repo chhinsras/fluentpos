@@ -10,7 +10,7 @@ import {MultilingualService} from './core/services/multilingual.service';
 })
 export class AppComponent {
 
-  constructor(private authService: AuthService, private translationService: MultilingualService, public busyService: BusyService) {
+  constructor(private authService: AuthService, private translationService: MultilingualService) {
   }
 
   ngOnInit(): void {

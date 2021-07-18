@@ -2,6 +2,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { BusyService } from 'src/app/core/services/busy.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class AdminLayoutComponent implements OnInit {
   fullName: string;
   email: string;
 
-  constructor(private localStorageService: LocalStorageService, private dialog: MatDialog, private overlay: OverlayContainer, private authService: AuthService) { }
+  constructor(private localStorageService: LocalStorageService, private dialog: MatDialog, private overlay: OverlayContainer, private authService: AuthService, public busyService: BusyService) { }
 
   ngOnInit() {
     this.themeVariant = this.localStorageService.getItem('themeVariant');
