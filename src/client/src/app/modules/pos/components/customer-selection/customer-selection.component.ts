@@ -3,7 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
 import { Customer } from '../../models/customer';
 import { CustomerParams } from '../../models/customerParams';
-import { CustomerService } from '../../services/customer.service';
+import { PosService } from '../../services/pos.service';
 @Component({
   selector: 'app-customer-selection',
   templateUrl: './customer-selection.component.html',
@@ -15,7 +15,7 @@ export class CustomerSelectionComponent implements OnInit {
   customerParams = new CustomerParams();
   searchString: string;
   visible= false;
-  constructor(private customerService: CustomerService, public dialogRef: MatDialogRef<CustomerSelectionComponent>) { }
+  constructor(private posService: PosService, public dialogRef: MatDialogRef<CustomerSelectionComponent>) { }
 
   ngOnInit(): void {
     this.formTitle = 'Customer Selection';
@@ -23,7 +23,7 @@ export class CustomerSelectionComponent implements OnInit {
     this.getCustomers();
   }
   getCustomers(): void {
-    this.customerService.getCustomers(this.customerParams).subscribe((result) => {
+    this.posService.getCustomers(this.customerParams).subscribe((result) => {
       this.customers = result;
     });
   }

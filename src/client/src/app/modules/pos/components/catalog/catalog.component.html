@@ -1,5 +1,54 @@
 <div class="c-card">
-    <div>
-        <p>List of products will appear here.</p>
+
+    <div class="row">
+        <div class="col-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Filter Products</mat-label>
+                <input matInput autocomplete="off" placeholder="Search For Products" [(ngModel)]="searchString"
+                    name="searchString" type="text" autocomplete="off" (keyup)="doFilter()" />
+            </mat-form-field>
+        </div>
+        <div class="col-4">
+                <mat-form-field appearance="fill">
+                    <mat-label>Filter Brands</mat-label>
+                    <input *ngIf="brands && brands.data" type="text" placeholder="Brand Selection" aria-label="Filter Brands" matInput
+                        [matAutocomplete]="auto">
+                    <mat-autocomplete  autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option  *ngFor="let brand of brands.data" [value]="brand.name">
+                            {{brand.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+        </div>
+        <div class="col-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Filter Categories</mat-label>
+                <input *ngIf="brands && brands.data" type="text" placeholder="Category Selection" aria-label="Filter Categories" matInput
+                    [matAutocomplete]="auto">
+                <mat-autocomplete  autoActiveFirstOption #auto="matAutocomplete">
+                    <mat-option  *ngFor="let brand of brands.data" [value]="brand.name">
+                        {{brand.name}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+    </div>
+    <div style="min-height:55vh;max-height:55vh;">
+        <div *ngIf="products && products.data">
+            <div *ngFor="let product of products.data" class="row"
+                style="margin:5px;padding:15px;background: rgba(0,0,0,.01);border-radius: 5px;">
+                <div class="col-6">
+                    <h2 style="margin: 0px!important;">{{product.name}}</h2>
+                    {{product.localeName}}
+                    <br>
+                    {{product.price}}
+                </div>
+                <div style="align-self: center;text-align: right;" class="col-6">
+                    <button mat-raised-button color="accent" (click)="selectCustomer(customer.id)">
+                        <span><span style="margin-right: 10px;" class="fas fa-plus"></span>Add</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Customer } from '../../../admin/people/models/customer';
-import { CustomerService } from '../../services/customer.service';
+import { PosService } from '../../services/pos.service';
 import { CustomerSelectionComponent } from '../customer-selection/customer-selection.component';
 
 @Component({
@@ -11,9 +11,10 @@ import { CustomerSelectionComponent } from '../customer-selection/customer-selec
 })
 export class CustomerComponent implements OnInit {
   customer: Customer;
-  constructor(public dialog: MatDialog, private customerService: CustomerService) { }
+  constructor(public dialog: MatDialog, private posService: PosService) { }
 
   ngOnInit(): void {
+    this.loadDefaultCustomer();
   }
   openForm(): void {
     const dialogRef = this.dialog.open(CustomerSelectionComponent);
@@ -28,16 +29,16 @@ export class CustomerComponent implements OnInit {
     this.customer = null;
   }
   loadCustomer(customerId) {
-    this.customerService.getCustomerById(customerId).subscribe((res) => {
+    this.posService.getCustomerById(customerId).subscribe((res) => {
       this.customer = res.data;
     }
     )
   }
-  selectCustomer() {
+  loadDefaultCustomer() {
     this.customer = {
-      id: "13243513",
-      name: "Mukesh Murugan",
-      email: "iammukeshm@gmail.com",
+      id: "0",
+      name: "Walk-In Customer",
+      email: "walkincustomer@fluentpos.com",
       type: "Random",
       phone: "789456123",
       imageUrl: ""
