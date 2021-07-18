@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Customer } from '../../admin/people/models/customer';
+import { Customer } from '../../../admin/people/models/customer';
+import { CustomerService } from '../../services/customer.service';
 import { CustomerSelectionComponent } from '../customer-selection/customer-selection.component';
 
 @Component({
@@ -10,20 +11,24 @@ import { CustomerSelectionComponent } from '../customer-selection/customer-selec
 })
 export class CustomerComponent implements OnInit {
   customer: Customer;
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private customerService: CustomerService) { }
 
   ngOnInit(): void {
-    console.log(this.customer);
   }
   openForm(): void {
     const dialogRef = this.dialog.open(CustomerSelectionComponent);
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((customerId) => {
+      this.loadCustomer(customerId);
     });
-    this.selectCustomer();
   }
   removeCustomer() {
     this.customer = null;
-    console.log(this.customer);
+  }
+  loadCustomer(customerId) {
+    this.customerService.getCustomerById(customerId).subscribe((res) => {
+      this.customer = res.data;
+    }
+    )
   }
   selectCustomer() {
     this.customer = {
@@ -34,6 +39,5 @@ export class CustomerComponent implements OnInit {
       phone: "789456123",
       imageUrl: ""
     }
-    console.log(this.customer);
   }
 }

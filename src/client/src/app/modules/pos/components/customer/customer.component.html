@@ -8,12 +8,12 @@
     <div *ngIf="customer" class="row">
 
         <div class="col-6">
-            #41
+            #{{customer.id}}
             <br>
-            <h1 style="margin: 0px!important;">Mukesh Murugan</h1>
-            789456123
+            <h1 style="margin: 0px!important;">{{customer.name}}</h1>
+            {{customer.phone}}
             <br>
-            iammukeshm@gmail.com
+            {{customer.email}}
         </div>
         <div style="align-self: center;text-align: right;" class="col-6">
             <button mat-raised-button>

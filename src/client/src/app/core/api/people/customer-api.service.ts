@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Customer } from 'src/app/modules/admin/people/models/customer';
 import { environment } from 'src/environments/environment';
+import { Result } from '../../models/wrappers/Result';
 
 @Injectable()
 export class CustomerApiService {
@@ -16,7 +17,7 @@ export class CustomerApiService {
   }
 
   getById(id: string) {
-    return this.http.get<Customer>(this.baseUrl + `/${id}`);
+    return this.http.get<Result<Customer>>(this.baseUrl + `/${id}`);
   }
 
   create(customer: Customer) {

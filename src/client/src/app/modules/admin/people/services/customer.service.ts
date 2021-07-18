@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { CustomerApiService } from 'src/app/core/api/people/customer-api.service';
 import { IResult } from 'src/app/core/models/wrappers/IResult';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
+import { Result } from 'src/app/core/models/wrappers/Result';
 import { Customer } from '../models/customer';
 import { CustomerParams } from '../models/customerParams';
 
@@ -24,9 +25,9 @@ export class CustomerService {
       .pipe(map((response: PaginatedResult<Customer>) => response));
   }
 
-  getCustomerById(id: string): Observable<Customer> {
+  getCustomerById(id: string): Observable<Result<Customer>> {
     return this.api.getById(id).pipe(
-      map((response: Customer) => response)
+      map((response: Result<Customer>) => response)
     );
   }
 
