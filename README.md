@@ -66,7 +66,10 @@ Clone this repository to your local machine.
 - Run `ng serve`
 - Navigate to localhost:4200 on your browser
 
-https://user-images.githubusercontent.com/31455818/125523164-91ddb337-75cd-4911-bc46-2f12f04f9476.mp4
+
+https://user-images.githubusercontent.com/31455818/126076884-47989b52-368e-4714-b90b-093779a7607f.mp4
+
+
 
 #### Default Credentials
 
