@@ -14,6 +14,7 @@ export class CustomerSelectionComponent implements OnInit {
   customers: PaginatedResult<Customer>;
   customerParams = new CustomerParams();
   searchString: string;
+  visible= false;
   constructor(private customerService: CustomerService, public dialogRef: MatDialogRef<CustomerSelectionComponent>) { }
 
   ngOnInit(): void {
