@@ -2,9 +2,9 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
+import { ProductApiService } from 'src/app/core/api/catalog/product-api.service';
 import { IResult } from 'src/app/core/models/wrappers/IResult';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
-import { ProductApiService } from '../api/product-api.service';
 import { Product } from '../models/product';
 import { ProductParams } from '../models/productParams';
 

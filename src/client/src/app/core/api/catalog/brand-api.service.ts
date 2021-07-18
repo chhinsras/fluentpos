@@ -1,7 +1,7 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import { Brand } from 'src/app/modules/admin/catalog/models/brand';
 import {environment} from 'src/environments/environment';
-import {Brand} from '../models/brand';
 
 @Injectable()
 export class BrandApiService {

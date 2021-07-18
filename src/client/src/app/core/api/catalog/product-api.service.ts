@@ -1,7 +1,7 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import { Product } from 'src/app/modules/admin/catalog/models/product';
 import {environment} from 'src/environments/environment';
-import {Product} from '../models/product';
 
 @Injectable()
 export class ProductApiService {

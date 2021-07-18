@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { CategoryApiService } from '../api/category-api.service';
 import { CategoryParams } from '../models/categoryParams';
 import { Observable } from 'rxjs';
 import { PaginatedResult } from '../../../../core/models/wrappers/PaginatedResult';
@@ -7,6 +6,7 @@ import { Category } from '../models/category';
 import { HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/internal/operators/map';
 import { IResult } from '../../../../core/models/wrappers/IResult';
+import { CategoryApiService } from 'src/app/core/api/catalog/category-api.service';
 
 @Injectable()
 export class CategoryService {

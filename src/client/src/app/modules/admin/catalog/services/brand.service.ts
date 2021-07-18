@@ -2,9 +2,9 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
+import { BrandApiService } from 'src/app/core/api/catalog/brand-api.service';
 import { IResult } from 'src/app/core/models/wrappers/IResult';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
-import { BrandApiService } from '../api/brand-api.service';
 import { Brand } from '../models/brand';
 import { BrandParams } from '../models/brandParams';
 

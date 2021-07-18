@@ -9,6 +9,9 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { MaterialModule } from '../material/material.module';
 import { TableComponent } from './components/table/table.component';
 import { DataPropertyGetterPipe } from '../pipes/data-property-getter.pipe';
+import { BrandApiService } from '../api/catalog/brand-api.service';
+import { CategoryApiService } from '../api/catalog/category-api.service';
+import { ProductApiService } from '../api/catalog/product-api.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { DataPropertyGetterPipe } from '../pipes/data-property-getter.pipe';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
+  ],
+  providers: [
+    BrandApiService, CategoryApiService, ProductApiService,
   ],
   exports: [
     ReactiveFormsModule,
