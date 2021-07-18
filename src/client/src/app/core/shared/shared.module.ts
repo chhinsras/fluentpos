@@ -12,6 +12,7 @@ import { DataPropertyGetterPipe } from '../pipes/data-property-getter.pipe';
 import { BrandApiService } from '../api/catalog/brand-api.service';
 import { CategoryApiService } from '../api/catalog/category-api.service';
 import { ProductApiService } from '../api/catalog/product-api.service';
+import { CustomerApiService } from '../api/people/customer-api.service';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ProductApiService } from '../api/catalog/product-api.service';
   ],
   providers: [
     BrandApiService, CategoryApiService, ProductApiService,
+    CustomerApiService,
   ],
   exports: [
     ReactiveFormsModule,

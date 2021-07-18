@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Customer } from 'src/app/modules/admin/people/models/customer';
 import { environment } from 'src/environments/environment';
-import { Customer } from '../models/customer';
 
 @Injectable()
 export class CustomerApiService {
