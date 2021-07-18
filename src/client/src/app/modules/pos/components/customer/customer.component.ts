@@ -18,7 +18,10 @@ export class CustomerComponent implements OnInit {
   openForm(): void {
     const dialogRef = this.dialog.open(CustomerSelectionComponent);
     dialogRef.afterClosed().subscribe((customerId) => {
-      this.loadCustomer(customerId);
+      if(customerId)
+      {
+        this.loadCustomer(customerId);
+      }      
     });
   }
   removeCustomer() {
