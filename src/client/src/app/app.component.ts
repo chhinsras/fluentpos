@@ -10,7 +10,7 @@ import {MultilingualService} from './core/services/multilingual.service';
 })
 export class AppComponent {
 
-  constructor(private authService: AuthService, private translationService: MultilingualService, private busyService: BusyService) {
+  constructor(private authService: AuthService, private translationService: MultilingualService, public busyService: BusyService) {
   }
 
   ngOnInit(): void {
@@ -30,7 +30,4 @@ export class AppComponent {
       });
   }
 
-  isHttpRequestBusy() {
-    return this.busyService.isLoading;
-  }
 }

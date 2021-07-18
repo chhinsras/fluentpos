@@ -5,5 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 export class BusyService {
   
   public isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public isOverlay: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  
   constructor() { }
 }
