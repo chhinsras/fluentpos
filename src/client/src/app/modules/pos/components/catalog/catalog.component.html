@@ -41,7 +41,7 @@
     <div style="min-height:58vh;max-height:58vh;overflow:auto;">
         <div *ngIf="products && products.data">
             <div *ngFor="let product of products.data" class="row"
-                style="margin:2px;padding:15px;background: rgba(0,0,0,.03);border-radius: 5px;">
+                style="margin:2px;padding:15px;background: rgba(0,0,0,.05);border-radius: 5px;">
                 <div class="col-6">
                     <h2 style="margin: 0px!important;">{{product.name}}</h2>
                     {{product.localeName}}
