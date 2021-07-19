@@ -1,13 +1,13 @@
 <div class="c-card" style="margin-bottom: 0;">
     <div class="row">
-        <div class="col-4">
+        <div class="col-md-4 col-xl-4">
             <mat-form-field appearance="fill">
                 <mat-label>Filter Products</mat-label>
                 <input matInput autocomplete="off" placeholder="Search For Products" [(ngModel)]="searchString"
                     name="searchString" type="text" autocomplete="off" (keyup)="doFilter()" />
             </mat-form-field>
         </div>
-        <div class="col-4">
+        <div class="col-md-4 col-xl-4">
             <form>
                 <mat-form-field appearance="fill" *ngIf="brands && brands.data">
                     <mat-label>Filter Brands</mat-label>
@@ -21,7 +21,7 @@
                 </mat-form-field>
             </form>
         </div>
-        <div class="col-4">
+        <div class="col-md-4 col-xl-4">
             <form>
                 <mat-form-field *ngIf="brands && brands.data" appearance="fill">
                     <mat-label>Filter Categories</mat-label>
