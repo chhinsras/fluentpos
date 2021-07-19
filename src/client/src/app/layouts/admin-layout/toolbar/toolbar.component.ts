@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { ThemeService } from 'src/app/core/services/theme.service';
 import { LogoutDialogComponent } from 'src/app/core/shared/components/logout-dialog/logout-dialog.component';
 
 @Component({
@@ -19,7 +20,7 @@ export class ToolbarComponent implements OnInit {
   fullName: string;
   email: string;
 
-  constructor(private localStorageService: LocalStorageService, public authService: AuthService, public dialog: MatDialog) { }
+  constructor(private localStorageService: LocalStorageService, public authService: AuthService, public dialog: MatDialog,private themeService:ThemeService) { }
 
   ngOnInit() {
     let themeVariant = this.localStorageService.getItem('themeVariant');
@@ -30,9 +31,8 @@ export class ToolbarComponent implements OnInit {
   }
 
   toggleDarkMode() {
-    this.isDarkMode = !this.isDarkMode;
+    this.isDarkMode = this.themeService.toggleDarkMode();
     this.darkModeIcon = this.isDarkMode ? 'bedtime' : 'wb_sunny'
-    this.darkModelToggled.emit({ isDarkMode: this.isDarkMode, darkModeIcon: this.darkModeIcon });
   }
 
   openLogoutDialog() {

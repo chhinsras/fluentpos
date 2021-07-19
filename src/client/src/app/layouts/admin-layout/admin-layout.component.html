@@ -1,4 +1,4 @@
-<mat-sidenav-container class='sidenav-container mat-app-background {{themeVariant}}'>
+<mat-sidenav-container class='sidenav-container'>
     <mat-sidenav #sidenav class="sidenav" disableClose="false" mode="push">
         <mat-nav-list style="padding-top: 0;">
             <mat-card>
@@ -31,7 +31,7 @@
             </div>
         </mat-nav-list>
     </mat-sidenav>
-    <app-toolbar [inputSideNav]="sidenav" (darkModelToggled)="onDarkModeToggled($event)"></app-toolbar>
+    <app-toolbar [inputSideNav]="sidenav"></app-toolbar>
     <div style="height: 2px;">
         <mat-progress-bar *ngIf="busyService.isLoading | async" mode="indeterminate" color="accent"></mat-progress-bar>
     </div>

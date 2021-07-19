@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ThemeService } from 'src/app/core/services/theme.service';
 
 @Component({
   selector: 'app-pos',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PosComponent implements OnInit {
 
-  constructor() { }
+  constructor(private themeService: ThemeService) { }
 
   ngOnInit(): void {
   }
-
+  toggleDarkMode() {
+    this.themeService.toggleDarkMode();
+  }
 }

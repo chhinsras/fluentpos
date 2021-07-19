@@ -13,29 +13,14 @@ import { LocalStorageService } from 'src/app/core/services/local-storage.service
 export class AdminLayoutComponent implements OnInit {
 
   title = 'fluentpos';
-  themeVariant: string = '';
-  darkModeIcon: string = '';
   fullName: string;
   email: string;
 
-  constructor(private localStorageService: LocalStorageService, private dialog: MatDialog, private overlay: OverlayContainer, private authService: AuthService, public busyService: BusyService) { }
+  constructor(private authService: AuthService, public busyService: BusyService) { }
 
   ngOnInit() {
-    this.themeVariant = this.localStorageService.getItem('themeVariant');
     this.getUserDetails();
   }
-
-  onDarkModeToggled(data: { isDarkMode: boolean, darkModeIcon: string }) {
-    this.themeVariant = data.isDarkMode ? 'dark-theme' : 'light-theme';
-    if (data.isDarkMode) {
-      this.overlay.getContainerElement().classList.add('dark-theme');
-    } else {
-      this.overlay.getContainerElement().classList.remove('dark-theme');
-    }
-    this.localStorageService.setItem('themeVariant', this.themeVariant);
-    this.darkModeIcon = data.darkModeIcon;
-  }
-
   getUserDetails() {
     this.fullName = this.authService.getFullName;
     this.email = this.authService.getEmail;

@@ -1,7 +1,9 @@
-import {Component} from '@angular/core';
-import {AuthService} from './core/services/auth.service';
-import { BusyService } from './core/services/busy.service';
-import {MultilingualService} from './core/services/multilingual.service';
+import { Component } from '@angular/core';
+import { AuthService } from './core/services/auth.service';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { LocalStorageService } from './core/services/local-storage.service';
+import { MultilingualService } from './core/services/multilingual.service';
+import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +11,9 @@ import {MultilingualService} from './core/services/multilingual.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  constructor(private authService: AuthService, private translationService: MultilingualService) {
+  themeVariant: string = '';
+  darkModeIcon: string = '';
+  constructor(private authService: AuthService, private translationService: MultilingualService, private themeService: ThemeService, private overlay: OverlayContainer) {
   }
 
   ngOnInit(): void {
@@ -20,6 +23,7 @@ export class AppComponent {
 
   loadDefaults() {
     this.translationService.loadDefaultLanguage();
+    this.themeService.setThemeFromLocalStorage();
   }
 
   loadCurrentUser() {
@@ -29,5 +33,4 @@ export class AppComponent {
         console.log(error);
       });
   }
-
 }
