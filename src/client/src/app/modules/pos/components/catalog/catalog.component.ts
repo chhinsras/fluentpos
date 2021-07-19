@@ -23,7 +23,7 @@ export class CatalogComponent implements OnInit {
   constructor(private posService: PosService) { }
 
   ngOnInit(): void {
-    this.productParams.pageSize = 5;
+    this.productParams.pageSize = 10;
     this.brandParams.pageSize = 5;
     this.getProducts();
     this.getBrands();

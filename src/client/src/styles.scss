@@ -15,6 +15,18 @@ $material-design-icons-font-directory-path: '~material-design-icons-iconfont/dis
   background-color: red;
   color:white ;
 }
+.dark-theme .mat-danger {
+  background-color: red;
+  color:white ;
+}
+.mat-info {
+  background-color: #00b0ff;
+  color:white ;
+}
+.dark-theme .mat-info {
+  background-color: #00b0ff;
+  color:white ;
+}
 body { margin: 0;}
 .flex-stretch
 {
@@ -29,9 +41,16 @@ body { margin: 0;}
     background: white;
     box-shadow: inset 0 0 0px gainsboro;
 }
+
 ::-webkit-scrollbar-thumb {
     background: gainsboro;
     border-radius: 10px;
+}
+.dark-theme ::-webkit-scrollbar {
+  background: #424242;
+}
+.dark-theme ::-webkit-scrollbar-thumb {
+  background: rgb(43, 43, 43);
 }
 .dark-theme .mat-drawer.mat-drawer-push
 {
@@ -147,10 +166,13 @@ table {
   margin-bottom: 30px;
   padding: 40px;
   border-radius: 4px;
-  background-color: #fff;
   box-shadow: 0 10px 60px 0 rgba(29, 29, 31, .09)
 }
-
+.dark-theme .c-card {
+  background: #424242;
+  color: white;
+  box-shadow: 0 10px 60px 0 rgba(29, 29, 31, 0)
+}
 .c-card.is-animated {
   transition: -webkit-transform .3s;
   transition: transform .3s;

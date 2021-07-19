@@ -1,24 +1,22 @@
-<div class="home-center-screen">    
+<div class="home-center-screen">
     <div class="row">
-        <div class="col-md-12 col-xl-12" >
+        <div class="col-md-12 col-xl-12">
             <div class="c-card background-color-primary" style="color: white;">
                 <div>
                     <h1>Hi, {{fullName}}</h1>
                     <p style="opacity: 75%;">Welcome to fluentPOS. Choose a Module to continue.</p>
-                    <button mat-raised-button color="primary" > {{date   | date: "dd MMMM , yyyy"}}
-                        {{date   | date: "hh:mm:ss a"}}</button>
-                    <button mat-raised-button color="danger" (click)="onClickLogout()" >Logout</button>
+                    <button mat-raised-button color="accent" (click)="onClickLogout()">Logout</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">        
+    <div class="row">
         <div class="col-md-6 col-xl-6 u-mr-auto">
             <div class="c-card is-animated background-color-primary" style="color: white;">
                 <div>
                     <h1>POS</h1>
                     <p style="opacity: 50%;">Start selling items from your store/warehouse inventory.</p>
-                    <button mat-raised-button color="secondary" routerLink="/pos">POS</button>
+                    <button mat-raised-button color="accent" routerLink="/pos">POS</button>
                 </div>
             </div>
         </div>
@@ -30,7 +28,7 @@
                     <button mat-raised-button color="primary" routerLink="/admin">Dashboard</button>
                 </div>
             </div>
-        </div>        
+        </div>
     </div>
     <div class="row " style="place-content: center;">
         <div class="col-md-6 col-xl-6 u-ml-auto">
@@ -52,5 +50,5 @@
             </div>
         </div>
     </div>
-    
+
 </div>
