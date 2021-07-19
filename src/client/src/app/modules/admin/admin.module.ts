@@ -10,6 +10,7 @@ import { DeleteDialogComponent } from './shared/components/delete-dialog/delete-
 import { LogoutDialogComponent } from '../../core/shared/components/logout-dialog/logout-dialog.component';
 import { SettingsComponent } from './settings/settings.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { AboutComponent } from './about/about.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { TranslateModule } from '@ngx-translate/core';
     DashboardComponent,
     DeleteDialogComponent,
     LogoutDialogComponent,
-    SettingsComponent
+    SettingsComponent,
+    AboutComponent
   ],
   imports: [
     CommonModule,

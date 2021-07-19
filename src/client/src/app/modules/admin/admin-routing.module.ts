@@ -1,10 +1,11 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {DashboardComponent} from './dashboard/dashboard.component';
-import {SettingsComponent} from './settings/settings.component';
-import {AuthGuard} from '../../core/guards/auth.guard';
-import {CatalogComponent} from './catalog/catalog.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SettingsComponent } from './settings/settings.component';
+import { AuthGuard } from '../../core/guards/auth.guard';
+import { CatalogComponent } from './catalog/catalog.component';
 import { PeopleComponent } from './people/people.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent
+  },
+  {
+    path: 'about',
+    component: AboutComponent
   },
   {
     path: 'catalog',

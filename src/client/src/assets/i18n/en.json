@@ -6,6 +6,10 @@
         "title": "Dashboard",
         "subtitle": "Quick Overview of your Business."
     },
+    "about": {
+        "title": "About",
+        "subtitle": "Everything about fluentpos."
+    },
     "settings": {
         "title": "Settings",
         "subtitle": "Manage Application Settings.",
@@ -33,6 +37,9 @@
         "cancel": "Cancel",
         "ok": "Ok",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "blog": "Blog",
+        "linkedin": "LinkedIn",
+        "github": "Github"
     }
 }
