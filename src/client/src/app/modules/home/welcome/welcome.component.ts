@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { LogoutDialogComponent } from 'src/app/core/shared/components/logout-dialog/logout-dialog.component';
 import { AuthService } from "../../../core/services/auth.service";
 
 @Component({
@@ -11,7 +13,7 @@ export class WelcomeComponent implements OnInit {
   fullName: string = '';
   email: string;
   date:Date=new Date();
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getUserDetails();
@@ -25,6 +27,9 @@ export class WelcomeComponent implements OnInit {
     this.email = this.authService.getEmail;
   }
   onClickLogout() {
-    this.authService.logout();
+    const dialogRef = this.dialog.open(LogoutDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.authService.logout();
+    });
   }
 }

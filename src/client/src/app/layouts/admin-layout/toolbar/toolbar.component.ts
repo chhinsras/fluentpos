@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
-import { LogoutDialogComponent } from 'src/app/modules/admin/shared/components/logout-dialog/logout-dialog.component';
+import { LogoutDialogComponent } from 'src/app/core/shared/components/logout-dialog/logout-dialog.component';
 
 @Component({
   selector: 'app-toolbar',
