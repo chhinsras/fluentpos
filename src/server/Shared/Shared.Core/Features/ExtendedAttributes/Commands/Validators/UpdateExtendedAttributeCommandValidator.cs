@@ -11,7 +11,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators
     public abstract class UpdateExtendedAttributeCommandValidator<TEntityId, TEntity> : AbstractValidator<UpdateExtendedAttributeCommand<TEntityId, TEntity>>
         where TEntity : class, IEntity<TEntityId>
     {
-        public UpdateExtendedAttributeCommandValidator(IStringLocalizer localizer, IJsonSerializer jsonSerializer)
+        protected UpdateExtendedAttributeCommandValidator(IStringLocalizer localizer, IJsonSerializer jsonSerializer)
         {
             RuleFor(request => request.Id)
                 .NotEqual(Guid.Empty).WithMessage(x => localizer["The {PropertyName} property cannot be empty."]);
