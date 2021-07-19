@@ -1,17 +1,30 @@
 <div class="pos-center-screen">
     <div class="row">
         <div class="col-md-6 col-xl-6 u-mr-auto">
-            <app-customer></app-customer>
-            <app-catalog></app-catalog>
-        </div>
-        <div class="col-md-6 col-xl-6 u-ml-auto">
-            <div class="c-card">
+            <div class="c-card background-color-primary" style="color: white;">
                 <div>
+                    <h1>Point Of Sales</h1>
                     <button mat-raised-button routerLink="/home">
-                        <span><span style="margin-right: 10px;" class="fas fa-home"></span>Go Home</span>
+                        <span><span style="margin-right: 10px;" class="fas fa-home"></span>Home</span>
+                    </button>
+                    <button mat-raised-button>
+                        <span><span style="margin-right: 10px;" class="fas fa-home"></span>Toggle View</span>
+                    </button>
+                    <button mat-raised-button>
+                        <span><span style="margin-right: 10px;" class="fas fa-home"></span>Toggle Dark Mode</span>
+                    </button>
+                    <button mat-raised-button>
+                        <span><span style="margin-right: 10px;" class="fas fa-home"></span>Logged In as</span>
+                    </button>
+                    <button mat-raised-button>
+                        <span><span style="margin-right: 10px;" class="fas fa-home"></span>Hold</span>
                     </button>
                 </div>
             </div>
+            <app-catalog></app-catalog>
+        </div>
+        <div class="col-md-6 col-xl-6 u-ml-auto">
+            <app-customer></app-customer>
             <div class="c-card">
                 <div>
                     <h1>Bill</h1>
