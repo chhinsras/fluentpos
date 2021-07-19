@@ -16,9 +16,9 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
         public string CacheKey => CacheKeys.GetExtendedAttributeByIdCacheKey(typeof(TEntity).Name, Id);
         public TimeSpan? SlidingExpiration { get; }
 
-        public GetExtendedAttributeByIdQuery(Guid brandId, bool bypassCache = false, TimeSpan? slidingExpiration = null)
+        public GetExtendedAttributeByIdQuery(Guid entityExtendedAttributeId, bool bypassCache = false, TimeSpan? slidingExpiration = null)
         {
-            Id = brandId;
+            Id = entityExtendedAttributeId;
             BypassCache = bypassCache;
             SlidingExpiration = slidingExpiration;
         }

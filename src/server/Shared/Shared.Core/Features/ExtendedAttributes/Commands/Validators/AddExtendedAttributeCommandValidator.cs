@@ -7,10 +7,10 @@ using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators
 {
-    public class AddExtendedAttributeCommandValidator<TEntityId, TEntity> : AbstractValidator<AddExtendedAttributeCommand<TEntityId, TEntity>>
+    public abstract class AddExtendedAttributeCommandValidator<TEntityId, TEntity> : AbstractValidator<AddExtendedAttributeCommand<TEntityId, TEntity>>
         where TEntity : class, IEntity<TEntityId>
     {
-        public AddExtendedAttributeCommandValidator(IStringLocalizer localizer, IJsonSerializer jsonSerializer)
+        protected AddExtendedAttributeCommandValidator(IStringLocalizer localizer, IJsonSerializer jsonSerializer)
         {
             RuleFor(request => request.EntityId)
                 .NotEqual(default(TEntityId)).WithMessage(x => localizer["The {PropertyName} property cannot be default."]);
