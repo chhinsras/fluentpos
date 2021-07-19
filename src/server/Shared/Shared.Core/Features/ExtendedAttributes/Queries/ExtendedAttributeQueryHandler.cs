@@ -56,7 +56,6 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
                         || b.Type == ExtendedAttributeType.Text && b.Text != null && b.Text.Contains(request.SearchString)
                         || b.Type == ExtendedAttributeType.DateTime && b.DateTime != null && b.DateTime.ToString().Contains(request.SearchString)
                         || b.Type == ExtendedAttributeType.Json && b.Json != null && b.Json.Contains(request.SearchString)
-                        || b.Type == ExtendedAttributeType.Boolean && b.Boolean != null && b.Boolean.ToString().Contains(request.SearchString)
                         || b.Type == ExtendedAttributeType.Integer && b.Integer != null && b.Integer.ToString().Contains(request.SearchString)
                         || b.ExternalId != null && b.ExternalId.Contains(request.SearchString)
                         || b.Group != null && b.Group.Contains(request.SearchString)
