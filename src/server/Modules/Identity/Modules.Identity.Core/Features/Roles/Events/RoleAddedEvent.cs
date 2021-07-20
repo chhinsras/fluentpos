@@ -1,17 +1,17 @@
 ﻿using System;
+using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Shared.Core.Domain;
-using FluentPOS.Shared.DTOs.Identity.Roles;
 
 namespace FluentPOS.Modules.Identity.Core.Features.Roles.Events
 {
     public class RoleAddedEvent : Event
     {
-        public RoleAddedEvent(RoleRequest request)
+        public RoleAddedEvent(FluentRole role)
         {
-            Name = request.Name;
-            Description = request.Description;
-            Id = request.Id;
-            if (Guid.TryParse(request.Id, out var aggregateId))
+            Name = role.Name;
+            Description = role.Description;
+            Id = role.Id;
+            if (Guid.TryParse(role.Id, out var aggregateId))
             {
                 AggregateId = aggregateId;
             }
