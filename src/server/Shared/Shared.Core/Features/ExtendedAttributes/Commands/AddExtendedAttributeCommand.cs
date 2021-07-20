@@ -1,4 +1,5 @@
 ﻿#nullable enable
+#pragma warning disable 8618
 
 using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Wrapper;
