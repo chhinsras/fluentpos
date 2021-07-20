@@ -40,6 +40,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                 .AddTransient<IRoleService, RoleService>()
                 .AddTransient<IRoleClaimService, RoleClaimService>()
                 .AddDatabaseContext<IdentityDbContext>()
+                .AddScoped<IIdentityDbContext>(provider => provider.GetService<IdentityDbContext>())
                 .AddIdentity<FluentUser, FluentRole>(options =>
                 {
                     options.Password.RequiredLength = 6;
@@ -51,7 +52,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                 })
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
-            services.AddExtendedAttributeDbContextsFromAssembly(typeof(IdentityDbContext), Assembly.GetAssembly(typeof(IIdentityService)));
+            services.AddExtendedAttributeDbContextsFromAssembly(typeof(IdentityDbContext), Assembly.GetAssembly(typeof(IIdentityDbContext)));
             services.AddTransient<IDatabaseSeeder, IdentityDbSeeder>();
             services.AddPermissions(configuration);
             services.AddJwtAuthentication(configuration);

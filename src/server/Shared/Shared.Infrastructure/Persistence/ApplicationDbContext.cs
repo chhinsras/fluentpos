@@ -13,7 +13,10 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
 
         protected string Schema => "Application";
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IOptions<PersistenceSettings> persistenceOptions) : base(options)
+        public ApplicationDbContext(
+            DbContextOptions<ApplicationDbContext> options,
+            IOptions<PersistenceSettings> persistenceOptions)
+                : base(options)
         {
             _persistenceOptions = persistenceOptions.Value;
         }

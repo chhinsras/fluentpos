@@ -24,7 +24,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         private readonly ICurrentUser _currentUserService;
         private readonly IStringLocalizer<RoleClaimService> _localizer;
         private readonly IMapper _mapper;
-        private readonly IdentityDbContext _db;
+        private readonly IIdentityDbContext _db;
 
         public RoleClaimService(
             RoleManager<FluentRole> roleManager,
@@ -32,7 +32,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             ICurrentUser currentUserService,
             IStringLocalizer<RoleClaimService> localizer,
             IMapper mapper,
-            IdentityDbContext db)
+            IIdentityDbContext db)
         {
             _roleManager = roleManager;
             _userManager = userManager;

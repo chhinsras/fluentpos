@@ -1,4 +1,5 @@
-﻿using FluentPOS.Modules.Identity.Core.Entities;
+﻿using FluentPOS.Modules.Identity.Core.Abstractions;
+using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Infrastructure.Extensions;
 using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.Interfaces;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Options;
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 {
     public sealed class IdentityDbContext : IdentityDbContext<FluentUser, FluentRole, string, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, FluentRoleClaim, IdentityUserToken<string>>,
+        IIdentityDbContext,
         IExtendedAttributeDbContext<string, FluentUser, UserExtendedAttribute>,
         IExtendedAttributeDbContext<string, FluentRole, RoleExtendedAttribute>
     {
@@ -18,7 +20,10 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 
         internal string Schema => "Identity";
 
-        public IdentityDbContext(DbContextOptions<IdentityDbContext> options, IOptions<PersistenceSettings> persistenceOptions) : base(options)
+        public IdentityDbContext(
+            DbContextOptions<IdentityDbContext> options,
+            IOptions<PersistenceSettings> persistenceOptions)
+                : base(options)
         {
             _persistenceOptions = persistenceOptions.Value;
         }
