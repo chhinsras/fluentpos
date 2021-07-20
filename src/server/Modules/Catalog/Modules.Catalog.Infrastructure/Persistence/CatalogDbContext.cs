@@ -12,7 +12,7 @@ using System;
 
 namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
 {
-    public class CatalogDbContext : ModuleDbContext, ICatalogDbContext,
+    public sealed class CatalogDbContext : ModuleDbContext, ICatalogDbContext,
         IExtendedAttributeDbContext<Guid, Brand, BrandExtendedAttribute>,
         IExtendedAttributeDbContext<Guid, Category, CategoryExtendedAttribute>,
         IExtendedAttributeDbContext<Guid, Product, ProductExtendedAttribute>

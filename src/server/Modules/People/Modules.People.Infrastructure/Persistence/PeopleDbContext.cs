@@ -12,7 +12,7 @@ using System;
 
 namespace FluentPOS.Modules.People.Infrastructure.Persistence
 {
-    public class PeopleDbContext : ModuleDbContext, IPeopleDbContext,
+    public sealed class PeopleDbContext : ModuleDbContext, IPeopleDbContext,
         IExtendedAttributeDbContext<Guid, Customer, CustomerExtendedAttribute>
     {
         private readonly PersistenceSettings _persistenceOptions;
