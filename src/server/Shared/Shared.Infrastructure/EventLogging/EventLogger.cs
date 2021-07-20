@@ -13,7 +13,10 @@ namespace FluentPOS.Shared.Infrastructure.EventLogging
         private readonly IApplicationDbContext _context;
         private readonly IJsonSerializer _jsonSerializer;
 
-        public EventLogger(ICurrentUser user, IApplicationDbContext context, IJsonSerializer jsonSerializer)
+        public EventLogger(
+            ICurrentUser user,
+            IApplicationDbContext context,
+            IJsonSerializer jsonSerializer)
         {
             _user = user;
             _context = context;
@@ -22,7 +25,7 @@ namespace FluentPOS.Shared.Infrastructure.EventLogging
 
         public async Task Save<T>(T @event) where T : Event
         {
-            var serializedData = _jsonSerializer.Serialize(@event);
+            var serializedData = _jsonSerializer.Serialize(@event, @event.GetType());
 
             var userEmail = _user.GetUserEmail();
             var thisEvent = new EventLog(

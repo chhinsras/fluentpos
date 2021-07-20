@@ -19,6 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using FluentPOS.Modules.Identity.Core.Features.Users.Events;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
@@ -77,6 +78,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
             if (userWithSameEmail == null)
             {
+                user.AddDomainEvent(new UserRegisteredEvent(user));
                 var result = await _userManager.CreateAsync(user, request.Password);
                 if (result.Succeeded)
                 {

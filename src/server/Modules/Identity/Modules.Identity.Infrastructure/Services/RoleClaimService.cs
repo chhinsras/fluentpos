@@ -2,7 +2,6 @@
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Helpers;
-using FluentPOS.Modules.Identity.Infrastructure.Persistence;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using FluentPOS.Shared.Core.Wrapper;
@@ -14,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentPOS.Modules.Identity.Core.Features.RoleClaims.Events;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
@@ -93,6 +93,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 }
                 var roleClaim = _mapper.Map<FluentRoleClaim>(request);
                 await _db.RoleClaims.AddAsync(roleClaim);
+                roleClaim.AddDomainEvent(new RoleClaimAddedEvent(roleClaim));
                 await _db.SaveChangesAsync();
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Role Claim {0} created."], request.Value));
             }
@@ -114,6 +115,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     existingRoleClaim.Description = request.Description;
                     existingRoleClaim.RoleId = request.RoleId;
                     _db.RoleClaims.Update(existingRoleClaim);
+                    existingRoleClaim.AddDomainEvent(new RoleClaimUpdatedEvent(existingRoleClaim));
                     await _db.SaveChangesAsync();
                     return await Result<string>.SuccessAsync(string.Format(_localizer["Role Claim {0} for Role {1} updated."], request.Value, existingRoleClaim.Role.Name));
                 }
@@ -132,6 +134,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     return await Result<string>.FailAsync(string.Format(_localizer["Not allowed to delete Permissions for {0} Role."], existingRoleClaim.Role.Name));
                 }
 
+                existingRoleClaim.AddDomainEvent(new RoleClaimDeletedEvent(id));
                 _db.RoleClaims.Remove(existingRoleClaim);
                 await _db.SaveChangesAsync();
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Role Claim {0} for {1} Role deleted."], existingRoleClaim.ClaimValue, existingRoleClaim.Role?.Name));
