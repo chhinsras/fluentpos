@@ -25,7 +25,7 @@ namespace FluentPOS.Shared.Infrastructure.EventLogging
 
         public async Task Save<T>(T @event) where T : Event
         {
-            var serializedData = _jsonSerializer.Serialize(@event);
+            var serializedData = _jsonSerializer.Serialize(@event, @event.GetType());
 
             var userEmail = _user.GetUserEmail();
             var thisEvent = new EventLog(

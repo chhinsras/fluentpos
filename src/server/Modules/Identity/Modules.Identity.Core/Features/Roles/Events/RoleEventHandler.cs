@@ -14,7 +14,9 @@ namespace FluentPOS.Modules.Identity.Core.Features.Roles.Events
         private readonly ILogger<RoleEventHandler> _logger;
         private readonly IStringLocalizer<RoleEventHandler> _localizer;
 
-        public RoleEventHandler(ILogger<RoleEventHandler> logger, IStringLocalizer<RoleEventHandler> localizer)
+        public RoleEventHandler(
+            ILogger<RoleEventHandler> logger,
+            IStringLocalizer<RoleEventHandler> localizer)
         {
             _logger = logger;
             _localizer = localizer;

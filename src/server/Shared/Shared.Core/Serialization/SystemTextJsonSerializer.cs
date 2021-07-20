@@ -1,4 +1,5 @@
-﻿using FluentPOS.Shared.Core.Interfaces.Serialization;
+﻿using System;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
 
@@ -18,5 +19,8 @@ namespace FluentPOS.Shared.Core.Serialization
 
         public string Serialize<T>(T data, IJsonSerializerSettingsOptions options = null)
             => JsonSerializer.Serialize(data, options?.JsonSerializerOptions ?? _options);
+
+        public string Serialize<T>(T data, Type type, IJsonSerializerSettingsOptions options = null)
+            => JsonSerializer.Serialize(data, type, options?.JsonSerializerOptions ?? _options);
     }
 }
