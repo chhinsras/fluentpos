@@ -12,6 +12,7 @@ using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentPOS.Modules.Identity.Core.Features.Roles.Events;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
@@ -58,6 +59,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             }
             if (roleIsNotUsed)
             {
+                existingRole.AddDomainEvent(new RoleDeletedEvent(id));
                 await _roleManager.DeleteAsync(existingRole);
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Role {0} Deleted."], existingRole.Name));
             }
@@ -87,7 +89,9 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             {
                 var existingRole = await _roleManager.FindByNameAsync(request.Name);
                 if (existingRole != null) throw new IdentityException(_localizer["Similar Role already exists."], statusCode: System.Net.HttpStatusCode.BadRequest);
-                var response = await _roleManager.CreateAsync(new FluentRole(request.Name, request.Description));
+                var newRole = new FluentRole(request.Name, request.Description);
+                newRole.AddDomainEvent(new RoleAddedEvent(request)); //TODO - add id after add and save changes?
+                var response = await _roleManager.CreateAsync(newRole);
                 if (response.Succeeded)
                 {
                     return await Result<string>.SuccessAsync(string.Format(_localizer["Role {0} Created."], request.Name));
@@ -108,6 +112,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 existingRole.Name = request.Name;
                 existingRole.NormalizedName = request.Name.ToUpper();
                 existingRole.Description = request.Description;
+                existingRole.AddDomainEvent(new RoleUpdatedEvent(request));
                 await _roleManager.UpdateAsync(existingRole);
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Role {0} Updated."], existingRole.Name));
             }
