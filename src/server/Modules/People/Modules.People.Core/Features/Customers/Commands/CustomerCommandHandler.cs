@@ -60,7 +60,7 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Commands
             if (customer != null)
             {
                 customer = _mapper.Map<Customer>(command);
-                if (customer.Type != CustomerTypes.General || customer.Type != CustomerTypes.VIP) customer.Type = CustomerTypes.General;
+                if (customer.Type != CustomerTypes.General && customer.Type != CustomerTypes.VIP) customer.Type = CustomerTypes.General;
                 var uploadRequest = command.UploadRequest;
                 if (uploadRequest != null)
                 {
