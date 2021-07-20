@@ -13,7 +13,10 @@ namespace FluentPOS.Shared.Infrastructure.EventLogging
         private readonly IApplicationDbContext _context;
         private readonly IJsonSerializer _jsonSerializer;
 
-        public EventLogger(ICurrentUser user, IApplicationDbContext context, IJsonSerializer jsonSerializer)
+        public EventLogger(
+            ICurrentUser user,
+            IApplicationDbContext context,
+            IJsonSerializer jsonSerializer)
         {
             _user = user;
             _context = context;
