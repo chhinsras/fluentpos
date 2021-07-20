@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Controllers
 {
-    internal class UsersController : BaseController
+    internal sealed class UsersController : BaseController
     {
         private readonly IUserService _userService;
 

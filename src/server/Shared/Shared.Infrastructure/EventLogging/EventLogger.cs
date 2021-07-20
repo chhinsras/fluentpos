@@ -24,10 +24,11 @@ namespace FluentPOS.Shared.Infrastructure.EventLogging
         {
             var serializedData = _jsonSerializer.Serialize(@event);
 
+            var userEmail = _user.GetUserEmail();
             var thisEvent = new EventLog(
                 @event,
                 serializedData,
-                _user.Name ?? _user.GetUserEmail());
+                string.IsNullOrWhiteSpace(userEmail) ? _user.Name : userEmail);
             await _context.EventLogs.AddAsync(thisEvent);
             await _context.SaveChangesAsync(default);
         }
