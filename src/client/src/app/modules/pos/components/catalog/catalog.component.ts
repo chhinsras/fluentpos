@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { map, startWith } from 'rxjs/operators';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
 import { Brand } from '../../models/brand';
 import { BrandParams } from '../../models/brandParams';
 import { Product } from '../../models/product';
 import { ProductParams } from '../../models/productParams';
+import { CartService } from '../../services/cart.service';
 import { PosService } from '../../services/pos.service';
 
 @Component({
@@ -20,7 +22,7 @@ export class CatalogComponent implements OnInit {
   productParams = new ProductParams();
   searchString: string;
   brandAutoComplete = new FormControl();
-  constructor(private posService: PosService) { }
+  constructor(private posService: PosService, private toast: ToastrService, private cartService: CartService) { }
 
   ngOnInit(): void {
     this.productParams.pageSize = 10;
@@ -49,5 +51,10 @@ export class CatalogComponent implements OnInit {
     if (this.brands && this.brands.data && this.brands.data.find(book => book.id === brandId)) {
       return this.brands.data.find(brand => brand.id === brandId).name;
     }
+  }
+  addToCart(productId: string) {
+    console.log(productId);
+    this.toast.info('Added ' + productId);
+    this.cartService.add(productId, 5);
   }
 }

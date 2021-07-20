@@ -11,6 +11,7 @@ import { CustomerInfoComponent } from './components/customer-info/customer-info.
 import { ProductInfoComponent } from './components/product-info/product-info.component';
 
 import { SharedModule } from 'src/app/core/shared/shared.module';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SharedModule } from 'src/app/core/shared/shared.module';
     CatalogComponent,
     CustomerSelectionComponent,
     CustomerInfoComponent,
-    ProductInfoComponent
+    ProductInfoComponent,
+    CartComponent
   ],
   imports: [
     CommonModule,

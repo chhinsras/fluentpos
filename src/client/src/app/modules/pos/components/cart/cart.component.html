@@ -1,0 +1,21 @@
+<div class="c-card">
+    <div>
+        <h1>Cart</h1>
+        <div style="min-height:58vh;max-height:58vh;overflow:auto;">
+            <div *ngIf="cartItems">
+                <div *ngFor="let item of cartItems" class="row"
+                    style="margin:2px;padding:15px;background: rgba(0,0,0,.05);border-radius: 5px;">
+                    <div class="col-6">
+                        <h4 style="margin: 0px!important;">{{item.productId}}</h4>
+                        {{item.quantity}}
+                    </div>
+                    <div style="align-self: center;text-align: right;" class="col-6">
+                        <button mat-raised-button color="danger">
+                            <span><span style="margin-right: 10px;" class="fas fa-minus"></span>Remove</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
