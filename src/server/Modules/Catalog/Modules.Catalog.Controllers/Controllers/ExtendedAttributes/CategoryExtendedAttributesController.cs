@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace FluentPOS.Modules.Catalog.Controllers.ExtendedAttributes
 {
     [Route(BaseController.BasePath + "/" + nameof(Category) + "/attributes")]
-    public class CategoryExtendedAttributesController : ExtendedAttributesController<Guid, Category>
+    internal sealed class CategoryExtendedAttributesController : ExtendedAttributesController<Guid, Category>
     {
         private IMediator _mediatorInstance;
         protected override IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();

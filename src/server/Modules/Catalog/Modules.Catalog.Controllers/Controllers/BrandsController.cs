@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Catalog.Controllers
 {
-    internal class BrandsController : BaseController
+    internal sealed class BrandsController : BaseController
     {
         [HttpGet("{id}")]
         [Authorize(Policy = Permissions.Brands.View)]

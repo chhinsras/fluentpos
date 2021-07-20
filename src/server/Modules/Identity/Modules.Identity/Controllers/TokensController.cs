@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Controllers
 {
-    internal class TokensController : BaseController
+    internal sealed class TokensController : BaseController
     {
         private readonly ITokenService _tokenService;
 

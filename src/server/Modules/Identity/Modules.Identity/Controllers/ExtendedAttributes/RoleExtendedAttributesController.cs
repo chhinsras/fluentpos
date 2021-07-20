@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace FluentPOS.Modules.Identity.Controllers.ExtendedAttributes
 {
     [Route(BaseController.BasePath + "/role/attributes")]
-    public class RoleExtendedAttributesController : ExtendedAttributesController<string, FluentRole>
+    internal sealed class RoleExtendedAttributesController : ExtendedAttributesController<string, FluentRole>
     {
         private IMediator _mediatorInstance;
         protected override IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
