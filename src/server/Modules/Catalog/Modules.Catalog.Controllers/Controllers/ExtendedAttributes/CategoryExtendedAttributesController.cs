@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.Catalog.Controllers
+namespace FluentPOS.Modules.Catalog.Controllers.ExtendedAttributes
 {
     [Route(BaseController.BasePath + "/" + nameof(Category) + "/attributes")]
     public class CategoryExtendedAttributesController : ExtendedAttributesController<Guid, Category>

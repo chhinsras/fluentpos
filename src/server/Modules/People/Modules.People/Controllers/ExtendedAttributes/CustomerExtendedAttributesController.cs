@@ -1,4 +1,4 @@
-﻿using FluentPOS.Modules.Identity.Core.Entities;
+﻿using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
@@ -10,39 +10,39 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.Identity.Controllers
+namespace FluentPOS.Modules.People.Controllers.ExtendedAttributes
 {
-    [Route(BaseController.BasePath + "/user/attributes")]
-    public class UserExtendedAttributesController : ExtendedAttributesController<string, FluentUser>
+    [Route(BaseController.BasePath + "/" + nameof(Customer) + "/attributes")]
+    public class CustomerExtendedAttributesController : ExtendedAttributesController<Guid, Customer>
     {
         private IMediator _mediatorInstance;
         protected override IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
 
-        [Authorize(Policy = Permissions.UsersExtendedAttributes.ViewAll)]
-        public override Task<IActionResult> GetAllAsync(PaginatedExtendedAttributeFilter<string> filter)
+        [Authorize(Policy = Permissions.CustomersExtendedAttributes.ViewAll)]
+        public override Task<IActionResult> GetAllAsync(PaginatedExtendedAttributeFilter<Guid> filter)
         {
             return base.GetAllAsync(filter);
         }
 
-        [Authorize(Policy = Permissions.UsersExtendedAttributes.View)]
+        [Authorize(Policy = Permissions.CustomersExtendedAttributes.View)]
         public override Task<IActionResult> GetByIdAsync(Guid id, bool bypassCache)
         {
             return base.GetByIdAsync(id, bypassCache);
         }
 
-        [Authorize(Policy = Permissions.UsersExtendedAttributes.Add)]
-        public override Task<IActionResult> CreateAsync(AddExtendedAttributeCommand<string, FluentUser> command)
+        [Authorize(Policy = Permissions.CustomersExtendedAttributes.Add)]
+        public override Task<IActionResult> CreateAsync(AddExtendedAttributeCommand<Guid, Customer> command)
         {
             return base.CreateAsync(command);
         }
 
-        [Authorize(Policy = Permissions.UsersExtendedAttributes.Update)]
-        public override Task<IActionResult> UpdateAsync(UpdateExtendedAttributeCommand<string, FluentUser> command)
+        [Authorize(Policy = Permissions.CustomersExtendedAttributes.Update)]
+        public override Task<IActionResult> UpdateAsync(UpdateExtendedAttributeCommand<Guid, Customer> command)
         {
             return base.UpdateAsync(command);
         }
 
-        [Authorize(Policy = Permissions.UsersExtendedAttributes.Remove)]
+        [Authorize(Policy = Permissions.CustomersExtendedAttributes.Remove)]
         public override Task<IActionResult> RemoveAsync(Guid id)
         {
             return base.RemoveAsync(id);
