@@ -25,7 +25,7 @@ export class CustomerFormComponent implements OnInit {
       id: [this.data && this.data.id],
       name: [this.data && this.data.name, Validators.required],
       phone: [this.data && this.data.phone, Validators.required],
-      email: [this.data && this.data.email],
+      email: [this.data && this.data.email, [Validators.required, Validators.email]],
       imageUrl: [this.data && this.data.imageUrl],
       type: [this.data && this.data.type, Validators.required]
     })
