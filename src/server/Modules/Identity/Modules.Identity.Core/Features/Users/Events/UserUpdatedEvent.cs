@@ -14,10 +14,9 @@ namespace FluentPOS.Modules.Identity.Core.Features.Users.Events
             UserName = user.UserName;
             PhoneNumber = user.PhoneNumber;
             Id = user.Id;
-            if (Guid.TryParse(user.Id, out var aggregateId))
-            {
-                AggregateId = aggregateId;
-            }
+            AggregateId = Guid.TryParse(user.Id, out var aggregateId)
+                ? aggregateId
+                : Guid.NewGuid();
         }
 
         public string Id { get; }

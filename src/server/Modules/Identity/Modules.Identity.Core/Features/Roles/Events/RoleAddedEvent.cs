@@ -11,10 +11,9 @@ namespace FluentPOS.Modules.Identity.Core.Features.Roles.Events
             Name = role.Name;
             Description = role.Description;
             Id = role.Id;
-            if (Guid.TryParse(role.Id, out var aggregateId))
-            {
-                AggregateId = aggregateId;
-            }
+            AggregateId = Guid.TryParse(role.Id, out var aggregateId)
+                ? aggregateId
+                : Guid.NewGuid();
         }
 
         public string Id { get; }
