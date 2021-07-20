@@ -164,7 +164,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             var result = await _userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
             {
-                if (user.PhoneNumberConfirmed)
+                if (user.PhoneNumberConfirmed || !_smsSettings.EnableVerification)
                 {
                     return await Result<string>.SuccessAsync(user.Id, string.Format(_localizer["Account Confirmed for E-Mail {0}. You can now use the /api/identity/token endpoint to generate JWT."], user.Email));
                 }

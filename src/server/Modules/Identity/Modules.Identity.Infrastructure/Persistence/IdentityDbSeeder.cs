@@ -9,20 +9,21 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentPOS.Modules.Identity.Core.Abstractions;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 {
     internal class IdentityDbSeeder : IDatabaseSeeder
     {
         private readonly ILogger<IdentityDbSeeder> _logger;
-        private readonly IdentityDbContext _db;
+        private readonly IIdentityDbContext _db;
         private readonly UserManager<FluentUser> _userManager;
         private readonly IStringLocalizer<IdentityDbSeeder> _localizer;
         private readonly RoleManager<FluentRole> _roleManager;
 
         public IdentityDbSeeder(
             ILogger<IdentityDbSeeder> logger,
-            IdentityDbContext db,
+            IIdentityDbContext db,
             RoleManager<FluentRole> roleManager,
             UserManager<FluentUser> userManager,
             IStringLocalizer<IdentityDbSeeder> localizer)

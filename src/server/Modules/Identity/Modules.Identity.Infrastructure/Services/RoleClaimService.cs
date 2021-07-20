@@ -24,7 +24,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         private readonly ICurrentUser _currentUserService;
         private readonly IStringLocalizer<RoleClaimService> _localizer;
         private readonly IMapper _mapper;
-        private readonly IdentityDbContext _db;
+        private readonly IIdentityDbContext _db;
 
         public RoleClaimService(
             RoleManager<FluentRole> roleManager,
@@ -32,7 +32,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             ICurrentUser currentUserService,
             IStringLocalizer<RoleClaimService> localizer,
             IMapper mapper,
-            IdentityDbContext db)
+            IIdentityDbContext db)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -144,14 +144,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
 
         public async Task<Result<PermissionResponse>> GetAllPermissionsAsync(string roleId)
         {
-            var model = new PermissionResponse();
+            var response = new PermissionResponse();
             var allPermissions = new List<RoleClaimResponse>();
             allPermissions.GetAllPermissions();
             var role = await _roleManager.FindByIdAsync(roleId);
             if (role != null)
             {
-                model.RoleId = role.Id;
-                model.RoleName = role.Name;
+                response.RoleId = role.Id;
+                response.RoleName = role.Name;
                 var allRoleClaims = await GetAllAsync();
                 var roleClaimsResult = await GetAllByRoleIdAsync(role.Id);
                 if (roleClaimsResult.Succeeded)
@@ -181,12 +181,12 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 }
                 else
                 {
-                    model.RoleClaims = new List<RoleClaimResponse>();
+                    response.RoleClaims = new List<RoleClaimResponse>();
                     return await Result<PermissionResponse>.FailAsync(roleClaimsResult.Messages);
                 }
             }
-            model.RoleClaims = allPermissions;
-            return await Result<PermissionResponse>.SuccessAsync(model);
+            response.RoleClaims = allPermissions;
+            return await Result<PermissionResponse>.SuccessAsync(response);
         }
 
         public async Task<Result<string>> UpdatePermissionsAsync(PermissionRequest request)
