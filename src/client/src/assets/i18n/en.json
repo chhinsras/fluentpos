@@ -45,6 +45,13 @@
             "title": "Logout",
             "message": "Do you want to logout?",
             "button": "Logout"
+        },
+        "delete": {
+            "title": "Delete Confirmation",
+            "buttons": {
+                "cancel": "Cancel",
+                "confirm": "Confirm"
+            }
         }
     },
     "components": {
