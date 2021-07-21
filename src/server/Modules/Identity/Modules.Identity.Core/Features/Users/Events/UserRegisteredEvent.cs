@@ -6,6 +6,13 @@ namespace FluentPOS.Modules.Identity.Core.Features.Users.Events
 {
     public class UserRegisteredEvent : Event
     {
+        public string Id { get; }
+        public string FirstName { get; }
+        public string LastName { get; }
+        public string Email { get; }
+        public string UserName { get; }
+        public string PhoneNumber { get; }
+
         public UserRegisteredEvent(FluentUser user)
         {
             FirstName = user.FirstName;
@@ -18,12 +25,5 @@ namespace FluentPOS.Modules.Identity.Core.Features.Users.Events
                 ? aggregateId
                 : Guid.NewGuid();
         }
-
-        public string Id { get; }
-        public string FirstName { get; }
-        public string LastName { get; }
-        public string Email { get; }
-        public string UserName { get; }
-        public string PhoneNumber { get; }
     }
 }

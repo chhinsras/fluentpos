@@ -48,7 +48,7 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Commands
                 uploadRequest.FileName = $"C-{command.Name}{uploadRequest.Extension}";
                 customer.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
             }
-            customer.AddDomainEvent(new CustomerRegisteredEvent(customer.Id, customer.Name, customer.Phone, customer.Email, customer.ImageUrl, customer.Type));
+            customer.AddDomainEvent(new CustomerRegisteredEvent(customer));
             await _context.Customers.AddAsync(customer, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(customer.Id, _localizer["Customer Saved"]);
@@ -67,7 +67,7 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Commands
                     uploadRequest.FileName = $"C-{command.Name}{uploadRequest.Extension}";
                     customer.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
                 }
-                customer.AddDomainEvent(new CustomerUpdatedEvent(customer.Id, customer.Name, customer.Phone, customer.Email, customer.ImageUrl, customer.Type));
+                customer.AddDomainEvent(new CustomerUpdatedEvent(customer));
                 _context.Customers.Update(customer);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _cache.RemoveAsync(PeopleCacheKeys.GetCustomerByIdCacheKey(command.Id), cancellationToken);

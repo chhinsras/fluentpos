@@ -134,8 +134,8 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     return await Result<string>.FailAsync(string.Format(_localizer["Not allowed to delete Permissions for {0} Role."], existingRoleClaim.Role.Name));
                 }
 
-                existingRoleClaim.AddDomainEvent(new RoleClaimDeletedEvent(id));
                 _db.RoleClaims.Remove(existingRoleClaim);
+                existingRoleClaim.AddDomainEvent(new RoleClaimDeletedEvent(id));
                 await _db.SaveChangesAsync();
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Role Claim {0} for {1} Role deleted."], existingRoleClaim.ClaimValue, existingRoleClaim.Role?.Name));
             }

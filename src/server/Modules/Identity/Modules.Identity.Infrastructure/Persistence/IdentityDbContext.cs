@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
+using FluentPOS.Modules.Identity.Core.Entities.ExtendedAttributes;
 using FluentPOS.Modules.Identity.Infrastructure.Extensions;
 using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.EventLogging;

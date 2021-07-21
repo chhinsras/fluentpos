@@ -52,7 +52,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
                 uploadRequest.FileName = $"C-{command.Name}{uploadRequest.Extension}";
                 category.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
             }
-            category.AddDomainEvent(new CategoryRegisteredEvent(category.Id, category.Name, category.ImageUrl, category.Detail));
+            category.AddDomainEvent(new CategoryRegisteredEvent(category));
             await _context.Categories.AddAsync(category, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(category.Id, _localizer["Category Saved"]);
@@ -75,7 +75,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
                     uploadRequest.FileName = $"C-{command.Name}{uploadRequest.Extension}";
                     category.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
                 }
-                category.AddDomainEvent(new CategoryUpdatedEvent(category.Id, category.Name, category.ImageUrl, category.Detail));
+                category.AddDomainEvent(new CategoryUpdatedEvent(category));
                 _context.Categories.Update(category);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _cache.RemoveAsync(CatalogCacheKeys.GetCategoryByIdCacheKey(command.Id), cancellationToken);

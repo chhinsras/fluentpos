@@ -1,4 +1,5 @@
 ﻿using FluentPOS.Modules.Identity.Core.Entities;
+using FluentPOS.Modules.Identity.Core.Entities.ExtendedAttributes;
 using FluentPOS.Shared.Core.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

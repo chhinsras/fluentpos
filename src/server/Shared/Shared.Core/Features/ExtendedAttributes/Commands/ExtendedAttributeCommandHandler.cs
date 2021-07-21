@@ -57,11 +57,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands
             if (isKeyUsed) throw new CustomException(string.Format(_localizer["This {0} Key is Already Used For This Entity"], typeof(TEntity).Name), statusCode: HttpStatusCode.NotFound);
 
             var extendedAttribute = _mapper.Map<TExtendedAttribute>(command);
-            extendedAttribute.AddDomainEvent(new ExtendedAttributeAddedEvent<TEntityId, TEntity>(extendedAttribute.Id,
-                extendedAttribute.EntityId, extendedAttribute.Type, extendedAttribute.Key, extendedAttribute.Decimal,
-                extendedAttribute.Text, extendedAttribute.DateTime, extendedAttribute.Json, extendedAttribute.Boolean, extendedAttribute.Integer,
-                extendedAttribute.ExternalId, extendedAttribute.Group, extendedAttribute.Description,
-                extendedAttribute.IsActive));
+            extendedAttribute.AddDomainEvent(new ExtendedAttributeAddedEvent<TEntityId, TEntity>(extendedAttribute));
             await _context.ExtendedAttributes.AddAsync(extendedAttribute, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(extendedAttribute.Id, string.Format(_localizer["{0} Extended Attribute Saved"], typeof(TEntity).Name));
@@ -91,11 +87,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands
             if (isKeyUsed) throw new CustomException(string.Format(_localizer["This {0} Key Is Already Used For This Entity"], typeof(TEntity).Name), statusCode: HttpStatusCode.NotFound);
 
             extendedAttribute = _mapper.Map<TExtendedAttribute>(command);
-            extendedAttribute.AddDomainEvent(new ExtendedAttributeUpdatedEvent<TEntityId, TEntity>(extendedAttribute.Id,
-                extendedAttribute.EntityId, extendedAttribute.Type, extendedAttribute.Key, extendedAttribute.Decimal,
-                extendedAttribute.Text, extendedAttribute.DateTime, extendedAttribute.Json, extendedAttribute.Boolean, extendedAttribute.Integer,
-                extendedAttribute.ExternalId, extendedAttribute.Group, extendedAttribute.Description,
-                extendedAttribute.IsActive));
+            extendedAttribute.AddDomainEvent(new ExtendedAttributeUpdatedEvent<TEntityId, TEntity>(extendedAttribute));
             _context.ExtendedAttributes.Update(extendedAttribute);
             await _context.SaveChangesAsync(cancellationToken);
             await _cache.RemoveAsync(CacheKeys.GetExtendedAttributeByIdCacheKey(typeof(TEntity).Name, command.Id), cancellationToken);

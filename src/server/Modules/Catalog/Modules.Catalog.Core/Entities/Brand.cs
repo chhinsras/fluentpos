@@ -1,5 +1,6 @@
 ﻿using FluentPOS.Shared.Core.Domain;
 using System.Collections.Generic;
+using FluentPOS.Modules.Catalog.Core.Entities.ExtendedAttributes;
 
 namespace FluentPOS.Modules.Catalog.Core.Entities
 {

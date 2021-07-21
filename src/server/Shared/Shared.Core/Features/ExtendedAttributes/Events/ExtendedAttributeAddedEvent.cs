@@ -3,32 +3,13 @@
 using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
 using System;
+using FluentPOS.Shared.Core.Contracts;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
 {
     public class ExtendedAttributeAddedEvent<TEntityId, TEntity> : Event
+        where TEntity : class, IEntity<TEntityId>
     {
-        public ExtendedAttributeAddedEvent(Guid id, TEntityId entityId, ExtendedAttributeType type,
-            string key, decimal? @decimal, string? text, DateTime? dateTime, string? json, bool? boolean, int? integer, string? externalId,
-            string? group, string? description, bool isActive)
-        {
-            EntityId = entityId;
-            EntityName = typeof(TEntity).Name;
-            Type = type;
-            Key = key;
-            Decimal = @decimal;
-            Text = text;
-            DateTime = dateTime;
-            Json = json;
-            Boolean = boolean;
-            Integer = integer;
-            ExternalId = externalId;
-            Group = @group;
-            Description = description;
-            IsActive = isActive;
-            AggregateId = id;
-        }
-
         public TEntityId EntityId { get; set; }
         public string EntityName { get; set; }
         public ExtendedAttributeType Type { get; set; }
@@ -43,5 +24,24 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
         public string? Group { get; set; }
         public string? Description { get; set; }
         public bool IsActive { get; set; }
+
+        public ExtendedAttributeAddedEvent(ExtendedAttribute<TEntityId, TEntity> extendedAttribute)
+        {
+            EntityId = extendedAttribute.EntityId;
+            EntityName = typeof(TEntity).Name;
+            Type = extendedAttribute.Type;
+            Key = extendedAttribute.Key;
+            Decimal = extendedAttribute.Decimal;
+            Text = extendedAttribute.Text;
+            DateTime = extendedAttribute.DateTime;
+            Json = extendedAttribute.Json;
+            Boolean = extendedAttribute.Boolean;
+            Integer = extendedAttribute.Integer;
+            ExternalId = extendedAttribute.ExternalId;
+            Group = extendedAttribute.Group;
+            Description = extendedAttribute.Description;
+            IsActive = extendedAttribute.IsActive;
+            AggregateId = extendedAttribute.Id;
+        }
     }
 }
