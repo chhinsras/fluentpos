@@ -42,6 +42,11 @@
         },
         "serverError": {
             "text": "server-error works!"
+        },
+        "table": {
+            "register": "Register New",
+            "reload": "Reload",
+            "filter": "Filter"
         }
     },
     "common": {
