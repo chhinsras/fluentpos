@@ -1,29 +1,11 @@
 ﻿using FluentPOS.Shared.Core.Domain;
 using System;
+using FluentPOS.Modules.Catalog.Core.Entities;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Products.Events
 {
     public class ProductUpdatedEvent : Event
     {
-        public ProductUpdatedEvent(Guid id, string name, string localeName, Guid brandId, Guid categoryId, decimal price, decimal cost, string imageUrl, string tax, string taxMethod, string barcodeSymbology, bool isAlert, decimal alertQuantity, string detail)
-        {
-            Id = id;
-            Name = name;
-            LocaleName = localeName;
-            BrandId = brandId;
-            CategoryId = categoryId;
-            Price = price;
-            Cost = cost;
-            ImageUrl = imageUrl;
-            Tax = tax;
-            TaxMethod = taxMethod;
-            BarcodeSymbology = barcodeSymbology;
-            IsAlert = isAlert;
-            AlertQuantity = alertQuantity;
-            Detail = detail;
-            AggregateId = id;
-        }
-
         public Guid Id { get; }
         public string Name { get; }
         public string LocaleName { get; }
@@ -38,5 +20,24 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Events
         public bool IsAlert { get; }
         public decimal AlertQuantity { get; }
         public string Detail { get; }
+
+        public ProductUpdatedEvent(Product product)
+        {
+            Id = product.Id;
+            Name = product.Name;
+            LocaleName = product.LocaleName;
+            BrandId = product.BrandId;
+            CategoryId = product.CategoryId;
+            Price = product.Price;
+            Cost = product.Cost;
+            ImageUrl = product.ImageUrl;
+            Tax = product.Tax;
+            TaxMethod = product.TaxMethod;
+            BarcodeSymbology = product.BarcodeSymbology;
+            IsAlert = product.IsAlert;
+            AlertQuantity = product.AlertQuantity;
+            Detail = product.Detail;
+            AggregateId = product.Id;
+        }
     }
 }

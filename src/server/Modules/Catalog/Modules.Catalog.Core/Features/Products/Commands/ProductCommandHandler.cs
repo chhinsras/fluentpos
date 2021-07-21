@@ -52,7 +52,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
                 uploadRequest.FileName = $"P-{command.BarcodeSymbology}{uploadRequest.Extension}";
                 product.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
             }
-            product.AddDomainEvent(new ProductRegisteredEvent(product.Id, product.Name, product.LocaleName, product.BrandId, product.CategoryId, product.Price, product.Cost, product.ImageUrl, product.Tax, product.TaxMethod, product.BarcodeSymbology, product.IsAlert, product.AlertQuantity, product.Detail));
+            product.AddDomainEvent(new ProductRegisteredEvent(product));
             await _context.Products.AddAsync(product, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(product.Id, _localizer["Product Saved"]);
@@ -76,7 +76,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
                     uploadRequest.FileName = $"P-{command.BarcodeSymbology}{uploadRequest.Extension}";
                     product.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
                 }
-                product.AddDomainEvent(new ProductUpdatedEvent(product.Id, product.Name, product.LocaleName, product.BrandId, product.CategoryId, product.Price, product.Cost, product.ImageUrl, product.Tax, product.TaxMethod, product.BarcodeSymbology, product.IsAlert, product.AlertQuantity, product.Detail));
+                product.AddDomainEvent(new ProductUpdatedEvent(product));
                 _context.Products.Update(product);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _cache.RemoveAsync(CatalogCacheKeys.GetProductByIdCacheKey(command.Id), cancellationToken);
