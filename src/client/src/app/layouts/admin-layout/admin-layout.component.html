@@ -13,23 +13,23 @@
                     <mat-icon style="padding-right: 10px;">trending_up</mat-icon> Dashboard
                 </a>
                 <div class="nav-subheading">
-                    Catalog Management</div>
+                    {{'layouts.admin.catalogSubhead'|translate}}</div>
                 <a mat-list-item routerLink="catalog/brands" (click)="sidenav.close()">
-                    <mat-icon style="padding-right: 10px;">inventory</mat-icon> Brands
+                    <mat-icon style="padding-right: 10px;">inventory</mat-icon> {{'layouts.admin.brands'|translate}}
                 </a>
                 <a mat-list-item routerLink="catalog/categories" (click)="sidenav.close()">
-                    <mat-icon style="padding-right: 10px;">inventory</mat-icon> Categories
+                    <mat-icon style="padding-right: 10px;">inventory</mat-icon> {{'layouts.admin.categories'|translate}}
                 </a>
                 <a mat-list-item routerLink="catalog/products" (click)="sidenav.close()">
-                    <mat-icon style="padding-right: 10px;">free_breakfast</mat-icon> Products
+                    <mat-icon style="padding-right: 10px;">free_breakfast</mat-icon> {{'layouts.admin.products'|translate}}
                 </a>
                 <div class="nav-subheading">
-                    People Management</div>
+                    {{'layouts.admin.peopleSubhead'|translate}}</div>
                 <a mat-list-item routerLink="people/customers" (click)="sidenav.close()">
-                    <mat-icon style="padding-right: 10px;">people</mat-icon> Customers
+                    <mat-icon style="padding-right: 10px;">people</mat-icon> {{'layouts.admin.customers'|translate}}
                 </a>
                 <a mat-list-item routerLink="/admin/about" (click)="sidenav.close()">
-                    <mat-icon style="padding-right: 10px;">info</mat-icon> About
+                    <mat-icon style="padding-right: 10px;">info</mat-icon> {{'layouts.admin.about'|translate}}
                 </a>
             </div>
         </mat-nav-list>

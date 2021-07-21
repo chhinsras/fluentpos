@@ -4,6 +4,17 @@
         "fork": "Сделать Fork репозитория!",
         "support": "Поддержать fluentpos"
     },
+    "layouts": {
+        "admin": {
+            "catalogSubhead": "Управление каталогом",
+            "brands": "Бренды",
+            "categories": "Категории",
+            "products": "Продукты",
+            "peopleSubhead": "Управление персоналом",
+            "customers": "Клиенты",
+            "about": "О проекте"
+        }
+    },
     "dashboard": {
         "title": "Dashboard",
         "subtitle": "Краткий обзор вашего бизнеса."

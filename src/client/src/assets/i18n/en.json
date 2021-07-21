@@ -4,6 +4,17 @@
         "fork": "Fork this repository!",
         "support": "Support fluentpos"
     },
+    "layouts": {
+        "admin": {
+            "catalogSubhead": "Catalog Management",
+            "brands": "Brands",
+            "categories": "Categories",
+            "products": "Products",
+            "peopleSubhead": "People Management",
+            "customers": "Customers",
+            "about": "About"
+        }
+    },
     "dashboard": {
         "title": "Dashboard",
         "subtitle": "Quick Overview of your Business."
