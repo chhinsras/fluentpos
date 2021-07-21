@@ -98,7 +98,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 await _context.SaveChangesAsync();
                 if (response.Succeeded)
                 {
-                    return await Result<string>.SuccessAsync(string.Format(_localizer["Role {0} Created."], request.Name));
+                    return await Result<string>.SuccessAsync(newRole.Id, string.Format(_localizer["Role {0} Created."], request.Name));
                 }
                 else
                 {
@@ -118,7 +118,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 existingRole.Description = request.Description;
                 existingRole.AddDomainEvent(new RoleUpdatedEvent(existingRole));
                 await _roleManager.UpdateAsync(existingRole);
-                return await Result<string>.SuccessAsync(string.Format(_localizer["Role {0} Updated."], existingRole.Name));
+                return await Result<string>.SuccessAsync(existingRole.Id, string.Format(_localizer["Role {0} Updated."], existingRole.Name));
             }
         }
 
