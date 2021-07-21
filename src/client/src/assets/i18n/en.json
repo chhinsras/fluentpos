@@ -1,6 +1,8 @@
 {
     "site": {
-        "title": "fluentpos"
+        "title": "fluentpos",
+        "fork": "Fork this repository!",
+        "support": "Support fluentpos"
     },
     "dashboard": {
         "title": "Dashboard",

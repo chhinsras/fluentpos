@@ -8,7 +8,7 @@
             <span style="font-weight:lighter;font-size: larger;" translate>site.title</span>
         </a>
         <span class="nav-spacer"></span>
-        <a mat-icon-button matTooltip="Fork this repository!" href="https://github.com/fluentpos/fluentpos/"
+        <a mat-icon-button matTooltip="{{'site.fork'|translate}}" href="https://github.com/fluentpos/fluentpos/"
             target="_blank">
             <mat-icon class="fab fa-github"></mat-icon>
         </a>
@@ -19,7 +19,7 @@
         <mat-divider vertical style="height:50%;margin: 10px;"></mat-divider>
         <a mat-button style="background: rgba(0,0,0,.2);margin-right: 5px;" href="https://opencollective.com/fluentpos"
             target="_blank">
-            <span style="font-weight:lighter;font-size: small;">Support fluentpos</span>
+            <span style="font-weight:lighter;font-size: small;" translate>site.support</span>
         </a>
         <button mat-button style="background: rgba(0,0,0,.2);" [matMenuTriggerFor]="userMenu">
             <span style="font-weight:lighter;font-size: small;">{{fullName}}</span>
