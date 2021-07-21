@@ -8,7 +8,8 @@
     },
     "about": {
         "title": "About",
-        "subtitle": "Everything about fluentpos."
+        "subtitle": "Everything about fluentpos.",
+        "header": "Core Team"
     },
     "settings": {
         "title": "Settings",
@@ -44,9 +45,17 @@
         "cancel": "Cancel",
         "ok": "Ok",
         "yes": "Yes",
-        "no": "No",
+        "no": "No"
+    },
+    "social": {
         "blog": "Blog",
+        "site": "Personal Site",
         "linkedin": "LinkedIn",
-        "github": "Github"
+        "github": "Github",
+        "facebook": "Facebook",
+        "habr": "Habr",
+        "medium": "Medium",
+        "devto": "DevTo",
+        "support": "Support"
     }
 }

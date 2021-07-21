@@ -6,6 +6,11 @@
         "title": "Dashboard",
         "subtitle": "Краткий обзор вашего бизнеса."
     },
+    "about": {
+        "title": "О проекте",
+        "subtitle": "Всё о fluentpos.",
+        "header": "Основная команда"
+    },
     "settings": {
         "title": "Настройки",
         "subtitle": "Управление настройками приложения.",
@@ -41,5 +46,16 @@
         "ok": "Ок",
         "yes": "Да",
         "no": "Нет"
+    },
+    "social": {
+        "blog": "Блог",
+        "site": "Персональный сайт",
+        "linkedin": "LinkedIn",
+        "github": "Github",
+        "facebook": "Facebook",
+        "habr": "Хабр",
+        "medium": "Medium",
+        "devto": "DevTo",
+        "support": "Поддержать"
     }
 }
