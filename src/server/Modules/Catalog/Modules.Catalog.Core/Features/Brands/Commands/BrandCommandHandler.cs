@@ -53,7 +53,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
                 uploadRequest.FileName = $"B-{command.Name}{uploadRequest.Extension}";
                 brand.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
             }
-            brand.AddDomainEvent(new BrandRegisteredEvent(brand.Id, brand.Name, brand.ImageUrl, brand.Detail));
+            brand.AddDomainEvent(new BrandRegisteredEvent(brand));
             await _context.Brands.AddAsync(brand, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Saved"]);
@@ -89,7 +89,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
                 uploadRequest.FileName = $"B-{command.Name}{uploadRequest.Extension}";
                 brand.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
             }
-            brand.AddDomainEvent(new BrandUpdatedEvent(brand.Id, brand.Name, brand.ImageUrl, brand.Detail));
+            brand.AddDomainEvent(new BrandUpdatedEvent(brand));
             _context.Brands.Update(brand);
             await _context.SaveChangesAsync(cancellationToken);
             await _cache.RemoveAsync(CatalogCacheKeys.GetBrandByIdCacheKey(command.Id), cancellationToken);
