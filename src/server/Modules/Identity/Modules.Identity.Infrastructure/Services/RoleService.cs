@@ -12,6 +12,7 @@ using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentPOS.Modules.Identity.Core.Features.Roles.Events;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
@@ -19,6 +20,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
     {
         private readonly RoleManager<FluentRole> _roleManager;
         private readonly UserManager<FluentUser> _userManager;
+        private readonly IIdentityDbContext _context;
         private readonly IStringLocalizer<RoleService> _localizer;
         private readonly IMapper _mapper;
 
@@ -26,11 +28,13 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             RoleManager<FluentRole> roleManager,
             IMapper mapper,
             UserManager<FluentUser> userManager,
+            IIdentityDbContext context,
             IStringLocalizer<RoleService> localizer)
         {
             _roleManager = roleManager;
             _mapper = mapper;
             _userManager = userManager;
+            _context = context;
             _localizer = localizer;
         }
 
@@ -58,6 +62,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             }
             if (roleIsNotUsed)
             {
+                existingRole.AddDomainEvent(new RoleDeletedEvent(id));
                 await _roleManager.DeleteAsync(existingRole);
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Role {0} Deleted."], existingRole.Name));
             }
@@ -87,7 +92,10 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             {
                 var existingRole = await _roleManager.FindByNameAsync(request.Name);
                 if (existingRole != null) throw new IdentityException(_localizer["Similar Role already exists."], statusCode: System.Net.HttpStatusCode.BadRequest);
-                var response = await _roleManager.CreateAsync(new FluentRole(request.Name, request.Description));
+                var newRole = new FluentRole(request.Name, request.Description);
+                var response = await _roleManager.CreateAsync(newRole);
+                newRole.AddDomainEvent(new RoleAddedEvent(newRole));
+                await _context.SaveChangesAsync();
                 if (response.Succeeded)
                 {
                     return await Result<string>.SuccessAsync(string.Format(_localizer["Role {0} Created."], request.Name));
@@ -108,6 +116,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 existingRole.Name = request.Name;
                 existingRole.NormalizedName = request.Name.ToUpper();
                 existingRole.Description = request.Description;
+                existingRole.AddDomainEvent(new RoleUpdatedEvent(existingRole));
                 await _roleManager.UpdateAsync(existingRole);
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Role {0} Updated."], existingRole.Name));
             }

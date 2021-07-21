@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Controllers
 {
-    internal class RolesController : BaseController
+    internal sealed class RolesController : BaseController
     {
         private readonly IRoleService _roleService;
         private readonly IRoleClaimService _roleClaimService;

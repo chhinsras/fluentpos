@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.People.Controllers
 {
-    internal class CustomersController : BaseController
+    internal sealed class CustomersController : BaseController
     {
         [HttpGet]
         [Authorize(Policy = Permissions.Customers.ViewAll)]

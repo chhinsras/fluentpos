@@ -10,10 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace FluentPOS.Modules.People.Controllers
+namespace FluentPOS.Modules.People.Controllers.ExtendedAttributes
 {
     [Route(BaseController.BasePath + "/" + nameof(Customer) + "/attributes")]
-    public class CustomerExtendedAttributesController : ExtendedAttributesController<Guid, Customer>
+    internal sealed class CustomerExtendedAttributesController : ExtendedAttributesController<Guid, Customer>
     {
         private IMediator _mediatorInstance;
         protected override IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();

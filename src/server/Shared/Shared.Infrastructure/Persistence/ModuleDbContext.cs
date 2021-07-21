@@ -1,18 +1,17 @@
-﻿using FluentPOS.Shared.Core.Contracts;
-using FluentPOS.Shared.Core.Domain;
+﻿using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.EventLogging;
 using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Interfaces;
 
 namespace FluentPOS.Shared.Infrastructure.Persistence
 {
-    public abstract class ModuleDbContext : DbContext
+    public abstract class ModuleDbContext : DbContext, IModuleDbContext
     {
         private readonly IMediator _mediator;
         private readonly IEventLogger _eventLogger;
@@ -45,25 +44,17 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var domainEntities = this.ChangeTracker
-                .Entries<IBaseEntity>()
-                .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any());
+            return await this.SaveChangeWithPublishEventsAsync(_eventLogger, _mediator, cancellationToken);
+        }
 
-            var domainEvents = domainEntities
-                .SelectMany(x => x.Entity.DomainEvents)
-                .ToList();
+        public override int SaveChanges()
+        {
+            return this.SaveChangeWithPublishEvents(_eventLogger, _mediator);
+        }
 
-            domainEntities.ToList()
-                .ForEach(entity => entity.Entity.ClearDomainEvents());
-
-            var tasks = domainEvents
-                .Select(async (domainEvent) =>
-                {
-                    await _eventLogger.Save(domainEvent);
-                    await _mediator.Publish(domainEvent, cancellationToken);
-                });
-            await Task.WhenAll(tasks);
-            return (await base.SaveChangesAsync(true, cancellationToken));
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            return SaveChanges();
         }
     }
 }

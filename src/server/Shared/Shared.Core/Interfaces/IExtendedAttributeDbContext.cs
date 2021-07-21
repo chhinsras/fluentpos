@@ -2,12 +2,10 @@
 using FluentPOS.Shared.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace FluentPOS.Shared.Core.Interfaces
 {
-    public interface IExtendedAttributeDbContext<TEntityId, TEntity, TExtendedAttribute>
+    public interface IExtendedAttributeDbContext<TEntityId, TEntity, TExtendedAttribute> : IDbContext
         where TExtendedAttribute : ExtendedAttribute<TEntityId, TEntity>
         where TEntity : class, IEntity<TEntityId>
     {
@@ -17,7 +15,5 @@ namespace FluentPOS.Shared.Core.Interfaces
         protected DbSet<TEntity> GetEntities();
 
         public DbSet<TExtendedAttribute> ExtendedAttributes { get; set; }
-
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

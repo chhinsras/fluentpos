@@ -2,7 +2,6 @@
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Helpers;
-using FluentPOS.Modules.Identity.Infrastructure.Persistence;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using FluentPOS.Shared.Core.Wrapper;
@@ -14,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentPOS.Modules.Identity.Core.Features.RoleClaims.Events;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
@@ -24,7 +24,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         private readonly ICurrentUser _currentUserService;
         private readonly IStringLocalizer<RoleClaimService> _localizer;
         private readonly IMapper _mapper;
-        private readonly IdentityDbContext _db;
+        private readonly IIdentityDbContext _db;
 
         public RoleClaimService(
             RoleManager<FluentRole> roleManager,
@@ -32,7 +32,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             ICurrentUser currentUserService,
             IStringLocalizer<RoleClaimService> localizer,
             IMapper mapper,
-            IdentityDbContext db)
+            IIdentityDbContext db)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -93,6 +93,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 }
                 var roleClaim = _mapper.Map<FluentRoleClaim>(request);
                 await _db.RoleClaims.AddAsync(roleClaim);
+                roleClaim.AddDomainEvent(new RoleClaimAddedEvent(roleClaim));
                 await _db.SaveChangesAsync();
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Role Claim {0} created."], request.Value));
             }
@@ -114,6 +115,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     existingRoleClaim.Description = request.Description;
                     existingRoleClaim.RoleId = request.RoleId;
                     _db.RoleClaims.Update(existingRoleClaim);
+                    existingRoleClaim.AddDomainEvent(new RoleClaimUpdatedEvent(existingRoleClaim));
                     await _db.SaveChangesAsync();
                     return await Result<string>.SuccessAsync(string.Format(_localizer["Role Claim {0} for Role {1} updated."], request.Value, existingRoleClaim.Role.Name));
                 }
@@ -132,6 +134,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     return await Result<string>.FailAsync(string.Format(_localizer["Not allowed to delete Permissions for {0} Role."], existingRoleClaim.Role.Name));
                 }
 
+                existingRoleClaim.AddDomainEvent(new RoleClaimDeletedEvent(id));
                 _db.RoleClaims.Remove(existingRoleClaim);
                 await _db.SaveChangesAsync();
                 return await Result<string>.SuccessAsync(string.Format(_localizer["Role Claim {0} for {1} Role deleted."], existingRoleClaim.ClaimValue, existingRoleClaim.Role?.Name));
@@ -144,14 +147,14 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
 
         public async Task<Result<PermissionResponse>> GetAllPermissionsAsync(string roleId)
         {
-            var model = new PermissionResponse();
+            var response = new PermissionResponse();
             var allPermissions = new List<RoleClaimResponse>();
             allPermissions.GetAllPermissions();
             var role = await _roleManager.FindByIdAsync(roleId);
             if (role != null)
             {
-                model.RoleId = role.Id;
-                model.RoleName = role.Name;
+                response.RoleId = role.Id;
+                response.RoleName = role.Name;
                 var allRoleClaims = await GetAllAsync();
                 var roleClaimsResult = await GetAllByRoleIdAsync(role.Id);
                 if (roleClaimsResult.Succeeded)
@@ -181,12 +184,12 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 }
                 else
                 {
-                    model.RoleClaims = new List<RoleClaimResponse>();
+                    response.RoleClaims = new List<RoleClaimResponse>();
                     return await Result<PermissionResponse>.FailAsync(roleClaimsResult.Messages);
                 }
             }
-            model.RoleClaims = allPermissions;
-            return await Result<PermissionResponse>.SuccessAsync(model);
+            response.RoleClaims = allPermissions;
+            return await Result<PermissionResponse>.SuccessAsync(response);
         }
 
         public async Task<Result<string>> UpdatePermissionsAsync(PermissionRequest request)
