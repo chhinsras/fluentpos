@@ -8,16 +8,16 @@
   <div style="margin: 0 26px 0 16px">
     <div class="left">
       <a mat-raised-button color="primary" (click)="openCreateForm()">
-        <mat-icon>add</mat-icon> Register New {{ title }}
+        <mat-icon>add</mat-icon> {{'components.table.register'|translate}} {{ title }}
       </a>
       <a mat-raised-button color="accent" (click)="handleReload()">
-        <mat-icon>refresh</mat-icon> Reload
+        <mat-icon>refresh</mat-icon> {{'components.table.reload'|translate}}
       </a>
     </div>
     <div class="right" *ngIf="isFilterable">
       <mat-form-field>
         <input matInput [(ngModel)]="searchString" name="searchString" type="text" autocomplete="off"
-          (keyup)="handleFilter()" placeholder="Filter {{ title }}" />
+          (keyup)="handleFilter()" placeholder="{{'components.table.filter'|translate}} {{ title }}" />
       </mat-form-field>
     </div>
   </div>

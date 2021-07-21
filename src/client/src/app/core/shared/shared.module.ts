@@ -13,6 +13,7 @@ import { BrandApiService } from '../api/catalog/brand-api.service';
 import { CategoryApiService } from '../api/catalog/category-api.service';
 import { ProductApiService } from '../api/catalog/product-api.service';
 import { CustomerApiService } from '../api/people/customer-api.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { CustomerApiService } from '../api/people/customer-api.service';
     ReactiveFormsModule,
     MaterialModule,
     FormsModule,
+    TranslateModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,

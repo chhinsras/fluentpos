@@ -1,6 +1,19 @@
 {
     "site": {
-        "title": "fluentpos"
+        "title": "fluentpos",
+        "fork": "Fork this repository!",
+        "support": "Support fluentpos"
+    },
+    "layouts": {
+        "admin": {
+            "catalogSubhead": "Catalog Management",
+            "brands": "Brands",
+            "categories": "Categories",
+            "products": "Products",
+            "peopleSubhead": "People Management",
+            "customers": "Customers",
+            "about": "About"
+        }
     },
     "dashboard": {
         "title": "Dashboard",
@@ -8,7 +21,8 @@
     },
     "about": {
         "title": "About",
-        "subtitle": "Everything about fluentpos."
+        "subtitle": "Everything about fluentpos.",
+        "header": "Core Team"
     },
     "settings": {
         "title": "Settings",
@@ -31,15 +45,45 @@
             "title": "Logout",
             "message": "Do you want to logout?",
             "button": "Logout"
+        },
+        "delete": {
+            "title": "Delete Confirmation",
+            "buttons": {
+                "cancel": "Cancel",
+                "confirm": "Confirm"
+            }
+        }
+    },
+    "components": {
+        "notFound": {
+            "header": "Page not found.",
+            "text": "The page you were looking for could not be found.It might have been removed,renamed or did not exist in the first place.",
+            "button": "Go Home"
+        },
+        "serverError": {
+            "text": "server-error works!"
+        },
+        "table": {
+            "register": "Register New",
+            "reload": "Reload",
+            "filter": "Filter"
         }
     },
     "common": {
         "cancel": "Cancel",
         "ok": "Ok",
         "yes": "Yes",
-        "no": "No",
+        "no": "No"
+    },
+    "social": {
         "blog": "Blog",
+        "site": "Personal Site",
         "linkedin": "LinkedIn",
-        "github": "Github"
+        "github": "Github",
+        "facebook": "Facebook",
+        "habr": "Habr",
+        "medium": "Medium",
+        "devto": "DevTo",
+        "support": "Support"
     }
 }

@@ -1,10 +1,28 @@
 {
     "site": {
-        "title": "fluentpos"
+        "title": "fluentpos",
+        "fork": "Сделать Fork репозитория!",
+        "support": "Поддержать fluentpos"
+    },
+    "layouts": {
+        "admin": {
+            "catalogSubhead": "Управление каталогом",
+            "brands": "Бренды",
+            "categories": "Категории",
+            "products": "Продукты",
+            "peopleSubhead": "Управление персоналом",
+            "customers": "Клиенты",
+            "about": "О проекте"
+        }
     },
     "dashboard": {
         "title": "Dashboard",
         "subtitle": "Краткий обзор вашего бизнеса."
+    },
+    "about": {
+        "title": "О проекте",
+        "subtitle": "Всё о fluentpos.",
+        "header": "Основная команда"
     },
     "settings": {
         "title": "Настройки",
@@ -27,6 +45,28 @@
             "title": "Выход",
             "message": "Вы хотите выйти из системы?",
             "button": "Выход"
+        },
+        "delete": {
+            "title": "Подтверждение удаления",
+            "buttons": {
+                "cancel": "Отмена",
+                "confirm": "Подтвердить"
+            }
+        }
+    },
+    "components": {
+        "notFound": {
+            "header": "Страница не найдена.",
+            "text": "Страница, которую вы ищете, не найдена. Возможно, она была удалена, переименована или вообще не существует.",
+            "button": "На домашнюю страницу"
+        },
+        "serverError": {
+            "text": "Ошибка сервера работает!"
+        },
+        "table": {
+            "register": "Зарегистрировать",
+            "reload": "Перезагрузить",
+            "filter": "Фильтровать"
         }
     },
     "common": {
@@ -34,5 +74,16 @@
         "ok": "Ок",
         "yes": "Да",
         "no": "Нет"
+    },
+    "social": {
+        "blog": "Блог",
+        "site": "Персональный сайт",
+        "linkedin": "LinkedIn",
+        "github": "Github",
+        "facebook": "Facebook",
+        "habr": "Хабр",
+        "medium": "Medium",
+        "devto": "DevTo",
+        "support": "Поддержать"
     }
 }
