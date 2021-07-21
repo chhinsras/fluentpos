@@ -1,22 +1,23 @@
 ﻿using FluentPOS.Shared.Core.Domain;
 using System;
+using FluentPOS.Modules.Catalog.Core.Entities;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Events
 {
     public class CategoryUpdatedEvent : Event
     {
-        public CategoryUpdatedEvent(Guid id, string name, string imageUrl, string detail)
-        {
-            Name = name;
-            ImageUrl = imageUrl;
-            Detail = detail;
-            Id = id;
-            AggregateId = id;
-        }
-
         public Guid Id { get; }
         public string Name { get; }
         public string ImageUrl { get; }
         public string Detail { get; }
+
+        public CategoryUpdatedEvent(Category category)
+        {
+            Name = category.Name;
+            ImageUrl = category.ImageUrl;
+            Detail = category.Detail;
+            Id = category.Id;
+            AggregateId = category.Id;
+        }
     }
 }
