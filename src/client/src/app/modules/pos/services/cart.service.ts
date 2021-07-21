@@ -10,7 +10,13 @@ export class CartService {
   private cartItems: Cart[] = [];
   constructor() { }
   add(productId: string, quantity: number = 1) {
-    this.cartItems.push(new Cart(productId, quantity ?? 1));
+    var foundItem = this.cartItems.find(a => a.productId == productId);
+    if (foundItem) {
+      foundItem.quantity = foundItem.quantity + quantity;
+    }
+    else {
+      this.cartItems.push(new Cart(productId, quantity ?? 1));
+    }
     this.cartItems$.next(this.cartItems);
   }
   get(): Observable<Cart[]> {

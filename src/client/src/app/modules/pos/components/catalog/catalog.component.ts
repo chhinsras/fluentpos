@@ -55,6 +55,6 @@ export class CatalogComponent implements OnInit {
   addToCart(productId: string) {
     console.log(productId);
     this.toast.info('Added ' + productId);
-    this.cartService.add(productId, 5);
+    this.cartService.add(productId, 1);
   }
 }
