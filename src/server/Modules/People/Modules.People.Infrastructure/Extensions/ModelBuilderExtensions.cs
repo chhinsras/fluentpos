@@ -1,4 +1,4 @@
-﻿using FluentPOS.Modules.People.Core.Entities;
+﻿using FluentPOS.Modules.People.Core.Entities.ExtendedAttributes;
 using FluentPOS.Shared.Core.Settings;
 using Microsoft.EntityFrameworkCore;
 

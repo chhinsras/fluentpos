@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
+using FluentPOS.Modules.People.Core.Entities.ExtendedAttributes;
 
 namespace FluentPOS.Modules.People.Infrastructure.Persistence
 {
