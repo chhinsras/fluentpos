@@ -6,6 +6,7 @@ import { AuthGuard } from '../../core/guards/auth.guard';
 import { CatalogComponent } from './catalog/catalog.component';
 import { PeopleComponent } from './people/people.component';
 import { AboutComponent } from './about/about.component';
+import { IdentityComponent } from './identity/identity.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,12 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent
+  },
+  {
+    path: 'identity',
+    canActivate: [AuthGuard],
+    component: IdentityComponent,
+    loadChildren: () => import('./identity/identity.module').then(mod => mod.IdentityModule),
   },
   {
     path: 'about',

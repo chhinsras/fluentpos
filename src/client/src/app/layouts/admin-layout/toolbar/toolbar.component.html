@@ -32,7 +32,7 @@
                     <mat-card-subtitle style="margin-bottom: 5px;font-size:small">{{email}}</mat-card-subtitle>
                 </mat-card-header>
             </mat-card>
-            <button mat-menu-item translate>userCard.profile</button>
+            <button mat-menu-item translate routerLink="/admin/identity/profile">userCard.profile</button>
             <button mat-menu-item routerLink="/admin/settings" translate>userCard.settings</button>
             <mat-divider></mat-divider>
             <button mat-menu-item (click)="openLogoutDialog()" translate>userCard.logout</button>
