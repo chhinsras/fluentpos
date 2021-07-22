@@ -49,7 +49,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             if (existingRole == null) throw new IdentityException("Role Not Found", statusCode: System.Net.HttpStatusCode.NotFound);
             if (DefaultRoles().Contains(existingRole.Name))
             {
-                return await Result<string>.SuccessAsync(string.Format(_localizer["Not allowed to delete {0} Role."], existingRole.Name));
+                return await Result<string>.FailAsync(string.Format(_localizer["Not allowed to delete {0} Role."], existingRole.Name));
             }
             bool roleIsNotUsed = true;
             var allUsers = await _userManager.Users.ToListAsync();
@@ -64,11 +64,11 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             {
                 existingRole.AddDomainEvent(new RoleDeletedEvent(id));
                 await _roleManager.DeleteAsync(existingRole);
-                return await Result<string>.SuccessAsync(string.Format(_localizer["Role {0} Deleted."], existingRole.Name));
+                return await Result<string>.SuccessAsync(existingRole.Id, string.Format(_localizer["Role {0} Deleted."], existingRole.Name));
             }
             else
             {
-                return await Result<string>.SuccessAsync(string.Format(_localizer["Not allowed to delete {0} Role as it is being used."], existingRole.Name));
+                return await Result<string>.FailAsync(string.Format(_localizer["Not allowed to delete {0} Role as it is being used."], existingRole.Name));
             }
         }
 
