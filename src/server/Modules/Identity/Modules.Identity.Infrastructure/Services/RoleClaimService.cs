@@ -105,7 +105,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                         .SingleOrDefaultAsync(x => x.Id == request.Id);
                 if (existingRoleClaim == null)
                 {
-                    return await Result<string>.SuccessAsync(_localizer["Role Claim does not exist."]);
+                    return await Result<string>.FailAsync(_localizer["Role Claim does not exist."]);
                 }
                 else
                 {

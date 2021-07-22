@@ -77,7 +77,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands
 
         public async Task<Result<Guid>> Handle(UpdateExtendedAttributeCommand<TEntityId, TEntity> command, CancellationToken cancellationToken)
         {
-            var extendedAttribute = await _context.ExtendedAttributes.Where(ea => ea.Id.Equals(command.Id)).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+            var extendedAttribute = await _context.ExtendedAttributes.Where(ea => ea.Id.Equals(command.Id)).FirstOrDefaultAsync(cancellationToken);
             if (extendedAttribute == null) throw new CustomException(string.Format(_localizer["{0} Extended Attribute Not Found!"], typeof(TEntity).Name), statusCode: HttpStatusCode.NotFound);
 
             if (!extendedAttribute.EntityId.Equals(command.EntityId)) throw new CustomException(string.Format(_localizer["{0} Not Found"], typeof(TEntity).Name), statusCode: HttpStatusCode.NotFound);
@@ -86,7 +86,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands
                 .AnyAsync(ea => ea.Id != extendedAttribute.Id && ea.EntityId.Equals(command.EntityId) && ea.Key.Equals(command.Key), cancellationToken);
             if (isKeyUsed) throw new CustomException(string.Format(_localizer["This {0} Key Is Already Used For This Entity"], typeof(TEntity).Name), statusCode: HttpStatusCode.NotFound);
 
-            extendedAttribute = _mapper.Map<TExtendedAttribute>(command);
+            extendedAttribute = _mapper.Map(command, extendedAttribute);
             extendedAttribute.AddDomainEvent(new ExtendedAttributeUpdatedEvent<TEntityId, TEntity>(extendedAttribute));
             _context.ExtendedAttributes.Update(extendedAttribute);
             await _context.SaveChangesAsync(cancellationToken);
