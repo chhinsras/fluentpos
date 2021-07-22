@@ -85,5 +85,10 @@
         "medium": "Medium",
         "devto": "DevTo",
         "support": "Support"
+    },
+    "profile": {
+        "title":"Profile",
+        "subtitle": "Manage Profile"
+
     }
 }

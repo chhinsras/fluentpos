@@ -5,6 +5,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { MaterialModule } from 'src/app/core/material/material.module';
 import { SharedModule } from 'src/app/core/shared/shared.module';
 import { IdentityRoutingModule } from './identity-routing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -17,7 +18,8 @@ import { IdentityRoutingModule } from './identity-routing.module';
     CommonModule,
     IdentityRoutingModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    TranslateModule
   ]
 })
 export class IdentityModule { }
