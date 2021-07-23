@@ -55,6 +55,11 @@
         }
     },
     "components": {
+        "accessdenial": {
+            "header": "Access Denial.",
+            "text": "You do not have permission to access the page you were looking for, contact to system administator.",
+            "button": "Go Home"
+        },
         "notFound": {
             "header": "Page not found.",
             "text": "The page you were looking for could not be found.It might have been removed,renamed or did not exist in the first place.",

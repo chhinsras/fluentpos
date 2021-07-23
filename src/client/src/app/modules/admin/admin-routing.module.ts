@@ -12,7 +12,11 @@ import { PermissionGuard } from 'src/app/core/guards/permission.guard';
 const routes: Routes = [
   {
     path: '',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [PermissionGuard],
+    data: {
+      allowedPermissions: ['Permissions.Dashboard.View']
+    }
   },
   {
     path: 'dashboard',
