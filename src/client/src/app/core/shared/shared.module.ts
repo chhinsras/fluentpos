@@ -14,6 +14,7 @@ import { CategoryApiService } from '../api/catalog/category-api.service';
 import { ProductApiService } from '../api/catalog/product-api.service';
 import { CustomerApiService } from '../api/people/customer-api.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { AccessDenialComponent } from './components/access-denial/access-denial.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
     PaginationComponent,
     TableComponent,
     DataPropertyGetterPipe,
+    AccessDenialComponent,
   ],
   imports: [
     CommonModule,

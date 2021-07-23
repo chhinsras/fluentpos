@@ -22,6 +22,7 @@ export class PermissionGuard implements CanActivate {
 
     if (!isAuthorized) {
       this.toastrService.warning("You are not authoroized to access the resource");
+      this.router.navigateByUrl('access-denial');
     }
 
     return isAuthorized;
