@@ -7,6 +7,7 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { PeopleComponent } from './people/people.component';
 import { AboutComponent } from './about/about.component';
 import { IdentityComponent } from './identity/identity.component';
+import { PermissionGuard } from 'src/app/core/guards/permission.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +16,11 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [PermissionGuard],
+    data: {
+      allowedPermissions: ['Permissions.Dashboard.View']
+    }
   },
   {
     path: 'settings',

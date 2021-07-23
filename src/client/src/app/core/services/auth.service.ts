@@ -47,6 +47,18 @@ export class AuthService {
     return false;
   }
 
+  public isAuthorized(allowedPermissions: string[]): boolean {
+    if (allowedPermissions == null || allowedPermissions.length === 0) {
+      return true;
+    }
+    const decodeToken = this.getDecodedToken;
+    if (!decodeToken) {
+      console.log('Invalid token');
+      return false;
+    }
+    return allowedPermissions.includes(decodeToken['Permission']);
+  }
+
   private get getStorageRefreshToken(): string {
     return this.localStorage.getItem('refreshToken');
   }
@@ -132,5 +144,7 @@ export class AuthService {
     const decodedToken = jwtService.decodeToken(token);
     return decodedToken;
   }
+
+
 
 }

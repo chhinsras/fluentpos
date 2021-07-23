@@ -1,15 +1,30 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PermissionGuard implements CanActivate {
+  constructor(
+    private authService: AuthService,
+    private toastrService: ToastrService,
+    private router: Router
+  ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+    
+    const allowedPermissions = route.data.allowedPermissions;
+    const isAuthorized = this.authService.isAuthorized(allowedPermissions);
+
+    if (!isAuthorized) {
+      this.toastrService.warning("You are not authoroized to access the resource");
+    }
+
+    return isAuthorized;
   }
   
 }
