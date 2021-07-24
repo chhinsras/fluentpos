@@ -1,7 +1,5 @@
-<div class="c-card">
-    <div>
-        <h1>Cart</h1>
-        <div style="min-height:58vh;max-height:58vh;overflow:auto;">
+
+        <div style="height: calc(100vh-10px);overflow:auto;">
             <div *ngIf="cartItems">
                 <div *ngFor="let item of cartItems" class="row"
                     style="margin:2px;padding:15px;background: rgba(0,0,0,.05);border-radius: 5px;">
@@ -16,6 +14,8 @@
                     </div>
                 </div>
             </div>
+            <div *ngIf="!cartItems" style="height: 90vh!important;">
+                    <mat-icon>shopping_cart</mat-icon>
+                    No Items Added Yet!              
+            </div>
         </div>
-    </div>
-</div>

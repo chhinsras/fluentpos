@@ -12,6 +12,8 @@ import { ProductInfoComponent } from './components/product-info/product-info.com
 
 import { SharedModule } from 'src/app/core/shared/shared.module';
 import { CartComponent } from './components/cart/cart.component';
+import { PosToolbarComponent } from './components/pos-toolbar/pos-toolbar.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -21,13 +23,15 @@ import { CartComponent } from './components/cart/cart.component';
     CustomerSelectionComponent,
     CustomerInfoComponent,
     ProductInfoComponent,
-    CartComponent
+    CartComponent,
+    PosToolbarComponent
   ],
   imports: [
     CommonModule,
     PosRoutingModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    TranslateModule
   ]
 })
 export class PosModule { }

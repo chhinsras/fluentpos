@@ -1,32 +1,15 @@
-<div class="pos-center-screen">
-    <div class="row">
-        <div class="col-md-8 col-xl-8 u-mr-auto">
-            <div class="c-card background-color-primary" style="color: white;">
-                <div>
-                    <div>
-                        <h1 style="margin-bottom: 0px;">Point Of Sales</h1>
-                        <span>Logged In as</span>
-                    </div>
-                    <p></p>
-                    <button mat-raised-button routerLink="/home">
-                        <span><span style="margin-right: 10px;" class="fas fa-home"></span>Home</span>
-                    </button>
-                    <button mat-raised-button>
-                        <span><span style="margin-right: 10px;" class="fas fa-home"></span>Toggle View</span>
-                    </button>
-                    <button mat-raised-button (click)="toggleDarkMode()">
-                        <span><span style="margin-right: 10px;" class="fas fa-home"></span>Toggle Dark Mode</span>
-                    </button>
-                    <button mat-raised-button>
-                        <span><span style="margin-right: 10px;" class="fas fa-home"></span>Hold</span>
-                    </button>
-                </div>
+<mat-sidenav-container class='sidenav-container'> 
+    <mat-sidenav #sidenav class="sidenav" disableClose="false" mode="side" position="end">
+        <mat-nav-list style="padding-top: 0;">
+            <div style="padding: 10px;">
+                <app-cart></app-cart>
             </div>
+        </mat-nav-list>
+    </mat-sidenav>
+    <app-pos-toolbar [cart]="sidenav"></app-pos-toolbar>
+    <div class="content">
+        <div class="container">
             <app-catalog></app-catalog>
         </div>
-        <div class="col-md-4 col-xl-4 u-ml-auto">
-            <app-customer></app-customer>
-            <app-cart></app-cart>
-        </div>
     </div>
-</div>
+</mat-sidenav-container>

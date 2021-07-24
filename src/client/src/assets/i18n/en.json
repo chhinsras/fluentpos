@@ -92,8 +92,12 @@
         "support": "Support"
     },
     "profile": {
-        "title":"Profile",
+        "title": "Profile",
         "subtitle": "Manage Profile"
-
+    },
+    "pos": {
+        "title": "Point Of Sales",
+        "selectCustomer":"Select a Cutomer",
+        "changeCustomer":"Change"
     }
 }

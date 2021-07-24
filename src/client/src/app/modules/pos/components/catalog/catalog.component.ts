@@ -25,7 +25,7 @@ export class CatalogComponent implements OnInit {
   constructor(private posService: PosService, private toast: ToastrService, private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.productParams.pageSize = 10;
+    this.productParams.pageSize = 30;
     this.brandParams.pageSize = 5;
     this.getProducts();
     this.getBrands();
@@ -53,8 +53,6 @@ export class CatalogComponent implements OnInit {
     }
   }
   addToCart(productId: string) {
-    console.log(productId);
-    this.toast.info('Added ' + productId);
     this.cartService.add(productId, 1);
   }
 }
