@@ -56,7 +56,10 @@ export class AuthService {
       console.log('Invalid token');
       return false;
     }
-    return allowedPermissions.some(a => decodeToken['Permission'].includes(a));
+    const permissions = decodeToken['Permission'];
+    if (permissions === undefined || permissions.length === 0) return false;
+    
+    return allowedPermissions.some(a => permissions.includes(a));
   }
 
   private get getStorageRefreshToken(): string {
