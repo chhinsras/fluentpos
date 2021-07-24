@@ -35,8 +35,13 @@
         </div>
     </div>
     <div *ngIf="!cartItems|| cartItems.length==0" style="height: 60vh!important;">
-        <mat-icon>shopping_cart</mat-icon>
-        No Items Added Yet!
+        <mat-card>
+            <mat-card-content style="padding: 40px;text-align: center;opacity: 60%;">
+                <h2 translate>
+                    pos.cartEmpty</h2>
+                <p translate>pos.startAddingProducts</p>
+            </mat-card-content>
+        </mat-card>
     </div>
 
 </div>
