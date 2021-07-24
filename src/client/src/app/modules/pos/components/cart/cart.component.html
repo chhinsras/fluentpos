@@ -1,21 +1,25 @@
-
-        <div style="height: calc(100vh-10px);overflow:auto;">
-            <div *ngIf="cartItems">
-                <div *ngFor="let item of cartItems" class="row"
-                    style="margin:2px;padding:15px;background: rgba(0,0,0,.05);border-radius: 5px;">
-                    <div class="col-6">
-                        <h4 style="margin: 0px!important;">{{item.productId}}</h4>
-                        {{item.quantity}}
-                    </div>
-                    <div style="align-self: center;text-align: right;" class="col-6">
-                        <button mat-raised-button color="danger">
-                            <span><span style="margin-right: 10px;" class="fas fa-minus"></span>Remove</span>
-                        </button>
-                    </div>
-                </div>
+<div style="height: calc(100vh-10px);overflow:auto;">
+    <div *ngIf="cartItems">
+        <div *ngFor="let item of cartItems" class="row" style="margin:2px;padding:15px;background: rgba(0,0,0,.05);border-radius: 5px;">
+            <div class="col-2" style="font-size: large;align-self: center;">
+                X {{item.quantity}}
             </div>
-            <div *ngIf="!cartItems" style="height: 90vh!important;">
-                    <mat-icon>shopping_cart</mat-icon>
-                    No Items Added Yet!              
+            <div class="col-5" style="align-self: center;">
+                <h4 style="margin: 0px!important;">{{item.displayName}}</h4>
+            </div>
+            <div style="align-self: center;text-align: right;" class="col-5">
+                <button mat-icon-button (click)="increaseQuantity(item.productId)">
+                    <mat-icon>north</mat-icon>
+                  </button>
+                <button (click)="reduceQuantity(item.productId)" mat-icon-button>
+                    <mat-icon *ngIf=" item.quantity > 1 ">south</mat-icon>
+                    <mat-icon *ngIf=" item.quantity <=1 ">delete</mat-icon>
+                  </button>
             </div>
         </div>
+    </div>
+    <div *ngIf="!cartItems " style="height: 90vh!important; ">
+        <mat-icon>shopping_cart</mat-icon>
+        No Items Added Yet!
+    </div>
+</div>

@@ -5,6 +5,7 @@ import { map } from 'rxjs/internal/operators/map';
 import { ProductApiService } from 'src/app/core/api/catalog/product-api.service';
 import { IResult } from 'src/app/core/models/wrappers/IResult';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
+import { Result } from 'src/app/core/models/wrappers/Result';
 import { Product } from '../models/product';
 import { ProductParams } from '../models/productParams';
 
@@ -33,8 +34,8 @@ export class ProductService {
       .pipe(map((response: PaginatedResult<Product>) => response));
   }
 
-  getProductById(id: string): Observable<Product> {
-    return this.api.getById(id).pipe(map((response: Product) => response));
+  getProductById(id: string): Observable<Result<Product>> {
+    return this.api.getById(id).pipe(map((response: Result<Product>) => response));
   }
 
   createProduct(product: Product): Observable<IResult<Product>> {

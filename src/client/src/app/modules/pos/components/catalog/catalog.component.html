@@ -3,16 +3,14 @@
         <div class="col-md-4 col-xl-4">
             <mat-form-field appearance="fill">
                 <mat-label>Filter Products</mat-label>
-                <input matInput autocomplete="off" placeholder="Search For Products" [(ngModel)]="searchString"
-                    name="searchString" type="text" autocomplete="off" (keyup)="doFilter()" />
+                <input matInput autocomplete="off" placeholder="Search For Products" [(ngModel)]="searchString" name="searchString" type="text" autocomplete="off" (keyup)="doFilter()" />
             </mat-form-field>
         </div>
         <div class="col-md-4 col-xl-4">
             <form>
                 <mat-form-field appearance="fill" *ngIf="brands && brands.data">
                     <mat-label>Filter Brands</mat-label>
-                    <input type="text" placeholder="Brand Selection" aria-label="Filter Brands" matInput
-                        [matAutocomplete]="auto" [formControl]="brandAutoComplete">
+                    <input type="text" placeholder="Brand Selection" aria-label="Filter Brands" matInput [matAutocomplete]="auto" [formControl]="brandAutoComplete">
                     <mat-autocomplete #auto="matAutocomplete" [displayWith]="getBrandName.bind(this)">
                         <mat-option *ngFor="let brand of brands.data" [value]="brand.id">
                             {{brand.name}}
@@ -25,8 +23,7 @@
             <form>
                 <mat-form-field *ngIf="brands && brands.data" appearance="fill">
                     <mat-label>Filter Categories</mat-label>
-                    <input type="text" placeholder="Category Selection" aria-label="Filter Categories" matInput
-                        [matAutocomplete]="auto">
+                    <input type="text" placeholder="Category Selection" aria-label="Filter Categories" matInput [matAutocomplete]="auto">
                     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                         <mat-option *ngFor="let brand of brands.data" [value]="brand.name">
                             {{brand.name}}
@@ -38,20 +35,27 @@
             </form>
         </div>
     </div>
-    <div style="max-height:80vh;overflow:auto;">
+    <div>
         <div *ngIf="products && products.data">
-            <div *ngFor="let product of products.data" class="row"
-                style="margin:2px;padding:15px;background: rgba(0,0,0,.05);border-radius: 5px;">
-                <div class="col-6">
-                    <h2 style="margin: 0px!important;">{{product.name}}</h2>
-                    {{product.localeName}}
-                    <br>
-                    {{product.price}}
-                </div>
-                <div style="align-self: center;text-align: right;" class="col-6">
-                    <button mat-raised-button color="accent" (click)="addToCart(product.id)">
-                        <span><span style="margin-right: 10px;" class="fas fa-plus"></span>Add</span>
-                    </button>
+            <div class="row">
+                <div *ngFor="let product of products.data" class="col-xs-12 col-sm-6 col-md-3" style="border-radius: 5px;">
+                    <mat-card class="example-card">
+                        <img mat-card-image src="https://cdn.thewirecutter.com/wp-content/media/2020/12/macbook-2048px-9-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024">
+                        <mat-card-content style="padding: 0!important;">
+                            <h3>
+                                {{product.name}}
+                            </h3>
+                            {{product.localeName}}
+                        </mat-card-content>
+                        <mat-card-actions style="padding:0px 0px 0px 10px">
+                            <button mat-raised-button color="accent" (click)="addToCart(product.id)">
+                                <span><span style="margin-right: 10px;" class="fas fa-plus"></span>Add</span>
+                            </button>
+                            <button mat-raised-button color="info" (click)="addToCart(product.id)">
+                                <span><span style="margin-right: 10px;" class="fas fa-plus"></span>Add</span>
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
                 </div>
             </div>
         </div>

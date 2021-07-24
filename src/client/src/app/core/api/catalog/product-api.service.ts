@@ -2,6 +2,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import { Product } from 'src/app/modules/admin/catalog/models/product';
 import {environment} from 'src/environments/environment';
+import { Result } from '../../models/wrappers/Result';
 
 @Injectable()
 export class ProductApiService {
@@ -16,7 +17,7 @@ export class ProductApiService {
   }
 
   getById(id: string) {
-    return this.http.get<Product>(this.baseUrl + id);
+    return this.http.get<Result<Product>>(this.baseUrl + id);
   }
 
   create(product: Product) {

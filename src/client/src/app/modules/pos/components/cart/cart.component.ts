@@ -18,5 +18,12 @@ export class CartComponent implements OnInit {
       console.log(data);
     })
   }
-
+  increaseQuantity(productId)
+  {
+   this.cartService.add(productId); 
+  }
+  reduceQuantity(productId)
+  {
+    this.cartService.reduce(productId); 
+  }
 }

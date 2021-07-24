@@ -46,6 +46,11 @@ export class PosService {
       .getAlls(params)
       .pipe(map((response: PaginatedResult<Product>) => response));
   }
+  getProductById(id: string): Observable<Result<Product>> {
+    return this.productApi.getById(id).pipe(
+      map((response: Result<Product>) => response)
+    );
+  }
   getBrands(brandParams: BrandParams): Observable<PaginatedResult<Brand>> {
     let params = new HttpParams();
     if (brandParams.searchString)

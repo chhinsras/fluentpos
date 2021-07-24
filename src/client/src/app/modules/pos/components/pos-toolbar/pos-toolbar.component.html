@@ -8,8 +8,7 @@
         </a>
         <span class="nav-spacer"></span>
         <mat-divider vertical style="height:50%;margin: 10px;"></mat-divider>
-        <a *ngIf="!customer" mat-raised-button color="accent" style="margin-right: 5px;"
-            (click)="openCustomerSelectionForm()">
+        <a *ngIf="!customer" mat-raised-button color="accent" style="margin-right: 5px;" (click)="openCustomerSelectionForm()">
             <span style="font-weight:lighter;font-size: small;" translate>pos.selectCustomer</span>
         </a>
         <a *ngIf="customer" mat-button style="background: rgba(0,0,0,.2);border-radius: 4px 0px 0px 4px!important;">
@@ -20,7 +19,7 @@
             <span style="font-weight:lighter;font-size: small;" translate>pos.changeCustomer</span>
         </a>
         <button mat-icon-button (click)="cart.toggle()">
-            <mat-icon>shopping_cart</mat-icon>
+            <mat-icon matBadge="{{cartItemCount}}" matBadgeColor="warn">shopping_cart</mat-icon>
         </button>
     </mat-toolbar-row>
 </mat-toolbar>
