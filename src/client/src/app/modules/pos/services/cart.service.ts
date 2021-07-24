@@ -10,7 +10,7 @@ export class CartService {
   private cartItems$ = new Subject<Cart[]>();
   private cartItems: Cart[] = [];
   constructor() { }
-  add(product: Product,quantity:number=1) {
+  add(product: Product, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == product.id);
     if (foundItem) {
       foundItem.quantity = foundItem.quantity + quantity;
@@ -23,21 +23,26 @@ export class CartService {
   increase(productId: string, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == productId);
     if (foundItem) {
-        foundItem.quantity = foundItem.quantity + quantity;    
+      foundItem.quantity = foundItem.quantity + quantity;
     }
     this.cartItems$.next(this.cartItems);
   }
   reduce(productId: string, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == productId);
     if (foundItem) {
-      if(foundItem.quantity > 1)
-      {
-        foundItem.quantity = foundItem.quantity - quantity;        
+      if (foundItem.quantity > 1) {
+        foundItem.quantity = foundItem.quantity - quantity;
       }
-      else
-      {
-        this.cartItems.splice(this.cartItems.indexOf(foundItem),1)
+      else {
+        this.cartItems.splice(this.cartItems.indexOf(foundItem), 1)
       }
+    }
+    this.cartItems$.next(this.cartItems);
+  }
+  remove(productId: string) {
+    var foundItem = this.cartItems.find(a => a.productId == productId);
+    if (foundItem) {
+      this.cartItems.splice(this.cartItems.indexOf(foundItem), 1)
     }
     this.cartItems$.next(this.cartItems);
   }
