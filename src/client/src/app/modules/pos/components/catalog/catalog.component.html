@@ -33,8 +33,8 @@
             </form>
         </div>
         <div class="col-md-3 col-xl-3" style="text-align: right;">
-            <a mat-raised-button style="margin-right: 5px;">
-                <span style="font-weight:lighter;font-size: small;" translate>pos.switchToListView</span>
+            <a mat-raised-button style="margin-right: 5px;" (click)="toggleImage()">
+                <span style="font-weight:lighter;font-size: small;" translate>pos.toggleImage</span>
             </a>
         </div>
     </div>
@@ -43,7 +43,7 @@
             <div class="row">
                 <div *ngFor="let product of products.data" class="col-xs-12 col-sm-12 col-md-6 col-lg-3" style="border-radius: 5px;">
                     <mat-card class="example-card">
-                        <img mat-card-image src="https://cdn.thewirecutter.com/wp-content/media/2020/12/macbook-2048px-9-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024">
+                        <img *ngIf="showImage" mat-card-image src="https://cdn.thewirecutter.com/wp-content/media/2020/12/macbook-2048px-9-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024">
                         <mat-card-content style="padding: 0!important;">
                             <h3>
                                 {{product.name}}

@@ -100,6 +100,7 @@
         "selectCustomer": "Select a Cutomer",
         "changeCustomer": "Change",
         "switchToListView": "Switch to List View",
+        "toggleImage": "Toggle Image",
         "cart": "Cart",
         "cartEmpty": "Cart is Empty",
         "startAddingProducts": "Start Adding Products from the Catalog Tab."

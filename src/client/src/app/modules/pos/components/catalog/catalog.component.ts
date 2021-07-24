@@ -22,6 +22,7 @@ export class CatalogComponent implements OnInit {
   productParams = new ProductParams();
   searchString: string;
   brandAutoComplete = new FormControl();
+  showImage:boolean=false;
   constructor(private posService: PosService, private toast: ToastrService, private cartService: CartService) { }
 
   ngOnInit(): void {
@@ -54,5 +55,9 @@ export class CatalogComponent implements OnInit {
   }
   addToCart(product: Product) {
     this.cartService.add(product);
+  }
+  toggleImage()
+  {
+    this.showImage = !this.showImage;
   }
 }
