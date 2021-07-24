@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-xl-6 u-ml-auto">
+        <div *appHasRole='["SuperAdmin"]' class="col-md-6 col-xl-6 u-ml-auto">
             <div class="c-card is-animated">
                 <div>
                     <h1>Dashboard</h1>
@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div class="row " style="place-content: center;">
+    <div *appHasRole='["SuperAdmin"]' class="row " style="place-content: center;">
         <div class="col-md-6 col-xl-6 u-ml-auto">
             <div class="c-card is-animated">
                 <div>
