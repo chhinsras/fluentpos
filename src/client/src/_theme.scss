@@ -1,41 +1,25 @@
-
 @import '~@angular/material/theming';
-
 @include mat-core();
-
 // Define the default theme (same as the example above).
 $app-primary: mat-palette($mat-indigo);
-$app-accent:  mat-palette($mat-pink, A200, A100, A400);
-$app-warn:    mat-palette($mat-deep-orange, A400, A400, A400);
-$app-theme:   mat-light-theme((
-  color: (
-    primary: $app-primary,
-    accent: $app-accent,
-    warn:$app-warn
-  )
-));
+$app-accent: mat-palette($mat-pink, A200, A100, A400);
+$app-warn: mat-palette($mat-deep-orange, A400, A400, A400);
+$app-theme: mat-light-theme(( color: ( primary: $app-primary, accent: $app-accent, warn:$app-warn)));
 $custom-typography: mat-typography-config($font-family: 'Poppins,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif');
 @include mat-core($custom-typography);
-
 // Include the default theme styles (color and default density)
 @include angular-material-theme($app-theme);
-
-
 // Define an alternate dark theme.
 $dark-primary: mat-palette($mat-indigo);
-$dark-accent:  mat-palette($mat-pink, A400, A400, A400);
-$dark-warn:    mat-palette($mat-deep-orange);
-$dark-theme:   mat-dark-theme((
-  color: (
-    primary: $dark-primary,
-    accent: $dark-accent,
-    warn: $dark-warn
-  )
-));
+$dark-accent: mat-palette($mat-pink, A400, A400, A400);
+$dark-warn: mat-palette($mat-deep-orange);
+$dark-theme: mat-dark-theme(( color: ( primary: $dark-primary, accent: $dark-accent, warn: $dark-warn)));
 $primary: mat-palette($mat-deep-purple, 600, 500, 900);
 .dark-theme {
     @include angular-material-color($dark-theme);
-  }
-  .background-color-primary {
+}
+
+.background-color-primary {
+    color: white;
     background-color: mat-color($app-primary)!important;
-  }
+}

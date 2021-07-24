@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { ThemeService } from 'src/app/core/services/theme.service';
 import { Customer } from '../../models/customer';
 import { CartService } from '../../services/cart.service';
 import { PosService } from '../../services/pos.service';
@@ -14,11 +16,20 @@ import { CustomerSelectionComponent } from '../customer-selection/customer-selec
 export class PosToolbarComponent implements OnInit {
   customer: Customer;
   cartItemCount: number = 0;
-  constructor(public dialog: MatDialog, private posService: PosService, private cartService: CartService) { }
+  constructor(private localStorageService: LocalStorageService,public dialog: MatDialog, private posService: PosService, private cartService: CartService,private themeService:ThemeService) { }
   @Input() cart: MatSidenav;
+  @Input() darkModeIcon: string;
+  @Input() isDarkMode: boolean;
   ngOnInit(): void {
     this.cart.toggle();
     this.cartService.get().subscribe(res => this.cartItemCount = res.length);
+    let themeVariant = this.localStorageService.getItem('themeVariant');
+    this.darkModeIcon = themeVariant === 'dark-theme' ? 'bedtime' : 'wb_sunny';
+    this.isDarkMode = themeVariant === 'dark-theme';
+  }
+  toggleDarkMode() {
+    this.isDarkMode = this.themeService.toggleDarkMode();
+    this.darkModeIcon = this.isDarkMode ? 'bedtime' : 'wb_sunny'
   }
   loadCustomer(customerId) {
     this.posService.getCustomerById(customerId).subscribe((res) => {

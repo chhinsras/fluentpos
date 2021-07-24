@@ -7,6 +7,9 @@
             <span style="font-weight:lighter;font-size: larger;" translate>pos.title</span>
         </a>
         <span class="nav-spacer"></span>
+        <a mat-icon-button (click)="toggleDarkMode()">
+            <mat-icon>{{darkModeIcon}}</mat-icon>
+        </a>
         <mat-divider vertical style="height:50%;margin: 10px;"></mat-divider>
         <a *ngIf="!customer" mat-raised-button color="accent" style="margin-right: 5px;" (click)="openCustomerSelectionForm()">
             <span style="font-weight:lighter;font-size: small;" translate>pos.selectCustomer</span>
