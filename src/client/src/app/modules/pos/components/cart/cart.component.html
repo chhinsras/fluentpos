@@ -1,4 +1,4 @@
-<mat-toolbar class="position-fixed" style="z-index:1000;background: white;color: black;">
+<mat-toolbar class="position-fixed" style="z-index:1000;">
     <mat-toolbar-row>
         <button mat-icon-button (click)="cart.toggle()">
             <mat-icon>menu</mat-icon>
@@ -46,7 +46,7 @@
 
 </div>
 <div *ngIf="cartItems && cartItems.length !=0" class="checkout">
-    <mat-card style="margin:0px!important;border-radius: 0px!important;padding: 30px;" class="background-color-primary">
+    <mat-card style="margin:0px!important;border-radius: 0px!important;padding: 30px;">
         <mat-card-content style="padding: 0!important;margin-bottom: 0px;">
             <div class="row">
                 <div class="col-6">Discount</div>
