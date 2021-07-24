@@ -51,12 +51,12 @@ export class AuthService {
     if (allowedPermissions == null || allowedPermissions.length === 0) {
       return true;
     }
-    const decodeToken = this.getDecodedToken;
+    const decodeToken = this.getDecodedToken();
     if (!decodeToken) {
       console.log('Invalid token');
       return false;
     }
-    return allowedPermissions.includes(decodeToken['Permission']);
+    return allowedPermissions.some(a => decodeToken['Permission'].includes(a));
   }
 
   private get getStorageRefreshToken(): string {

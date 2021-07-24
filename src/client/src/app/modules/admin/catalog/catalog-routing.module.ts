@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import { PermissionGuard } from 'src/app/core/guards/permission.guard';
 import {BrandComponent} from './components/brand/brand.component';
 import {CategoryComponent} from './components/category/category.component';
 import {ProductComponent} from './components/product/product.component';
@@ -7,15 +8,27 @@ import {ProductComponent} from './components/product/product.component';
 const routes: Routes = [
   {
     path: 'brands',
-    component: BrandComponent
+    component: BrandComponent,
+    canActivate: [PermissionGuard],
+    data: {
+      allowedPermissions: ['Permissions.Brands.View']
+    }
   },
   {
     path: 'categories',
-    component: CategoryComponent
+    component: CategoryComponent,
+    canActivate: [PermissionGuard],
+    data: {
+      allowedPermissions: ['Permissions.Categories.View']
+    }
   },
   {
     path: 'products',
-    component: ProductComponent
+    component: ProductComponent,
+    canActivate: [PermissionGuard],
+    data: {
+      allowedPermissions: ['Permissions.Productss.View']
+    }
   }
 ];
 
