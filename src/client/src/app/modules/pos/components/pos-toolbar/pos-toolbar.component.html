@@ -11,12 +11,9 @@
         <a *ngIf="!customer" mat-raised-button color="accent" style="margin-right: 5px;" (click)="openCustomerSelectionForm()">
             <span style="font-weight:lighter;font-size: small;" translate>pos.selectCustomer</span>
         </a>
-        <a *ngIf="customer" mat-button style="background: rgba(0,0,0,.2);border-radius: 4px 0px 0px 4px!important;">
+        <a *ngIf="customer" mat-button style="background: rgba(0,0,0,.2);border-radius: 4px 0px 0px 4px!important;" (click)="openCustomerSelectionForm()">
             <span style="font-weight:lighter;font-size: small;" translate>
                 <span style="margin-right: 10px;" class="fas fa-user-circle"></span>{{customer.name}}</span>
-        </a>
-        <a *ngIf="customer" mat-button color="danger" (click)="removeCustomer()">
-            <mat-icon>delete</mat-icon>
         </a>
         <button mat-icon-button (click)="cart.toggle()">
             <mat-icon matBadge="{{cartItemCount}}" matBadgeColor="warn">shopping_cart</mat-icon>

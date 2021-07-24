@@ -1,7 +1,7 @@
 <mat-toolbar color="accent">
     <mat-toolbar-row>
         <button mat-icon-button (click)="cart.toggle()">
-            <mat-icon>arrow_back</mat-icon>
+            <mat-icon>menu</mat-icon>
         </button>
         <a mat-button>
             <span style="font-weight:lighter;font-size: larger;" translate>pos.cart</span>
@@ -15,10 +15,10 @@
             <div class="col-2" style="font-size: large;align-self: center;">
                 X {{item.quantity}}
             </div>
-            <div class="col-5" style="align-self: center;">
+            <div class="col-6" style="align-self: center;">
                 <h4 style="margin: 0px!important;">{{item.displayName}}</h4>
             </div>
-            <div style="align-self: center;text-align: right;" class="col-5">
+            <div style="align-self: center;text-align: right;" class="col-4">
                 <button mat-icon-button (click)="increaseQuantity(item.productId)">
                     <mat-icon>north</mat-icon>
                   </button>

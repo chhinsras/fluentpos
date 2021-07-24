@@ -13,35 +13,30 @@ import { CustomerSelectionComponent } from '../customer-selection/customer-selec
 })
 export class PosToolbarComponent implements OnInit {
   customer: Customer;
-  cartItemCount:number = 0;
-  constructor(public dialog: MatDialog,private posService:PosService,private cartService:CartService) { }
+  cartItemCount: number = 0;
+  constructor(public dialog: MatDialog, private posService: PosService, private cartService: CartService) { }
   @Input() cart: MatSidenav;
   ngOnInit(): void {
     this.cart.toggle();
-    this.cartService.get().subscribe(res=> this.cartItemCount = res.length);
+    this.cartService.get().subscribe(res => this.cartItemCount = res.length);
   }
   loadCustomer(customerId) {
     this.posService.getCustomerById(customerId).subscribe((res) => {
-      if(res)
-      {
-          this.customer = res.data;
-      }      
+      if (res) {
+        this.customer = res.data;
+      }
     }
     )
   }
-  removeCustomer()
-  {
-    if(this.customer)
-        {
-          this.customer = null;
-        }
+  removeCustomer() {
+    if (this.customer) {
+      this.customer = null;
+    }
   }
-  openCustomerSelectionForm()
-  {
+  openCustomerSelectionForm() {
     const dialogRef = this.dialog.open(CustomerSelectionComponent);
     dialogRef.afterClosed().subscribe((customer: Customer) => {
       if (customer) {
-        
         this.loadCustomer(customer.id);
       }
     });
