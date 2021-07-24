@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BusyService } from 'src/app/core/services/busy.service';
 import { ThemeService } from 'src/app/core/services/theme.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { ThemeService } from 'src/app/core/services/theme.service';
 })
 export class PosComponent implements OnInit {
 
-  constructor(private themeService: ThemeService) { }
+  constructor(private themeService: ThemeService,public busyService: BusyService) { }
 
   ngOnInit(): void {
   }
