@@ -15,6 +15,7 @@ import { ProductApiService } from '../api/catalog/product-api.service';
 import { CustomerApiService } from '../api/people/customer-api.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { AccessDenialComponent } from './components/access-denial/access-denial.component';
+import { HasPermissionDirective } from '../directives/has-permission.directive';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { AccessDenialComponent } from './components/access-denial/access-denial.
     TableComponent,
     DataPropertyGetterPipe,
     AccessDenialComponent,
+    HasPermissionDirective
   ],
   imports: [
     CommonModule,
@@ -46,6 +48,7 @@ import { AccessDenialComponent } from './components/access-denial/access-denial.
     FormsModule,
     PaginationComponent,
     TableComponent,
+    HasPermissionDirective
   ],
 })
 export class SharedModule {}

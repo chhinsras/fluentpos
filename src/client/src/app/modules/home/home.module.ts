@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { MaterialModule } from 'src/app/core/material/material.module';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { SharedModule } from 'src/app/core/shared/shared.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ]
 })
 export class HomeModule { }
