@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Cart } from '../../models/cart';
 import { CartService } from '../../services/cart.service';
 
@@ -8,7 +9,7 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
-
+  @Input() cart: MatSidenav;
   cartItems: Cart[];
   constructor(private cartService: CartService) { }
 

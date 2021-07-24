@@ -1,4 +1,15 @@
-<div style="height: calc(100vh-10px);overflow:auto;">
+<mat-toolbar color="accent">
+    <mat-toolbar-row>
+        <button mat-icon-button (click)="cart.toggle()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <a mat-button>
+            <span style="font-weight:lighter;font-size: larger;" translate>pos.cart</span>
+        </a>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<div style="height: calc(100vh-10px);overflow:auto;padding: 20px;">
     <div *ngIf="cartItems">
         <div *ngFor="let item of cartItems" class="row" style="margin:2px;padding:15px;background: rgba(0,0,0,.05);border-radius: 5px;">
             <div class="col-2" style="font-size: large;align-self: center;">

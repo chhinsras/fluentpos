@@ -29,7 +29,7 @@ export class CartService {
       }
       else
       {
-        this.cartItems.splice(this.cartItems.indexOf(foundItem))
+        this.cartItems.splice(this.cartItems.indexOf(foundItem),1)
       }
     }
     this.cartItems$.next(this.cartItems);

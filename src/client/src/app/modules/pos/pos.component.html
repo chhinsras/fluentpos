@@ -1,9 +1,7 @@
-<mat-sidenav-container class='sidenav-container'> 
+<mat-sidenav-container class='sidenav-container'>
     <mat-sidenav #sidenav class="sidenav" disableClose="false" mode="side" position="end">
         <mat-nav-list style="padding-top: 0;">
-            <div style="padding: 10px;">
-                <app-cart></app-cart>
-            </div>
+            <app-cart [cart]="sidenav"></app-cart>
         </mat-nav-list>
     </mat-sidenav>
     <app-pos-toolbar [cart]="sidenav"></app-pos-toolbar>

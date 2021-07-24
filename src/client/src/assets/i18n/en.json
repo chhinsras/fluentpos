@@ -99,6 +99,7 @@
         "title": "Point Of Sales",
         "selectCustomer": "Select a Cutomer",
         "changeCustomer": "Change",
-        "switchToListView": "Switch to List View"
+        "switchToListView": "Switch to List View",
+        "cart": "Cart"
     }
 }
