@@ -20,6 +20,13 @@ export class CartService {
     }
     this.cartItems$.next(this.cartItems);
   }
+  increase(productId: string, quantity: number = 1) {
+    var foundItem = this.cartItems.find(a => a.productId == productId);
+    if (foundItem) {
+        foundItem.quantity = foundItem.quantity + quantity;    
+    }
+    this.cartItems$.next(this.cartItems);
+  }
   reduce(productId: string, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == productId);
     if (foundItem) {

@@ -21,7 +21,7 @@ export class CartComponent implements OnInit {
   }
   increaseQuantity(productId)
   {
-   this.cartService.add(productId); 
+   this.cartService.increase(productId); 
   }
   reduceQuantity(productId)
   {
