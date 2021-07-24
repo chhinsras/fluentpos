@@ -69,6 +69,12 @@ Clone this repository to your local machine.
 
 https://user-images.githubusercontent.com/31455818/126076884-47989b52-368e-4714-b90b-093779a7607f.mp4
 
+POS UI - As of 25/7/2021
+
+https://user-images.githubusercontent.com/31455818/126880716-67545770-e74c-4e20-b42f-8c247e91f834.mp4
+
+
+
 
 
 #### Default Credentials
