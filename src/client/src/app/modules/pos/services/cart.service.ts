@@ -16,16 +16,16 @@ export class CartService {
       foundItem.quantity = foundItem.quantity + quantity;
     }
     else {
-      this.cartItems.push(new Cart(product.id, quantity ?? 1, product.name, product.detail));
+      this.cartItems.push(new Cart(product.id, quantity ?? 1, product.name, product.detail, product.price));
     }
-    this.cartItems$.next(this.cartItems);
+    this.cartItems$.next(this.calculate(this.cartItems));
   }
   increase(productId: string, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == productId);
     if (foundItem) {
       foundItem.quantity = foundItem.quantity + quantity;
     }
-    this.cartItems$.next(this.cartItems);
+    this.cartItems$.next(this.calculate(this.cartItems));
   }
   reduce(productId: string, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == productId);
@@ -37,7 +37,7 @@ export class CartService {
         this.cartItems.splice(this.cartItems.indexOf(foundItem), 1)
       }
     }
-    this.cartItems$.next(this.cartItems);
+    this.cartItems$.next(this.calculate(this.cartItems));
   }
   remove(productId: string) {
     var foundItem = this.cartItems.find(a => a.productId == productId);
@@ -48,5 +48,11 @@ export class CartService {
   }
   get(): Observable<Cart[]> {
     return this.cartItems$.asObservable();
+  }
+  private calculate(cartItems: Cart[]): Cart[] {
+    cartItems.forEach(function (part, index, theArray) {
+      theArray[index].total = cartItems[index].quantity * cartItems[index].rate;
+    });
+    return cartItems;
   }
 }

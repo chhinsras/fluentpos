@@ -11,12 +11,15 @@
 
 <div style="height: calc(100vh-10px);overflow:auto;padding: 20px;">
     <div *ngIf="cartItems">
-        <div *ngFor="let item of cartItems" class="row" style="margin:2px;padding:15px;background: rgba(0,0,0,.05);border-radius: 5px;">
+        <div *ngFor="let item of cartItems" class="row" style="margin:2px;padding:15px;background: rgba(0,0,0,.03);border-radius: 5px;">
             <div class="col-2" style="font-size: large;align-self: center;">
                 X {{item.quantity}}
             </div>
             <div class="col-6" style="align-self: center;">
                 <h4 style="margin: 0px!important;">{{item.displayName}}</h4>
+                Rate : ${{item.rate}}
+                <br>
+                <b>Total : ${{item.total}}</b>
             </div>
             <div style="align-self: center;text-align: right;" class="col-4">
                 <button mat-icon-button (click)="increaseQuantity(item.productId)">
