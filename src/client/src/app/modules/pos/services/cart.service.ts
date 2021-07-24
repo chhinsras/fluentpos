@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Cart } from '../models/cart';
-import { PosService } from './pos.service';
+import { Product } from '../models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -9,16 +9,14 @@ import { PosService } from './pos.service';
 export class CartService {
   private cartItems$ = new Subject<Cart[]>();
   private cartItems: Cart[] = [];
-  constructor(private posService: PosService) { }
-  add(productId: string, quantity: number = 1) {
-    var foundItem = this.cartItems.find(a => a.productId == productId);
+  constructor() { }
+  add(product: Product,quantity:number=1) {
+    var foundItem = this.cartItems.find(a => a.productId == product.id);
     if (foundItem) {
       foundItem.quantity = foundItem.quantity + quantity;
     }
     else {
-      this.posService.getProductById(productId).subscribe((result) => {
-        this.cartItems.push(new Cart(productId, quantity ?? 1, result.data.name, result.data.detail));
-      })
+      this.cartItems.push(new Cart(product.id, quantity ?? 1, product.name, product.detail));
     }
     this.cartItems$.next(this.cartItems);
   }

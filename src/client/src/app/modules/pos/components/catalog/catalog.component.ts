@@ -52,7 +52,7 @@ export class CatalogComponent implements OnInit {
       return this.brands.data.find(brand => brand.id === brandId).name;
     }
   }
-  addToCart(productId: string) {
-    this.cartService.add(productId, 1);
+  addToCart(product: Product) {
+    this.cartService.add(product);
   }
 }
