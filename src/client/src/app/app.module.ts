@@ -25,6 +25,7 @@ import {MultilingualService} from './core/services/multilingual.service';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { BusyService } from './core/services/busy.service';
 import { PermissionGuard } from './core/guards/permission.guard';
+import { RoleGuard } from './core/guards/role.guard';
 
 export function rootLoaderFactory(http: HttpClient)
 {
@@ -59,6 +60,7 @@ export function rootLoaderFactory(http: HttpClient)
   providers: [
     AuthGuard,
     PermissionGuard,
+    RoleGuard,
     AuthService, 
     LocalStorageService, 
     MultilingualService, 

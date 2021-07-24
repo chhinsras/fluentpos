@@ -47,8 +47,8 @@ export class AuthService {
     return false;
   }
 
-  public isAuthorized(allowedPermissions: string[]): boolean {
-    if (allowedPermissions == null || allowedPermissions.length === 0) {
+  public isAuthorized(authorizationType: string, allowedData: string[]): boolean {
+    if (allowedData == null || allowedData.length === 0) {
       return true;
     }
     const decodeToken = this.getDecodedToken();
@@ -56,10 +56,17 @@ export class AuthService {
       console.log('Invalid token');
       return false;
     }
-    const permissions = decodeToken['Permission'];
-    if (permissions === undefined || permissions.length === 0) return false;
-    
-    return allowedPermissions.some(a => permissions.includes(a));
+
+    if(authorizationType === 'Role') {
+      const roles = decodeToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      if (roles === undefined || roles.length === 0) return false;
+      return allowedData.some(a => roles.includes(a));
+
+    } else if (authorizationType === 'Permission') {
+      const permissions = decodeToken['Permission'];
+      if (permissions === undefined || permissions.length === 0) return false;
+      return allowedData.some(a => permissions.includes(a));
+    }
   }
 
   private get getStorageRefreshToken(): string {

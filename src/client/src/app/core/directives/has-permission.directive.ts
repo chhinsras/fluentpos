@@ -12,7 +12,7 @@ export class HasPermissionDirective implements OnInit{
     private authService: AuthService) {}
 
     ngOnInit(): void {
-      const isAuthorized = this.authService.isAuthorized(this.appHasPermission);
+      const isAuthorized = this.authService.isAuthorized('Permission', this.appHasPermission);
       if (!isAuthorized) {
         this.viewContainerRef.clear();
       } else {
