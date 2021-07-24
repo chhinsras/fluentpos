@@ -12,13 +12,13 @@
                     <mat-icon>north</mat-icon>
                   </button>
                 <button (click)="reduceQuantity(item.productId)" mat-icon-button>
-                    <mat-icon *ngIf=" item.quantity > 1 ">south</mat-icon>
-                    <mat-icon *ngIf=" item.quantity <=1 ">delete</mat-icon>
+                    <mat-icon *ngIf="item.quantity > 1" style="color: red;">south</mat-icon>
+                    <mat-icon *ngIf="item.quantity <=1" style="color: red;">delete</mat-icon>
                   </button>
             </div>
         </div>
     </div>
-    <div *ngIf="!cartItems " style="height: 90vh!important; ">
+    <div *ngIf="!cartItems|| cartItems.length==0" style="height: 90vh!important; ">
         <mat-icon>shopping_cart</mat-icon>
         No Items Added Yet!
     </div>

@@ -22,15 +22,26 @@ export class PosToolbarComponent implements OnInit {
   }
   loadCustomer(customerId) {
     this.posService.getCustomerById(customerId).subscribe((res) => {
-      this.customer = res.data;
+      if(res)
+      {
+          this.customer = res.data;
+      }      
     }
     )
+  }
+  removeCustomer()
+  {
+    if(this.customer)
+        {
+          this.customer = null;
+        }
   }
   openCustomerSelectionForm()
   {
     const dialogRef = this.dialog.open(CustomerSelectionComponent);
     dialogRef.afterClosed().subscribe((customer: Customer) => {
       if (customer) {
+        
         this.loadCustomer(customer.id);
       }
     });

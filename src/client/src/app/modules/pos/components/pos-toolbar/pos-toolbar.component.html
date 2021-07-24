@@ -15,8 +15,8 @@
             <span style="font-weight:lighter;font-size: small;" translate>
                 <span style="margin-right: 10px;" class="fas fa-user-circle"></span>{{customer.name}}</span>
         </a>
-        <a *ngIf="customer" mat-button style="margin-right: 5px;" color="danger">
-            <span style="font-weight:lighter;font-size: small;" translate>pos.changeCustomer</span>
+        <a *ngIf="customer" mat-button color="danger" (click)="removeCustomer()">
+            <mat-icon>delete</mat-icon>
         </a>
         <button mat-icon-button (click)="cart.toggle()">
             <mat-icon matBadge="{{cartItemCount}}" matBadgeColor="warn">shopping_cart</mat-icon>
