@@ -14,21 +14,21 @@
                 </a>
                 <div class="nav-subheading">
                     {{'layouts.admin.catalogSubhead'|translate}}</div>
-                <a mat-list-item routerLink="catalog/brands" (click)="sidenav.close()">
+                <a *appHasPermission='["Permissions.Brands.View"]' mat-list-item routerLink="catalog/brands" (click)="sidenav.close()">
                     <mat-icon style="padding-right: 10px;">inventory</mat-icon> {{'layouts.admin.brands'|translate}}
                 </a>
-                <a mat-list-item routerLink="catalog/categories" (click)="sidenav.close()">
+                <a *appHasPermission='["Permissions.Categories.View"]' mat-list-item routerLink="catalog/categories" (click)="sidenav.close()">
                     <mat-icon style="padding-right: 10px;">inventory</mat-icon> {{'layouts.admin.categories'|translate}}
                 </a>
-                <a mat-list-item routerLink="catalog/products" (click)="sidenav.close()">
+                <a *appHasPermission='["Permissions.Products.View"]' mat-list-item routerLink="catalog/products" (click)="sidenav.close()">
                     <mat-icon style="padding-right: 10px;">free_breakfast</mat-icon> {{'layouts.admin.products'|translate}}
                 </a>
                 <div class="nav-subheading">
                     {{'layouts.admin.peopleSubhead'|translate}}</div>
-                <a mat-list-item routerLink="people/customers" (click)="sidenav.close()">
+                <a *appHasPermission='["Permissions.Customers.View"]' mat-list-item routerLink="people/customers" (click)="sidenav.close()">
                     <mat-icon style="padding-right: 10px;">people</mat-icon> {{'layouts.admin.customers'|translate}}
                 </a>
-                <a mat-list-item routerLink="/admin/about" (click)="sidenav.close()">
+                <a *appHasPermission='["Permissions.Suppliers.View"]' mat-list-item routerLink="/admin/about" (click)="sidenav.close()">
                     <mat-icon style="padding-right: 10px;">info</mat-icon> {{'layouts.admin.about'|translate}}
                 </a>
             </div>
