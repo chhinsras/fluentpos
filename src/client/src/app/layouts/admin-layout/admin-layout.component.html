@@ -28,7 +28,7 @@
                 <a *appHasPermission='["Permissions.Customers.View"]' mat-list-item routerLink="people/customers" (click)="sidenav.close()">
                     <mat-icon style="padding-right: 10px;">people</mat-icon> {{'layouts.admin.customers'|translate}}
                 </a>
-                <a *appHasPermission='["Permissions.Suppliers.View"]' mat-list-item routerLink="/admin/about" (click)="sidenav.close()">
+                <a mat-list-item routerLink="/admin/about" (click)="sidenav.close()">
                     <mat-icon style="padding-right: 10px;">info</mat-icon> {{'layouts.admin.about'|translate}}
                 </a>
             </div>
