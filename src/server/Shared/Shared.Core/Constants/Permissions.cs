@@ -143,5 +143,14 @@ namespace FluentPOS.Shared.Core.Constants
             public const string Update = "Permissions.Products.ExtendedAttributes.Update";
             public const string Remove = "Permissions.Products.ExtendedAttributes.Remove";
         }
+
+        [DisplayName("Carts")]
+        [Description("Carts Permissions")]
+        public static class Carts
+        {
+            public const string View = "Permissions.Carts.View";
+            public const string Create = "Permissions.Carts.Register";
+            public const string Remove = "Permissions.Carts.Remove";
+        }
     }
 }

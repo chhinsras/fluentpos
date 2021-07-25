@@ -8,5 +8,15 @@ namespace FluentPOS.Modules.People.Core.Constants
         {
             return $"Customer-{id}";
         }
+
+        public static string GetCartByIdCacheKey(Guid id)
+        {
+            return $"Cart-{id}";
+        }
+
+        public static string GetCartByCustomerIdCacheKey(Guid customerId)
+        {
+            return $"Cart-customer-{customerId}";
+        }
     }
 }

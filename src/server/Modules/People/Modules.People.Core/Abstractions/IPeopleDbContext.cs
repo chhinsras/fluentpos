@@ -7,5 +7,9 @@ namespace FluentPOS.Modules.People.Core.Abstractions
     public interface IPeopleDbContext : IDbContext
     {
         public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<Cart> Carts { get; set; }
+
+        public DbSet<CartItem> CartItems { get; set; }
     }
 }
