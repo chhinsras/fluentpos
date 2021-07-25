@@ -1,4 +1,5 @@
 <mat-toolbar color="primary">
+    
     <mat-toolbar-row>
         <button mat-icon-button routerLink="/home">
             <mat-icon>arrow_back</mat-icon>
@@ -7,16 +8,16 @@
             <span style="font-weight:lighter;font-size: larger;" translate>pos.title</span>
         </a>
         <span class="nav-spacer"></span>
-        <a mat-icon-button (click)="toggleDarkMode()">
-            <mat-icon>{{darkModeIcon}}</mat-icon>
-        </a>
         <mat-divider vertical style="height:50%;margin: 10px;"></mat-divider>
         <a *ngIf="!customer" mat-raised-button color="accent" style="margin-right: 5px;" (click)="openCustomerSelectionForm()">
             <span style="font-weight:lighter;font-size: small;" translate>pos.selectCustomer</span>
         </a>
-        <a *ngIf="customer" mat-button style="background: rgba(0,0,0,.2);border-radius: 4px 0px 0px 4px!important;" (click)="openCustomerSelectionForm()">
-            <span style="font-weight:lighter;font-size: small;" translate>
-                <span style="margin-right: 10px;" class="fas fa-user-circle"></span>{{customer.name}}</span>
+        <a *ngIf="customer" mat-button style="font-weight:lighter;font-size: small; background: rgba(0,0,0,.2);border-radius: 4px 0px 0px 4px!important;" translate>
+            <span style="margin-right: 10px;" class="fas fa-user-circle"></span>  
+            {{customer.name}}
+        </a>
+        <a *ngIf="customer" mat-button style="margin-right: 5px;" color="danger" (click)="openCustomerSelectionForm()">
+            <span style="font-weight:lighter;font-size: small;" translate>pos.changeCustomer</span>
         </a>
         <button mat-icon-button (click)="cart.toggle()">
             <mat-icon matBadge="{{cartItemCount}}" matBadgeColor="warn">shopping_cart</mat-icon>
