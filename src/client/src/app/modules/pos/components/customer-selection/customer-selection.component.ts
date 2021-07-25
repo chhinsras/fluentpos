@@ -14,17 +14,20 @@ export class CustomerSelectionComponent implements OnInit {
   customers: PaginatedResult<Customer>;
   customerParams = new CustomerParams();
   searchString: string;
-  visible= false;
+  visible = false;
   constructor(private posService: PosService, public dialogRef: MatDialogRef<CustomerSelectionComponent>) { }
 
   ngOnInit(): void {
     this.formTitle = 'Customer Selection';
-    this.customerParams.pageSize = 10;
+    this.customerParams.pageSize = 10;    
     this.getCustomers();
+
   }
-  getCustomers(): void {
+  getCustomers() {
     this.posService.getCustomers(this.customerParams).subscribe((result) => {
-      this.customers = result;
+      if (result) {
+        this.customers = result;
+      }
     });
   }
   public doFilter(): void {

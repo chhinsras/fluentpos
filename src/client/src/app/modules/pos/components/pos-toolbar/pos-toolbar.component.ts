@@ -16,7 +16,7 @@ import { CustomerSelectionComponent } from '../customer-selection/customer-selec
 export class PosToolbarComponent implements OnInit {
   customer: Customer;
   cartItemCount: number = 0;
-  constructor(private localStorageService: LocalStorageService,public dialog: MatDialog, private posService: PosService, private cartService: CartService,private themeService:ThemeService) { }
+  constructor(private localStorageService: LocalStorageService, public dialog: MatDialog, private posService: PosService, private cartService: CartService, private themeService: ThemeService) { }
   @Input() cart: MatSidenav;
   @Input() darkModeIcon: string;
   @Input() isDarkMode: boolean;
@@ -31,14 +31,6 @@ export class PosToolbarComponent implements OnInit {
     this.isDarkMode = this.themeService.toggleDarkMode();
     this.darkModeIcon = this.isDarkMode ? 'bedtime' : 'wb_sunny'
   }
-  loadCustomer(customerId) {
-    this.posService.getCustomerById(customerId).subscribe((res) => {
-      if (res) {
-        this.customer = res.data;
-      }
-    }
-    )
-  }
   removeCustomer() {
     if (this.customer) {
       this.customer = null;
@@ -48,7 +40,7 @@ export class PosToolbarComponent implements OnInit {
     const dialogRef = this.dialog.open(CustomerSelectionComponent);
     dialogRef.afterClosed().subscribe((customer: Customer) => {
       if (customer) {
-        this.loadCustomer(customer.id);
+        this.customer = customer;
       }
     });
   }
