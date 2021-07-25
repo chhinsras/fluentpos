@@ -14,9 +14,9 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Queries
         public string CacheKey => PeopleCacheKeys.GetCustomerByIdCacheKey(Id);
         public TimeSpan? SlidingExpiration { get; }
 
-        public GetCustomerByIdQuery(Guid categoryId, bool bypassCache = false, TimeSpan? slidingExpiration = null)
+        public GetCustomerByIdQuery(Guid customerId, bool bypassCache = false, TimeSpan? slidingExpiration = null)
         {
-            Id = categoryId;
+            Id = customerId;
             BypassCache = bypassCache;
             SlidingExpiration = slidingExpiration;
         }

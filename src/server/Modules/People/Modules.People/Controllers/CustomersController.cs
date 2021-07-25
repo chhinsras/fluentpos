@@ -15,16 +15,16 @@ namespace FluentPOS.Modules.People.Controllers
         [Authorize(Policy = Permissions.Customers.ViewAll)]
         public async Task<IActionResult> GetAllAsync([FromQuery] PaginatedCustomerFilter filter)
         {
-            var brands = await Mediator.Send(new GetAllPagedCustomersQuery(filter.PageNumber, filter.PageSize, filter.SearchString));
-            return Ok(brands);
+            var customers = await Mediator.Send(new GetAllPagedCustomersQuery(filter.PageNumber, filter.PageSize, filter.SearchString));
+            return Ok(customers);
         }
 
         [HttpGet("{id}")]
         [Authorize(Policy = Permissions.Customers.View)]
         public async Task<IActionResult> GetByIdAsync(Guid id, bool bypassCache)
         {
-            var brand = await Mediator.Send(new GetCustomerByIdQuery(id, bypassCache));
-            return Ok(brand);
+            var customer = await Mediator.Send(new GetCustomerByIdQuery(id, bypassCache));
+            return Ok(customer);
         }
 
         [HttpPost]
