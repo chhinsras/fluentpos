@@ -73,7 +73,7 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Commands
             }
             if (await _context.CartItems.AsNoTracking().AnyAsync(i => i.Id != command.Id && i.CartId == command.CartId && i.ProductId == command.ProductId, cancellationToken))
             {
-                throw new PeopleException(_localizer["Cart Item with the same Product already exists in the Cart."]);
+                throw new PeopleException(_localizer["Cart Item with the same Product already exists in the Cart."], HttpStatusCode.BadRequest);
             }
 
             cartItem = _mapper.Map<CartItem>(command);

@@ -12,6 +12,7 @@ using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -58,7 +59,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
             var categoryList = await queryable
             .Select(expression)
             .ToPaginatedListAsync(request.PageNumber, request.PageSize);
-            if (categoryList == null) throw new CatalogException(_localizer["Brands Not Found!"]);
+            if (categoryList == null) throw new CatalogException(_localizer["Brands Not Found!"], HttpStatusCode.NotFound);
             var mappedCategories = _mapper.Map<PaginatedResult<GetAllPagedCategoriesResponse>>(categoryList);
             return mappedCategories;
         }
@@ -66,7 +67,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
         public async Task<Result<GetCategoryByIdResponse>> Handle(GetCategoryByIdQuery query, CancellationToken cancellationToken)
         {
             var category = await _context.Categories.Where(c => c.Id == query.Id).FirstOrDefaultAsync(cancellationToken);
-            if (category == null) throw new CatalogException(_localizer["Category Not Found!"]);
+            if (category == null) throw new CatalogException(_localizer["Category Not Found!"], HttpStatusCode.NotFound);
             var mappedCategory = _mapper.Map<GetCategoryByIdResponse>(category);
             return await Result<GetCategoryByIdResponse>.SuccessAsync(mappedCategory);
         }

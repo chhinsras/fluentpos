@@ -12,6 +12,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -42,7 +43,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
         {
             if (await _context.Products.AnyAsync(p => p.BarcodeSymbology == command.BarcodeSymbology, cancellationToken))
             {
-                throw new CatalogException(_localizer["Barcode already exists."]);
+                throw new CatalogException(_localizer["Barcode already exists."], HttpStatusCode.BadRequest);
             }
 
             var product = _mapper.Map<Product>(command);
@@ -62,7 +63,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
         {
             if (await _context.Products.Where(p => p.Id != command.Id).AnyAsync(p => p.BarcodeSymbology == command.BarcodeSymbology, cancellationToken))
             {
-                throw new CatalogException(_localizer["Barcode already exists."]);
+                throw new CatalogException(_localizer["Barcode already exists."], HttpStatusCode.BadRequest);
             }
 
             var product = await _context.Products.Where(p => p.Id == command.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
@@ -84,7 +85,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
             }
             else
             {
-                throw new CatalogException(_localizer["Product Not Found!"]);
+                throw new CatalogException(_localizer["Product Not Found!"], HttpStatusCode.NotFound);
             }
         }
 
@@ -101,7 +102,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
             }
             else
             {
-                throw new CatalogException(_localizer["Product Not Found!"]);
+                throw new CatalogException(_localizer["Product Not Found!"], HttpStatusCode.NotFound);
             }
         }
     }

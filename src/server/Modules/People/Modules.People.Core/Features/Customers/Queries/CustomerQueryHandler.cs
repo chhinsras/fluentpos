@@ -11,6 +11,7 @@ using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,7 +46,7 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Queries
                 .AsNoTracking()
                 .ToPaginatedListAsync(request.PageNumber, request.PageSize);
 
-            if (customerList == null) throw new PeopleException(_localizer["Customers Not Found!"]);
+            if (customerList == null) throw new PeopleException(_localizer["Customers Not Found!"], HttpStatusCode.NotFound);
 
             var mappedCustomers = _mapper.Map<PaginatedResult<GetAllPagedCustomersResponse>>(customerList);
 
@@ -55,7 +56,7 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Queries
         public async Task<Result<GetCustomerByIdResponse>> Handle(GetCustomerByIdQuery query, CancellationToken cancellationToken)
         {
             var customer = await _context.Customers.Where(c => c.Id == query.Id).FirstOrDefaultAsync(cancellationToken);
-            if (customer == null) throw new PeopleException(_localizer["Customer Not Found!"]);
+            if (customer == null) throw new PeopleException(_localizer["Customer Not Found!"], HttpStatusCode.NotFound);
             var mappedCustomer = _mapper.Map<GetCustomerByIdResponse>(customer);
             return await Result<GetCustomerByIdResponse>.SuccessAsync(mappedCustomer);
         }
