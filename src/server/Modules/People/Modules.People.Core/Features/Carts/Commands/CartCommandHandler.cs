@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -41,7 +42,7 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Commands
         {
             if (!await _context.Customers.AnyAsync(p => p.Id == command.CustomerId, cancellationToken))
             {
-                throw new PeopleException(_localizer["Customer Not Found!"]);
+                throw new PeopleException(_localizer["Customer Not Found!"], HttpStatusCode.NotFound);
             }
 
             var cart = _mapper.Map<Cart>(command);
@@ -54,6 +55,10 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Commands
         public async Task<Result<Guid>> Handle(RemoveCartCommand command, CancellationToken cancellationToken)
         {
             var cart = await _context.Carts.FirstOrDefaultAsync(b => b.Id == command.Id, cancellationToken);
+            if (cart == null)
+            {
+                throw new PeopleException(_localizer["Cart Not Found!"], HttpStatusCode.NotFound);
+            }
             cart.AddDomainEvent(new CartRemovedEvent(cart.Id));
             _context.Carts.Remove(cart);
             await _context.SaveChangesAsync(cancellationToken);

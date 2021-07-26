@@ -11,7 +11,7 @@ namespace FluentPOS.Modules.People.Core.Mappings
         {
             CreateMap<CreateCartCommand, Cart>().ReverseMap();
             CreateMap<GetCartByIdResponse, Cart>().ReverseMap();
-            CreateMap<GetCartByCustomerIdResponse, Cart>().ReverseMap();
+            CreateMap<GetAllPagedCartsResponse, Cart>().ReverseMap();
         }
     }
 }

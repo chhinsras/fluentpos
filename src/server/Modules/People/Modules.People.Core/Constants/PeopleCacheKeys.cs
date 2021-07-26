@@ -14,9 +14,9 @@ namespace FluentPOS.Modules.People.Core.Constants
             return $"Cart-{id}";
         }
 
-        public static string GetCartByCustomerIdCacheKey(Guid customerId)
+        public static string GetCartItemByIdCacheKey(Guid id)
         {
-            return $"Cart-customer-{customerId}";
+            return $"CartItem-{id}";
         }
     }
 }

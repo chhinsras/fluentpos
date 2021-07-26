@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FluentPOS.Modules.People.Core.Features.Carts.Commands;
 using FluentPOS.Modules.People.Core.Features.Carts.Queries;
 using FluentPOS.Shared.Core.Constants;
+using FluentPOS.Shared.DTOs.People.Carts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,12 +19,13 @@ namespace FluentPOS.Modules.People.Controllers
             return Ok(cart);
         }
 
-        [HttpGet("customer/{customerId}")]
-        [Authorize(Policy = Permissions.Carts.View)]
-        public async Task<IActionResult> GetByCustomerIdAsync(Guid customerId, bool bypassCache)
+        [HttpGet]
+        [Authorize(Policy = Permissions.Carts.ViewAll)]
+        public async Task<IActionResult> GetAllAsync([FromQuery] PaginatedCartFilter filter)
         {
-            var cart = await Mediator.Send(new GetCartByCustomerIdQuery(customerId, bypassCache));
-            return Ok(cart);
+            var carts =
+                await Mediator.Send(new GetAllPagedCartsQuery(filter.PageNumber, filter.PageSize, filter.SearchString, filter.OrderBy, filter.CustomerId));
+            return Ok(carts);
         }
 
         [HttpPost]
