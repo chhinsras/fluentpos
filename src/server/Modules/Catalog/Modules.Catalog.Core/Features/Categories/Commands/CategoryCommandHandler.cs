@@ -12,6 +12,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -42,7 +43,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
         {
             if (await _context.Categories.AnyAsync(c => c.Name == command.Name, cancellationToken))
             {
-                throw new CatalogException(_localizer["Category with the same name already exists."]);
+                throw new CatalogException(_localizer["Category with the same name already exists."], HttpStatusCode.BadRequest);
             }
 
             var category = _mapper.Map<Category>(command);
@@ -65,7 +66,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
             {
                 if (await _context.Categories.AnyAsync(c => c.Id != command.Id && c.Name == command.Name, cancellationToken))
                 {
-                    throw new CatalogException(_localizer["Category with the same name already exists."]);
+                    throw new CatalogException(_localizer["Category with the same name already exists."], HttpStatusCode.BadRequest);
                 }
 
                 category = _mapper.Map<Category>(command);
@@ -83,7 +84,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
             }
             else
             {
-                throw new CatalogException(_localizer["Category Not Found!"]);
+                throw new CatalogException(_localizer["Category Not Found!"], HttpStatusCode.NotFound);
             }
         }
 

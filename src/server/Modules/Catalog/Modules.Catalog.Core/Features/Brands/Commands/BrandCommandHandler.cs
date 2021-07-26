@@ -43,7 +43,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
         {
             if (await _context.Brands.AnyAsync(c => c.Name == command.Name, cancellationToken))
             {
-                throw new CatalogException(_localizer["Brand with the same name already exists."]);
+                throw new CatalogException(_localizer["Brand with the same name already exists."], HttpStatusCode.BadRequest);
             }
 
             var brand = _mapper.Map<Brand>(command);
@@ -75,11 +75,11 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
         public async Task<Result<Guid>> Handle(UpdateBrandCommand command, CancellationToken cancellationToken)
         {
             var brand = await _context.Brands.Where(b => b.Id == command.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
-            if (brand == null) throw new CatalogException(_localizer["Brand Not Found!"]);
+            if (brand == null) throw new CatalogException(_localizer["Brand Not Found!"], HttpStatusCode.NotFound);
 
             if (await _context.Brands.AnyAsync(c => c.Id != command.Id && c.Name == command.Name, cancellationToken))
             {
-                throw new CatalogException(_localizer["Brand with the same name already exists."]);
+                throw new CatalogException(_localizer["Brand with the same name already exists."], HttpStatusCode.BadRequest);
             }
 
             brand = _mapper.Map<Brand>(command);

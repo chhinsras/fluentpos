@@ -12,6 +12,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -75,7 +76,7 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Commands
             }
             else
             {
-                throw new PeopleException(_localizer["Customer Not Found!"]);
+                throw new PeopleException(_localizer["Customer Not Found!"], HttpStatusCode.NotFound);
             }
         }
 

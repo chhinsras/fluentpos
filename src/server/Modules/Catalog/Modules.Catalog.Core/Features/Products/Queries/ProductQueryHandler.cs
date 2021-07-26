@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -58,7 +59,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
                 .AsNoTracking()
                 .ToPaginatedListAsync(request.PageNumber, request.PageSize);
 
-            if (productList == null) throw new CatalogException(_localizer["Products Not Found!"]);
+            if (productList == null) throw new CatalogException(_localizer["Products Not Found!"], HttpStatusCode.NotFound);
 
             var mappedProducts = _mapper.Map<PaginatedResult<GetAllPagedProductsResponse>>(productList);
 
@@ -68,7 +69,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
         public async Task<Result<GetProductByIdResponse>> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
         {
             var product = await _context.Products.Where(p => p.Id == query.Id).FirstOrDefaultAsync(cancellationToken);
-            if (product == null) throw new CatalogException(_localizer["Product Not Found!"]);
+            if (product == null) throw new CatalogException(_localizer["Product Not Found!"], HttpStatusCode.NotFound);
             var mappedProduct = _mapper.Map<GetProductByIdResponse>(product);
             return await Result<GetProductByIdResponse>.SuccessAsync(mappedProduct);
         }
