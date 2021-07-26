@@ -18,10 +18,17 @@ namespace FluentPOS.Modules.People.Infrastructure.Extensions
                 {
                     entity.Property(p => p.Decimal)
                         .HasColumnType("decimal(23, 2)");
-                    //entity.HasOne(p => p.Entity)
-                    //    .WithMany(p => p.ExtendedAttributes)
-                    //    .HasForeignKey(p => p.EntityId)
-                    //    .OnDelete(DeleteBehavior.Cascade);
+                }
+            });
+
+            builder.Entity<CartExtendedAttribute>(entity =>
+            {
+                entity.ToTable("CartExtendedAttributes");
+
+                if (persistenceOptions.UseMsSql)
+                {
+                    entity.Property(p => p.Decimal)
+                        .HasColumnType("decimal(23, 2)");
                 }
             });
         }

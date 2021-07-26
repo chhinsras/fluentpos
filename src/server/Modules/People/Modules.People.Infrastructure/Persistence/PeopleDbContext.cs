@@ -14,7 +14,8 @@ using FluentPOS.Modules.People.Core.Entities.ExtendedAttributes;
 namespace FluentPOS.Modules.People.Infrastructure.Persistence
 {
     public sealed class PeopleDbContext : ModuleDbContext, IPeopleDbContext,
-        IExtendedAttributeDbContext<Guid, Customer, CustomerExtendedAttribute>
+        IExtendedAttributeDbContext<Guid, Customer, CustomerExtendedAttribute>,
+        IExtendedAttributeDbContext<Guid, Cart, CartExtendedAttribute>
     {
         private readonly PersistenceSettings _persistenceOptions;
 
@@ -45,5 +46,9 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence
         DbSet<Customer> IExtendedAttributeDbContext<Guid, Customer, CustomerExtendedAttribute>.GetEntities() => Customers;
 
         DbSet<CustomerExtendedAttribute> IExtendedAttributeDbContext<Guid, Customer, CustomerExtendedAttribute>.ExtendedAttributes { get; set; }
+
+        DbSet<Cart> IExtendedAttributeDbContext<Guid, Cart, CartExtendedAttribute>.GetEntities() => Carts;
+
+        DbSet<CartExtendedAttribute> IExtendedAttributeDbContext<Guid, Cart, CartExtendedAttribute>.ExtendedAttributes { get; set; }
     }
 }
