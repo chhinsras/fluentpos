@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentPOS.Modules.People.Core.Entities.ExtendedAttributes;
 using FluentPOS.Shared.Core.Domain;
 
 namespace FluentPOS.Modules.People.Core.Entities
@@ -14,9 +15,12 @@ namespace FluentPOS.Modules.People.Core.Entities
 
         public virtual ICollection<CartItem> CartItems { get; set; }
 
+        public virtual ICollection<CartExtendedAttribute> ExtendedAttributes { get; set; }
+
         public Cart()
         {
             CartItems = new List<CartItem>();
+            ExtendedAttributes = new HashSet<CartExtendedAttribute>();
             Timestamp = DateTime.Now;
         }
     }
