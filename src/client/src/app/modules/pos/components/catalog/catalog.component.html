@@ -1,5 +1,5 @@
 <div *ngIf="busyService.isLoading | async" class="catalog-card" style="margin-bottom: 0;">
-    <app-catalog-skeleton></app-catalog-skeleton>
+    <app-catalog-skeleton [showImage]="showImage"></app-catalog-skeleton>
 </div>
 
 <div class="catalog-card" style="margin-bottom: 0;">
