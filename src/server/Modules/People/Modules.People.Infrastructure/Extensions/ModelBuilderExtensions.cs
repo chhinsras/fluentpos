@@ -24,34 +24,16 @@ namespace FluentPOS.Modules.People.Infrastructure.Extensions
             builder.Entity<CustomerExtendedAttribute>(entity =>
             {
                 entity.ToTable("CustomerExtendedAttributes");
-
-                //if (persistenceOptions.UseMsSql)
-                //{
-                //    entity.Property(p => p.Decimal)
-                //        .HasColumnType("decimal(23, 2)");
-                //}
             });
 
             builder.Entity<CartExtendedAttribute>(entity =>
             {
                 entity.ToTable("CartExtendedAttributes");
-
-                //if (persistenceOptions.UseMsSql)
-                //{
-                //    entity.Property(p => p.Decimal)
-                //        .HasColumnType("decimal(23, 2)");
-                //}
             });
 
             builder.Entity<CartItemExtendedAttribute>(entity =>
             {
                 entity.ToTable("CartItemExtendedAttributes");
-
-                //if (persistenceOptions.UseMsSql)
-                //{
-                //    entity.Property(p => p.Decimal)
-                //        .HasColumnType("decimal(23, 2)");
-                //}
             });
         }
     }

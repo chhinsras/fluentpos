@@ -1,4 +1,5 @@
-﻿using FluentPOS.Modules.Catalog.Core.Entities;
+﻿using System.Linq;
+using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Entities.ExtendedAttributes;
 using FluentPOS.Shared.Core.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,16 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
         public static void ApplyCatalogConfiguration(this ModelBuilder builder, PersistenceSettings persistenceOptions)
         {
             // build model for MSSQL and Postgres
+
+            if (persistenceOptions.UseMsSql)
+            {
+                foreach (var property in builder.Model.GetEntityTypes()
+                    .SelectMany(t => t.GetProperties())
+                    .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
+                {
+                    property.SetColumnType("decimal(23,2)");
+                }
+            }
 
             builder.Entity<Product>(entity =>
             {
@@ -29,46 +40,16 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
             builder.Entity<BrandExtendedAttribute>(entity =>
             {
                 entity.ToTable("BrandExtendedAttributes");
-
-                if (persistenceOptions.UseMsSql)
-                {
-                    entity.Property(p => p.Decimal)
-                        .HasColumnType("decimal(23, 2)");
-                    //entity.HasOne(p => p.Entity)
-                    //    .WithMany(p => p.ExtendedAttributes)
-                    //    .HasForeignKey(p => p.EntityId)
-                    //    .OnDelete(DeleteBehavior.Cascade);
-                }
             });
 
             builder.Entity<CategoryExtendedAttribute>(entity =>
             {
                 entity.ToTable("CategoryExtendedAttributes");
-
-                if (persistenceOptions.UseMsSql)
-                {
-                    entity.Property(p => p.Decimal)
-                        .HasColumnType("decimal(23, 2)");
-                    //entity.HasOne(p => p.Entity)
-                    //    .WithMany(p => p.ExtendedAttributes)
-                    //    .HasForeignKey(p => p.EntityId)
-                    //    .OnDelete(DeleteBehavior.Cascade);
-                }
             });
 
             builder.Entity<ProductExtendedAttribute>(entity =>
             {
                 entity.ToTable("ProductExtendedAttributes");
-
-                if (persistenceOptions.UseMsSql)
-                {
-                    entity.Property(p => p.Decimal)
-                        .HasColumnType("decimal(23, 2)");
-                    //entity.HasOne(p => p.Entity)
-                    //    .WithMany(p => p.ExtendedAttributes)
-                    //    .HasForeignKey(p => p.EntityId)
-                    //    .OnDelete(DeleteBehavior.Cascade);
-                }
             });
         }
     }
