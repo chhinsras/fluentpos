@@ -74,17 +74,21 @@ public class CatalogDbContext : ModuleDbContext, ICatalogDbContext,
 ```csharp
 public static void ApplyCatalogConfiguration(this ModelBuilder builder, PersistenceSettings persistenceOptions)
 {
+    if (persistenceOptions.UseMsSql)
+    {
+        foreach (var property in builder.Model.GetEntityTypes()
+            .SelectMany(t => t.GetProperties())
+            .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
+        {
+            property.SetColumnType("decimal(23,2)");
+        }
+    }
+
     //...
 
     builder.Entity<BrandExtendedAttribute>(entity =>
     {
         entity.ToTable("BrandExtendedAttributes", "Catalog");
-
-        if (persistenceOptions.UseMsSql)
-        {
-            entity.Property(p => p.Decimal)
-                .HasColumnType("decimal(23, 2)");
-        }
     });
 
     //...
@@ -199,7 +203,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
 9) Add validators for added extended attribute into **FluentPOS.Modules.|module-name|.Core.*.Validators** inherited from each the abstract classes: `AddExtendedAttributeCommandValidator<|related-entity-id-type|, |related-entity-type-name|>`, `UpdateExtendedAttributeCommandValidator<|related-entity-id-type|, |related-entity-type-name|>` and `RemoveExtendedAttributeCommandValidator<|related-entity-id-type|, |related-entity-type-name|>`:
 
 ```csharp
-namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
+namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators.Brands
 {
     public class AddBrandExtendedAttributeCommandValidator : AddExtendedAttributeCommandValidator<Guid, Brand>
     {
@@ -212,7 +216,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
 ```
 
 ```csharp
-namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
+namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators.Brands
 {
     public class UpdateBrandExtendedAttributeCommandValidator : UpdateExtendedAttributeCommandValidator<Guid, Brand>
     {
@@ -225,7 +229,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
 ```
 
 ```csharp
-namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
+namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators.Brands
 {
     public class RemoveBrandExtendedAttributeCommandValidator : RemoveExtendedAttributeCommandValidator<Guid, Brand>
     {
@@ -263,4 +267,10 @@ namespace FluentPOS.Modules.Catalog.Core.Extensions
 
 ```
 dotnet ef migrations add "initial" --startup-project ../../../API -o Persistence/Migrations/ --context CatalogDbContext
+```
+
+Or using *Package Manager Console* in Visual Studio (should change *Default project* to **Modules.Catalog.Infrastructure**):
+
+```
+add-migration initial -o Persistence/Migrations/ -context CatalogDbContext
 ```
