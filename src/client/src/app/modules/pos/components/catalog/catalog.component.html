@@ -1,51 +1,51 @@
 <div class="catalog-card" style="margin-bottom: 0;">
 
     <div>
-
+        <div class="row">
+            <div class="col-md-3 col-xl-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Filter Products</mat-label>
+                    <input matInput autocomplete="off" placeholder="Search For Products" [(ngModel)]="searchString" name="searchString" type="text" autocomplete="off" (keyup)="doFilter()" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-xl-3">
+                <form>
+                    <mat-form-field appearance="outline" *ngIf="brands && brands.data">
+                        <mat-label>Filter Brands</mat-label>
+                        <input type="text" placeholder="Brand Selection" aria-label="Filter Brands" matInput [matAutocomplete]="auto" [formControl]="brandAutoComplete">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="getBrandName.bind(this)">
+                            <mat-option *ngFor="let brand of brands.data" [value]="brand.id">
+                                {{brand.name}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+            </div>
+            <div class="col-md-3 col-xl-3">
+                <form>
+                    <mat-form-field *ngIf="brands && brands.data" appearance="outline">
+                        <mat-label>Filter Categories</mat-label>
+                        <input type="text" placeholder="Category Selection" aria-label="Filter Categories" matInput [matAutocomplete]="auto">
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                            <mat-option *ngFor="let brand of brands.data" [value]="brand.name">
+                                {{brand.name}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+            </div>
+            <div class="col-md-3 col-xl-3" style="text-align: right;">
+                <a mat-raised-button style="margin-right: 5px;" (click)="toggleImage()">
+                    <span style="font-weight:lighter;font-size: small;" translate>pos.toggleImage</span>
+                </a>
+            </div>
+        </div>
         <div *ngIf="busyService.isLoading | async" style="margin-bottom: 0;">
             <app-catalog-skeleton [showImage]="showImage"></app-catalog-skeleton>
         </div>
 
         <div *ngIf="(busyService.isLoading | async) === false && (products && products.data)">
-            <div class="row">
-                <div class="col-md-3 col-xl-3">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Filter Products</mat-label>
-                        <input matInput autocomplete="off" placeholder="Search For Products" [(ngModel)]="searchString" name="searchString" type="text" autocomplete="off" (keyup)="doFilter()" />
-                    </mat-form-field>
-                </div>
-                <div class="col-md-3 col-xl-3">
-                    <form>
-                        <mat-form-field appearance="outline" *ngIf="brands && brands.data">
-                            <mat-label>Filter Brands</mat-label>
-                            <input type="text" placeholder="Brand Selection" aria-label="Filter Brands" matInput [matAutocomplete]="auto" [formControl]="brandAutoComplete">
-                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="getBrandName.bind(this)">
-                                <mat-option *ngFor="let brand of brands.data" [value]="brand.id">
-                                    {{brand.name}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </form>
-                </div>
-                <div class="col-md-3 col-xl-3">
-                    <form>
-                        <mat-form-field *ngIf="brands && brands.data" appearance="outline">
-                            <mat-label>Filter Categories</mat-label>
-                            <input type="text" placeholder="Category Selection" aria-label="Filter Categories" matInput [matAutocomplete]="auto">
-                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                                <mat-option *ngFor="let brand of brands.data" [value]="brand.name">
-                                    {{brand.name}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </form>
-                </div>
-                <div class="col-md-3 col-xl-3" style="text-align: right;">
-                    <a mat-raised-button style="margin-right: 5px;" (click)="toggleImage()">
-                        <span style="font-weight:lighter;font-size: small;" translate>pos.toggleImage</span>
-                    </a>
-                </div>
-            </div>
+
             <div class="row">
                 <div *ngFor="let product of products.data" class="col-xs-12 col-sm-12 col-md-6 col-lg-3" style="border-radius: 5px;">
                     <mat-card class="example-card">
