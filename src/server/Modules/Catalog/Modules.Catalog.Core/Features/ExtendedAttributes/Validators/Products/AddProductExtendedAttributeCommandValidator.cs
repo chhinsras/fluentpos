@@ -4,7 +4,7 @@ using FluentPOS.Shared.Core.Interfaces.Serialization;
 using Microsoft.Extensions.Localization;
 using System;
 
-namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
+namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators.Products
 {
     public class AddProductExtendedAttributeCommandValidator : AddExtendedAttributeCommandValidator<Guid, Product>
     {

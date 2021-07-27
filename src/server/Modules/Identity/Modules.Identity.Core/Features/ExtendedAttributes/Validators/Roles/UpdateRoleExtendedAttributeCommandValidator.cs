@@ -3,7 +3,7 @@ using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators;
 using FluentPOS.Shared.Core.Interfaces.Serialization;
 using Microsoft.Extensions.Localization;
 
-namespace FluentPOS.Modules.Identity.Core.Features.ExtendedAttributes.Validators
+namespace FluentPOS.Modules.Identity.Core.Features.ExtendedAttributes.Validators.Roles
 {
     public class UpdateRoleExtendedAttributeCommandValidator : UpdateExtendedAttributeCommandValidator<string, FluentRole>
     {

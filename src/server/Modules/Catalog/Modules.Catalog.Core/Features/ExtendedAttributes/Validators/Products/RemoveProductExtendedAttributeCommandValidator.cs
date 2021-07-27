@@ -3,7 +3,7 @@ using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators;
 using Microsoft.Extensions.Localization;
 using System;
 
-namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators
+namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators.Products
 {
     public class RemoveProductExtendedAttributeCommandValidator : RemoveExtendedAttributeCommandValidator<Guid, Product>
     {

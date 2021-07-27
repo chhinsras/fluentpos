@@ -2,7 +2,7 @@
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators;
 using Microsoft.Extensions.Localization;
 
-namespace FluentPOS.Modules.Identity.Core.Features.ExtendedAttributes.Validators
+namespace FluentPOS.Modules.Identity.Core.Features.ExtendedAttributes.Validators.Users
 {
     public class RemoveUserExtendedAttributeCommandValidator : RemoveExtendedAttributeCommandValidator<string, FluentUser>
     {
