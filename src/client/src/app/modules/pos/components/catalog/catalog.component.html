@@ -5,7 +5,7 @@
 <div class="catalog-card" style="margin-bottom: 0;">
     <div class="row">
         <div class="col-md-3 col-xl-3">
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" *ngIf="products && products.data">
                 <mat-label>Filter Products</mat-label>
                 <input matInput autocomplete="off" placeholder="Search For Products" [(ngModel)]="searchString" name="searchString" type="text" autocomplete="off" (keyup)="doFilter()" />
             </mat-form-field>
