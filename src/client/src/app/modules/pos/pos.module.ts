@@ -15,6 +15,9 @@ import { CartComponent } from './components/cart/cart.component';
 import { PosToolbarComponent } from './components/pos-toolbar/pos-toolbar.component';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { CatalogSkeletonComponent } from './components/catalog-skeleton/catalog-skeleton.component';
+
 @NgModule({
   declarations: [
     PosComponent,
@@ -24,14 +27,16 @@ import { TranslateModule } from '@ngx-translate/core';
     CustomerInfoComponent,
     ProductInfoComponent,
     CartComponent,
-    PosToolbarComponent
+    PosToolbarComponent,
+    CatalogSkeletonComponent
   ],
   imports: [
     CommonModule,
     PosRoutingModule,
     MaterialModule,
     SharedModule,
-    TranslateModule
+    TranslateModule,
+    NgxSkeletonLoaderModule
   ]
 })
 export class PosModule { }

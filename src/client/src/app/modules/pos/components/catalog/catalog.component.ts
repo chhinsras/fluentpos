@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { map, startWith } from 'rxjs/operators';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
+import { BusyService } from 'src/app/core/services/busy.service';
 import { Brand } from '../../models/brand';
 import { BrandParams } from '../../models/brandParams';
 import { Product } from '../../models/product';
@@ -23,7 +24,7 @@ export class CatalogComponent implements OnInit {
   searchString: string;
   brandAutoComplete = new FormControl();
   showImage:boolean=false;
-  constructor(private posService: PosService, private toast: ToastrService, private cartService: CartService) { }
+  constructor(private posService: PosService, private toast: ToastrService, private cartService: CartService, public busyService: BusyService) { }
 
   ngOnInit(): void {
     this.productParams.pageSize = 16;
