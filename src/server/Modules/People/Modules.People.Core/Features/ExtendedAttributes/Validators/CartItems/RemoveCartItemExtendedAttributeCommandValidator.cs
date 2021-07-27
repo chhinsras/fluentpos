@@ -3,7 +3,7 @@ using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators;
 using Microsoft.Extensions.Localization;
 
-namespace FluentPOS.Modules.People.Core.Features.ExtendedAttributes.Validators
+namespace FluentPOS.Modules.People.Core.Features.ExtendedAttributes.Validators.CartItems
 {
     public class RemoveCartItemExtendedAttributeCommandValidator : RemoveExtendedAttributeCommandValidator<Guid, CartItem>
     {
