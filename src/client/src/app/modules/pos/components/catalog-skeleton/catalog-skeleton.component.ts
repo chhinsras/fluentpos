@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CatalogSkeletonComponent implements OnInit {
   @Input() showImage : Boolean;
-  products = new Array(16);
+  products = new Array(20);
   
   constructor() { }
 
