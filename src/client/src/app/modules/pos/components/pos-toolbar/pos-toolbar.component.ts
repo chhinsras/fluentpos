@@ -41,6 +41,7 @@ export class PosToolbarComponent implements OnInit {
     dialogRef.afterClosed().subscribe((customer: Customer) => {
       if (customer) {
         this.customer = customer;
+        this.cartService.setCurrentCustomer(customer.id);
       }
     });
   }

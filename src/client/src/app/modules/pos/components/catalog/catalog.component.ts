@@ -24,7 +24,7 @@ export class CatalogComponent implements OnInit {
   searchString: string;
   brandAutoComplete = new FormControl();
   showImage:boolean=false;
-  constructor(private posService: PosService, private toast: ToastrService, private cartService: CartService, public busyService: BusyService) { }
+  constructor(private posService: PosService, private toastr: ToastrService, private cartService: CartService, public busyService: BusyService) { }
 
   ngOnInit(): void {
     this.productParams.pageSize = 20;
@@ -54,8 +54,20 @@ export class CatalogComponent implements OnInit {
       return this.brands.data.find(brand => brand.id === brandId).name;
     }
   }
+  isCustomerSelected() {
+    const currentCustomer = this.cartService.getCurrentCustomer();
+    if (!currentCustomer) {
+      this.toastr.info('Select a customer first');
+      return false;
+    }
+    return true;
+  }
   addToCart(product: Product) {
-    this.cartService.add(product);
+    if(this.isCustomerSelected())
+    {
+      this.cartService.add(product); 
+    }
+   
   }
   toggleImage()
   {

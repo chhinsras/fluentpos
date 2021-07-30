@@ -14,7 +14,6 @@ export class CustomerComponent implements OnInit {
   constructor(public dialog: MatDialog, private posService: PosService) { }
 
   ngOnInit(): void {
-    this.loadDefaultCustomer();
   }
   openForm(): void {
     const dialogRef = this.dialog.open(CustomerSelectionComponent);
@@ -32,15 +31,5 @@ export class CustomerComponent implements OnInit {
       this.customer = res.data;
     }
     )
-  }
-  loadDefaultCustomer() {
-    this.customer = {
-      id: "0",
-      name: "Walk-In Customer",
-      email: "walkincustomer@fluentpos.com",
-      type: "Random",
-      phone: "789456123",
-      imageUrl: ""
-    }
   }
 }
