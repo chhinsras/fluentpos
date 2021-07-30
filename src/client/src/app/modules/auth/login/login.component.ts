@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthService} from 'src/app/core/services/auth.service';
-import {filter} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -30,10 +30,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loginForm.disable()
     this.authService.login(this.loginForm.value)
       .pipe(filter(result => result?.succeeded === true))
       .subscribe(() => this.router.navigateByUrl(this.returnUrl),
-        error => console.log(error));
+        error => { console.log(error); this.loginForm.enable(); });
   }
 
   fillSuperAdminCredentials() {
