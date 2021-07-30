@@ -1,5 +1,4 @@
 <div class="catalog-card" style="margin-bottom: 0;">
-
     <div>
         <div class="row">
             <div class="col-md-3 col-xl-3">
@@ -40,12 +39,10 @@
                 </a>
             </div>
         </div>
-        <div *ngIf="busyService.isLoading | async" style="margin-bottom: 0;">
+        <div *ngIf="(busyService.isLoading | async)" style="margin-bottom: 0;">
             <app-catalog-skeleton [showImage]="showImage"></app-catalog-skeleton>
         </div>
-
         <div *ngIf="(busyService.isLoading | async) === false && (products && products.data)">
-
             <div class="row">
                 <div *ngFor="let product of products.data" class="col-xs-12 col-sm-12 col-md-6 col-lg-3" style="border-radius: 5px;">
                     <mat-card class="example-card">

@@ -49,6 +49,9 @@ export class CartService {
   get(): Observable<Cart[]> {
     return this.cartItems$.asObservable();
   }
+  loadCurrentCart(): Cart[] {
+    return this.calculate(this.cartItems);
+  }
   private calculate(cartItems: Cart[]): Cart[] {
     cartItems.forEach(function (part, index, theArray) {
       theArray[index].total = cartItems[index].quantity * cartItems[index].rate;
