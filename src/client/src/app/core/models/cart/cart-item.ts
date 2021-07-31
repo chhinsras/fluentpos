@@ -1,4 +1,5 @@
 export class CartItemApiModel {
+    id: string;
     cartId: string;
     productId: string;
     quantity: number;
@@ -10,4 +11,5 @@ export class CartItemApiModel {
         this.productId = productId;
         this.quantity = quantity;
     }
+
 }

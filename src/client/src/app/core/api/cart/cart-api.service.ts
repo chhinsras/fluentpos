@@ -13,15 +13,12 @@ export class CartApiService {
 
   constructor(private http: HttpClient) {
   }
-  create(customerId:string)
-  {
-    return this.http.post(this.baseUrl, customerId);
+  create(customerId: string) {
+    return this.http.post<Result<string>>(this.baseUrl, { "customerId": customerId });
   }
-  get(customerId:string)
-  {
+  get(customerId: string) {
     let params = new HttpParams();
-    params= params.append('customerId', customerId);
-    return this.http.get<Result<CartApiModel[]>>(this.baseUrl, {params: params});
+    params = params.append('customerId', customerId);
+    return this.http.get<Result<CartApiModel[]>>(this.baseUrl, { params: params });
   }
-  getC
 }

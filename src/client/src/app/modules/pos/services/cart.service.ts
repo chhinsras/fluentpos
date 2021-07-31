@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CartApiService } from 'src/app/core/api/cart/cart-api.service';
 import { CartItemsApiService } from 'src/app/core/api/cart/cart-items-api.service';
-import { CustomerApiService } from 'src/app/core/api/people/customer-api.service';
 import { CartItemApiModel } from 'src/app/core/models/cart/cart-item';
-import { Cart } from '../models/cart';
+import { CartItem } from '../models/cart';
 import { Customer } from '../models/customer';
 import { Product } from '../models/product';
 
@@ -12,9 +11,10 @@ import { Product } from '../models/product';
   providedIn: 'root'
 })
 export class CartService {
-  private cartItems$ = new Subject<Cart[]>();
-  private cartItems: Cart[] = [];
+  private cartItems$ = new Subject<CartItem[]>();
+  private cartItems: CartItem[] = [];
   private currentCustomer: Customer;
+  private cartId: string;
   constructor(private cartApi: CartApiService, private cartItemApi: CartItemsApiService, private cartItemsApi: CartItemsApiService) { }
   add(product: Product, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == product.id);
@@ -22,28 +22,20 @@ export class CartService {
       foundItem.quantity = foundItem.quantity + quantity;
     }
     else {
-      this.cartItems.push(new Cart(product.id, quantity ?? 1, product.name, product.detail, product.price));
+      this.cartItems.push(new CartItem(product.id, quantity ?? 1, product.name, product.detail, product.price));
     }
     this.cartItems$.next(this.calculate(this.cartItems));
-    this.cartApi.get(this.currentCustomer.id).subscribe((result) => {
-      if (result) {
-        if (result.data.length > 1) {
-          //take first only - temporarily
-          //todo : add cart selection dialog later
-          const cartId = result.data[0].id;
-          this.cartItemApi.create(new CartItemApiModel(cartId, product.id, quantity)).subscribe();
-        }
-        else {
-          //create cart
-        }
-      }
-    });
+    this.cartItemApi.create(new CartItemApiModel(this.cartId, product.id, quantity)).subscribe();
 
   }
   increase(productId: string, quantity: number = 1) {
+    console.log(this.cartItems);
     var foundItem = this.cartItems.find(a => a.productId == productId);
     if (foundItem) {
       foundItem.quantity = foundItem.quantity + quantity;
+      var cartItem = new CartItemApiModel(this.cartId, foundItem.productId, foundItem.quantity);
+      cartItem.id = foundItem.id;
+      this.cartItemApi.update(cartItem).subscribe();
     }
     this.cartItems$.next(this.calculate(this.cartItems));
   }
@@ -52,6 +44,9 @@ export class CartService {
     if (foundItem) {
       if (foundItem.quantity > 1) {
         foundItem.quantity = foundItem.quantity - quantity;
+        var cartItem = new CartItemApiModel(this.cartId, foundItem.productId, foundItem.quantity);
+        cartItem.id = foundItem.id;
+        this.cartItemApi.update(cartItem).subscribe();
       }
       else {
         this.cartItems.splice(this.cartItems.indexOf(foundItem), 1)
@@ -66,10 +61,10 @@ export class CartService {
     }
     this.cartItems$.next(this.cartItems);
   }
-  get(): Observable<Cart[]> {
+  get(): Observable<CartItem[]> {
     return this.cartItems$.asObservable();
   }
-  loadCurrentCart(): Cart[] {
+  loadCurrentCart(): CartItem[] {
     return this.calculate(this.cartItems);
   }
   setCurrentCustomer(customer: Customer) {
@@ -78,7 +73,7 @@ export class CartService {
   getCurrentCustomer() {
     return this.currentCustomer;
   }
-  private calculate(cartItems: Cart[]): Cart[] {
+  private calculate(cartItems: CartItem[]): CartItem[] {
     cartItems.forEach(function (part, index, theArray) {
       theArray[index].total = cartItems[index].quantity * cartItems[index].rate;
     });
@@ -86,17 +81,20 @@ export class CartService {
   }
   getCustomerCart(customerId: string) {
     this.cartItems = [];
+    this.cartItems$.next(this.calculate(this.cartItems));
     this.cartApi.get(customerId).subscribe((result) => {
       if (result) {
         if (result.data.length > 1) {
           //take first only - temporarily
           //todo : add cart selection dialog later
-          const cartId = result.data[0].id;
-          this.cartItemApi.get(cartId).subscribe((data) => {
+          this.cartId = result.data[0].id;
+          this.cartItemApi.get(this.cartId).subscribe((data) => {
             if (data) {
               data.data.forEach(element => {
-                this.cartItems.push(new Cart(element.cartId, element.quantity, element.productName, element.productDescription, element.rate));
-
+                var cartItem = new CartItem(element.productId, element.quantity, element.productName, element.productDescription, element.rate);
+                cartItem.id = element.id;
+                this.cartItems.push(cartItem);
+                this.cartItems$.next(this.calculate(this.cartItems));
               });
 
             }
@@ -104,9 +102,15 @@ export class CartService {
         }
         else {
           //create cart
+          this.cartApi.create(customerId).subscribe((data) => {
+            if (data && data.succeeded) {
+              this.cartId = data.data;
+              this.cartItems$.next(this.calculate(this.cartItems));
+            }
+          })
         }
       }
-      this.cartItems$.next(this.calculate(this.cartItems));
+
     });
   }
 }
