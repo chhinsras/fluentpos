@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
@@ -45,6 +46,16 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
             Expression<Func<TExtendedAttribute, GetAllPagedExtendedAttributesResponse<TEntityId>>> expression = e => new GetAllPagedExtendedAttributesResponse<TEntityId>(e.Id, e.EntityId, e.Type, e.Key, e.Decimal, e.Text, e.DateTime, e.Json, e.Boolean, e.Integer, e.ExternalId, e.Group, e.Description, e.IsActive);
 
             var queryable = _context.ExtendedAttributes.OrderBy(x => x.Id).AsQueryable();
+
+            if (request.OrderBy?.Any() == true)
+            {
+                var ordering = string.Join(",", request.OrderBy);
+                queryable = queryable.OrderBy(ordering);
+            }
+            else
+            {
+                queryable = queryable.OrderBy(a => a.Id);
+            }
 
             // apply filter parameters
             if (request.EntityId != null && !request.EntityId.Equals(default(TEntityId))) queryable = queryable.Where(b => b.EntityId.Equals(request.EntityId));
