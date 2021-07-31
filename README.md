@@ -20,6 +20,21 @@ The WebAPI application had to be highly modular to improve development experienc
 
 fluentpos was meant for retail businesses. The modular monolith architecture would help us to extend fluentpos to support other business modules like cafe, restaurant, warehouses and so.
 
+### Roadmap
+
+For the initial realse, you can track the progress and included tasks here - https://github.com/fluentpos/fluentpos/milestone/1
+
+PS, we will be adding in more requirements.
+
+Note to contributors.
+- Identity tasks from https://github.com/fluentpos/fluentpos/issues
+- Assign it to yourself
+- Create a branch from the master branch and name it according to the Issue Id. For ex, if the Issue id is #70, create a branch 'fluentpos-70'
+- Make your changes in this branch
+- Get it reviewed from one of the Core Team Members
+- Submit a PR
+- Get it Merged to the Master Branch
+
 ### Technology Stack :muscle:
 
 - API - ASP.NET Core 5.0 WebAPI
