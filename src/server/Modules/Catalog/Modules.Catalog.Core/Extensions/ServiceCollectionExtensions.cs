@@ -1,4 +1,5 @@
 ﻿using FluentPOS.Shared.Core.Extensions;
+using FluentPOS.Shared.Core.Interfaces.Services.Catalog;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

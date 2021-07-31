@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Cart } from '../../models/cart/cart';
+import { CartApiModel } from '../../models/cart/cart';
 import { Result } from '../../models/wrappers/Result';
 
 @Injectable({
@@ -21,6 +21,6 @@ export class CartApiService {
   {
     let params = new HttpParams();
     params= params.append('customerId', customerId);
-    return this.http.get<Result<Cart[]>>(this.baseUrl, {params: params});
+    return this.http.get<Result<CartApiModel[]>>(this.baseUrl, {params: params});
   }
 }

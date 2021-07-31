@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CartApiService } from 'src/app/core/api/cart/cart-api.service';
+import { CartItemsApiService } from 'src/app/core/api/cart/cart-items-api.service';
 import { CustomerApiService } from 'src/app/core/api/people/customer-api.service';
+import { CartItemApiModel } from 'src/app/core/models/cart/cart-item';
 import { Cart } from '../models/cart';
 import { Customer } from '../models/customer';
 import { Product } from '../models/product';
@@ -13,7 +15,7 @@ export class CartService {
   private cartItems$ = new Subject<Cart[]>();
   private cartItems: Cart[] = [];
   private currentCustomer: Customer;
-  constructor(private cartApi: CartApiService) { }
+  constructor(private cartApi: CartApiService,private cartItemApi: CartItemsApiService) { }
   add(product: Product, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == product.id);
     if (foundItem) {
@@ -23,6 +25,20 @@ export class CartService {
       this.cartItems.push(new Cart(product.id, quantity ?? 1, product.name, product.detail, product.price));
     }
     this.cartItems$.next(this.calculate(this.cartItems));
+    this.cartApi.get(this.currentCustomer.id).subscribe((result) => {
+      if (result) {
+        if (result.data.length > 1) {
+          //take first only - temporarily
+          //todo : add cart selection dialog later
+          const cartId = result.data[0].id;
+          this.cartItemApi.create(new CartItemApiModel(cartId,product.id,quantity)).subscribe();
+        }
+        else {
+          //create cart
+        }
+      }
+    });
+    
   }
   increase(productId: string, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == productId);
@@ -73,7 +89,8 @@ export class CartService {
     this.cartApi.get(customerId).subscribe((result) => {
       if (result) {
         if (result.data.length > 1) {
-          //take first only
+          //take first only - temporarily
+          //todo : add cart selection dialog later
           const cartId = result.data[0].id;
         }
         else {
