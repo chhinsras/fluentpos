@@ -15,7 +15,8 @@ namespace FluentPOS.Modules.People.Controllers
         [Authorize(Policy = Permissions.Customers.ViewAll)]
         public async Task<IActionResult> GetAllAsync([FromQuery] PaginatedCustomerFilter filter)
         {
-            var customers = await Mediator.Send(new GetAllPagedCustomersQuery(filter.PageNumber, filter.PageSize, filter.SearchString));
+            var request = Mapper.Map<GetAllPagedCustomersQuery>(filter);
+            var customers = await Mediator.Send(request);
             return Ok(customers);
         }
 

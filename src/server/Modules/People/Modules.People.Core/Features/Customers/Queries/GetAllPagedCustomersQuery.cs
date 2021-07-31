@@ -6,15 +6,9 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Queries
 {
     public class GetAllPagedCustomersQuery : IRequest<PaginatedResult<GetAllPagedCustomersResponse>>
     {
-        public int PageNumber { get; }
-        public int PageSize { get; }
-        public string SearchString { get; }
-
-        public GetAllPagedCustomersQuery(int pageNumber, int pageSize, string searchString)
-        {
-            PageNumber = pageNumber;
-            PageSize = pageSize;
-            SearchString = searchString;
-        }
+        public int PageNumber { get; private set; }
+        public int PageSize { get; private set; }
+        public string[] OrderBy { get; private set; }
+        public string SearchString { get; private set; }
     }
 }

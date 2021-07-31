@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
@@ -38,6 +39,16 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Queries
             Expression<Func<Customer, GetAllPagedCustomersResponse>> expression = e => new GetAllPagedCustomersResponse(e.Id, e.Name, e.Phone, e.Email, e.ImageUrl, e.Type);
 
             var queryable = _context.Customers.OrderBy(x => x.Id).AsQueryable();
+
+            if (request.OrderBy?.Any() == true)
+            {
+                var ordering = string.Join(",", request.OrderBy);
+                queryable = queryable.OrderBy(ordering);
+            }
+            else
+            {
+                queryable = queryable.OrderBy(a => a.Id);
+            }
 
             if (!string.IsNullOrEmpty(request.SearchString)) queryable = queryable.Where(c => c.Name.Contains(request.SearchString) || c.Phone.Contains(request.SearchString) || c.Email.Contains(request.SearchString));
 
