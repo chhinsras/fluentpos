@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { CartApiService } from 'src/app/core/api/cart/cart-api.service';
+import { CustomerApiService } from 'src/app/core/api/people/customer-api.service';
 import { Cart } from '../models/cart';
 import { Customer } from '../models/customer';
 import { Product } from '../models/product';
@@ -11,7 +13,7 @@ export class CartService {
   private cartItems$ = new Subject<Cart[]>();
   private cartItems: Cart[] = [];
   private currentCustomer: Customer;
-  constructor() { }
+  constructor(private cartApi: CartApiService) { }
   add(product: Product, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == product.id);
     if (foundItem) {
@@ -54,7 +56,7 @@ export class CartService {
   loadCurrentCart(): Cart[] {
     return this.calculate(this.cartItems);
   }
-  setCurrentCustomer(customer : Customer) {
+  setCurrentCustomer(customer: Customer) {
     this.currentCustomer = customer;
     console.log('customerId : ' + customer.id);
   }
@@ -66,5 +68,18 @@ export class CartService {
       theArray[index].total = cartItems[index].quantity * cartItems[index].rate;
     });
     return cartItems;
+  }
+  getCustomerCart(customerId: string) {
+    this.cartApi.get(customerId).subscribe((result) => {
+      if (result) {
+        if (result.data.length > 1) {
+          //take first only
+          const cartId = result.data[0].id;
+        }
+        else {
+          //create cart
+        }
+      }
+    });
   }
 }

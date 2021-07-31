@@ -1,18 +1,26 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Cart } from '../../models/cart/cart';
+import { Result } from '../../models/wrappers/Result';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartApiService {
 
-  baseUrl = environment.apiUrl + 'people/carts';
+  baseUrl = environment.apiUrl + 'people/carts/';
 
   constructor(private http: HttpClient) {
   }
-
-  getAlls(params: HttpParams) {
-    return this.http.get(this.baseUrl, {params: params});
+  create(customerId:string)
+  {
+    return this.http.post(this.baseUrl, customerId);
+  }
+  get(customerId:string)
+  {
+    let params = new HttpParams();
+    params= params.append('customerId', customerId);
+    return this.http.get<Result<Cart[]>>(this.baseUrl, {params: params});
   }
 }
