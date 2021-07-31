@@ -7,24 +7,11 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Queries
 {
     public class GetAllPagedCartItemsQuery : IRequest<PaginatedResult<GetAllPagedCartItemsResponse>>
     {
-        public int PageNumber { get; }
-        public int PageSize { get; }
-        public string[] OrderBy { get; set; }
-        public string SearchString { get; }
-        public Guid? CartId { get; }
-        public Guid? ProductId { get; }
-
-        public GetAllPagedCartItemsQuery(int pageNumber, int pageSize, string searchString, string orderBy, Guid? cartId, Guid? productId)
-        {
-            PageNumber = pageNumber;
-            PageSize = pageSize;
-            SearchString = searchString;
-            if (!string.IsNullOrWhiteSpace(orderBy))
-            {
-                OrderBy = orderBy.Split(',');
-            }
-            CartId = cartId;
-            ProductId = productId;
-        }
+        public int PageNumber { get; private set; }
+        public int PageSize { get; private set; }
+        public string[] OrderBy { get; private set; }
+        public string SearchString { get; private set; }
+        public Guid? CartId { get; private set; }
+        public Guid? ProductId { get; private set; }
     }
 }
