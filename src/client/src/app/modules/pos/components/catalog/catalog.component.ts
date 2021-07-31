@@ -24,6 +24,7 @@ export class CatalogComponent implements OnInit {
   searchString: string;
   brandAutoComplete = new FormControl();
   showImage: boolean = false;
+  hasProductsLoaded: boolean = false;
   constructor(private posService: PosService, private toastr: ToastrService, private cartService: CartService, public busyService: BusyService) { }
 
   ngOnInit(): void {
@@ -34,7 +35,8 @@ export class CatalogComponent implements OnInit {
     this.brandAutoComplete.valueChanges.subscribe((value) => this._filterBrand(value));
   }
   getProducts() {
-    this.posService.getProducts(this.productParams).subscribe((res) => { this.products = res });
+    this.hasProductsLoaded = false;
+    this.posService.getProducts(this.productParams).subscribe((res) => { this.products = res, this.hasProductsLoaded = true });
   }
   getBrands() {
     this.posService.getBrands(this.brandParams).subscribe((res) => { this.brands = res; });
