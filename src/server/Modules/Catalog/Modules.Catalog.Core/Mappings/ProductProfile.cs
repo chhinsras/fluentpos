@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Features.Products.Commands;
+using FluentPOS.Modules.Catalog.Core.Features.Products.Queries;
+using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.DTOs.Catalogs.Products;
 
 namespace FluentPOS.Modules.Catalog.Core.Mappings
@@ -13,6 +15,8 @@ namespace FluentPOS.Modules.Catalog.Core.Mappings
             CreateMap<UpdateProductCommand, Product>().ReverseMap();
             CreateMap<GetProductByIdResponse, Product>().ReverseMap();
             CreateMap<GetAllPagedProductsResponse, Product>().ReverseMap();
+            CreateMap<PaginatedProductFilter, GetAllPagedProductsQuery>()
+                .ForMember(dest => dest.OrderBy, opt => opt.ConvertUsing<string>(new OrderByConverter()));
         }
     }
 }
