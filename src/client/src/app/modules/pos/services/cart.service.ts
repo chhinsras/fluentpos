@@ -15,7 +15,7 @@ export class CartService {
   private cartItems$ = new Subject<Cart[]>();
   private cartItems: Cart[] = [];
   private currentCustomer: Customer;
-  constructor(private cartApi: CartApiService,private cartItemApi: CartItemsApiService) { }
+  constructor(private cartApi: CartApiService, private cartItemApi: CartItemsApiService, private cartItemsApi: CartItemsApiService) { }
   add(product: Product, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == product.id);
     if (foundItem) {
@@ -31,14 +31,14 @@ export class CartService {
           //take first only - temporarily
           //todo : add cart selection dialog later
           const cartId = result.data[0].id;
-          this.cartItemApi.create(new CartItemApiModel(cartId,product.id,quantity)).subscribe();
+          this.cartItemApi.create(new CartItemApiModel(cartId, product.id, quantity)).subscribe();
         }
         else {
           //create cart
         }
       }
     });
-    
+
   }
   increase(productId: string, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == productId);
@@ -74,7 +74,6 @@ export class CartService {
   }
   setCurrentCustomer(customer: Customer) {
     this.currentCustomer = customer;
-    console.log('customerId : ' + customer.id);
   }
   getCurrentCustomer() {
     return this.currentCustomer;
@@ -86,17 +85,28 @@ export class CartService {
     return cartItems;
   }
   getCustomerCart(customerId: string) {
+    this.cartItems = [];
     this.cartApi.get(customerId).subscribe((result) => {
       if (result) {
         if (result.data.length > 1) {
           //take first only - temporarily
           //todo : add cart selection dialog later
           const cartId = result.data[0].id;
+          this.cartItemApi.get(cartId).subscribe((data) => {
+            if (data) {
+              data.data.forEach(element => {
+                this.cartItems.push(new Cart(element.cartId, element.quantity, element.productName, element.productDescription, element.rate));
+
+              });
+
+            }
+          });
         }
         else {
           //create cart
         }
       }
+      this.cartItems$.next(this.calculate(this.cartItems));
     });
   }
 }

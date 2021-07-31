@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CartItemApiModel } from '../../models/cart/cart-item';
+import { Result } from '../../models/wrappers/Result';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,12 @@ import { CartItemApiModel } from '../../models/cart/cart-item';
 export class CartItemsApiService {
   baseUrl = environment.apiUrl + 'people/cartitems/';
   constructor(private http: HttpClient) {
+  }
+  get(cartId: string)
+  {
+    let params = new HttpParams();
+    params= params.append('cartId', cartId);
+    return this.http.get<Result<CartItemApiModel[]>>(this.baseUrl, {params: params});
   }
   create(cartItem: CartItemApiModel) {
     return this.http.post(this.baseUrl, cartItem);
