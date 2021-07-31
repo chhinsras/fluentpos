@@ -13,30 +13,16 @@ export class CartComponent implements OnInit {
   @Input() cart: MatSidenav;
   cartItems: CartItem[];
   total: number = 0;
-  hasCartLoaded: boolean = false;
-  constructor(private cartService: CartService, private toastr: ToastrService) { }
+  constructor(public cartService: CartService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.loadCurrentCart();
     this.cartService.get().subscribe((data) => {
       this.total = 0;
       this.cartItems = data;
-      this.hasCartLoaded = true;
       data.forEach(arg => {
         this.total += arg.total;
       });
-    })
-    this.cartService.getCartStatus().subscribe((data) => {
-
-      if (data === 'loading') {
-        this.hasCartLoaded = false;
-        console.log(data);
-
-      }
-      else {
-        this.hasCartLoaded = true;
-      }
-      console.log(this.hasCartLoaded);
     });
   }
   loadCurrentCart() {

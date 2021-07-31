@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { CartApiService } from 'src/app/core/api/cart/cart-api.service';
 import { CartItemsApiService } from 'src/app/core/api/cart/cart-items-api.service';
 import { CartItemApiModel } from 'src/app/core/models/cart/cart-item';
@@ -16,15 +16,12 @@ export class CartService {
   private cartItems: CartItem[] = [];
   private currentCustomer: Customer;
   private cartId: string;
-  private cartStatus$ = new Subject<string>();
+  public isCartLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(private cartApi: CartApiService, private cartItemApi: CartItemsApiService, private cartItemsApi: CartItemsApiService, private toastr: ToastrService) { }
   private updateCart(cartItemId: string, productId: string, quantity: number) {
     var cartItem = new CartItemApiModel(this.cartId, productId, quantity);
     cartItem.id = cartItemId;
     this.cartItemApi.update(cartItem).subscribe((res) => this.toastr.info(res.messages[0]));
-  }
-  getCartStatus(): Observable<string> {
-    return this.cartStatus$.asObservable();
   }
   add(product: Product, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == product.id);
@@ -98,7 +95,7 @@ export class CartService {
   }
   getCustomerCart(customerId: string) {
     this.cartItems = [];
-    this.cartStatus$.next('loading');
+    this.isCartLoading.next(true);
     this.cartItems$.next(this.calculate(this.cartItems));
     this.cartApi.get(customerId).subscribe((result) => {
       if (result) {
@@ -107,17 +104,18 @@ export class CartService {
           //todo : add cart selection dialog later
           this.cartId = result.data[0].id;
           this.cartItemApi.get(this.cartId).subscribe((data) => {
-            if (data) {
+            if (data && data.data && data.data.length > 0) {
               data.data.forEach(element => {
                 var cartItem = new CartItem(element.productId, element.quantity, element.productName, element.productDescription, element.rate);
                 cartItem.id = element.id;
                 this.cartItems.push(cartItem);
                 this.cartItems$.next(this.calculate(this.cartItems));
-                this.cartStatus$.next('loaded');
               });
+              this.isCartLoading.next(false);
             }
             else {
-              this.cartStatus$.next('loaded');
+              console.log('no items');
+              this.isCartLoading.next(false);
             }
           });
         }
@@ -126,6 +124,7 @@ export class CartService {
           this.cartApi.create(customerId).subscribe((data) => {
             if (data && data.succeeded) {
               this.toastr.info(data.messages[0]);
+              this.isCartLoading.next(false);
               this.cartId = data.data;
               this.cartItems$.next(this.calculate(this.cartItems));
             }
