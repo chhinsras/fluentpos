@@ -22,7 +22,7 @@ fluentpos was meant for retail businesses. The modular monolith architecture wou
 
 ### Roadmap
 
-For the initial realse, you can track the progress and included tasks here - https://github.com/fluentpos/fluentpos/milestone/1
+For the initial release, you can track the progress and included tasks here - https://github.com/fluentpos/fluentpos/milestone/1
 
 PS, we will be adding in more requirements.
 
