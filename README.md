@@ -26,8 +26,9 @@ For the initial release, you can track the progress and included tasks here - ht
 
 PS, we will be adding in more requirements.
 
-Note to contributors.
-- Identity tasks from https://github.com/fluentpos/fluentpos/issues
+### Note to contributors
+
+- Identify / Create tasks from / to https://github.com/fluentpos/fluentpos/issues
 - Assign it to yourself
 - Create a branch from the master branch and name it according to the Issue Id. For ex, if the Issue id is #70, create a branch 'fluentpos-70'
 - Make your changes in this branch
