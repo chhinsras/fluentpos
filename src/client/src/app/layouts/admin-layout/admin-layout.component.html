@@ -1,7 +1,7 @@
 <mat-sidenav-container class='sidenav-container'>
     <mat-sidenav #sidenav class="sidenav" disableClose="false" mode="push">
         <mat-nav-list style="padding-top: 0;">
-            <mat-card>
+            <mat-card style="margin-bottom: 0px!important;">
                 <mat-card-header style="padding:20px!important">
                     <div mat-card-avatar class="example-header-image"></div>
                     <mat-card-title style="margin-bottom: 10px;font-size:medium">{{fullName}}</mat-card-title>
@@ -28,6 +28,17 @@
                 <a *appHasPermission='["Permissions.Customers.View"]' mat-list-item routerLink="people/customers" (click)="sidenav.close()">
                     <mat-icon style="padding-right: 10px;">people</mat-icon> {{'layouts.admin.customers'|translate}}
                 </a>
+                <div class="nav-subheading">
+                    {{'layouts.admin.accSubhead'|translate}}</div>
+                <a *appHasPermission='["Permissions.Brands.View"]' mat-list-item routerLink="catalog/brands" (click)="sidenav.close()">
+                    <mat-icon style="padding-right: 10px;">face</mat-icon> {{'layouts.admin.users'|translate}}
+                </a>
+                <a *appHasPermission='["Permissions.Brands.View"]' mat-list-item routerLink="catalog/brands" (click)="sidenav.close()">
+                    <mat-icon style="padding-right: 10px;">badge</mat-icon> {{'layouts.admin.roles'|translate}}
+                </a>
+                <div class="nav-subheading">
+                    {{'layouts.admin.appSubhead'|translate}}</div>
+
                 <a mat-list-item routerLink="/admin/about" (click)="sidenav.close()">
                     <mat-icon style="padding-right: 10px;">info</mat-icon> {{'layouts.admin.about'|translate}}
                 </a>

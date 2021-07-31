@@ -12,7 +12,11 @@
             "products": "Products",
             "peopleSubhead": "People Management",
             "customers": "Customers",
-            "about": "About"
+            "about": "About",
+            "appSubhead": "Application",
+            "roles": "Roles",
+            "users": "Users",
+            "accSubhead": "Access Management"
         }
     },
     "dashboard": {
