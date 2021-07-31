@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Core.Features.CartItems.Commands;
+using FluentPOS.Modules.People.Core.Features.CartItems.Queries;
+using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.DTOs.People.CartItems;
 
 namespace FluentPOS.Modules.People.Core.Mappings
@@ -13,6 +15,8 @@ namespace FluentPOS.Modules.People.Core.Mappings
             CreateMap<UpdateCartItemCommand, CartItem>().ReverseMap();
             CreateMap<GetAllPagedCartItemsResponse, CartItem>().ReverseMap();
             CreateMap<GetCartItemByIdResponse, CartItem>().ReverseMap();
+            CreateMap<PaginatedCartItemFilter, GetAllPagedCartItemsQuery>()
+                .ForMember(dest => dest.OrderBy, opt => opt.ConvertUsing<string>(new OrderByConverter()));
         }
     }
 }

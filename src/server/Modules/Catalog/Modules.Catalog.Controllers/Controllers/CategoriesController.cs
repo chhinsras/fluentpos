@@ -15,7 +15,8 @@ namespace FluentPOS.Modules.Catalog.Controllers
         [Authorize(Policy = Permissions.Categories.ViewAll)]
         public async Task<IActionResult> GetAllAsync([FromQuery] PaginatedCategoryFilter filter)
         {
-            var categories = await Mediator.Send(new GetAllPagedCategoriesQuery(filter.PageNumber, filter.PageSize, filter.SearchString, filter.OrderBy));
+            var request = Mapper.Map<GetAllPagedCategoriesQuery>(filter);
+            var categories = await Mediator.Send(request);
             return Ok(categories);
         }
 

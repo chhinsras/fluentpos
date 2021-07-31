@@ -1,9 +1,12 @@
 ﻿using FluentPOS.Shared.Core.Behaviors;
 using FluentPOS.Shared.Core.Domain;
+using FluentPOS.Shared.Core.Features.Common.Queries.Validators;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Events;
+using FluentPOS.Shared.Core.Features.ExtendedAttributes.Filters;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries;
+using FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries.Validators;
 using FluentPOS.Shared.Core.Interfaces.Serialization;
 using FluentPOS.Shared.Core.Serialization;
 using FluentPOS.Shared.Core.Settings;
@@ -227,6 +230,54 @@ namespace FluentPOS.Shared.Core.Extensions
             }
 
             #endregion RemoveExtendedAttributeCommandValidator
+
+            return services;
+        }
+
+        public static IServiceCollection AddPaginatedFilterValidatorsFromAssembly(this IServiceCollection services, Assembly assembly)
+        {
+            var validatorTypes = assembly
+                .GetExportedTypes()
+                .Where(t => t.IsClass && !t.IsAbstract && t.BaseType?.IsGenericType == true)
+                .Select(t => new
+                {
+                    BaseGenericType = t.BaseType,
+                    CurrentType = t
+                })
+                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(PaginatedFilterValidator<,,>))
+                .ToList();
+
+            foreach (var validatorType in validatorTypes)
+            {
+                var validatorTypeGenericArguments = validatorType.BaseGenericType.GetGenericArguments().ToList();
+                var validatorServiceType = typeof(IValidator<>).MakeGenericType(validatorTypeGenericArguments.Last());
+                services.AddScoped(validatorServiceType, validatorType.CurrentType);
+            }
+
+            return services;
+        }
+
+        public static IServiceCollection AddExtendedAttributePaginatedFilterValidatorsFromAssembly(this IServiceCollection services, Assembly assembly)
+        {
+            var validatorTypes = assembly
+                .GetExportedTypes()
+                .Where(t => t.IsClass && !t.IsAbstract && t.BaseType?.IsGenericType == true)
+                .Select(t => new
+                {
+                    BaseGenericType = t.BaseType,
+                    CurrentType = t
+                })
+                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(PaginatedExtendedAttributeFilterValidator<,>))
+                .ToList();
+
+            foreach (var validatorType in validatorTypes)
+            {
+                var validatorTypeGenericArguments = validatorType.BaseGenericType.GetGenericArguments().ToList();
+
+                var filterType = typeof(PaginatedExtendedAttributeFilter<,>).MakeGenericType(validatorTypeGenericArguments.ToArray());
+                var validatorServiceType = typeof(IValidator<>).MakeGenericType(filterType);
+                services.AddScoped(validatorServiceType, validatorType.CurrentType);
+            }
 
             return services;
         }

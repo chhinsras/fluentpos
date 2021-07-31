@@ -12,7 +12,8 @@ namespace FluentPOS.Modules.Catalog.Extensions
         {
             services
                 .AddCatalogCore()
-                .AddCatalogInfrastructure();
+                .AddCatalogInfrastructure()
+                .AddCatalogValidation();
             return services;
         }
 

@@ -19,5 +19,11 @@ namespace FluentPOS.Modules.People.Infrastructure.Extensions
             services.AddTransient<IDatabaseSeeder, PeopleDbSeeder>();
             return services;
         }
+
+        public static IServiceCollection AddPeopleValidation(this IServiceCollection services)
+        {
+            services.AddControllers().AddPeopleValidation();
+            return services;
+        }
     }
 }

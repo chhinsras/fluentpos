@@ -11,10 +11,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Mappings.Converters;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
 {
@@ -46,20 +48,25 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
 
             var queryable = _context.ExtendedAttributes.OrderBy(x => x.Id).AsQueryable();
 
+            var ordering = new OrderByConverter().Convert(request.OrderBy);
+            queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderBy(a => a.Id);
+
             // apply filter parameters
             if (request.EntityId != null && !request.EntityId.Equals(default(TEntityId))) queryable = queryable.Where(b => b.EntityId.Equals(request.EntityId));
             if (request.Type != null) queryable = queryable.Where(b => b.Type == request.Type);
             if (!string.IsNullOrEmpty(request.SearchString))
             {
-                queryable = queryable.Where(b => b.Key.Contains(request.SearchString)
-                        || b.Type == ExtendedAttributeType.Decimal && b.Decimal != null && b.Decimal.ToString().Contains(request.SearchString)
-                        || b.Type == ExtendedAttributeType.Text && b.Text != null && b.Text.Contains(request.SearchString)
-                        || b.Type == ExtendedAttributeType.DateTime && b.DateTime != null && b.DateTime.ToString().Contains(request.SearchString)
-                        || b.Type == ExtendedAttributeType.Json && b.Json != null && b.Json.Contains(request.SearchString)
-                        || b.Type == ExtendedAttributeType.Integer && b.Integer != null && b.Integer.ToString().Contains(request.SearchString)
-                        || b.ExternalId != null && b.ExternalId.Contains(request.SearchString)
-                        || b.Group != null && b.Group.Contains(request.SearchString)
-                        || b.Description != null && b.Description.Contains(request.SearchString)
+                var lowerSearchString = request.SearchString.ToLower();
+                queryable = queryable.Where(x => EF.Functions.Like(x.Key.ToLower(), $"%{lowerSearchString}%")
+                        || x.Type == ExtendedAttributeType.Decimal && x.Decimal != null && EF.Functions.Like(x.Decimal.ToString().ToLower(), $"%{lowerSearchString}%")
+                        || x.Type == ExtendedAttributeType.Text && x.Text != null && EF.Functions.Like(x.Text.ToLower(), $"%{lowerSearchString}%")
+                        || x.Type == ExtendedAttributeType.DateTime && x.DateTime != null && EF.Functions.Like(x.DateTime.ToString().ToLower(), $"%{lowerSearchString}%")
+                        || x.Type == ExtendedAttributeType.Json && x.Json != null && EF.Functions.Like(x.Json.ToLower(), $"%{lowerSearchString}%")
+                        || x.Type == ExtendedAttributeType.Integer && x.Integer != null && EF.Functions.Like(x.Integer.ToString().ToLower(), $"%{lowerSearchString}%")
+                        || x.ExternalId != null && EF.Functions.Like(x.ExternalId.ToLower(), $"%{lowerSearchString}%")
+                        || x.Group != null && EF.Functions.Like(x.Group.ToLower(), $"%{lowerSearchString}%")
+                        || x.Description != null && EF.Functions.Like(x.Description.ToLower(), $"%{lowerSearchString}%")
+                        || EF.Functions.Like(x.Id.ToString().ToLower(), $"%{lowerSearchString}%")
                     );
             }
 

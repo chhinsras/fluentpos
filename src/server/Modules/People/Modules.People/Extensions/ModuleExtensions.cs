@@ -12,7 +12,8 @@ namespace FluentPOS.Modules.People.Extensions
         {
             services
                 .AddPeopleCore()
-                .AddPeopleInfrastructure();
+                .AddPeopleInfrastructure()
+                .AddPeopleValidation();
             return services;
         }
 
