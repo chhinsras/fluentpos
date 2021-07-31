@@ -11,17 +11,16 @@ export class CartItemsApiService {
   baseUrl = environment.apiUrl + 'people/cartitems/';
   constructor(private http: HttpClient) {
   }
-  get(cartId: string)
-  {
+  get(cartId: string) {
     let params = new HttpParams();
-    params= params.append('cartId', cartId);
-    return this.http.get<Result<CartItemApiModel[]>>(this.baseUrl, {params: params});
+    params = params.append('cartId', cartId);
+    return this.http.get<Result<CartItemApiModel[]>>(this.baseUrl, { params: params });
   }
   create(cartItem: CartItemApiModel) {
-    return this.http.post(this.baseUrl, cartItem);
+    return this.http.post<Result<string>>(this.baseUrl, cartItem);
   }
 
   update(cartItem: CartItemApiModel) {
-    return this.http.put(this.baseUrl, cartItem);
+    return this.http.put<Result<string>>(this.baseUrl, cartItem);
   }
 }

@@ -49,7 +49,7 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Commands
             cart.AddDomainEvent(new CartCreatedEvent(cart));
             await _context.Carts.AddAsync(cart, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result<Guid>.SuccessAsync(cart.Id, _localizer["Cart Saved"]);
+            return await Result<Guid>.SuccessAsync(cart.Id, _localizer["Cart Created"]);
         }
 
         public async Task<Result<Guid>> Handle(RemoveCartCommand command, CancellationToken cancellationToken)
