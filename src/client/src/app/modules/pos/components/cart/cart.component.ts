@@ -26,6 +26,18 @@ export class CartComponent implements OnInit {
         this.total += arg.total;
       });
     })
+    this.cartService.getCartStatus().subscribe((data) => {
+
+      if (data === 'loading') {
+        this.hasCartLoaded = false;
+        console.log(data);
+
+      }
+      else {
+        this.hasCartLoaded = true;
+      }
+      console.log(this.hasCartLoaded);
+    });
   }
   loadCurrentCart() {
     this.cartItems = this.cartService.loadCurrentCart();

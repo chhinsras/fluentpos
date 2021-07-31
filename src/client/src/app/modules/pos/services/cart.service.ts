@@ -16,11 +16,15 @@ export class CartService {
   private cartItems: CartItem[] = [];
   private currentCustomer: Customer;
   private cartId: string;
+  private cartStatus$ = new Subject<string>();
   constructor(private cartApi: CartApiService, private cartItemApi: CartItemsApiService, private cartItemsApi: CartItemsApiService, private toastr: ToastrService) { }
   private updateCart(cartItemId: string, productId: string, quantity: number) {
     var cartItem = new CartItemApiModel(this.cartId, productId, quantity);
     cartItem.id = cartItemId;
     this.cartItemApi.update(cartItem).subscribe((res) => this.toastr.info(res.messages[0]));
+  }
+  getCartStatus(): Observable<string> {
+    return this.cartStatus$.asObservable();
   }
   add(product: Product, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == product.id);
@@ -94,6 +98,7 @@ export class CartService {
   }
   getCustomerCart(customerId: string) {
     this.cartItems = [];
+    this.cartStatus$.next('loading');
     this.cartItems$.next(this.calculate(this.cartItems));
     this.cartApi.get(customerId).subscribe((result) => {
       if (result) {
@@ -108,7 +113,11 @@ export class CartService {
                 cartItem.id = element.id;
                 this.cartItems.push(cartItem);
                 this.cartItems$.next(this.calculate(this.cartItems));
+                this.cartStatus$.next('loaded');
               });
+            }
+            else {
+              this.cartStatus$.next('loaded');
             }
           });
         }

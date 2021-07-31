@@ -11,7 +11,7 @@
 
 <div style="height: calc(100vh-10px);overflow:auto;padding: 20px;padding-top: 80px;padding-bottom: 250px;">
     <div *ngIf="hasCartLoaded == false" style="margin-bottom: 0;">
-        <app-cart-skeleton [showImage]="showImage"></app-cart-skeleton>
+        <app-cart-skeleton></app-cart-skeleton>
     </div>
     <div *ngIf="hasCartLoaded == true" style="margin-bottom: 0;">
         <div *ngIf="cartItems">
