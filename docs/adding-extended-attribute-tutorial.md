@@ -270,6 +270,7 @@ namespace FluentPOS.Modules.Catalog.Core.Extensions
             services.AddExtendedAttributeCommandValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddPaginatedExtendedAttributeFilterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
+            services.AddPaginatedFilterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;
         }
