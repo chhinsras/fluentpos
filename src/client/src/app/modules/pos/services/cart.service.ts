@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Cart } from '../models/cart';
+import { Customer } from '../models/customer';
 import { Product } from '../models/product';
 
 @Injectable({
@@ -9,7 +10,7 @@ import { Product } from '../models/product';
 export class CartService {
   private cartItems$ = new Subject<Cart[]>();
   private cartItems: Cart[] = [];
-  private currentCustomer: string;
+  private currentCustomer: Customer;
   constructor() { }
   add(product: Product, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == product.id);
@@ -53,9 +54,9 @@ export class CartService {
   loadCurrentCart(): Cart[] {
     return this.calculate(this.cartItems);
   }
-  setCurrentCustomer(customerId: string) {
-    this.currentCustomer = customerId;
-    console.log('customerId : ' + customerId);
+  setCurrentCustomer(customer : Customer) {
+    this.currentCustomer = customer;
+    console.log('customerId : ' + customer.id);
   }
   getCurrentCustomer() {
     return this.currentCustomer;

@@ -23,6 +23,7 @@ export class PosToolbarComponent implements OnInit {
   ngOnInit(): void {
     this.cart.toggle();
     this.cartService.get().subscribe(res => this.cartItemCount = res.length);
+    this.customer = this.cartService.getCurrentCustomer();
     let themeVariant = this.localStorageService.getItem('themeVariant');
     this.darkModeIcon = themeVariant === 'dark-theme' ? 'bedtime' : 'wb_sunny';
     this.isDarkMode = themeVariant === 'dark-theme';
@@ -41,7 +42,7 @@ export class PosToolbarComponent implements OnInit {
     dialogRef.afterClosed().subscribe((customer: Customer) => {
       if (customer) {
         this.customer = customer;
-        this.cartService.setCurrentCustomer(customer.id);
+        this.cartService.setCurrentCustomer(customer);
       }
     });
   }

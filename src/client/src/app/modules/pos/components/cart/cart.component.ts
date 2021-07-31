@@ -51,7 +51,7 @@ export class CartComponent implements OnInit {
   saveOrUpdateCart() {
     if (this.isCustomerSelected()) {
       const customerId = this.cartService.getCurrentCustomer();
-
+      const cart = this.cartService.loadCurrentCart();
     }
   }
 }

@@ -23,11 +23,11 @@ export class CatalogComponent implements OnInit {
   productParams = new ProductParams();
   searchString: string;
   brandAutoComplete = new FormControl();
-  showImage:boolean=false;
+  showImage: boolean = false;
   constructor(private posService: PosService, private toastr: ToastrService, private cartService: CartService, public busyService: BusyService) { }
 
   ngOnInit(): void {
-    this.productParams.pageSize = 20;
+    this.productParams.pageSize = 16;
     this.brandParams.pageSize = 5;
     this.getProducts();
     this.getBrands();
@@ -57,20 +57,18 @@ export class CatalogComponent implements OnInit {
   isCustomerSelected() {
     const currentCustomer = this.cartService.getCurrentCustomer();
     if (!currentCustomer) {
-      this.toastr.info('Select a customer first');
+      this.toastr.error('Select a customer');
       return false;
     }
     return true;
   }
   addToCart(product: Product) {
-    if(this.isCustomerSelected())
-    {
-      this.cartService.add(product); 
+    if (this.isCustomerSelected()) {
+      this.cartService.add(product);
     }
-   
+
   }
-  toggleImage()
-  {
+  toggleImage() {
     this.showImage = !this.showImage;
   }
 }
