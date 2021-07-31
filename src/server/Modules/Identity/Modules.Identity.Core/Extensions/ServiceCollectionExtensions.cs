@@ -14,6 +14,8 @@ namespace FluentPOS.Modules.Identity.Core.Extensions
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddExtendedAttributeHandlersFromAssembly(Assembly.GetExecutingAssembly());
             services.AddExtendedAttributeCommandValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddExtendedAttributePaginatedFilterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddPaginatedFilterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;
         }
