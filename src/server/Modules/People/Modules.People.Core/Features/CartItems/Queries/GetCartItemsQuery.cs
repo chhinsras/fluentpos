@@ -15,7 +15,7 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Queries
         public GetCartItemsQuery(PaginatedCartItemFilter request)
         {
             PageNumber = request.PageNumber;
-            PageSize = request.PageSize;
+            PageSize = 50;
             if (!string.IsNullOrWhiteSpace(request.OrderBy))
             {
                 OrderBy = request.OrderBy.Split(',');
