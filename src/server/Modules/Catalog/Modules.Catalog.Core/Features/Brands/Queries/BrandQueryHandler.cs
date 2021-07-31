@@ -15,6 +15,7 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Mappings.Converters;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
 {
@@ -39,15 +40,8 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
             Expression<Func<Brand, GetAllPagedBrandsResponse>> expression = e => new GetAllPagedBrandsResponse(e.Id, e.Name, e.Detail);
             var queryable = _context.Brands.AsQueryable();
 
-            if (request.OrderBy?.Any() == true)
-            {
-                var ordering = string.Join(",", request.OrderBy);
-                queryable = queryable.OrderBy(ordering);
-            }
-            else
-            {
-                queryable = queryable.OrderBy(a => a.Id);
-            }
+            var ordering = new OrderByConverter().Convert(request.OrderBy);
+            queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderBy(a => a.Id);
 
             if (!string.IsNullOrEmpty(request.SearchString))
             {

@@ -10,6 +10,7 @@ using FluentPOS.Modules.People.Core.Abstractions;
 using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Core.Exceptions;
 using FluentPOS.Shared.Core.Extensions;
+using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.People.Carts;
 using MediatR;
@@ -41,15 +42,8 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Queries
             Expression<Func<Cart, GetAllPagedCartsResponse>> expression = e => new GetAllPagedCartsResponse(e.Id, e.CustomerId, e.Timestamp);
             var queryable = _context.Carts.AsQueryable();
 
-            if (request.OrderBy?.Any() == true)
-            {
-                var ordering = string.Join(",", request.OrderBy);
-                queryable = queryable.OrderBy(ordering);
-            }
-            else
-            {
-                queryable = queryable.OrderBy(a => a.Id);
-            }
+            var ordering = new OrderByConverter().Convert(request.OrderBy);
+            queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderBy(a => a.Id);
 
             if (request.CustomerId != null && !request.CustomerId.Equals(Guid.Empty)) queryable = queryable.Where(x => x.CustomerId.Equals(request.CustomerId));
             if (!string.IsNullOrEmpty(request.SearchString))

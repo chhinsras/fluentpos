@@ -16,6 +16,7 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Mappings.Converters;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
 {
@@ -47,15 +48,8 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
 
             var queryable = _context.ExtendedAttributes.OrderBy(x => x.Id).AsQueryable();
 
-            if (request.OrderBy?.Any() == true)
-            {
-                var ordering = string.Join(",", request.OrderBy);
-                queryable = queryable.OrderBy(ordering);
-            }
-            else
-            {
-                queryable = queryable.OrderBy(a => a.Id);
-            }
+            var ordering = new OrderByConverter().Convert(request.OrderBy);
+            queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderBy(a => a.Id);
 
             // apply filter parameters
             if (request.EntityId != null && !request.EntityId.Equals(default(TEntityId))) queryable = queryable.Where(b => b.EntityId.Equals(request.EntityId));
