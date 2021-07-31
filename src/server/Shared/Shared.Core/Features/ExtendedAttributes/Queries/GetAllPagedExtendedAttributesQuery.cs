@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using FluentPOS.Shared.Core.Contracts;
+using FluentPOS.Shared.Core.Features.ExtendedAttributes.Filters;
 using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
@@ -18,7 +19,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
         public TEntityId? EntityId { get; }
         public ExtendedAttributeType? Type { get; }
 
-        public GetAllPagedExtendedAttributesQuery(PaginatedExtendedAttributeFilter<TEntityId> filter)
+        public GetAllPagedExtendedAttributesQuery(PaginatedExtendedAttributeFilter<TEntityId, TEntity> filter)
         {
             PageNumber = filter.PageNumber;
             PageSize = filter.PageSize;
