@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Controllers
 {
+    [ApiVersion("1")]
     internal sealed class RolesController : BaseController
     {
         private readonly IRoleService _roleService;
