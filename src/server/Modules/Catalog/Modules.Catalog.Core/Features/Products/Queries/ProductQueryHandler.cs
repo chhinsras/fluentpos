@@ -37,6 +37,9 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
         {
             var queryable = _context.Products.ProjectTo<GetAllPagedProductsResponse>(_mapper.ConfigurationProvider).OrderBy(x => x.Id).AsQueryable();
 
+            if (request.BrandIds.Any()) queryable = queryable.Where(x => request.BrandIds.Contains(x.BrandId));
+            if (request.CategoryIds.Any()) queryable = queryable.Where(x => request.CategoryIds.Contains(x.CategoryId));
+
             var ordering = new OrderByConverter().Convert(request.OrderBy);
             queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderBy(a => a.Id);
 
