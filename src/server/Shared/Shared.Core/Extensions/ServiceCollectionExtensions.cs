@@ -87,14 +87,14 @@ namespace FluentPOS.Shared.Core.Extensions
                 var commandsImplementationType = typeof(ExtendedAttributeCommandHandler<,,>).MakeGenericType(extendedAttributeTypeGenericArguments[0], extendedAttributeTypeGenericArguments[1], extendedAttributeType.CurrentType);
                 var eventsImplementationType = typeof(ExtendedAttributeEventHandler<,>).MakeGenericType(extendedAttributeTypeGenericArguments.ToArray());
 
-                #region GetAllPagedExtendedAttributesQuery
+                #region GetExtendedAttributesQuery
 
-                var tRequest = typeof(GetAllPagedExtendedAttributesQuery<,>).MakeGenericType(extendedAttributeTypeGenericArguments.ToArray());
-                var tResponse = typeof(PaginatedResult<>).MakeGenericType(typeof(GetAllPagedExtendedAttributesResponse<>).MakeGenericType(extendedAttributeTypeGenericArguments[0]));
+                var tRequest = typeof(GetExtendedAttributesQuery<,>).MakeGenericType(extendedAttributeTypeGenericArguments.ToArray());
+                var tResponse = typeof(PaginatedResult<>).MakeGenericType(typeof(GetExtendedAttributesResponse<>).MakeGenericType(extendedAttributeTypeGenericArguments[0]));
                 var serviceType = typeof(IRequestHandler<,>).MakeGenericType(tRequest, tResponse);
                 services.AddScoped(serviceType, queriesImplementationType);
 
-                #endregion GetAllPagedExtendedAttributesQuery
+                #endregion GetExtendedAttributesQuery
 
                 #region GetExtendedAttributeByIdQuery
 

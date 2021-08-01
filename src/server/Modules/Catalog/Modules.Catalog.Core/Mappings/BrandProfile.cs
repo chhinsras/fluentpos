@@ -14,8 +14,8 @@ namespace FluentPOS.Modules.Catalog.Core.Mappings
             CreateMap<RegisterBrandCommand, Brand>().ReverseMap();
             CreateMap<UpdateBrandCommand, Brand>().ReverseMap();
             CreateMap<GetBrandByIdResponse, Brand>().ReverseMap();
-            CreateMap<GetAllPagedBrandsResponse, Brand>().ReverseMap();
-            CreateMap<PaginatedBrandFilter, GetAllPagedBrandsQuery>()
+            CreateMap<GetBrandsResponse, Brand>().ReverseMap();
+            CreateMap<PaginatedBrandFilter, GetBrandsQuery>()
                 .ForMember(dest => dest.OrderBy, opt => opt.ConvertUsing<string>(new OrderByConverter()));
         }
     }
