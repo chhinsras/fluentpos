@@ -27,7 +27,7 @@ const routes: Routes = [
     component: ProductComponent,
     canActivate: [PermissionGuard],
     data: {
-      allowedPermissions: ['Permissions.Productss.View']
+      allowedPermissions: ['Permissions.Products.View']
     }
   }
 ];
