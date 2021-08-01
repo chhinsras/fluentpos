@@ -17,16 +17,16 @@
             "roles": "Roles",
             "users": "Users",
             "accSubhead": "Access Management",
-            "activityLog": "Activity Logs"
+            "eventLogs": "Event Logs"
         }
     },
     "dashboard": {
         "title": "Dashboard",
         "subtitle": "Quick Overview of your Business."
     },
-    "activityLogs": {
-        "title": "Activity Logs",
-        "subtitle": "Monitor Activity Logs of Users."
+    "eventLogs": {
+        "title": "Event Logs",
+        "subtitle": "Monitor Events Logs of Users."
     },
     "about": {
         "title": "About",
