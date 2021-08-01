@@ -36,6 +36,9 @@
                 <a *appHasPermission='["Permissions.Brands.View"]' mat-list-item routerLink="catalog/brands" (click)="sidenav.close()">
                     <mat-icon style="padding-right: 10px;">badge</mat-icon> {{'layouts.admin.roles'|translate}}
                 </a>
+                <a *appHasPermission='["Permissions.Brands.View"]' mat-list-item routerLink="activity-logs" (click)="sidenav.close()">
+                    <mat-icon style="padding-right: 10px;">access_time</mat-icon> {{'layouts.admin.activityLog'|translate}}
+                </a>
                 <div class="nav-subheading">
                     {{'layouts.admin.appSubhead'|translate}}</div>
 

@@ -16,12 +16,17 @@
             "appSubhead": "Application",
             "roles": "Roles",
             "users": "Users",
-            "accSubhead": "Access Management"
+            "accSubhead": "Access Management",
+            "activityLog": "Activity Logs"
         }
     },
     "dashboard": {
         "title": "Dashboard",
         "subtitle": "Quick Overview of your Business."
+    },
+    "activityLogs": {
+        "title": "Activity Logs",
+        "subtitle": "Monitor Activity Logs of Users."
     },
     "about": {
         "title": "About",
