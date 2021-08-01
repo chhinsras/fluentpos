@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using FluentValidation;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 [assembly: InternalsVisibleTo("Bootstrapper")]
@@ -45,6 +46,8 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 
         public static IServiceCollection AddSharedInfrastructure(this IServiceCollection services, IConfiguration config)
         {
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddPersistenceSettings(config);
             services
                 .AddDatabaseContext<ApplicationDbContext>()

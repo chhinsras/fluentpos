@@ -5,9 +5,9 @@ using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.People.Core.Features.ExtendedAttributes.Validators.CartItems
 {
-    public class CartItemPaginatedExtendedAttributeFilterValidator : PaginatedExtendedAttributeFilterValidator<Guid, CartItem>
+    public class PaginatedCartItemExtendedAttributeFilterValidator : PaginatedExtendedAttributeFilterValidator<Guid, CartItem>
     {
-        public CartItemPaginatedExtendedAttributeFilterValidator(IStringLocalizer<CartItemPaginatedExtendedAttributeFilterValidator> localizer) : base(localizer)
+        public PaginatedCartItemExtendedAttributeFilterValidator(IStringLocalizer<PaginatedCartItemExtendedAttributeFilterValidator> localizer) : base(localizer)
         {
             // you can override the validation rules here
         }
