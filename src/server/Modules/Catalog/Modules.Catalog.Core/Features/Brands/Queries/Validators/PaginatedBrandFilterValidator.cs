@@ -6,9 +6,9 @@ using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries.Validators
 {
-    public class BrandPaginatedFilterValidator : PaginatedFilterValidator<Guid, Brand, PaginatedBrandFilter>
+    public class PaginatedBrandFilterValidator : PaginatedFilterValidator<Guid, Brand, PaginatedBrandFilter>
     {
-        public BrandPaginatedFilterValidator(IStringLocalizer<BrandPaginatedFilterValidator> localizer) : base(localizer)
+        public PaginatedBrandFilterValidator(IStringLocalizer<PaginatedBrandFilterValidator> localizer) : base(localizer)
         {
             // you can override the validation rules here
         }
