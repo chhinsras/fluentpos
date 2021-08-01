@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 {
@@ -48,21 +50,6 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
             modelBuilder.ApplyIdentityConfiguration(_persistenceOptions);
-        }
-
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            return await this.SaveChangeWithPublishEventsAsync(_eventLogger, _mediator, cancellationToken);
-        }
-
-        public override int SaveChanges()
-        {
-            return this.SaveChangeWithPublishEvents(_eventLogger, _mediator);
-        }
-
-        public override int SaveChanges(bool acceptAllChangesOnSuccess)
-        {
-            return SaveChanges();
         }
 
         DbSet<FluentUser> IExtendedAttributeDbContext<string, FluentUser, UserExtendedAttribute>.GetEntities() => Users;
