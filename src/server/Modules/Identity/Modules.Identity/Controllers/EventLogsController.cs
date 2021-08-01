@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FluentPOS.Modules.Identity.Controllers
 {
+    [ApiVersion("1")]
     internal sealed class EventLogsController : BaseController
     {
         private readonly IEventLogService _eventLog;
