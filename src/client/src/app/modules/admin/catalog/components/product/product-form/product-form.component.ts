@@ -25,8 +25,8 @@ export class ProductFormComponent implements OnInit {
     this.productForm = this.fb.group({
       id: [this.data && this.data.id],
       name: [this.data && this.data.name, Validators.required],
-      brandId: [this.data && this.data.brandId, Validators.required], // todo get brands and show dropdown to select brand instead of hidden input
-      categoryId: [this.data && this.data.categoryId, Validators.required], // todo get categories and show dropdown list to select category
+      // brandId: [this.data && this.data.brandId, Validators.required], // todo get brands and show dropdown to select brand instead of hidden input
+      // categoryId: [this.data && this.data.categoryId, Validators.required], // todo get categories and show dropdown list to select category
       localeName: [this.data && this.data.localeName, Validators.required],
       price: [this.data && this.data.price, Validators.required],
       cost: [this.data && this.data.cost, Validators.required],
