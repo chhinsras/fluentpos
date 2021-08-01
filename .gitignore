@@ -367,3 +367,4 @@ FodyWeavers.xsd
 /src/client/.vscode/settings.json
 
 src/server/.idea/.idea.FluentPOS/.idea/
+.DS_Store
