@@ -1,8 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ToastrService} from 'ngx-toastr';
+import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
+import { Brand } from '../../../models/brand';
+import { BrandParams } from '../../../models/brandParams';
 import {Product} from '../../../models/product';
+import { BrandService } from '../../../services/brand.service';
 import {ProductService} from '../../../services/product.service';
 
 @Component({
@@ -13,20 +17,24 @@ import {ProductService} from '../../../services/product.service';
 export class ProductFormComponent implements OnInit {
   productForm: FormGroup;
   formTitle: string;
+  brands: PaginatedResult<Brand>;
+  brandParams = new BrandParams();
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Product, private productService: ProductService, private toastr: ToastrService, private fb: FormBuilder) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Product, private productService: ProductService, private brandService: BrandService, private toastr: ToastrService, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.initializeForm();
+    this.brandParams.pageSize = 50;
+    this.getBrands();
   }
 
   initializeForm() {
     this.productForm = this.fb.group({
       id: [this.data && this.data.id],
       name: [this.data && this.data.name, Validators.required],
-      // brandId: [this.data && this.data.brandId, Validators.required], // todo get brands and show dropdown to select brand instead of hidden input
-      // categoryId: [this.data && this.data.categoryId, Validators.required], // todo get categories and show dropdown list to select category
+      brandId: [this.data && this.data.brandId, Validators.required], // todo get brands and show dropdown to select brand instead of hidden input
+      categoryId: [this.data && this.data.categoryId, Validators.required], // todo get categories and show dropdown list to select category
       localeName: [this.data && this.data.localeName, Validators.required],
       price: [this.data && this.data.price, Validators.required],
       cost: [this.data && this.data.cost, Validators.required],
@@ -42,6 +50,9 @@ export class ProductFormComponent implements OnInit {
     } else {
       this.formTitle = 'Edit Product';
     }
+  }
+  getBrands() {
+    this.brandService.getBrands(this.brandParams).subscribe((response) => { this.brands = response; });
   }
 
   onSubmit() {

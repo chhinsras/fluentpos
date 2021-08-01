@@ -2,7 +2,9 @@ export interface Product {
   id: string;
   name: string;
   localeName: string;
+  brandId: string;
   brandName: string;
+  categoryId: string;
   categoryName: string;
   price: number;
   cost: number;
