@@ -1,9 +1,41 @@
-<div *ngFor="let a of cartItems; let i = index" style="margin:2px;padding:0px;background: rgba(0,0,0,.06);border-radius: 5px;opacity: {{0.8-(i/10)}};" [attr.data-index]="i">
-    <ngx-skeleton-loader appearance="circle" [theme]="{
-                width: '100%',
-                height: '94px',
-                'border-radius': '0px',
-                margin: '0px'
-              }">
-    </ngx-skeleton-loader>
+<div *ngFor="let a of cartItems; let index = index" class="row" style="margin:2px;padding:15px;background: rgba(0,0,0,.06);border-radius: 5px;">
+    <div class="col-2" style="font-size: large;align-self: center;">
+        <ngx-skeleton-loader appearance="line" [theme]="{
+        'border-radius': '0px',
+        margin: '0px'
+      }">
+        </ngx-skeleton-loader>
+    </div>
+    <div class="col-6" style="align-self: center;">
+        <h4 style="margin: 0px!important;">
+            <ngx-skeleton-loader appearance="line" [theme]="{
+          'border-radius': '0px',
+          height: '15px',
+          margin: '0px'
+        }">
+            </ngx-skeleton-loader>
+        </h4>
+        <ngx-skeleton-loader appearance="line" [theme]="{
+          'border-radius': '0px',
+          height: '15px',
+          margin: '0px'
+        }">
+        </ngx-skeleton-loader>
+        <br>
+        <ngx-skeleton-loader appearance="line" [theme]="{
+          'border-radius': '0px',
+          height: '15px',
+          margin: '0px'
+        }">
+        </ngx-skeleton-loader>
+    </div>
+    <div style="align-self: center;text-align: right;" class="col-4">
+        <ngx-skeleton-loader appearance="circle" [theme]="{
+        'border-radius': '10px',
+        'width': '120px',
+        'height':'30px',
+        margin: '0px'
+      }">
+        </ngx-skeleton-loader>
+    </div>
 </div>
