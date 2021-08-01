@@ -39,6 +39,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             services.AddScoped<IJobService, HangfireService>();
             services.Configure<MailSettings>(config.GetSection(nameof(MailSettings)));
             services.Configure<SmsSettings>(config.GetSection(nameof(SmsSettings)));
+            services.AddTransient<IEventLogService, EventLogService>();
             return services;
         }
 

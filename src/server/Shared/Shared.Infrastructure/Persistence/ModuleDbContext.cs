@@ -8,6 +8,9 @@ using Microsoft.Extensions.Options;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentPOS.Shared.Core.Interfaces;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace FluentPOS.Shared.Infrastructure.Persistence
 {
@@ -44,12 +47,48 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            return await this.SaveChangeWithPublishEventsAsync(_eventLogger, _mediator, cancellationToken);
+            var changes = OnBeforeSaveChanges();
+            return await this.SaveChangeWithPublishEventsAsync(_eventLogger, _mediator, changes, cancellationToken);
         }
+        private (string oldValues, string newValues) OnBeforeSaveChanges()
+        {
+            var previousData = new Dictionary<string, object>();
+            var currentData = new Dictionary<string, object>();
+            ChangeTracker.DetectChanges();
+            foreach (var entry in ChangeTracker.Entries())
+            {
+                foreach (var property in entry.Properties)
+                {
+                    string propertyName = property.Metadata.Name;
+                    var originalValue = entry.GetDatabaseValues()?.GetValue<object>(propertyName);
+                    switch (entry.State)
+                    {
+                        case EntityState.Added:
+                            currentData[propertyName] = property.CurrentValue;
+                            break;
+                        case EntityState.Deleted:
+                            previousData[propertyName] = originalValue;
+                            break;
 
+                        case EntityState.Modified:
+
+                            if (property.IsModified && originalValue?.Equals(property.CurrentValue) == false)
+                            {
+                                previousData[propertyName] = originalValue;
+                                currentData[propertyName] = property.CurrentValue;
+                            }
+                            break;
+                    }
+                }
+            }
+            var oldValues = previousData.Count == 0 ? null : JsonConvert.SerializeObject(previousData);
+            var newValues = currentData.Count == 0 ? null : JsonConvert.SerializeObject(currentData);
+            return (oldValues: oldValues, newValues: newValues);
+        }
         public override int SaveChanges()
         {
-            return this.SaveChangeWithPublishEvents(_eventLogger, _mediator);
+            var changes = OnBeforeSaveChanges();
+            return this.SaveChangeWithPublishEvents(_eventLogger, _mediator, changes);
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
