@@ -10,8 +10,8 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
         public int PageNumber { get; private set; }
         public int PageSize { get; private set; }
         public string SearchString { get; private set; }
-        public Guid BrandId { get; private set; }
-        public Guid CategoryId { get; private set; }
+        public Guid[] BrandIds { get; private set; }
+        public Guid[] CategoryIds { get; private set; }
         public string[] OrderBy { get; private set; }
     }
 }
