@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using FluentPOS.Modules.Catalog.Core.Entities.ExtendedAttributes;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 
 namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
 {
@@ -19,17 +20,18 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
         IExtendedAttributeDbContext<Guid, Product, ProductExtendedAttribute>
     {
         private readonly PersistenceSettings _persistenceOptions;
-
+        private readonly IJsonSerializer _json;
         protected override string Schema => "Catalog";
 
         public CatalogDbContext(
             DbContextOptions<CatalogDbContext> options,
             IMediator mediator,
             IEventLogger eventLogger,
-            IOptions<PersistenceSettings> persistenceOptions)
-                : base(options, mediator, eventLogger, persistenceOptions)
+            IOptions<PersistenceSettings> persistenceOptions, IJsonSerializer json)
+                : base(options, mediator, eventLogger, persistenceOptions, json)
         {
             _persistenceOptions = persistenceOptions.Value;
+            _json = json;
         }
 
         public DbSet<Product> Products { get; set; }

@@ -11,6 +11,7 @@ using FluentPOS.Shared.Core.Interfaces;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Linq;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 
 namespace FluentPOS.Shared.Infrastructure.Persistence
 {
@@ -19,6 +20,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
         private readonly IMediator _mediator;
         private readonly IEventLogger _eventLogger;
         private readonly PersistenceSettings _persistenceOptions;
+        private readonly IJsonSerializer _json;
 
         protected abstract string Schema { get; }
 
@@ -26,11 +28,12 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
             DbContextOptions options,
             IMediator mediator,
             IEventLogger eventLogger,
-            IOptions<PersistenceSettings> persistenceOptions) : base(options)
+            IOptions<PersistenceSettings> persistenceOptions, IJsonSerializer json) : base(options)
         {
             _mediator = mediator;
             _eventLogger = eventLogger;
             _persistenceOptions = persistenceOptions.Value;
+            _json = json;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -81,8 +84,8 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
                     }
                 }
             }
-            var oldValues = previousData.Count == 0 ? null : JsonConvert.SerializeObject(previousData);
-            var newValues = currentData.Count == 0 ? null : JsonConvert.SerializeObject(currentData);
+            var oldValues = previousData.Count == 0 ? null : _json.Serialize(previousData);
+            var newValues = currentData.Count == 0 ? null : _json.Serialize(currentData);
             return (oldValues: oldValues, newValues: newValues);
         }
         public override int SaveChanges()
