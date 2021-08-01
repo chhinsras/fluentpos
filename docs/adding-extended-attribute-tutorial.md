@@ -139,7 +139,7 @@ namespace FluentPOS.Shared.Core.Constants
 namespace FluentPOS.Modules.Catalog.Controllers
 {
     [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/catalog/" + nameof(Brand) + "/attributes")]
+    [Route(BaseController.BasePath + "/" + nameof(Brand) + "/attributes")]
     public class BrandExtendedAttributesController : ExtendedAttributesController<Guid, Brand>
     {
 	    private IMediator _mediatorInstance;
