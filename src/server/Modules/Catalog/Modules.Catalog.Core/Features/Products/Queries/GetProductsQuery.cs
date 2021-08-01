@@ -5,7 +5,7 @@ using System;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 {
-    public class GetAllPagedProductsQuery : IRequest<PaginatedResult<GetAllPagedProductsResponse>>
+    public class GetProductsQuery : IRequest<PaginatedResult<GetProductsResponse>>
     {
         public int PageNumber { get; private set; }
         public int PageSize { get; private set; }

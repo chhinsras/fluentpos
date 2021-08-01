@@ -49,7 +49,7 @@ namespace FluentPOS.Shared.Core.Extensions
 
                 #region GetAllPagedExtendedAttributesResponse
 
-                sourceType = typeof(GetAllPagedExtendedAttributesResponse<>).MakeGenericType(extendedAttributeTypeGenericArguments[0]);
+                sourceType = typeof(GetExtendedAttributesResponse<>).MakeGenericType(extendedAttributeTypeGenericArguments[0]);
                 profile.CreateMap(sourceType, extendedAttributeType.CurrentType).ReverseMap();
 
                 #endregion GetAllPagedExtendedAttributesResponse

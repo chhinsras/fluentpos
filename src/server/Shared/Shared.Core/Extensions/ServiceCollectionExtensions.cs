@@ -90,7 +90,7 @@ namespace FluentPOS.Shared.Core.Extensions
                 #region GetAllPagedExtendedAttributesQuery
 
                 var tRequest = typeof(GetAllPagedExtendedAttributesQuery<,>).MakeGenericType(extendedAttributeTypeGenericArguments.ToArray());
-                var tResponse = typeof(PaginatedResult<>).MakeGenericType(typeof(GetAllPagedExtendedAttributesResponse<>).MakeGenericType(extendedAttributeTypeGenericArguments[0]));
+                var tResponse = typeof(PaginatedResult<>).MakeGenericType(typeof(GetExtendedAttributesResponse<>).MakeGenericType(extendedAttributeTypeGenericArguments[0]));
                 var serviceType = typeof(IRequestHandler<,>).MakeGenericType(tRequest, tResponse);
                 services.AddScoped(serviceType, queriesImplementationType);
 

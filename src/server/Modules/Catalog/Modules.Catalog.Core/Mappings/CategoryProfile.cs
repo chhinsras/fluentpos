@@ -14,8 +14,8 @@ namespace FluentPOS.Modules.Catalog.Core.Mappings
             CreateMap<RegisterCategoryCommand, Category>().ReverseMap();
             CreateMap<UpdateCategoryCommand, Category>().ReverseMap();
             CreateMap<GetCategoryByIdResponse, Category>().ReverseMap();
-            CreateMap<GetAllPagedCategoriesResponse, Category>().ReverseMap();
-            CreateMap<PaginatedCategoryFilter, GetAllPagedCategoriesQuery>()
+            CreateMap<GetCategoriesResponse, Category>().ReverseMap();
+            CreateMap<PaginatedCategoryFilter, GetCategoriesQuery>()
                 .ForMember(dest => dest.OrderBy, opt => opt.ConvertUsing<string>(new OrderByConverter()));
         }
     }

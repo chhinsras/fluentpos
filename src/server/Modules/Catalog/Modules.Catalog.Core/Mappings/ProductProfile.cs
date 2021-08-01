@@ -14,10 +14,10 @@ namespace FluentPOS.Modules.Catalog.Core.Mappings
             CreateMap<RegisterProductCommand, Product>().ReverseMap();
             CreateMap<UpdateProductCommand, Product>().ReverseMap();
             CreateMap<GetProductByIdResponse, Product>().ReverseMap(); 
-            CreateMap<Product, GetAllPagedProductsResponse>()
+            CreateMap<Product, GetProductsResponse>()
                 .ForMember(d => d.BrandName, o => o.MapFrom(s => s.Brand.Name))
                 .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category.Name));
-            CreateMap<PaginatedProductFilter, GetAllPagedProductsQuery>()
+            CreateMap<PaginatedProductFilter, GetProductsQuery>()
                 .ForMember(dest => dest.OrderBy, opt => opt.ConvertUsing<string>(new OrderByConverter()));
         }
     }

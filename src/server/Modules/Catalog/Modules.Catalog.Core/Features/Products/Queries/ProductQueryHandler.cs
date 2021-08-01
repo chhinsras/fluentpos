@@ -18,7 +18,7 @@ using FluentPOS.Shared.Core.Mappings.Converters;
 namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 {
     internal class ProductQueryHandler :
-        IRequestHandler<GetAllPagedProductsQuery, PaginatedResult<GetAllPagedProductsResponse>>,
+        IRequestHandler<GetProductsQuery, PaginatedResult<GetProductsResponse>>,
         IRequestHandler<GetProductByIdQuery, Result<GetProductByIdResponse>>,
         IRequestHandler<GetProductImageQuery, Result<string>>
     {
@@ -33,9 +33,9 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
             _localizer = localizer;
         }
 
-        public async Task<PaginatedResult<GetAllPagedProductsResponse>> Handle(GetAllPagedProductsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedResult<GetProductsResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            var queryable = _context.Products.ProjectTo<GetAllPagedProductsResponse>(_mapper.ConfigurationProvider).OrderBy(x => x.Id).AsQueryable();
+            var queryable = _context.Products.ProjectTo<GetProductsResponse>(_mapper.ConfigurationProvider).OrderBy(x => x.Id).AsQueryable();
 
             if (request.BrandIds.Any()) queryable = queryable.Where(x => request.BrandIds.Contains(x.BrandId));
             if (request.CategoryIds.Any()) queryable = queryable.Where(x => request.CategoryIds.Contains(x.CategoryId));
@@ -58,7 +58,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 
             if (productList == null) throw new CatalogException(_localizer["Products Not Found!"], HttpStatusCode.NotFound);
 
-            var mappedProducts = _mapper.Map<PaginatedResult<GetAllPagedProductsResponse>>(productList);
+            var mappedProducts = _mapper.Map<PaginatedResult<GetProductsResponse>>(productList);
 
             return mappedProducts;
         }

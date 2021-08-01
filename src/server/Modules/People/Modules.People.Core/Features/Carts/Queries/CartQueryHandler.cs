@@ -20,7 +20,7 @@ using Microsoft.Extensions.Localization;
 namespace FluentPOS.Modules.People.Core.Features.Carts.Queries
 {
     internal class CartQueryHandler :
-        IRequestHandler<GetAllPagedCartsQuery, PaginatedResult<GetAllPagedCartsResponse>>,
+        IRequestHandler<GetCartsQuery, PaginatedResult<GetCartsResponse>>,
         IRequestHandler<GetCartByIdQuery, Result<GetCartByIdResponse>>
     {
         private readonly IPeopleDbContext _context;
@@ -37,9 +37,9 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Queries
             _localizer = localizer;
         }
 
-        public async Task<PaginatedResult<GetAllPagedCartsResponse>> Handle(GetAllPagedCartsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedResult<GetCartsResponse>> Handle(GetCartsQuery request, CancellationToken cancellationToken)
         {
-            Expression<Func<Cart, GetAllPagedCartsResponse>> expression = e => new GetAllPagedCartsResponse(e.Id, e.CustomerId, e.Timestamp);
+            Expression<Func<Cart, GetCartsResponse>> expression = e => new GetCartsResponse(e.Id, e.CustomerId, e.Timestamp);
             var queryable = _context.Carts.AsQueryable();
 
             var ordering = new OrderByConverter().Convert(request.OrderBy);
@@ -57,7 +57,7 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Queries
                 .Select(expression)
                 .ToPaginatedListAsync(request.PageNumber, request.PageSize);
             if (cartList == null) throw new PeopleException(_localizer["Carts Not Found!"], HttpStatusCode.NotFound);
-            var mappedCarts = _mapper.Map<PaginatedResult<GetAllPagedCartsResponse>>(cartList);
+            var mappedCarts = _mapper.Map<PaginatedResult<GetCartsResponse>>(cartList);
             return mappedCarts;
         }
 
