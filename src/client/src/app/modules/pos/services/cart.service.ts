@@ -23,6 +23,9 @@ export class CartService {
     cartItem.id = cartItemId;
     this.cartItemApi.update(cartItem).subscribe((res) => this.toastr.info(res.messages[0]));
   }
+  private deleteFromCart(cartItemId: string) {
+    this.cartItemApi.delete(cartItemId).subscribe((res) => this.toastr.info(res.messages[0]));
+  }
   add(product: Product, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == product.id);
     if (foundItem) {
@@ -63,7 +66,8 @@ export class CartService {
         this.updateCart(foundItem.id, foundItem.productId, foundItem.quantity);
       }
       else {
-        this.cartItems.splice(this.cartItems.indexOf(foundItem), 1)
+        this.cartItems.splice(this.cartItems.indexOf(foundItem), 1);
+        this.deleteFromCart(foundItem.id);
       }
     }
     this.cartItems$.next(this.calculate(this.cartItems));
@@ -71,7 +75,8 @@ export class CartService {
   remove(productId: string) {
     var foundItem = this.cartItems.find(a => a.productId == productId);
     if (foundItem) {
-      this.cartItems.splice(this.cartItems.indexOf(foundItem), 1)
+      this.cartItems.splice(this.cartItems.indexOf(foundItem), 1);
+      this.deleteFromCart(foundItem.id);
     }
     this.cartItems$.next(this.cartItems);
   }

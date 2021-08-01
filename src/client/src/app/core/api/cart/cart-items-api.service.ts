@@ -23,4 +23,7 @@ export class CartItemsApiService {
   update(cartItem: CartItemApiModel) {
     return this.http.put<Result<string>>(this.baseUrl, cartItem);
   }
+  delete(id: string) {
+    return this.http.delete<Result<string>>(this.baseUrl + id);
+  }
 }
