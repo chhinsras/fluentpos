@@ -1,0 +1,35 @@
+<div *ngFor="let a of customers; let i = index" style="margin:5px;padding:15px;background: rgba(0,0,0,.06);border-radius: 5px;opacity: {{0.8-(i/10)}};" [attr.data-index]="i">
+  
+  <div class="d-flex justify-content-between" style="height: 75px;">
+    <div class="d-flex flex-column" style="margin-top: 10px;">
+      <ngx-skeleton-loader [theme]="{
+        width: '200px',
+        'border-radius': '0px',
+        height: '15px',
+        margin: '0px'
+      }"></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{
+        width: '150px',
+        'border-radius': '0px',
+        height: '15px',
+        margin: '0px'
+      }"></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{
+        width: '170px',
+        'border-radius': '0px',
+        height: '15px',
+        margin: '0px'
+      }"></ngx-skeleton-loader>
+   </div>
+    <div class="d-flex align-items-center">
+     <ngx-skeleton-loader count="2" appearance="circle" [theme]="{
+       width: '70px',
+       height: '40px',
+       'border-radius': '10px'
+     }">
+           </ngx-skeleton-loader>
+    
+    </div>
+   </div>
+
+</div>

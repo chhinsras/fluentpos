@@ -6,33 +6,38 @@
 </mat-form-field>
 <p></p>
 <mat-dialog-content class="mat-typography" style="min-width:50vw;min-height:70vh;max-height: 70vh;">
-    <div *ngIf="customers && customers.data">
-        <div *ngFor="let customer of customers.data" class="row" style="margin:5px;padding:15px;background: rgba(0,0,0,.05);border-radius: 5px;">
-            <div class="col-6">
-                <h2 style="margin: 0px!important;">{{customer.name}}</h2>
-                {{customer.phone}}
-                <br> {{customer.email}}
-            </div>
-            <div style="align-self: center;text-align: right;" class="col-6">
-                <button mat-raised-button color="info">
-                    <span><span style="margin-right: 10px;" class="fas fa-info"></span>Info</span>
-                </button>
-                <button mat-raised-button color="accent" (click)="selectCustomer(customer)">
-                    <span><span style="margin-right: 10px;" class="fas fa-check"></span>Select</span>
-                </button>
+    <div *ngIf="(posService.isCustomerLoading | async); else customerLoaded" style="margin-bottom: 0;">
+        <app-customer-skeleton></app-customer-skeleton>
+    </div>
+    <ng-template #customerLoaded>
+        <div *ngIf="customers && customers.data">
+            <div *ngFor="let customer of customers.data" class="row" style="margin:5px;padding:15px;background: rgba(0,0,0,.05);border-radius: 5px;">
+                <div class="col-6">
+                    <h2 style="margin: 0px!important;">{{customer.name}}</h2>
+                    {{customer.phone}}
+                    <br> {{customer.email}}
+                </div>
+                <div style="align-self: center;text-align: right;" class="col-6">
+                    <button mat-raised-button color="info">
+                        <span><span style="margin-right: 10px;" class="fas fa-info"></span>Info</span>
+                    </button>
+                    <button mat-raised-button color="accent" (click)="selectCustomer(customer)">
+                        <span><span style="margin-right: 10px;" class="fas fa-check"></span>Select</span>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-    <div *ngIf="customers && customers.data.length == 0">
-        <div class="row" style="margin:5px;padding:15px;background: rgba(0,0,0,.02);border-radius: 5px;">
-            <div style="align-self: center;" class="col-6">
-                <h3 style="margin: 0px!important;">{{searchString}} Not Found</h3>
-            </div>
-            <div style="align-self: center;text-align: right;" class="col-6">
-                <button mat-raised-button color="accent" (click)="selectCustomer(customer.id)">
-                    <span><span style="margin-right: 10px;" class="fas fa-info"></span>Register New Customer</span>
-                </button>
+        <div *ngIf="customers && customers.data.length == 0">
+            <div class="row" style="margin:5px;padding:15px;background: rgba(0,0,0,.02);border-radius: 5px;">
+                <div style="align-self: center;" class="col-6">
+                    <h3 style="margin: 0px!important;">{{searchString}} Not Found</h3>
+                </div>
+                <div style="align-self: center;text-align: right;" class="col-6">
+                    <button mat-raised-button color="accent" (click)="selectCustomer(customer.id)">
+                        <span><span style="margin-right: 10px;" class="fas fa-info"></span>Register New Customer</span>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
+    </ng-template>
 </mat-dialog-content>
