@@ -5,8 +5,11 @@ import {ToastrService} from 'ngx-toastr';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
 import { Brand } from '../../../models/brand';
 import { BrandParams } from '../../../models/brandParams';
+import { Category } from '../../../models/category';
+import { CategoryParams } from '../../../models/categoryParams';
 import {Product} from '../../../models/product';
 import { BrandService } from '../../../services/brand.service';
+import { CategoryService } from '../../../services/category.service';
 import {ProductService} from '../../../services/product.service';
 
 @Component({
@@ -19,14 +22,19 @@ export class ProductFormComponent implements OnInit {
   formTitle: string;
   brands: PaginatedResult<Brand>;
   brandParams = new BrandParams();
+  categories: PaginatedResult<Category>;
+  categoryParams = new CategoryParams();
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Product, private productService: ProductService, private brandService: BrandService, private toastr: ToastrService, private fb: FormBuilder) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Product, private productService: ProductService, private brandService: BrandService, private categoryService: CategoryService,
+        private toastr: ToastrService, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.initializeForm();
     this.brandParams.pageSize = 50;
+    this.categoryParams.pageSize = 50;
     this.getBrands();
+    this.getCategories();
   }
 
   initializeForm() {
@@ -51,8 +59,13 @@ export class ProductFormComponent implements OnInit {
       this.formTitle = 'Edit Product';
     }
   }
+
   getBrands() {
     this.brandService.getBrands(this.brandParams).subscribe((response) => { this.brands = response; });
+  }  
+  
+  getCategories() {
+    this.categoryService.getCategories(this.categoryParams).subscribe((response) => { this.categories = response; });
   }
 
   onSubmit() {
