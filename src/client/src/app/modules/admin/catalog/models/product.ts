@@ -3,7 +3,9 @@ export interface Product {
   name: string;
   localeName: string;
   brandId: string;
+  brandName: string;
   categoryId: string;
+  categoryName: string;
   price: number;
   cost: number;
   imageUrl: string;

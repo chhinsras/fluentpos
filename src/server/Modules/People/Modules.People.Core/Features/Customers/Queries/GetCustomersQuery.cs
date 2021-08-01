@@ -4,7 +4,7 @@ using MediatR;
 
 namespace FluentPOS.Modules.People.Core.Features.Customers.Queries
 {
-    public class GetAllPagedCustomersQuery : IRequest<PaginatedResult<GetAllPagedCustomersResponse>>
+    public class GetCustomersQuery : IRequest<PaginatedResult<GetCustomersResponse>>
     {
         public int PageNumber { get; private set; }
         public int PageSize { get; private set; }
