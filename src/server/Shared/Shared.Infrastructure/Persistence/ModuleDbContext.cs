@@ -60,7 +60,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
                 foreach (var property in entry.Properties)
                 {
                     string propertyName = property.Metadata.Name;
-                    var originalValue = entry.GetDatabaseValues().GetValue<object>(propertyName);
+                    var originalValue = entry.GetDatabaseValues()?.GetValue<object>(propertyName);
                     switch (entry.State)
                     {
                         case EntityState.Added:
