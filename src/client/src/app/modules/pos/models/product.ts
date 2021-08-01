@@ -2,8 +2,8 @@ export interface Product {
   id: string;
   name: string;
   localeName: string;
-  brandId: string;
-  categoryId: string;
+  brandName: string;
+  categoryName: string;
   price: number;
   cost: number;
   imageUrl: string;
