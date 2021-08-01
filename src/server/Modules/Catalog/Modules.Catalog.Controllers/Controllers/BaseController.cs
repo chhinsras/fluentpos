@@ -1,20 +1,12 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using FluentPOS.Shared.Infrastructure.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentPOS.Modules.Catalog.Controllers
 {
     [ApiController]
     [Route(BasePath + "/[controller]")]
-    internal abstract class BaseController : ControllerBase
+    internal abstract class BaseController : CommonBaseController
     {
-        protected internal const string BasePath = "api/catalog";
-
-        private IMediator _mediatorInstance;
-        protected IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
-
-        private IMapper _mapperInstance;
-        protected IMapper Mapper => _mapperInstance ??= HttpContext.RequestServices.GetService<IMapper>();
+        protected internal new const string BasePath = CommonBaseController.BasePath + "/catalog";
     }
 }

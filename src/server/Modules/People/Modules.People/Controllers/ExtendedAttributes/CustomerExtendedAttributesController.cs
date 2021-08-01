@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.People.Controllers.ExtendedAttributes
 {
+    [ApiVersion("1")]
     [Route(BaseController.BasePath + "/" + nameof(Customer) + "/attributes")]
     internal sealed class CustomerExtendedAttributesController : ExtendedAttributesController<Guid, Customer>
     {

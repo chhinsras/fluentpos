@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentPOS.Modules.People.Controllers.ExtendedAttributes
 {
+    [ApiVersion("1")]
     [Route(BaseController.BasePath + "/" + nameof(Cart) + "/attributes")]
     internal sealed class CartExtendedAttributesController : ExtendedAttributesController<Guid, Cart>
     {
