@@ -23,8 +23,8 @@ namespace FluentPOS.Modules.People.Controllers
         [Authorize(Policy = Permissions.Carts.ViewAll)]
         public async Task<IActionResult> GetAllAsync([FromQuery] PaginatedCartFilter filter)
         {
-            var carts =
-                await Mediator.Send(new GetAllPagedCartsQuery(filter.PageNumber, filter.PageSize, filter.SearchString, filter.OrderBy, filter.CustomerId));
+            var request = Mapper.Map<GetAllPagedCartsQuery>(filter);
+            var carts = await Mediator.Send(request);
             return Ok(carts);
         }
 

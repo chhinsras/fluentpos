@@ -241,6 +241,19 @@ namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators.
 }
 ```
 
+```csharp
+namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators.Brands
+{
+    public class BrandPaginatedExtendedAttributeFilterValidator : PaginatedExtendedAttributeFilterValidator<Guid, Brand>
+    {
+        public BrandPaginatedExtendedAttributeFilterValidator(IStringLocalizer<BrandPaginatedExtendedAttributeFilterValidator> localizer) : base(localizer)
+        {
+            // you can override the validation rules here
+        }
+    }
+}
+```
+
 10) Add `AddExtendedAttributeHandlersFromAssembly` and `AddExtendedAttributeCommandValidatorsFromAssembly` extension methods in `ServiceCollectionExtensions` for |module-name| to register extended attribute handlers and handler validators automatically for this module:
 
 ```csharp
@@ -255,7 +268,9 @@ namespace FluentPOS.Modules.Catalog.Core.Extensions
 
             services.AddExtendedAttributeHandlersFromAssembly(Assembly.GetExecutingAssembly());
             services.AddExtendedAttributeCommandValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddPaginatedExtendedAttributeFilterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
+            services.AddPaginatedFilterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;
         }

@@ -13,6 +13,7 @@ using System.Linq.Dynamic.Core;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Mappings.Converters;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 {
@@ -36,15 +37,8 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
         {
             var queryable = _context.Products.ProjectTo<GetAllPagedProductsResponse>(_mapper.ConfigurationProvider).OrderBy(x => x.Id).AsQueryable();
 
-            if (request.OrderBy?.Any() == true)
-            {
-                var ordering = string.Join(",", request.OrderBy);
-                queryable = queryable.OrderBy(ordering);
-            }
-            else
-            {
-                queryable = queryable.OrderBy(a => a.Id);
-            }
+            var ordering = new OrderByConverter().Convert(request.OrderBy);
+            queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderBy(a => a.Id);
 
             if (!string.IsNullOrEmpty(request.SearchString))
             {

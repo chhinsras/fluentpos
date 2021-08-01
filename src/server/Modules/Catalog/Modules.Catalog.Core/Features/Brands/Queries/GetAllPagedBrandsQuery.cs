@@ -6,20 +6,9 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
 {
     public class GetAllPagedBrandsQuery : IRequest<PaginatedResult<GetAllPagedBrandsResponse>>
     {
-        public int PageNumber { get; }
-        public int PageSize { get; }
-        public string[] OrderBy { get; set; }
-        public string SearchString { get; }
-
-        public GetAllPagedBrandsQuery(int pageNumber, int pageSize, string searchString, string orderBy)
-        {
-            PageNumber = pageNumber;
-            PageSize = pageSize;
-            SearchString = searchString;
-            if (!string.IsNullOrWhiteSpace(orderBy))
-            {
-                OrderBy = orderBy.Split(',');
-            }
-        }
+        public int PageNumber { get; private set; }
+        public int PageSize { get; private set; }
+        public string[] OrderBy { get; private set; }
+        public string SearchString { get; private set; }
     }
 }

@@ -11,6 +11,7 @@ using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Core.Exceptions;
 using FluentPOS.Shared.Core.Extensions;
 using FluentPOS.Shared.Core.Interfaces.Services.Catalog;
+using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.People.CartItems;
 using MediatR;
@@ -40,15 +41,10 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Queries
         {
             Expression<Func<CartItem, GetCartItemsResponse>> expression = e => new GetCartItemsResponse(e.Id, e.CartId, e.ProductId, e.Quantity);
             var queryable = _context.CartItems.AsQueryable();
-            if (request.OrderBy?.Any() == true)
-            {
-                var ordering = string.Join(",", request.OrderBy);
-                queryable = queryable.OrderBy(ordering);
-            }
-            else
-            {
-                queryable = queryable.OrderBy(a => a.Id);
-            }
+
+            var ordering = new OrderByConverter().Convert(request.OrderBy);
+            queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderBy(a => a.Id);
+
             if (request.CartId != null && !request.CartId.Equals(Guid.Empty)) queryable = queryable.Where(x => x.CartId.Equals(request.CartId));
             var cartItemList = await queryable
                 .Select(expression)

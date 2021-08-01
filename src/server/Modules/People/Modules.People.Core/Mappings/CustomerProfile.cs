@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Core.Features.Customers.Commands;
+using FluentPOS.Modules.People.Core.Features.Customers.Queries;
+using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.DTOs.People.Customers;
 
 namespace FluentPOS.Modules.People.Core.Mappings
@@ -13,6 +15,8 @@ namespace FluentPOS.Modules.People.Core.Mappings
             CreateMap<UpdateCustomerCommand, Customer>().ReverseMap();
             CreateMap<GetCustomerByIdResponse, Customer>().ReverseMap();
             CreateMap<GetAllPagedCustomersResponse, Customer>().ReverseMap();
+            CreateMap<PaginatedCustomerFilter, GetAllPagedCustomersQuery>()
+                .ForMember(dest => dest.OrderBy, opt => opt.ConvertUsing<string>(new OrderByConverter()));
         }
     }
 }

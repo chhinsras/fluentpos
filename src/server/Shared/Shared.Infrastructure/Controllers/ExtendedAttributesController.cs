@@ -1,7 +1,7 @@
 ﻿using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
+using FluentPOS.Shared.Core.Features.ExtendedAttributes.Filters;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries;
-using FluentPOS.Shared.DTOs.ExtendedAttributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,9 +16,9 @@ namespace FluentPOS.Shared.Infrastructure.Controllers
         protected abstract IMediator Mediator { get; }
 
         [HttpGet]
-        public virtual async Task<IActionResult> GetAllAsync([FromQuery] PaginatedExtendedAttributeFilter<TEntityId> filter)
+        public virtual async Task<IActionResult> GetAllAsync([FromQuery] PaginatedExtendedAttributeFilter<TEntityId, TEntity> filter)
         {
-            var extendedAttributes = await Mediator.Send(new GetAllPagedExtendedAttributesQuery<TEntityId, TEntity>(filter.PageNumber, filter.PageSize, filter.SearchString, filter.EntityId, filter.Type));
+            var extendedAttributes = await Mediator.Send(new GetAllPagedExtendedAttributesQuery<TEntityId, TEntity>(filter));
             return Ok(extendedAttributes);
         }
 

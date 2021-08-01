@@ -25,5 +25,11 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
             services.AddTransient<IProductService, ProductService>();
             return services;
         }
+
+        public static IServiceCollection AddCatalogValidation(this IServiceCollection services)
+        {
+            services.AddControllers().AddCatalogValidation();
+            return services;
+        }
     }
 }

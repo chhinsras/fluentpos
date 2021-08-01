@@ -6,9 +6,11 @@ using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Infrastructure.Controllers;
 using FluentPOS.Shared.Infrastructure.EventLogging;
+using FluentPOS.Shared.Infrastructure.Interceptors;
 using FluentPOS.Shared.Infrastructure.Middlewares;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using FluentPOS.Shared.Infrastructure.Services;
+using FluentValidation.AspNetCore;
 using Hangfire;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,6 +52,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                 {
                     manager.FeatureProviders.Add(new InternalControllerFeatureProvider());
                 });
+            services.AddTransient<IValidatorInterceptor, ValidatorInterceptor>();
             services.AddApplicationLayer(config);
             services.AddLocalization(options =>
             {

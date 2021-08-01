@@ -1,7 +1,7 @@
 ﻿using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
-using FluentPOS.Shared.DTOs.ExtendedAttributes;
+using FluentPOS.Shared.Core.Features.ExtendedAttributes.Filters;
 using FluentPOS.Shared.Infrastructure.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +19,7 @@ namespace FluentPOS.Modules.Identity.Controllers.ExtendedAttributes
         protected override IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
 
         [Authorize(Policy = Permissions.RolesExtendedAttributes.ViewAll)]
-        public override Task<IActionResult> GetAllAsync(PaginatedExtendedAttributeFilter<string> filter)
+        public override Task<IActionResult> GetAllAsync(PaginatedExtendedAttributeFilter<string, FluentRole> filter)
         {
             return base.GetAllAsync(filter);
         }
