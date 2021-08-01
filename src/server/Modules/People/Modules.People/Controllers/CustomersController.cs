@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.People.Controllers
 {
+    [ApiVersion("1")]
     internal sealed class CustomersController : BaseController
     {
         [HttpGet]

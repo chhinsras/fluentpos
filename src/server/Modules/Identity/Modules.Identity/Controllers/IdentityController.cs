@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Controllers
 {
+    [ApiVersion("1")]
+    [Route(BasePath)]
     internal sealed class IdentityController : BaseController
     {
         private readonly IIdentityService _identityService;
@@ -15,7 +17,7 @@ namespace FluentPOS.Modules.Identity.Controllers
             _identityService = identityService;
         }
 
-        [HttpPost("/api/identity/register")]
+        [HttpPost("register")]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterAsync(RegisterRequest request)
         {
@@ -23,21 +25,21 @@ namespace FluentPOS.Modules.Identity.Controllers
             return Ok(await _identityService.RegisterAsync(request, origin));
         }
 
-        [HttpGet("/api/identity/confirm-email")]
+        [HttpGet("confirm-email")]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmailAsync([FromQuery] string userId, [FromQuery] string code)
         {
             return Ok(await _identityService.ConfirmEmailAsync(userId, code));
         }
 
-        [HttpGet("/api/identity/confirm-phone-number")]
+        [HttpGet("confirm-phone-number")]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmPhoneNumberAsync([FromQuery] string userId, [FromQuery] string code)
         {
             return Ok(await _identityService.ConfirmPhoneNumberAsync(userId, code));
         }
 
-        [HttpPost("/api/identity/forgot-password")]
+        [HttpPost("forgot-password")]
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPasswordAsync(ForgotPasswordRequest request)
         {
@@ -45,7 +47,7 @@ namespace FluentPOS.Modules.Identity.Controllers
             return Ok(await _identityService.ForgotPasswordAsync(request, origin));
         }
 
-        [HttpPost("/api/identity/reset-password")]
+        [HttpPost("reset-password")]
         [AllowAnonymous]
         public async Task<IActionResult> ResetPasswordAsync(ResetPasswordRequest request)
         {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Controllers
 {
+    [ApiVersion("1")]
     internal sealed class UsersController : BaseController
     {
         private readonly IUserService _userService;

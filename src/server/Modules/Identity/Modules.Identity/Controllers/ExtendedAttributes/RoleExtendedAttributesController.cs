@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Controllers.ExtendedAttributes
 {
+    [ApiVersion("1")]
     [Route(BaseController.BasePath + "/role/attributes")]
     internal sealed class RoleExtendedAttributesController : ExtendedAttributesController<string, FluentRole>
     {
