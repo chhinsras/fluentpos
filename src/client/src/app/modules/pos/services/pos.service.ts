@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map } from 'rxjs/operators';
 import { BrandApiService } from 'src/app/core/api/catalog/brand-api.service';
 import { ProductApiService } from 'src/app/core/api/catalog/product-api.service';
@@ -19,13 +20,19 @@ import { ProductParams } from '../models/productParams';
 })
 export class PosService {
 
+  public isCustomerLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(private customerApi: CustomerApiService,private productApi :ProductApiService, private brandService:BrandApiService ) { }
+
   getCustomers(CustomerParams: CustomerParams): Observable<PaginatedResult<Customer>> {
     let params = new HttpParams();
     if (CustomerParams.searchString) params = params.append('searchString', CustomerParams.searchString);
     if (CustomerParams.pageSize) params = params.append('pageSize', CustomerParams.pageSize);
+    this.isCustomerLoading.next(true);
     return this.customerApi.getAlls(params)
-      .pipe(map((response: PaginatedResult<Customer>) => response));
+      .pipe(map((response: PaginatedResult<Customer>) => {
+        this.isCustomerLoading.next(false);
+        return response;
+      }));
   }
   getCustomerById(id: string): Observable<Result<Customer>> {
     return this.customerApi.getById(id).pipe(
