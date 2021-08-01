@@ -8,6 +8,7 @@ using FluentPOS.Modules.Identity.Infrastructure.Extensions;
 using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.EventLogging;
 using FluentPOS.Shared.Core.Interfaces;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using MediatR;
@@ -28,6 +29,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
         private readonly IMediator _mediator;
         private readonly IEventLogger _eventLogger;
         private readonly PersistenceSettings _persistenceOptions;
+        private readonly IJsonSerializer _json;
 
         internal string Schema => "Identity";
 
@@ -35,12 +37,13 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
             DbContextOptions<IdentityDbContext> options,
             IOptions<PersistenceSettings> persistenceOptions,
             IMediator mediator,
-            IEventLogger eventLogger)
+            IEventLogger eventLogger, IJsonSerializer json)
                 : base(options)
         {
             _mediator = mediator;
             _eventLogger = eventLogger;
             _persistenceOptions = persistenceOptions.Value;
+            _json = json;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -87,8 +90,8 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                     }
                 }
             }
-            var oldValues = previousData.Count == 0 ? null : JsonConvert.SerializeObject(previousData);
-            var newValues = currentData.Count == 0 ? null : JsonConvert.SerializeObject(currentData);
+            var oldValues = previousData.Count == 0 ? null : _json.Serialize(previousData);
+            var newValues = currentData.Count == 0 ? null : _json.Serialize(currentData);
             return (oldValues: oldValues, newValues: newValues);
         }
         public override int SaveChanges()
