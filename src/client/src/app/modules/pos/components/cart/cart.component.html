@@ -10,39 +10,46 @@
 </mat-toolbar>
 
 <div style="height: calc(100vh-10px);overflow:auto;padding: 20px;padding-top: 80px;padding-bottom: 250px;">
-    <div *ngIf="cartItems">
-        <div *ngFor="let item of cartItems" class="row" style="margin:2px;padding:15px;background: rgba(0,0,0,.06);border-radius: 5px;">
-            <div class="col-2" style="font-size: large;align-self: center;">
-                X {{item.quantity}}
+    <div *ngIf="(cartService.isCartLoading | async); else cartLoaded" style="margin-bottom: 0;">
+        <app-cart-skeleton></app-cart-skeleton>
+    </div>
+    <ng-template #cartLoaded>
+        <div style="margin-bottom: 0;">
+            <div *ngIf="cartItems">
+                <div *ngFor="let item of cartItems" class="row" style="margin:2px;padding:15px;background: rgba(0,0,0,.06);border-radius: 5px;">
+                    <div class="col-2" style="font-size: large;align-self: center;">
+                        X {{item.quantity}}
+                    </div>
+                    <div class="col-6" style="align-self: center;">
+                        <h4 style="margin: 0px!important;">{{item.displayName}}</h4>
+                        Rate : ${{item.rate}}
+                        <br>
+                        <b>Total : ${{item.total}}</b>
+                    </div>
+                    <div style="align-self: center;text-align: right;" class="col-4">
+                        <button mat-icon-button (click)="increaseQuantity(item.productId)">
+                        <mat-icon>north</mat-icon>
+                      </button>
+                        <button (click)="reduceQuantity(item.productId)" mat-icon-button>
+                        <mat-icon *ngIf="item.quantity >= 1" style="color: red;">south</mat-icon>
+                      </button>
+                        <button (click)="removeItem(item.productId)" mat-icon-button>
+                        <mat-icon *ngIf="item.quantity >=1" style="color: red;">delete</mat-icon>
+                      </button>
+                    </div>
+                </div>
             </div>
-            <div class="col-6" style="align-self: center;">
-                <h4 style="margin: 0px!important;">{{item.displayName}}</h4>
-                Rate : ${{item.rate}}
-                <br>
-                <b>Total : ${{item.total}}</b>
-            </div>
-            <div style="align-self: center;text-align: right;" class="col-4">
-                <button mat-icon-button (click)="increaseQuantity(item.productId)">
-                    <mat-icon>north</mat-icon>
-                  </button>
-                <button (click)="reduceQuantity(item.productId)" mat-icon-button>
-                    <mat-icon *ngIf="item.quantity >= 1" style="color: red;">south</mat-icon>
-                  </button>
-                <button (click)="removeItem(item.productId)" mat-icon-button>
-                    <mat-icon *ngIf="item.quantity >=1" style="color: red;">delete</mat-icon>
-                  </button>
+            <div *ngIf="!cartItems|| cartItems.length==0" style="height: 60vh!important;">
+                <mat-card>
+                    <mat-card-content style="padding: 40px;text-align: center;opacity: 60%;">
+                        <h2 translate>
+                            pos.cartEmpty</h2>
+                        <p translate>pos.startAddingProducts</p>
+                    </mat-card-content>
+                </mat-card>
             </div>
         </div>
-    </div>
-    <div *ngIf="!cartItems|| cartItems.length==0" style="height: 60vh!important;">
-        <mat-card>
-            <mat-card-content style="padding: 40px;text-align: center;opacity: 60%;">
-                <h2 translate>
-                    pos.cartEmpty</h2>
-                <p translate>pos.startAddingProducts</p>
-            </mat-card-content>
-        </mat-card>
-    </div>
+    </ng-template>
 
 </div>
 <div *ngIf="cartItems && cartItems.length !=0" class="checkout">

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ToastrService } from 'ngx-toastr';
-import { Cart } from '../../models/cart';
+import { CartItem } from '../../models/cart';
 import { CartService } from '../../services/cart.service';
 
 @Component({
@@ -11,9 +11,9 @@ import { CartService } from '../../services/cart.service';
 })
 export class CartComponent implements OnInit {
   @Input() cart: MatSidenav;
-  cartItems: Cart[];
+  cartItems: CartItem[];
   total: number = 0;
-  constructor(private cartService: CartService, private toastr: ToastrService) { }
+  constructor(public cartService: CartService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.loadCurrentCart();
@@ -23,7 +23,7 @@ export class CartComponent implements OnInit {
       data.forEach(arg => {
         this.total += arg.total;
       });
-    })
+    });
   }
   loadCurrentCart() {
     this.cartItems = this.cartService.loadCurrentCart();

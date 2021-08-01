@@ -18,12 +18,16 @@ namespace FluentPOS.Modules.People.Controllers
             var cartItem = await Mediator.Send(new GetCartItemByIdQuery(id, bypassCache));
             return Ok(cartItem);
         }
-
+        /// <summary>
+        /// Gets all Cart Items for a particular CartId
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = Permissions.CartItems.ViewAll)]
-        public async Task<IActionResult> GetAllAsync([FromQuery] PaginatedCartItemFilter filter)
+        public async Task<IActionResult> GetCartItemsAsync([FromQuery] PaginatedCartItemFilter filter)
         {
-            var request = Mapper.Map<GetAllPagedCartItemsQuery>(filter);
+            var request = Mapper.Map<GetCartItemsQuery>(filter);
             var cartItems = await Mediator.Send(request);
             return Ok(cartItems);
         }

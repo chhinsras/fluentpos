@@ -17,6 +17,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { CatalogSkeletonComponent } from './components/catalog-skeleton/catalog-skeleton.component';
+import { CustomerCartsComponent } from './components/customer-carts/customer-carts.component';
+import { CartSkeletonComponent } from './components/cart-skeleton/cart-skeleton.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { CatalogSkeletonComponent } from './components/catalog-skeleton/catalog-
     ProductInfoComponent,
     CartComponent,
     PosToolbarComponent,
-    CatalogSkeletonComponent
+    CatalogSkeletonComponent,
+    CustomerCartsComponent,
+    CartSkeletonComponent
   ],
   imports: [
     CommonModule,

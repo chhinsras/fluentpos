@@ -1,8 +1,11 @@
 ﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Infrastructure.Persistence;
+using FluentPOS.Modules.Catalog.Infrastructure.Services;
 using FluentPOS.Shared.Core.Interfaces.Services;
+using FluentPOS.Shared.Core.Interfaces.Services.Catalog;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using FluentPOS.Shared.Infrastructure.Persistence;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -17,6 +20,9 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
                 .AddScoped<ICatalogDbContext>(provider => provider.GetService<CatalogDbContext>());
             services.AddExtendedAttributeDbContextsFromAssembly(typeof(CatalogDbContext), Assembly.GetAssembly(typeof(ICatalogDbContext)));
             services.AddTransient<IDatabaseSeeder, CatalogDbSeeder>();
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            services.AddTransient<IProductService, ProductService>();
             return services;
         }
 

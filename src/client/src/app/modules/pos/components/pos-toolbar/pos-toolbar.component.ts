@@ -43,6 +43,7 @@ export class PosToolbarComponent implements OnInit {
       if (customer) {
         this.customer = customer;
         this.cartService.setCurrentCustomer(customer);
+        this.cartService.getCustomerCart(customer.id);
       }
     });
   }

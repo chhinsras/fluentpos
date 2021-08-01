@@ -13,9 +13,9 @@ namespace FluentPOS.Modules.People.Core.Mappings
         {
             CreateMap<AddCartItemCommand, CartItem>().ReverseMap();
             CreateMap<UpdateCartItemCommand, CartItem>().ReverseMap();
-            CreateMap<GetAllPagedCartItemsResponse, CartItem>().ReverseMap();
+
             CreateMap<GetCartItemByIdResponse, CartItem>().ReverseMap();
-            CreateMap<PaginatedCartItemFilter, GetAllPagedCartItemsQuery>()
+            CreateMap<PaginatedCartItemFilter, GetCartItemsQuery>()
                 .ForMember(dest => dest.OrderBy, opt => opt.ConvertUsing<string>(new OrderByConverter()));
         }
     }
