@@ -1,27 +1,58 @@
+using System;
 using System.Linq;
+using System.Linq.Dynamic.Core;
+using System.Net;
 using System.Threading.Tasks;
 using FluentPOS.Shared.Core.EventLogging;
+using FluentPOS.Shared.Core.Exceptions;
 using FluentPOS.Shared.Core.Extensions;
 using FluentPOS.Shared.Core.Interfaces;
 using FluentPOS.Shared.Core.Interfaces.Services;
+using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.Core.Wrapper;
+using FluentPOS.Shared.DTOs.Identity.EventLogs;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Shared.Infrastructure.Services
 {
     public class EventLogService : IEventLogService
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly IStringLocalizer<EventLogService> _localizer;
 
-        public EventLogService(IApplicationDbContext dbContext)
+        public EventLogService(
+            IApplicationDbContext dbContext,
+            IStringLocalizer<EventLogService> localizer)
         {
             _dbContext = dbContext;
+            _localizer = localizer;
         }
 
-        public async Task<PaginatedResult<EventLog>> Get(int pageNumber, int pageSize)
+        public async Task<PaginatedResult<EventLog>> GetAllAsync(GetEventLogsRequest request)
         {
-            return await _dbContext.EventLogs
-            .OrderByDescending(a => a.Timestamp)
-            .ToPaginatedListAsync(pageNumber, pageSize);
+            var queryable = _dbContext.EventLogs.AsNoTracking().AsQueryable();
+
+            if (request.UserId != Guid.Empty) queryable = queryable.Where(x => x.UserId.Equals(request.UserId));
+            if (!string.IsNullOrWhiteSpace(request.Email)) queryable = queryable.Where(x => EF.Functions.Like(x.Email.ToLower(), $"%{request.Email.ToLower()}%"));
+            if (!string.IsNullOrWhiteSpace(request.MessageType)) queryable = queryable.Where(x => EF.Functions.Like(x.MessageType.ToLower(), $"%{request.MessageType.ToLower()}%"));
+
+            var ordering = new OrderByConverter().Convert(request.OrderBy);
+            queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderByDescending(a => a.Timestamp);
+
+            if (!string.IsNullOrEmpty(request.SearchString))
+            {
+                var lowerSearchString = request.SearchString.ToLower();
+                queryable = queryable.Where(x => !string.IsNullOrWhiteSpace(x.Data) && EF.Functions.Like(x.Data.ToLower(), $"%{lowerSearchString}%")
+                                                 || !string.IsNullOrWhiteSpace(x.OldValues) && EF.Functions.Like(x.OldValues.ToLower(), $"%{lowerSearchString}%")
+                                                 || !string.IsNullOrWhiteSpace(x.NewValues) && EF.Functions.Like(x.NewValues.ToLower(), $"%{lowerSearchString}%")
+                                                 || EF.Functions.Like(x.Id.ToString().ToLower(), $"%{lowerSearchString}%"));
+            }
+
+            var eventLogList = await queryable
+                .ToPaginatedListAsync(request.PageNumber, request.PageSize);
+            if (eventLogList == null) throw new CustomException(_localizer["Event Logs Not Found!"], statusCode: HttpStatusCode.NotFound);
+            return eventLogList;
         }
     }
 }

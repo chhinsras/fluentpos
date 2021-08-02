@@ -186,11 +186,11 @@ namespace FluentPOS.Shared.Core.Constants
             public const string Update = "Permissions.CartItems.ExtendedAttributes.Update";
             public const string Remove = "Permissions.CartItems.ExtendedAttributes.Remove";
         }
-        [DisplayName("EventLogs")]
+        [DisplayName("Event Logs")]
         [Description("Event Logs Permissions")]
         public static class EventLogs
         {
-            public const string View = "Permissions.EventLogs.View";
+            public const string ViewAll = "Permissions.EventLogs.ViewAll";
             public const string Create = "Permissions.EventLogs.Create";
         }
     }

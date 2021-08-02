@@ -245,7 +245,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators.
 ```csharp
 namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators.Brands
 {
-    public class BrandPaginatedExtendedAttributeFilterValidator : PaginatedExtendedAttributeFilterValidator<Guid, Brand>
+    public class PaginatedBrandExtendedAttributeFilterValidator : PaginatedExtendedAttributeFilterValidator<Guid, Brand>
     {
         public BrandPaginatedExtendedAttributeFilterValidator(IStringLocalizer<BrandPaginatedExtendedAttributeFilterValidator> localizer) : base(localizer)
         {

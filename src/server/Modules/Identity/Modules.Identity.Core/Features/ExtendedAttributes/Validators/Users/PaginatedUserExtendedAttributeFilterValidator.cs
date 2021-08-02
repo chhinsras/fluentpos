@@ -4,9 +4,9 @@ using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Identity.Core.Features.ExtendedAttributes.Validators.Users
 {
-    public class UserPaginatedExtendedAttributeFilterValidator : PaginatedExtendedAttributeFilterValidator<string, FluentUser>
+    public class PaginatedUserExtendedAttributeFilterValidator : PaginatedExtendedAttributeFilterValidator<string, FluentUser>
     {
-        public UserPaginatedExtendedAttributeFilterValidator(IStringLocalizer<UserPaginatedExtendedAttributeFilterValidator> localizer) : base(localizer)
+        public PaginatedUserExtendedAttributeFilterValidator(IStringLocalizer<PaginatedUserExtendedAttributeFilterValidator> localizer) : base(localizer)
         {
             // you can override the validation rules here
         }
