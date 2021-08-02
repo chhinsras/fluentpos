@@ -72,6 +72,7 @@ export class ProductFormComponent implements OnInit {
     // TODO after successful update/insert, refresh table view in component product.component.ts
     if (this.productForm.valid) {
       if (this.productForm.get('id').value === '' || this.productForm.get('id').value == null) {
+        this.productForm.get('tax').setValue(this.productForm.get('tax').value ? 'YES' : 'NO');
         this.productService.createProduct(this.productForm.value).subscribe(response => {
           this.toastr.success(response.messages[0]);
         });
