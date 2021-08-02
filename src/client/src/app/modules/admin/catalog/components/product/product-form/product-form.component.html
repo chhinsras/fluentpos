@@ -33,7 +33,7 @@
       </div>
       <div class="col-xs-12 col-md-6">
         <mat-form-field  *ngIf="brands && brands.data">
-          <mat-select placeholder="Select Brand" [(value)]="data.brandId" formControlName="brandId">
+          <mat-select placeholder="Select Brand" [(value)]="data && data.brandId" formControlName="brandId">
             <mat-option *ngFor="let brand of brands.data" [value]="brand.id">
               {{ brand.name }}
             </mat-option>
@@ -42,7 +42,7 @@
       </div>
       <div class="col-xs-12 col-md-6">
         <mat-form-field  *ngIf="categories && categories.data">
-          <mat-select placeholder="Select Category" [(value)]="data.categoryId" formControlName="categoryId">
+          <mat-select placeholder="Select Category" [(value)]="data && data.categoryId" formControlName="categoryId">
             <mat-option *ngFor="let category of categories.data" [value]="category.id">
               {{ category.name }}
             </mat-option>
