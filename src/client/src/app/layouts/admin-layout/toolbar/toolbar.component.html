@@ -9,8 +9,7 @@
         </a>
         <span class="nav-spacer"></span>
         <button mat-raised-button routerLink="/pos" color="accent">POS</button>
-        <a mat-icon-button matTooltip="{{'site.fork'|translate}}" href="https://github.com/fluentpos/fluentpos/"
-            target="_blank">
+        <a mat-icon-button matTooltip="{{'site.fork'|translate}}" href="https://github.com/fluentpos/fluentpos/" target="_blank">
             <mat-icon class="fab fa-github"></mat-icon>
         </a>
 
@@ -18,15 +17,14 @@
             <mat-icon>{{darkModeIcon}}</mat-icon>
         </a>
         <mat-divider vertical style="height:50%;margin: 10px;"></mat-divider>
-        <a mat-button style="background: rgba(0,0,0,.2);margin-right: 5px;" href="https://opencollective.com/fluentpos"
-            target="_blank">
+        <a mat-button style="background: rgba(0,0,0,.2);margin-right: 5px;" href="https://opencollective.com/fluentpos" target="_blank">
             <span style="font-weight:lighter;font-size: small;" translate>site.support</span>
         </a>
         <button mat-button style="background: rgba(0,0,0,.2);" [matMenuTriggerFor]="userMenu">
             <span style="font-weight:lighter;font-size: small;">{{fullName}}</span>
         </button>
         <mat-menu #userMenu="matMenu" style="padding-top: 0!important;">
-            <mat-card style="padding-top: 16px!important;">
+            <mat-card style="padding-top: 16px!important;margin-bottom: 0px!important;">
                 <mat-card-header>
                     <div mat-card-avatar class="example-header-image"></div>
                     <mat-card-title style="margin-bottom: 10px;font-size:medium">{{fullName}}</mat-card-title>

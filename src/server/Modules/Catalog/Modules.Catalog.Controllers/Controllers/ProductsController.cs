@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Catalog.Controllers
 {
+    [ApiVersion("1")]
     internal sealed class ProductsController : BaseController
     {
         [HttpGet]

@@ -15,7 +15,7 @@ export class CustomerSelectionComponent implements OnInit {
   customerParams = new CustomerParams();
   searchString: string;
   visible = false;
-  constructor(private posService: PosService, public dialogRef: MatDialogRef<CustomerSelectionComponent>) { }
+  constructor(public posService: PosService, public dialogRef: MatDialogRef<CustomerSelectionComponent>) { }
 
   ngOnInit(): void {
     this.formTitle = 'Customer Selection';

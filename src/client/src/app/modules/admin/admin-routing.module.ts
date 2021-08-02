@@ -8,6 +8,7 @@ import { PeopleComponent } from './people/people.component';
 import { AboutComponent } from './about/about.component';
 import { IdentityComponent } from './identity/identity.component';
 import { PermissionGuard } from 'src/app/core/guards/permission.guard';
+import { ActivityLogsComponent } from './activity-logs/activity-logs.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: CatalogComponent,
     loadChildren: () => import('./catalog/catalog.module').then(mod => mod.CatalogModule),
+  },
+  {
+    path: 'activity-logs',
+    canActivate: [AuthGuard],
+    component: ActivityLogsComponent,
+    loadChildren: () => import('./activity-logs/activity-logs.module').then(mod => mod.ActivityLogsModule),
   },
   {
     path: 'people',

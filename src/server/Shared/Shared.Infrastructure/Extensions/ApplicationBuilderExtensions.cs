@@ -54,6 +54,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             {
                 options.DefaultModelsExpandDepth(-1);
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                options.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
                 options.RoutePrefix = "swagger";
                 options.DisplayRequestDuration();
                 options.DocExpansion(DocExpansion.None);

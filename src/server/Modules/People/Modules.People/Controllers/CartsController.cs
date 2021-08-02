@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FluentPOS.Modules.People.Controllers
 {
+    [ApiVersion("1")]
     internal sealed class CartsController : BaseController
     {
         [HttpGet("{id}")]

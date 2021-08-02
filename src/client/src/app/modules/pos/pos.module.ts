@@ -19,6 +19,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { CatalogSkeletonComponent } from './components/catalog-skeleton/catalog-skeleton.component';
 import { CustomerCartsComponent } from './components/customer-carts/customer-carts.component';
 import { CartSkeletonComponent } from './components/cart-skeleton/cart-skeleton.component';
+import { CustomerSkeletonComponent } from './components/customer-skeleton/customer-skeleton.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { CartSkeletonComponent } from './components/cart-skeleton/cart-skeleton.
     PosToolbarComponent,
     CatalogSkeletonComponent,
     CustomerCartsComponent,
-    CartSkeletonComponent
+    CartSkeletonComponent,
+    CustomerSkeletonComponent
   ],
   imports: [
     CommonModule,

@@ -10,8 +10,10 @@ using FluentPOS.Shared.Infrastructure.Interceptors;
 using FluentPOS.Shared.Infrastructure.Middlewares;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using FluentPOS.Shared.Infrastructure.Services;
+using FluentPOS.Shared.Infrastructure.Swagger.Filters;
 using FluentValidation.AspNetCore;
 using Hangfire;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -21,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 [assembly: InternalsVisibleTo("Bootstrapper")]
 
@@ -36,6 +39,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             services.AddScoped<IJobService, HangfireService>();
             services.Configure<MailSettings>(config.GetSection(nameof(MailSettings)));
             services.Configure<SmsSettings>(config.GetSection(nameof(SmsSettings)));
+            services.AddTransient<IEventLogService, EventLogService>();
             return services;
         }
 
@@ -47,6 +51,12 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                 .AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
             services.AddScoped<IEventLogger, EventLogger>();
+            services.AddApiVersioning(o =>
+            {
+                o.AssumeDefaultVersionWhenUnspecified = true;
+                o.DefaultApiVersion = new ApiVersion(1, 0);
+
+            });
             services.AddControllers()
                 .ConfigureApplicationPartManager(manager =>
                 {
@@ -97,7 +107,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 
         private static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
         {
-            return services.AddSwaggerGen(c =>
+            return services.AddSwaggerGen(options =>
             {
                 var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
@@ -108,22 +118,37 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                         var xmlPath = Path.Combine(baseDirectory, xmlFile);
                         if (File.Exists(xmlPath))
                         {
-                            c.IncludeXmlComments(xmlPath);
+                            options.IncludeXmlComments(xmlPath);
                         }
                     }
                 }
 
-                c.SwaggerDoc("v1", new OpenApiInfo
+                options.AddSwaggerDocs();
+
+                options.OperationFilter<RemoveVersionFromParameterFilter>();
+                options.DocumentFilter<ReplaceVersionWithExactValueInPathFilter>();
+                options.DocInclusionPredicate((version, desc) =>
                 {
-                    Version = "v1",
-                    Title = "FluentPOS.API",
-                    License = new OpenApiLicense
-                    {
-                        Name = "MIT License",
-                        Url = new Uri("https://opensource.org/licenses/MIT")
-                    }
+                    if (!desc.TryGetMethodInfo(out var methodInfo))
+                        return false;
+
+                    var versions = methodInfo
+                        .DeclaringType?
+                        .GetCustomAttributes(true)
+                        .OfType<ApiVersionAttribute>()
+                        .SelectMany(attr => attr.Versions);
+
+                    var maps = methodInfo
+                        .GetCustomAttributes(true)
+                        .OfType<MapToApiVersionAttribute>()
+                        .SelectMany(attr => attr.Versions)
+                        .ToList();
+
+                    return versions?.Any(v => $"v{v}" == version) == true
+                           && (!maps.Any() || maps.Any(v => $"v{v}" == version));
                 });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
                     In = ParameterLocation.Header,
@@ -132,7 +157,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                     BearerFormat = "JWT",
                     Description = "Input your Bearer token in this format - Bearer {your token here} to access this API",
                 });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
                         new OpenApiSecurityScheme
@@ -148,6 +173,31 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                         }, new List<string>()
                     },
                 });
+            });
+        }
+
+        private static void AddSwaggerDocs(this SwaggerGenOptions options)
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Version = "v1",
+                Title = "FluentPOS.API v1",
+                License = new OpenApiLicense
+                {
+                    Name = "MIT License",
+                    Url = new Uri("https://opensource.org/licenses/MIT")
+                }
+            });
+
+            options.SwaggerDoc("v2", new OpenApiInfo
+            {
+                Version = "v2",
+                Title = "FluentPOS.API v2",
+                License = new OpenApiLicense
+                {
+                    Name = "MIT License",
+                    Url = new Uri("https://opensource.org/licenses/MIT")
+                }
             });
         }
 

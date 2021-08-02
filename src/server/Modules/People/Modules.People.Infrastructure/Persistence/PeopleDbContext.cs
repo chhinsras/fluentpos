@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using FluentPOS.Modules.People.Core.Entities.ExtendedAttributes;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 
 namespace FluentPOS.Modules.People.Infrastructure.Persistence
 {
@@ -19,6 +20,7 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence
         IExtendedAttributeDbContext<Guid, CartItem, CartItemExtendedAttribute>
     {
         private readonly PersistenceSettings _persistenceOptions;
+        private readonly IJsonSerializer _json;
 
         protected override string Schema => "People";
 
@@ -26,10 +28,11 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence
             DbContextOptions<PeopleDbContext> options,
             IMediator mediator,
             IEventLogger eventLogger,
-            IOptions<PersistenceSettings> persistenceOptions)
-                : base(options, mediator, eventLogger, persistenceOptions)
+            IOptions<PersistenceSettings> persistenceOptions, IJsonSerializer json)
+                : base(options, mediator, eventLogger, persistenceOptions,json)
         {
             _persistenceOptions = persistenceOptions.Value;
+            _json = json;
         }
 
         public DbSet<Customer> Customers { get; set; }

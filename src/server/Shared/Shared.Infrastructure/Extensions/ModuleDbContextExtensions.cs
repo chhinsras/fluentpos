@@ -6,6 +6,7 @@ using FluentPOS.Shared.Core.EventLogging;
 using FluentPOS.Shared.Core.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace FluentPOS.Shared.Infrastructure.Extensions
 {
@@ -15,7 +16,9 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             this TModuleDbContext context,
             IEventLogger eventLogger,
             IMediator mediator,
-            CancellationToken cancellationToken = new())
+            (string oldValues,string newValues) changes,
+            CancellationToken cancellationToken = new()
+            )
                 where TModuleDbContext : DbContext, IModuleDbContext
         {
             var domainEntities = context.ChangeTracker
@@ -32,7 +35,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             var tasks = domainEvents
                 .Select(async (domainEvent) =>
                 {
-                    await eventLogger.Save(domainEvent);
+                    await eventLogger.Save(domainEvent,changes);
                     await mediator.Publish(domainEvent, cancellationToken);
                 });
             await Task.WhenAll(tasks);
@@ -43,10 +46,11 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
         public static int SaveChangeWithPublishEvents<TModuleDbContext>(
             this TModuleDbContext context,
             IEventLogger eventLogger,
-            IMediator mediator)
+            IMediator mediator,
+            (string oldValues,string newValues) changes)
             where TModuleDbContext : DbContext, IModuleDbContext
         {
-            return SaveChangeWithPublishEventsAsync(context, eventLogger, mediator).GetAwaiter().GetResult();
+            return SaveChangeWithPublishEventsAsync(context, eventLogger, mediator,changes).GetAwaiter().GetResult();
         }
     }
 }
