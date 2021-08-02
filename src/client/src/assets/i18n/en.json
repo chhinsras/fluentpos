@@ -75,7 +75,10 @@
             "button": "Go Home"
         },
         "serverError": {
-            "text": "server-error works!"
+            "header": "Internal Server Error.",
+            "text": "There is problem with the internal server",
+            "button": "Go Home"
+     
         },
         "table": {
             "register": "Register New",
