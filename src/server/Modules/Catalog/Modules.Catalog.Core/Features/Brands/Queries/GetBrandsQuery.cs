@@ -4,7 +4,7 @@ using MediatR;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
 {
-    public class GetAllPagedBrandsQuery : IRequest<PaginatedResult<GetAllPagedBrandsResponse>>
+    public class GetBrandsQuery : IRequest<PaginatedResult<GetBrandsResponse>>
     {
         public int PageNumber { get; private set; }
         public int PageSize { get; private set; }

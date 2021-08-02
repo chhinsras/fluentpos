@@ -20,7 +20,7 @@ using FluentPOS.Shared.Core.Mappings.Converters;
 namespace FluentPOS.Modules.People.Core.Features.Customers.Queries
 {
     internal class CustomerQueryHandler :
-        IRequestHandler<GetAllPagedCustomersQuery, PaginatedResult<GetAllPagedCustomersResponse>>,
+        IRequestHandler<GetCustomersQuery, PaginatedResult<GetCustomersResponse>>,
         IRequestHandler<GetCustomerByIdQuery, Result<GetCustomerByIdResponse>>,
         IRequestHandler<GetCustomerImageQuery, Result<string>>
     {
@@ -35,9 +35,9 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Queries
             _localizer = localizer;
         }
 
-        public async Task<PaginatedResult<GetAllPagedCustomersResponse>> Handle(GetAllPagedCustomersQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedResult<GetCustomersResponse>> Handle(GetCustomersQuery request, CancellationToken cancellationToken)
         {
-            Expression<Func<Customer, GetAllPagedCustomersResponse>> expression = e => new GetAllPagedCustomersResponse(e.Id, e.Name, e.Phone, e.Email, e.ImageUrl, e.Type);
+            Expression<Func<Customer, GetCustomersResponse>> expression = e => new GetCustomersResponse(e.Id, e.Name, e.Phone, e.Email, e.ImageUrl, e.Type);
 
             var queryable = _context.Customers.OrderBy(x => x.Id).AsQueryable();
 
@@ -53,7 +53,7 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Queries
 
             if (customerList == null) throw new PeopleException(_localizer["Customers Not Found!"], HttpStatusCode.NotFound);
 
-            var mappedCustomers = _mapper.Map<PaginatedResult<GetAllPagedCustomersResponse>>(customerList);
+            var mappedCustomers = _mapper.Map<PaginatedResult<GetCustomersResponse>>(customerList);
 
             return mappedCustomers;
         }

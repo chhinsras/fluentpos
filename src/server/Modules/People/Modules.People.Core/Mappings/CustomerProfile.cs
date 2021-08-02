@@ -14,8 +14,8 @@ namespace FluentPOS.Modules.People.Core.Mappings
             CreateMap<RegisterCustomerCommand, Customer>().ReverseMap();
             CreateMap<UpdateCustomerCommand, Customer>().ReverseMap();
             CreateMap<GetCustomerByIdResponse, Customer>().ReverseMap();
-            CreateMap<GetAllPagedCustomersResponse, Customer>().ReverseMap();
-            CreateMap<PaginatedCustomerFilter, GetAllPagedCustomersQuery>()
+            CreateMap<GetCustomersResponse, Customer>().ReverseMap();
+            CreateMap<PaginatedCustomerFilter, GetCustomersQuery>()
                 .ForMember(dest => dest.OrderBy, opt => opt.ConvertUsing<string>(new OrderByConverter()));
         }
     }

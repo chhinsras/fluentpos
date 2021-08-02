@@ -20,7 +20,7 @@ using FluentPOS.Shared.Core.Mappings.Converters;
 namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
 {
     internal class CategoryQueryHandler :
-        IRequestHandler<GetAllPagedCategoriesQuery, PaginatedResult<GetAllPagedCategoriesResponse>>,
+        IRequestHandler<GetCategoriesQuery, PaginatedResult<GetCategoriesResponse>>,
         IRequestHandler<GetCategoryByIdQuery, Result<GetCategoryByIdResponse>>,
         IRequestHandler<GetCategoryImageQuery, Result<string>>
     {
@@ -35,9 +35,9 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
             _localizer = localizer;
         }
 
-        public async Task<PaginatedResult<GetAllPagedCategoriesResponse>> Handle(GetAllPagedCategoriesQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedResult<GetCategoriesResponse>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
         {
-            Expression<Func<Category, GetAllPagedCategoriesResponse>> expression = e => new GetAllPagedCategoriesResponse(e.Id, e.Name, e.Detail);
+            Expression<Func<Category, GetCategoriesResponse>> expression = e => new GetCategoriesResponse(e.Id, e.Name, e.Detail);
 
             var queryable = _context.Categories.AsQueryable();
 
@@ -54,7 +54,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
             .Select(expression)
             .ToPaginatedListAsync(request.PageNumber, request.PageSize);
             if (categoryList == null) throw new CatalogException(_localizer["Brands Not Found!"], HttpStatusCode.NotFound);
-            var mappedCategories = _mapper.Map<PaginatedResult<GetAllPagedCategoriesResponse>>(categoryList);
+            var mappedCategories = _mapper.Map<PaginatedResult<GetCategoriesResponse>>(categoryList);
             return mappedCategories;
         }
 
