@@ -47,12 +47,12 @@ namespace FluentPOS.Shared.Core.Extensions
 
                 #endregion GetExtendedAttributeByIdResponse
 
-                #region GetAllPagedExtendedAttributesResponse
+                #region GetExtendedAttributesResponse
 
-                sourceType = typeof(GetAllPagedExtendedAttributesResponse<>).MakeGenericType(extendedAttributeTypeGenericArguments[0]);
+                sourceType = typeof(GetExtendedAttributesResponse<>).MakeGenericType(extendedAttributeTypeGenericArguments[0]);
                 profile.CreateMap(sourceType, extendedAttributeType.CurrentType).ReverseMap();
 
-                #endregion GetAllPagedExtendedAttributesResponse
+                #endregion GetExtendedAttributesResponse
             }
 
             return profile;

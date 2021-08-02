@@ -18,7 +18,7 @@ namespace FluentPOS.Shared.Infrastructure.Controllers
         [HttpGet]
         public virtual async Task<IActionResult> GetAllAsync([FromQuery] PaginatedExtendedAttributeFilter<TEntityId, TEntity> filter)
         {
-            var extendedAttributes = await Mediator.Send(new GetAllPagedExtendedAttributesQuery<TEntityId, TEntity>(filter));
+            var extendedAttributes = await Mediator.Send(new GetExtendedAttributesQuery<TEntityId, TEntity>(filter));
             return Ok(extendedAttributes);
         }
 

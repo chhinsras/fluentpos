@@ -9,7 +9,7 @@ using MediatR;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
 {
-    public class GetAllPagedExtendedAttributesQuery<TEntityId, TEntity> : IRequest<PaginatedResult<GetAllPagedExtendedAttributesResponse<TEntityId>>>
+    public class GetExtendedAttributesQuery<TEntityId, TEntity> : IRequest<PaginatedResult<GetExtendedAttributesResponse<TEntityId>>>
         where TEntity : class, IEntity<TEntityId>
     {
         public int PageNumber { get; }
@@ -19,7 +19,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
         public TEntityId? EntityId { get; }
         public ExtendedAttributeType? Type { get; }
 
-        public GetAllPagedExtendedAttributesQuery(PaginatedExtendedAttributeFilter<TEntityId, TEntity> filter)
+        public GetExtendedAttributesQuery(PaginatedExtendedAttributeFilter<TEntityId, TEntity> filter)
         {
             PageNumber = filter.PageNumber;
             PageSize = filter.PageSize;

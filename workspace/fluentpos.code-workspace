@@ -1,10 +1,10 @@
 {
-    "folders": [
-        {
-            "path": "../src/client"
-        },
-        {
-            "path": "../src/server"
-        }
-    ]
+	"folders": [
+		{
+			"path": "../src/client"
+		},
+		{
+			"path": "../src/server"
+		}
+	]
 }

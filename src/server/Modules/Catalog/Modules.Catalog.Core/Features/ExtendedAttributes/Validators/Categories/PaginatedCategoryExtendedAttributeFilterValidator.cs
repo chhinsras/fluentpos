@@ -5,9 +5,9 @@ using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.ExtendedAttributes.Validators.Categories
 {
-    public class CategoryPaginatedExtendedAttributeFilterValidator : PaginatedExtendedAttributeFilterValidator<Guid, Category>
+    public class PaginatedCategoryExtendedAttributeFilterValidator : PaginatedExtendedAttributeFilterValidator<Guid, Category>
     {
-        public CategoryPaginatedExtendedAttributeFilterValidator(IStringLocalizer<CategoryPaginatedExtendedAttributeFilterValidator> localizer) : base(localizer)
+        public PaginatedCategoryExtendedAttributeFilterValidator(IStringLocalizer<PaginatedCategoryExtendedAttributeFilterValidator> localizer) : base(localizer)
         {
             // you can override the validation rules here
         }

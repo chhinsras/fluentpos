@@ -5,7 +5,7 @@ using MediatR;
 
 namespace FluentPOS.Modules.People.Core.Features.Carts.Queries
 {
-    public class GetAllPagedCartsQuery : IRequest<PaginatedResult<GetAllPagedCartsResponse>>
+    public class GetCartsQuery : IRequest<PaginatedResult<GetCartsResponse>>
     {
         public int PageNumber { get; private set; }
         public int PageSize { get; private set; }

@@ -26,7 +26,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
     }
 
     public class ExtendedAttributeQueryHandler<TEntityId, TEntity, TExtendedAttribute> :
-        IRequestHandler<GetAllPagedExtendedAttributesQuery<TEntityId, TEntity>, PaginatedResult<GetAllPagedExtendedAttributesResponse<TEntityId>>>,
+        IRequestHandler<GetExtendedAttributesQuery<TEntityId, TEntity>, PaginatedResult<GetExtendedAttributesResponse<TEntityId>>>,
         IRequestHandler<GetExtendedAttributeByIdQuery<TEntityId, TEntity>, Result<GetExtendedAttributeByIdResponse<TEntityId>>>
             where TEntity : class, IEntity<TEntityId>
             where TExtendedAttribute : ExtendedAttribute<TEntityId, TEntity>
@@ -42,9 +42,9 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
             _localizer = localizer;
         }
 
-        public async Task<PaginatedResult<GetAllPagedExtendedAttributesResponse<TEntityId>>> Handle(GetAllPagedExtendedAttributesQuery<TEntityId, TEntity> request, CancellationToken cancellationToken)
+        public async Task<PaginatedResult<GetExtendedAttributesResponse<TEntityId>>> Handle(GetExtendedAttributesQuery<TEntityId, TEntity> request, CancellationToken cancellationToken)
         {
-            Expression<Func<TExtendedAttribute, GetAllPagedExtendedAttributesResponse<TEntityId>>> expression = e => new GetAllPagedExtendedAttributesResponse<TEntityId>(e.Id, e.EntityId, e.Type, e.Key, e.Decimal, e.Text, e.DateTime, e.Json, e.Boolean, e.Integer, e.ExternalId, e.Group, e.Description, e.IsActive);
+            Expression<Func<TExtendedAttribute, GetExtendedAttributesResponse<TEntityId>>> expression = e => new GetExtendedAttributesResponse<TEntityId>(e.Id, e.EntityId, e.Type, e.Key, e.Decimal, e.Text, e.DateTime, e.Json, e.Boolean, e.Integer, e.ExternalId, e.Group, e.Description, e.IsActive);
 
             var queryable = _context.ExtendedAttributes.OrderBy(x => x.Id).AsQueryable();
 
@@ -77,7 +77,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
 
             if (extendedAttributeList == null) throw new CustomException(string.Format(_localizer["{0} Extended Attributes Not Found!"], typeof(TEntity).Name), statusCode: HttpStatusCode.NotFound);
 
-            var mappedExtendedAttributes = _mapper.Map<PaginatedResult<GetAllPagedExtendedAttributesResponse<TEntityId>>>(extendedAttributeList);
+            var mappedExtendedAttributes = _mapper.Map<PaginatedResult<GetExtendedAttributesResponse<TEntityId>>>(extendedAttributeList);
 
             return mappedExtendedAttributes;
         }

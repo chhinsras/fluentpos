@@ -13,8 +13,8 @@ namespace FluentPOS.Modules.People.Core.Mappings
         {
             CreateMap<CreateCartCommand, Cart>().ReverseMap();
             CreateMap<GetCartByIdResponse, Cart>().ReverseMap();
-            CreateMap<GetAllPagedCartsResponse, Cart>().ReverseMap();
-            CreateMap<PaginatedCartFilter, GetAllPagedCartsQuery>()
+            CreateMap<GetCartsResponse, Cart>().ReverseMap();
+            CreateMap<PaginatedCartFilter, GetCartsQuery>()
                 .ForMember(dest => dest.OrderBy, opt => opt.ConvertUsing<string>(new OrderByConverter()));
         }
     }
