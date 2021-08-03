@@ -10,8 +10,7 @@ import { UserComponent } from './components/user/user.component';
 import { RoleComponent } from './components/role/role.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
 import { RoleFormComponent } from './components/role/role-form/role-form.component';
-
-
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +27,9 @@ import { RoleFormComponent } from './components/role/role-form/role-form.compone
     MaterialModule,
     SharedModule,
     TranslateModule
+  ],
+  providers:[
+    UserService
   ]
 })
 export class IdentityModule { }
