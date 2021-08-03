@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.EventLogging;
 using FluentPOS.Shared.Core.Interfaces;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -16,7 +18,8 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             this TModuleDbContext context,
             IEventLogger eventLogger,
             IMediator mediator,
-            (string oldValues,string newValues) changes,
+            List<(EntityEntry entityEntry, string oldValues, string newValues)> changes,
+            IJsonSerializer jsonSerializer,
             CancellationToken cancellationToken = new()
             )
                 where TModuleDbContext : DbContext, IModuleDbContext
@@ -35,8 +38,21 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             var tasks = domainEvents
                 .Select(async (domainEvent) =>
                 {
-                    await eventLogger.Save(domainEvent,changes);
-                    await mediator.Publish(domainEvent, cancellationToken);
+                    var relatedEntriesChanges = changes.Where(x => domainEvent.RelatedEntities.Any(t => t == x.entityEntry.Entity.GetType())).ToList();
+                    if (relatedEntriesChanges.Any())
+                    {
+                        var oldValues = relatedEntriesChanges.ToDictionary(x => x.entityEntry.Entity.GetType().Name, y => y.oldValues);
+                        var newValues = relatedEntriesChanges.ToDictionary(x => x.entityEntry.Entity.GetType().Name, y => y.newValues);
+                        var relatedChanges = (oldValues.Count == 0 ? null : jsonSerializer.Serialize(oldValues), newValues.Count == 0 ? null : jsonSerializer.Serialize(newValues));
+                        await eventLogger.Save(domainEvent, relatedChanges);
+                        await mediator.Publish(domainEvent, cancellationToken);
+
+                    }
+                    else
+                    {
+                        await eventLogger.Save(domainEvent, (null, null));
+                        await mediator.Publish(domainEvent, cancellationToken);
+                    }
                 });
             await Task.WhenAll(tasks);
 
@@ -47,10 +63,11 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             this TModuleDbContext context,
             IEventLogger eventLogger,
             IMediator mediator,
-            (string oldValues,string newValues) changes)
+            List<(EntityEntry entityEntry, string oldValues, string newValues)> changes,
+            IJsonSerializer jsonSerializer)
             where TModuleDbContext : DbContext, IModuleDbContext
         {
-            return SaveChangeWithPublishEventsAsync(context, eventLogger, mediator,changes).GetAwaiter().GetResult();
+            return SaveChangeWithPublishEventsAsync(context, eventLogger, mediator, changes, jsonSerializer).GetAwaiter().GetResult();
         }
     }
 }

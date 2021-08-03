@@ -18,6 +18,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Events
             Detail = category.Detail;
             Id = category.Id;
             AggregateId = category.Id;
+            RelatedEntities = new[] { typeof(Category) };
         }
     }
 }

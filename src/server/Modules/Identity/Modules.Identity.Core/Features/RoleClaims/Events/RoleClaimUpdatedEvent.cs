@@ -22,6 +22,7 @@ namespace FluentPOS.Modules.Identity.Core.Features.RoleClaims.Events
             Description = roleClaim.Description;
             Id = roleClaim.Id;
             AggregateId = Guid.NewGuid();
+            RelatedEntities = new[] { typeof(FluentRoleClaim) };
         }
     }
 }

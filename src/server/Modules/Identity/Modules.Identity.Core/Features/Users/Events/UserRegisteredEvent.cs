@@ -24,6 +24,7 @@ namespace FluentPOS.Modules.Identity.Core.Features.Users.Events
             AggregateId = Guid.TryParse(user.Id, out var aggregateId)
                 ? aggregateId
                 : Guid.NewGuid();
+            RelatedEntities = new[] { typeof(FluentUser) };
         }
     }
 }
