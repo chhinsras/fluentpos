@@ -5,8 +5,8 @@ import { map } from 'rxjs/internal/operators/map';
 import { UserApiService } from 'src/app/core/api/identity/user-api.service';
 import { IResult } from 'src/app/core/models/wrappers/IResult';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
-import { User } from '../models/User';
-import { UserParams } from '../models/UserParams';
+import { User } from '../models/user';
+import { UserParams } from '../models/userParams';
 
 @Injectable()
 export class UserService {
