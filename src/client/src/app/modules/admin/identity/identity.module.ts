@@ -8,6 +8,7 @@ import { IdentityRoutingModule } from './identity-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserComponent } from './components/user/user.component';
 import { RoleComponent } from './components/role/role.component';
+import { UserFormComponent } from './components/user/user-form/user-form.component';
 
 
 
@@ -16,7 +17,8 @@ import { RoleComponent } from './components/role/role.component';
     IdentityComponent,
     ProfileComponent,
     UserComponent,
-    RoleComponent
+    RoleComponent,
+    UserFormComponent
   ],
   imports: [
     CommonModule,
