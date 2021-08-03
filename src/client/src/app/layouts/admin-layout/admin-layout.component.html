@@ -30,10 +30,10 @@
                 </a>
                 <div class="nav-subheading">
                     {{'layouts.admin.accSubhead'|translate}}</div>
-                <a *appHasPermission='["Permissions.Brands.View"]' mat-list-item routerLink="catalog/brands" (click)="sidenav.close()">
+                <a *appHasPermission='["Permissions.Users.View"]' mat-list-item routerLink="identity/users" (click)="sidenav.close()">
                     <mat-icon style="padding-right: 10px;">face</mat-icon> {{'layouts.admin.users'|translate}}
                 </a>
-                <a *appHasPermission='["Permissions.Brands.View"]' mat-list-item routerLink="catalog/brands" (click)="sidenav.close()">
+                <a *appHasPermission='["Permissions.Roles.View"]' mat-list-item routerLink="identity/roles" (click)="sidenav.close()">
                     <mat-icon style="padding-right: 10px;">badge</mat-icon> {{'layouts.admin.roles'|translate}}
                 </a>
                 <a *appHasPermission='["Permissions.Brands.View"]' mat-list-item routerLink="activity-logs" (click)="sidenav.close()">
