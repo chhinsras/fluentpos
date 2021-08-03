@@ -7,6 +7,7 @@ import { SharedModule } from 'src/app/core/shared/shared.module';
 import { IdentityRoutingModule } from './identity-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserComponent } from './components/user/user.component';
+import { RoleComponent } from './components/role/role.component';
 
 
 
@@ -14,7 +15,8 @@ import { UserComponent } from './components/user/user.component';
   declarations: [
     IdentityComponent,
     ProfileComponent,
-    UserComponent
+    UserComponent,
+    RoleComponent
   ],
   imports: [
     CommonModule,
