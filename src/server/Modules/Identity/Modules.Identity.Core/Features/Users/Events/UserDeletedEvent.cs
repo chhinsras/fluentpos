@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Shared.Core.Domain;
 
 namespace FluentPOS.Modules.Identity.Core.Features.Users.Events
@@ -13,6 +14,7 @@ namespace FluentPOS.Modules.Identity.Core.Features.Users.Events
             AggregateId = Guid.TryParse(id, out var aggregateId)
                 ? aggregateId
                 : Guid.NewGuid();
+            RelatedEntities = new[] { typeof(FluentUser) };
         }
     }
 }

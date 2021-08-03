@@ -22,6 +22,7 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Events
             Type = customer.Type;
             Id = customer.Id;
             AggregateId = customer.Id;
+            RelatedEntities = new[] { typeof(Customer) };
         }
     }
 }

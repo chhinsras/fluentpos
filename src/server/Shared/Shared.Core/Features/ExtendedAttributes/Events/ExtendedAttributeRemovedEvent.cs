@@ -13,6 +13,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
             Id = id;
             AggregateId = id;
             EntityName = typeof(TEntity).Name;
+            RelatedEntities = new[] { typeof(TEntity) };
         }
     }
 }

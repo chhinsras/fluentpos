@@ -9,9 +9,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentPOS.Shared.Core.Interfaces;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using System.Linq;
 using FluentPOS.Shared.Core.Interfaces.Serialization;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace FluentPOS.Shared.Infrastructure.Persistence
 {
@@ -51,15 +50,16 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var changes = OnBeforeSaveChanges();
-            return await this.SaveChangeWithPublishEventsAsync(_eventLogger, _mediator, changes, cancellationToken);
+            return await this.SaveChangeWithPublishEventsAsync(_eventLogger, _mediator, changes, _json, cancellationToken);
         }
-        private (string oldValues, string newValues) OnBeforeSaveChanges()
+        private List<(EntityEntry entityEntry, string oldValues, string newValues)> OnBeforeSaveChanges()
         {
-            var previousData = new Dictionary<string, object>();
-            var currentData = new Dictionary<string, object>();
+            var result = new List<(EntityEntry entityEntry, string oldValues, string newValues)>();
             ChangeTracker.DetectChanges();
             foreach (var entry in ChangeTracker.Entries())
             {
+                var previousData = new Dictionary<string, object>();
+                var currentData = new Dictionary<string, object>();
                 foreach (var property in entry.Properties)
                 {
                     string propertyName = property.Metadata.Name;
@@ -83,15 +83,16 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
                             break;
                     }
                 }
+                var oldValues = previousData.Count == 0 ? null : _json.Serialize(previousData);
+                var newValues = currentData.Count == 0 ? null : _json.Serialize(currentData);
+                result.Add((entry, oldValues, newValues));
             }
-            var oldValues = previousData.Count == 0 ? null : _json.Serialize(previousData);
-            var newValues = currentData.Count == 0 ? null : _json.Serialize(currentData);
-            return (oldValues: oldValues, newValues: newValues);
+            return result;
         }
         public override int SaveChanges()
         {
             var changes = OnBeforeSaveChanges();
-            return this.SaveChangeWithPublishEvents(_eventLogger, _mediator, changes);
+            return this.SaveChangeWithPublishEvents(_eventLogger, _mediator, changes, _json);
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
