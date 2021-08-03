@@ -11,6 +11,7 @@ import { RoleComponent } from './components/role/role.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
 import { RoleFormComponent } from './components/role/role-form/role-form.component';
 import { UserService } from './services/user.service';
+import { RoleService } from './services/role.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { UserService } from './services/user.service';
     TranslateModule
   ],
   providers:[
-    UserService
+    UserService,
+    RoleService
   ]
 })
 export class IdentityModule { }

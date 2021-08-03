@@ -18,6 +18,7 @@ import { AccessDenialComponent } from './components/access-denial/access-denial.
 import { HasPermissionDirective } from '../directives/has-permission.directive';
 import { HasRoleDirective } from '../directives/has-role.directive';
 import { UserApiService } from '../api/identity/user-api.service';
+import { RoleApiService } from '../api/identity/role-api.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,7 @@ import { UserApiService } from '../api/identity/user-api.service';
   providers: [
     BrandApiService, CategoryApiService, ProductApiService,
     CustomerApiService,
-    UserApiService
+    UserApiService, RoleApiService
   ],
   exports: [
     ReactiveFormsModule,
