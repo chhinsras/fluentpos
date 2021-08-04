@@ -31,12 +31,6 @@ export class UserService {
     return this.api.getById(id).pipe(map((response: User) => response));
   }
 
-  createUser(User: User): Observable<IResult<User>> {
-    return this.api
-      .create(User)
-      .pipe(map((response: IResult<User>) => response));
-  }
-
   updateUser(User: User): Observable<IResult<User>> {
     return this.api
       .update(User)
