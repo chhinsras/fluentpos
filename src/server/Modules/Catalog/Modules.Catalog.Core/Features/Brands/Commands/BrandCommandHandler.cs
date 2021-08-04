@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
-using FluentPOS.Modules.Catalog.Core.Constants;
 using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Modules.Catalog.Core.Features.Brands.Events;
@@ -15,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Constants;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
 {
@@ -62,13 +62,13 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
         public async Task<Result<Guid>> Handle(RemoveBrandCommand command, CancellationToken cancellationToken)
         {
             var isBrandUsed = await IsBrandUsed(command.Id);
-            if (isBrandUsed) throw new CatalogException(_localizer["Deletion Not Allowed"], System.Net.HttpStatusCode.BadRequest);
+            if (isBrandUsed) throw new CatalogException(_localizer["Deletion Not Allowed"], HttpStatusCode.BadRequest);
             var brand = await _context.Brands.FirstOrDefaultAsync(b => b.Id == command.Id, cancellationToken);
             if (brand == null) throw new CatalogException(_localizer["Brand Not Found"], HttpStatusCode.NotFound);
             _context.Brands.Remove(brand);
             brand.AddDomainEvent(new BrandRemovedEvent(command.Id));
             await _context.SaveChangesAsync(cancellationToken);
-            await _cache.RemoveAsync(CatalogCacheKeys.GetBrandByIdCacheKey(command.Id), cancellationToken);
+            await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, Brand>(command.Id), cancellationToken);
             return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Deleted"]);
         }
 
@@ -92,7 +92,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Commands
             brand.AddDomainEvent(new BrandUpdatedEvent(brand));
             _context.Brands.Update(brand);
             await _context.SaveChangesAsync(cancellationToken);
-            await _cache.RemoveAsync(CatalogCacheKeys.GetBrandByIdCacheKey(command.Id), cancellationToken);
+            await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, Brand>(command.Id), cancellationToken);
             return await Result<Guid>.SuccessAsync(brand.Id, _localizer["Brand Updated"]);
         }
 

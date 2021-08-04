@@ -10,16 +10,16 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Services
 {
     public class ProductService : IProductService
     {
-        private readonly IMediator _mediatr;
+        private readonly IMediator _mediator;
 
-        public ProductService(IMediator mediatr)
+        public ProductService(IMediator mediator)
         {
-            _mediatr = mediatr;
+            _mediator = mediator;
         }
 
         public async Task<Result<GetProductByIdResponse>> GetDetails(Guid productId)
         {
-            return await _mediatr.Send(new GetProductByIdQuery(productId, false));
+            return await _mediator.Send(new GetProductByIdQuery(productId, false));
         }
     }
 }
