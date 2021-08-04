@@ -13,13 +13,13 @@ export class IdentityService {
 
   constructor(private api: IdentityApiService) { }
 
-  RegisterUser(user: User): Observable<IResult<string>> {
+  registerUser(user: User): Observable<IResult<string>> {
     return this.api
       .register(user)
       .pipe(map((response: IResult<string>) => response));
   }
 
-  ConfirmEmail(confirmEmailParams: ConfirmEmailParams): Observable<IResult<string>> {
+  confirmEmail(confirmEmailParams: ConfirmEmailParams): Observable<IResult<string>> {
     let params = new HttpParams();
     if (confirmEmailParams.userId)
       params = params.append('userId', confirmEmailParams.userId);
@@ -31,7 +31,7 @@ export class IdentityService {
       .pipe(map((response: IResult<string>) => response));
   }
 
-  ConfirmPhoneNumber(confirmPhoneNumber: ConfirmPhoneNumberParams): Observable<IResult<string>> {
+  confirmPhoneNumber(confirmPhoneNumber: ConfirmPhoneNumberParams): Observable<IResult<string>> {
     let params = new HttpParams();
     if (confirmPhoneNumber.userId)
       params = params.append('userId', confirmPhoneNumber.userId);
@@ -43,13 +43,13 @@ export class IdentityService {
       .pipe(map((response: IResult<string>) => response));
   }
 
-  ForgotPassword(email: string) {
+  forgotPassword(email: string) {
     return this.api
     .forgotPassword(email)
     .pipe(map((response: IResult<string>) => response));
   }
 
-  ResetPassword(resetPassword: ResetPassword) {
+  resetPassword(resetPassword: ResetPassword) {
     return this.api
         .resetPassword(resetPassword)
         .pipe(map((response: IResult<string>) => response));

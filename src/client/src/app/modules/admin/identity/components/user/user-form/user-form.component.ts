@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../../models/user';
+import { IdentityService } from '../../../services/identity.service';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { UserService } from '../../../services/user.service';
 export class UserFormComponent implements OnInit {
   userForm: FormGroup;
   formTitle: string;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: User, private userService: UserService, private toastr: ToastrService, private fb: FormBuilder) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: User, private identityService: IdentityService, private userService: UserService, private toastr: ToastrService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -41,7 +42,7 @@ export class UserFormComponent implements OnInit {
   onSubmit() {
     if (this.userForm.valid) {
       if (this.userForm.get('id').value === "" || this.userForm.get('id').value == null) {
-        this.userService.createUser(this.userForm.value).subscribe(response => {
+        this.identityService.registerUser(this.userForm.value).subscribe(response => {
           this.toastr.success(response.messages[0]);
         })
       } else {
