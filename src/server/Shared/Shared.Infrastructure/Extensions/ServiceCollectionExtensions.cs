@@ -21,9 +21,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using FluentPOS.Shared.Core.Exceptions;
 using FluentValidation;
+using Microsoft.OpenApi.Any;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 [assembly: InternalsVisibleTo("Bootstrapper")]
@@ -64,6 +67,11 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                 .ConfigureApplicationPartManager(manager =>
                 {
                     manager.FeatureProviders.Add(new InternalControllerFeatureProvider());
+                })
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((value, propertyName) =>
+                        throw new CustomException($"{propertyName}: value '{value}' is invalid.", statusCode: HttpStatusCode.BadRequest));
                 });
             services.AddTransient<IValidatorInterceptor, ValidatorInterceptor>();
             services.AddApplicationLayer(config);
@@ -130,6 +138,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 
                 options.OperationFilter<RemoveVersionFromParameterFilter>();
                 options.DocumentFilter<ReplaceVersionWithExactValueInPathFilter>();
+                options.OperationFilter<SwaggerExcludeFilter>();
                 options.DocInclusionPredicate((version, desc) =>
                 {
                     if (!desc.TryGetMethodInfo(out var methodInfo))
@@ -175,6 +184,13 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                             In = ParameterLocation.Header,
                         }, new List<string>()
                     },
+                });
+                options.MapType<TimeSpan>(() => new OpenApiSchema
+                {
+                    Type = "string",
+                    Nullable = true,
+                    Pattern = @"^([0-9]{1}|(?:0[0-9]|1[0-9]|2[0-3])+):([0-5]?[0-9])(?::([0-5]?[0-9])(?:.(\d{1,9}))?)?$",
+                    Example = new OpenApiString("02:00:00")
                 });
             });
         }
