@@ -15,7 +15,7 @@ export class IdentityService {
 
   RegisterUser(user: User): Observable<IResult<string>> {
     return this.api
-      .Register(user)
+      .register(user)
       .pipe(map((response: IResult<string>) => response));
   }
 
@@ -27,7 +27,7 @@ export class IdentityService {
       params = params.append('code', confirmEmailParams.code);
     
     return this.api
-      .ConfirmEmail(params)
+      .confirmEmail(params)
       .pipe(map((response: IResult<string>) => response));
   }
 
@@ -39,19 +39,19 @@ export class IdentityService {
       params = params.append('code', confirmPhoneNumber.code);
     
     return this.api
-      .ConfirmEmail(params)
+      .confirmEmail(params)
       .pipe(map((response: IResult<string>) => response));
   }
 
   ForgotPassword(email: string) {
     return this.api
-    .ForgotPassword(email)
+    .forgotPassword(email)
     .pipe(map((response: IResult<string>) => response));
   }
 
   ResetPassword(resetPassword: ResetPassword) {
     return this.api
-        .ResetPassword(resetPassword)
+        .resetPassword(resetPassword)
         .pipe(map((response: IResult<string>) => response));
   }
 }

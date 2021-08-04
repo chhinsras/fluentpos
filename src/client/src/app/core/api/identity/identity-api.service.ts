@@ -12,23 +12,23 @@ export class IdentityApiService {
   constructor(private http: HttpClient) {
   }
 
-  Register(user: User) {
+  register(user: User) {
     return this.http.post(this.baseUrl + 'register', user);
   }
 
-  ConfirmEmail(params: HttpParams) {
+  confirmEmail(params: HttpParams) {
     return this.http.get(this.baseUrl + 'confirm-email', {params: params});
   }
 
-  ConfirmPhoneNumber(params: HttpParams) {
+  confirmPhoneNumber(params: HttpParams) {
     return this.http.get(this.baseUrl + 'confirm-phone-number', {params: params});
   }
 
-  ForgotPassword(email: string) {
+  forgotPassword(email: string) {
     return this.http.post(this.baseUrl + 'forgot-password', email);
   }
 
-  ResetPassword(resetPassword: ResetPassword) {
+  resetPassword(resetPassword: ResetPassword) {
     return this.http.post(this.baseUrl + 'reset-password', resetPassword);
   }
 }
