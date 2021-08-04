@@ -38,6 +38,11 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
             {
                 var response = context.Response;
                 response.ContentType = "application/json";
+                if (exception is not CustomException && exception.InnerException != null)
+                {
+                    while (exception.InnerException != null)
+                        exception = exception.InnerException;
+                }
                 var responseModel = await ErrorResult<string>.ReturnErrorAsync(exception.Message);
                 responseModel.Source = exception.Source;
                 responseModel.Exception = exception.Message;
