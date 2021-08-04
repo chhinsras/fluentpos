@@ -3,6 +3,8 @@ using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Catalogs.Products;
 using MediatR;
 using System;
+using FluentPOS.Modules.Catalog.Core.Entities;
+using FluentPOS.Shared.Core.Constants;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 {
@@ -21,6 +23,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
         {
             Id = productId;
             BypassCache = bypassCache;
+            CacheKey = CacheKeys.Common.GetEntityByIdCacheKey<Guid,Product>(productId);
             SlidingExpiration = slidingExpiration;
         }
     }
