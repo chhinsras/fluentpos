@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Shared.Core.Constants;
+using FluentPOS.Shared.Core.Domain;
+using FluentPOS.Shared.Core.Features.Common.Filters;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Filters;
 using FluentPOS.Shared.Infrastructure.Controllers;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentPOS.Modules.People.Controllers.ExtendedAttributes
 {
@@ -16,9 +16,6 @@ namespace FluentPOS.Modules.People.Controllers.ExtendedAttributes
     [Route(BaseController.BasePath + "/" + nameof(Cart) + "/attributes")]
     internal sealed class CartExtendedAttributesController : ExtendedAttributesController<Guid, Cart>
     {
-        private IMediator _mediatorInstance;
-        protected override IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
-
         [Authorize(Policy = Permissions.CartsExtendedAttributes.ViewAll)]
         public override Task<IActionResult> GetAllAsync(PaginatedExtendedAttributeFilter<Guid, Cart> filter)
         {
@@ -26,9 +23,9 @@ namespace FluentPOS.Modules.People.Controllers.ExtendedAttributes
         }
 
         [Authorize(Policy = Permissions.CartsExtendedAttributes.View)]
-        public override Task<IActionResult> GetByIdAsync(Guid id, bool bypassCache)
+        public override Task<IActionResult> GetByIdAsync([FromQuery] GetByIdCacheableFilter<Guid, ExtendedAttribute<Guid, Cart>> filter)
         {
-            return base.GetByIdAsync(id, bypassCache);
+            return base.GetByIdAsync(filter);
         }
 
         [Authorize(Policy = Permissions.CartsExtendedAttributes.Add)]

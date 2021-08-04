@@ -15,6 +15,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Constants;
 
 namespace FluentPOS.Modules.People.Core.Features.Customers.Commands
 {
@@ -71,7 +72,7 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Commands
                 customer.AddDomainEvent(new CustomerUpdatedEvent(customer));
                 _context.Customers.Update(customer);
                 await _context.SaveChangesAsync(cancellationToken);
-                await _cache.RemoveAsync(PeopleCacheKeys.GetCustomerByIdCacheKey(command.Id), cancellationToken);
+                await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, Customer>(command.Id), cancellationToken);
                 return await Result<Guid>.SuccessAsync(customer.Id, _localizer["Customer Updated"]);
             }
             else
@@ -86,7 +87,7 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Commands
             customer.AddDomainEvent(new CustomerRemovedEvent(customer.Id));
             _context.Customers.Remove(customer);
             await _context.SaveChangesAsync(cancellationToken);
-            await _cache.RemoveAsync(PeopleCacheKeys.GetCustomerByIdCacheKey(command.Id), cancellationToken);
+            await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, Customer>(command.Id), cancellationToken);
             return await Result<Guid>.SuccessAsync(customer.Id, _localizer["Customer Deleted"]);
         }
     }

@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Features.Categories.Commands;
 using FluentPOS.Modules.Catalog.Core.Features.Categories.Queries;
+using FluentPOS.Shared.Core.Features.Common.Filters;
 using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.DTOs.Catalogs.Categories;
 
@@ -13,6 +15,7 @@ namespace FluentPOS.Modules.Catalog.Core.Mappings
         {
             CreateMap<RegisterCategoryCommand, Category>().ReverseMap();
             CreateMap<UpdateCategoryCommand, Category>().ReverseMap();
+            CreateMap<GetByIdCacheableFilter<Guid, Category>, GetCategoryByIdQuery>();
             CreateMap<GetCategoryByIdResponse, Category>().ReverseMap();
             CreateMap<GetCategoriesResponse, Category>().ReverseMap();
             CreateMap<PaginatedCategoryFilter, GetCategoriesQuery>()
