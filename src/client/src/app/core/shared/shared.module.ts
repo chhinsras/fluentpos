@@ -19,6 +19,7 @@ import { HasPermissionDirective } from '../directives/has-permission.directive';
 import { HasRoleDirective } from '../directives/has-role.directive';
 import { UserApiService } from '../api/identity/user-api.service';
 import { RoleApiService } from '../api/identity/role-api.service';
+import { IdentityApiService } from '../api/identity/identity-api.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { RoleApiService } from '../api/identity/role-api.service';
   providers: [
     BrandApiService, CategoryApiService, ProductApiService,
     CustomerApiService,
-    UserApiService, RoleApiService
+    IdentityApiService, UserApiService, RoleApiService
   ],
   exports: [
     ReactiveFormsModule,
