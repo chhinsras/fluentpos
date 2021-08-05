@@ -9,6 +9,7 @@ import { RoleFormComponent } from './role-form/role-form.component';
 import { ToastrService } from 'ngx-toastr';
 import { Sort } from '@angular/material/sort';
 import { TableColumn } from 'src/app/core/shared/components/table/table-column';
+import { PermissionFormComponent } from './permission-form/permission-form.component';
 
 @Component({
   selector: 'app-role',
@@ -54,7 +55,14 @@ export class RoleComponent implements OnInit {
   }
 
   openPermissionsForm(role: Role): void {
-    
+    const dialogRef = this.dialog.open(PermissionFormComponent, {
+      data: role,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getRoles();
+      }
+    });
   }
 
   openForm(role?: Role): void {
