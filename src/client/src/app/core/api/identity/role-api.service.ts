@@ -24,7 +24,7 @@ export class RoleApiService {
   }
 
   update(role: Role) {
-    return this.http.put(this.baseUrl, role);
+    return this.http.post(this.baseUrl, role);
   }
 
   delete(id: string) {
