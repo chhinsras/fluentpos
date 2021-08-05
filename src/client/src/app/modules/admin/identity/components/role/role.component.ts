@@ -53,6 +53,10 @@ export class RoleComponent implements OnInit {
     this.getRoles();
   }
 
+  openPermissionsForm(role: Role): void {
+    
+  }
+
   openForm(role?: Role): void {
     const dialogRef = this.dialog.open(RoleFormComponent, {
       data: role,

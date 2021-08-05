@@ -67,6 +67,9 @@
           </ng-container>
 
           <ng-container *ngIf="tableColumn.dataKey === 'action'">
+            <button *ngIf="title === 'Roles'" mat-raised-button color="info" (click)="openPermissionsForm(element)">
+              Manage Permissions
+            </button>
             <button mat-raised-button color="primary" (click)="openEditForm(element)">
               Edit
             </button>
