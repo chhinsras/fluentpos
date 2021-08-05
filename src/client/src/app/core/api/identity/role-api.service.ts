@@ -33,15 +33,23 @@ export class RoleApiService {
   }
 
   getPermissions(roleId: string) {
-    return this.http.get(this.baseUrl + 'permissions/byrole/'+ roleId);
+    return this.http.get(this.baseUrl + `permissions/byrole/${roleId}`);
   }
 
-  getAllClaims() {}
+  getAllClaims() {
+    return this.http.get(this.baseUrl + `permissions`)
+  }
 
-  getClaim(id: number) {}
+  getClaim(id: number) {
+    return this.http.get(this.baseUrl + `permissions/${id}`);
+  }
 
-  updatePermissions(permission: Permission) {}
+  updatePermissions(permission: Permission) {
+    return this.http.put(this.baseUrl + 'permissions/update', permission);
+  }
 
-  deleteClaim(id: number) {}
+  deleteClaim(id: number) {
+    return this.http.delete(this.baseUrl + `permissions/${id}`)
+  }
 
 }
