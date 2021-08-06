@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AdminRoutingModule } from './admin-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MaterialModule } from 'src/app/core/material/material.module';
@@ -11,8 +10,7 @@ import { LogoutDialogComponent } from '../../core/shared/components/logout-dialo
 import { SettingsComponent } from './settings/settings.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { AboutComponent } from './about/about.component';
-import { ActivityLogsComponent } from './activity-logs/activity-logs.component';
-
+import { EventLogsComponent } from './event-logs/event-logs.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +19,7 @@ import { ActivityLogsComponent } from './activity-logs/activity-logs.component';
     LogoutDialogComponent,
     SettingsComponent,
     AboutComponent,
-    ActivityLogsComponent
+    EventLogsComponent
   ],
   imports: [
     CommonModule,
