@@ -1,9 +1,9 @@
 <mat-card class="module-card" style="margin-bottom: 0px!important;padding-bottom: 4px!important;">
     <mat-card-header>
         <mat-card-title>
-            {{ title }}
+            {{ title | translate }}
         </mat-card-title>
-        <mat-card-subtitle>{{ subtitle }}</mat-card-subtitle>
+        <mat-card-subtitle>{{ subtitle | translate }}</mat-card-subtitle>
     </mat-card-header>
     <div style="margin: 0 26px 0 16px">
         <div class="left">
@@ -94,7 +94,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" ></tr>
     </table>
     <!-- Pagination -->
     <mat-paginator [length]="totalCount" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"
