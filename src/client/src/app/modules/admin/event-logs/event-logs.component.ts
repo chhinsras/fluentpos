@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { EventLog } from 'src/app/core/models/event-logs/event-log';
 import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
+import { TableColumn } from 'src/app/core/shared/components/table/table-column';
 import { EventLogParams } from './models/eventLogParams';
 import { EventLogService } from './services/event-log.service';
 @Component({
@@ -13,8 +14,8 @@ import { EventLogService } from './services/event-log.service';
   styleUrls: ['./event-logs.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
@@ -22,7 +23,7 @@ import { EventLogService } from './services/event-log.service';
 export class EventLogsComponent implements OnInit {
 
   eventLogs: PaginatedResult<EventLog>;
-  eventLogColumns: string[] = ['id', 'email', 'messageType', 'timestamp', 'action'];
+  eventLogColumns: TableColumn[];//string[] = ['id', 'email', 'messageType', 'timestamp'];
   eventLogParams = new EventLogParams();
   dataSource = new MatTableDataSource<EventLog>([]);
   searchString: string;
@@ -32,6 +33,16 @@ export class EventLogsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEventLogs();
+    this.initColumns();
+  }
+  initColumns(): void {
+    this.eventLogColumns = [
+      { name: 'Id', dataKey: 'id', isSortable: true, isShowable: true },
+      { name: 'Event', dataKey: 'messageType', isSortable: true, isShowable: true },
+      { name: 'Invoked By', dataKey: 'email', isSortable: true, isShowable: true },
+      { name: 'Time Stamp', dataKey: 'timestamp', isSortable: true, isShowable: true },
+      { name: 'Action', dataKey: 'action', position: 'right' },
+    ];
   }
   public reload(): void {
     this.searchString = this.eventLogParams.searchString = '';
@@ -61,5 +72,6 @@ export class EventLogsComponent implements OnInit {
     this.eventLogParams.pageSize = 0;
     this.getEventLogs();
   }
-
+  viewDetails(): void {
+  }
 }
