@@ -57,7 +57,7 @@ export class RoleComponent implements OnInit {
   openPermissionsForm(role: Role): void {
     const dialogRef = this.dialog.open(PermissionFormComponent, {
       data: role,
-      height: '100%',
+      height: '90%',
       width: '100%'
     });
     dialogRef.afterClosed().subscribe((result) => {
