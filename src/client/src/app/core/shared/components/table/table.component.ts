@@ -47,6 +47,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Output() onPermissionsForm: EventEmitter<any> = new EventEmitter();
   @Output() onCreateForm: EventEmitter<any> = new EventEmitter();
   @Output() onEditForm: EventEmitter<any> = new EventEmitter();
+  @Output() onView: EventEmitter<any> = new EventEmitter();
   @Output() onDelete: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(public dialog: MatDialog) {}

@@ -72,11 +72,15 @@
                             (click)="openPermissionsForm(element)">
                             Manage Permissions
                         </button>
-                        <button *ngIf="onEditForm.observers.length>0" mat-raised-button color="primary"
+                        <button *ngIf="onView.observers.length>0" mat-raised-button color="primary"
+                            (click)="openEditForm(element)">
+                            <mat-icon>remove_red_eye</mat-icon> View
+                        </button>
+                        <button *ngIf="onEditForm.observers.length>0" mat-raised-button color="accent"
                             (click)="openEditForm(element)">
                             <mat-icon>mode_edit</mat-icon> Edit
                         </button>
-                        <button *ngIf="onDelete.observers.length>0" mat-raised-button
+                        <button *ngIf="onDelete.observers.length>0" mat-raised-button color="warn"
                             (click)="openDeleteConfirmationDialog(element.id)">
                             <mat-icon>delete</mat-icon> Delete
                         </button>
