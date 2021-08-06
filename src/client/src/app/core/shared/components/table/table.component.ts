@@ -34,7 +34,6 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Input() subtitle: string;
 
   @Input() isSortable = false;
-  @Input() isFilterable = false;
   @Input() columns: TableColumn[];
 
   @Input() set data(data: any[]) {

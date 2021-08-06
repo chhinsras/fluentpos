@@ -7,21 +7,23 @@
     </mat-card-header>
     <div style="margin: 0 26px 0 16px">
         <div class="left">
-            <a mat-raised-button color="primary" (click)="openCreateForm()">
+            <a *ngIf="onCreateForm.observers.length>0" mat-raised-button color="primary" (click)="openCreateForm()">
                 <mat-icon>add</mat-icon> {{'components.table.register'|translate}} {{ title }}
             </a>
-            <a mat-raised-button color="accent" (click)="handleReload()">
+            <a *ngIf="onReload.observers.length>0" mat-raised-button color="accent" (click)="handleReload()">
                 <mat-icon>refresh</mat-icon> {{'components.table.reload'|translate}}
             </a>
         </div>
-        <div class="right" *ngIf="isFilterable">
+        <div *ngIf="onFilter.observers.length>0" class="right">
             <mat-form-field>
-                <input matInput [(ngModel)]="searchString" name="searchString" type="text" autocomplete="off" (keyup)="handleFilter()" placeholder="{{'components.table.filter'|translate}} {{ title }}" />
+                <input matInput [(ngModel)]="searchString" name="searchString" type="text" autocomplete="off"
+                    (keyup)="handleFilter()" placeholder="{{'components.table.filter'|translate}} {{ title }}" />
             </mat-form-field>
         </div>
     </div>
     <!-- Table -->
-    <table fixedLayout="true" mat-table mat-table-stripped [dataSource]="tableDataSource" matSort (matSortChange)="handleSort($event)">
+    <table fixedLayout="true" mat-table mat-table-stripped [dataSource]="tableDataSource" matSort
+        (matSortChange)="handleSort($event)">
         <ng-container *ngFor="let tableColumn of columns" [matColumnDef]="tableColumn.name">
             <!-- if showable column header -->
             <ng-container *ngIf="
@@ -54,25 +56,28 @@
           tableColumn.isShowable || tableColumn.dataKey == 'action';
           else notShowableData
         ">
-                <td mat-cell *matCellDef="let element" [class.text-right]="tableColumn.position == 'right'" [ngClass]="{ 'text-right': tableColumn.dataKey === 'action' }">
+                <td mat-cell *matCellDef="let element" [class.text-right]="tableColumn.position == 'right'"
+                    [ngClass]="{ 'text-right': tableColumn.dataKey === 'action' }">
                     <ng-container *ngIf="tableColumn.isShowable">
-                        <span *ngIf="tableColumn.dataKey !== 'isAlert'"> {{ element | dataPropertyGetter: tableColumn.dataKey}}
-            </span>
+                        <span *ngIf="tableColumn.dataKey !== 'isAlert'"> {{ element | dataPropertyGetter:
+                            tableColumn.dataKey}}
+                        </span>
                         <span *ngIf="tableColumn.dataKey === 'tax'"> ({{ element.taxMethod }})</span>
                         <span *ngIf="tableColumn.dataKey === 'isAlert'">{{element.isAlert ? '&#10060;' : '&#9989;'}}
-              ({{element.alertQuantity}})</span>
+                            ({{element.alertQuantity}})</span>
                     </ng-container>
 
                     <ng-container *ngIf="tableColumn.dataKey === 'action'">
-                        <button *ngIf="title === 'Roles'" mat-raised-button color="info" (click)="openPermissionsForm(element)">
-              Manage Permissions
-            </button>
-                        <button mat-raised-button color="primary" (click)="openEditForm(element)">
-              Edit
-            </button>
-                        <button mat-raised-button (click)="openDeleteConfirmationDialog(element.id)">
-              Delete
-            </button>
+                        <button *ngIf="title === 'Roles'" mat-raised-button color="info"
+                            (click)="openPermissionsForm(element)">
+                            Manage Permissions
+                        </button>
+                        <button *ngIf="onEditForm.observers.length>0" mat-raised-button color="primary" (click)="openEditForm(element)">
+                            Edit
+                        </button>
+                        <button *ngIf="onDelete.observers.length>0" mat-raised-button (click)="openDeleteConfirmationDialog(element.id)">
+                            Delete
+                        </button>
                     </ng-container>
                 </td>
             </ng-container>
@@ -85,6 +90,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-    <mat-paginator [length]="totalCount" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChange($event)" showFirstLastButtons>
+    <!-- Pagination -->
+    <mat-paginator [length]="totalCount" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"
+        (page)="onPageChange($event)" showFirstLastButtons>
     </mat-paginator>
 </mat-card>
