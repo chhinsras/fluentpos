@@ -5,7 +5,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { RouterModule } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ServerErrorComponent } from './components/server-error/server-error.component';
-import { PaginationComponent } from './components/pagination/pagination.component';
 import { MaterialModule } from '../material/material.module';
 import { TableComponent } from './components/table/table.component';
 import { DataPropertyGetterPipe } from '../pipes/data-property-getter.pipe';
@@ -25,7 +24,6 @@ import { IdentityApiService } from '../api/identity/identity-api.service';
   declarations: [
     NotFoundComponent,
     ServerErrorComponent,
-    PaginationComponent,
     TableComponent,
     DataPropertyGetterPipe,
     AccessDenialComponent,
@@ -52,7 +50,6 @@ import { IdentityApiService } from '../api/identity/identity-api.service';
   exports: [
     ReactiveFormsModule,
     FormsModule,
-    PaginationComponent,
     TableComponent,
     HasPermissionDirective,
     HasRoleDirective
