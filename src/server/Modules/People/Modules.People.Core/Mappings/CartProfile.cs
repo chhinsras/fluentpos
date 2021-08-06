@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Core.Features.Carts.Commands;
 using FluentPOS.Modules.People.Core.Features.Carts.Queries;
+using FluentPOS.Shared.Core.Features.Common.Filters;
 using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.DTOs.People.Carts;
 
@@ -12,6 +14,7 @@ namespace FluentPOS.Modules.People.Core.Mappings
         public CartProfile()
         {
             CreateMap<CreateCartCommand, Cart>().ReverseMap();
+            CreateMap<GetByIdCacheableFilter<Guid, Cart>, GetCartByIdQuery>();
             CreateMap<GetCartByIdResponse, Cart>().ReverseMap();
             CreateMap<GetCartsResponse, Cart>().ReverseMap();
             CreateMap<PaginatedCartFilter, GetCartsQuery>()

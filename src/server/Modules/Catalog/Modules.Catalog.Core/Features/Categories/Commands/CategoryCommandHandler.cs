@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
-using FluentPOS.Modules.Catalog.Core.Constants;
 using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Modules.Catalog.Core.Features.Categories.Events;
@@ -15,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Constants;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
 {
@@ -79,7 +79,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
                 category.AddDomainEvent(new CategoryUpdatedEvent(category));
                 _context.Categories.Update(category);
                 await _context.SaveChangesAsync(cancellationToken);
-                await _cache.RemoveAsync(CatalogCacheKeys.GetCategoryByIdCacheKey(command.Id), cancellationToken);
+                await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, Category>(command.Id), cancellationToken);
                 return await Result<Guid>.SuccessAsync(category.Id, _localizer["Category Updated"]);
             }
             else
@@ -97,12 +97,12 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
                 category.AddDomainEvent(new CategoryRemovedEvent(category.Id));
                 _context.Categories.Remove(category);
                 await _context.SaveChangesAsync(cancellationToken);
-                await _cache.RemoveAsync(CatalogCacheKeys.GetCategoryByIdCacheKey(command.Id), cancellationToken);
+                await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, Category>(command.Id), cancellationToken);
                 return await Result<Guid>.SuccessAsync(category.Id, _localizer["Category Deleted"]);
             }
             else
             {
-                throw new CatalogException(_localizer["Deletion Not Allowed"], System.Net.HttpStatusCode.BadRequest);
+                throw new CatalogException(_localizer["Deletion Not Allowed"], HttpStatusCode.BadRequest);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using FluentPOS.Shared.Core.Domain;
 using System;
+using FluentPOS.Modules.Catalog.Core.Entities;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Events
 {
@@ -11,6 +12,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Events
         {
             Id = id;
             AggregateId = id;
+            RelatedEntities = new[] { typeof(Category) };
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Features.Brands.Commands;
 using FluentPOS.Modules.Catalog.Core.Features.Brands.Queries;
+using FluentPOS.Shared.Core.Features.Common.Filters;
 using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.DTOs.Catalogs.Brands;
 
@@ -13,6 +15,7 @@ namespace FluentPOS.Modules.Catalog.Core.Mappings
         {
             CreateMap<RegisterBrandCommand, Brand>().ReverseMap();
             CreateMap<UpdateBrandCommand, Brand>().ReverseMap();
+            CreateMap<GetByIdCacheableFilter<Guid, Brand>, GetBrandByIdQuery>();
             CreateMap<GetBrandByIdResponse, Brand>().ReverseMap();
             CreateMap<GetBrandsResponse, Brand>().ReverseMap();
             CreateMap<PaginatedBrandFilter, GetBrandsQuery>()

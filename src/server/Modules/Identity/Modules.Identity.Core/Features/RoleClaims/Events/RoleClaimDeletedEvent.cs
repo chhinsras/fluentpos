@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Shared.Core.Domain;
 
 namespace FluentPOS.Modules.Identity.Core.Features.RoleClaims.Events
@@ -11,6 +12,7 @@ namespace FluentPOS.Modules.Identity.Core.Features.RoleClaims.Events
         {
             Id = id;
             AggregateId = Guid.NewGuid();
+            RelatedEntities = new[] { typeof(FluentRoleClaim) };
         }
     }
 }

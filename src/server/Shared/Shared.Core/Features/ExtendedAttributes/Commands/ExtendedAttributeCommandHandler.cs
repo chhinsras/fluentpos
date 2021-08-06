@@ -71,7 +71,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands
             _context.ExtendedAttributes.Remove(extendedAttribute);
             extendedAttribute.AddDomainEvent(new ExtendedAttributeRemovedEvent<TEntity>(command.Id));
             await _context.SaveChangesAsync(cancellationToken);
-            await _cache.RemoveAsync(CacheKeys.GetExtendedAttributeByIdCacheKey(typeof(TEntity).Name, command.Id), cancellationToken);
+            await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, ExtendedAttribute<TEntityId, TEntity>>(command.Id), cancellationToken);
             return await Result<Guid>.SuccessAsync(extendedAttribute.Id, string.Format(_localizer["{0} Extended Attribute Deleted"], typeof(TEntity).Name));
         }
 
@@ -90,7 +90,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands
             extendedAttribute.AddDomainEvent(new ExtendedAttributeUpdatedEvent<TEntityId, TEntity>(extendedAttribute));
             _context.ExtendedAttributes.Update(extendedAttribute);
             await _context.SaveChangesAsync(cancellationToken);
-            await _cache.RemoveAsync(CacheKeys.GetExtendedAttributeByIdCacheKey(typeof(TEntity).Name, command.Id), cancellationToken);
+            await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, ExtendedAttribute<TEntityId, TEntity>>(command.Id), cancellationToken);
             return await Result<Guid>.SuccessAsync(extendedAttribute.Id, string.Format(_localizer["{0} Extended Attribute Updated"], typeof(TEntity).Name));
         }
     }

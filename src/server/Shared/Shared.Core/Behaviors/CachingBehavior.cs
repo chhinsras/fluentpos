@@ -7,9 +7,11 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Exceptions;
 
 namespace FluentPOS.Shared.Core.Behaviors
 {
@@ -47,13 +49,17 @@ namespace FluentPOS.Shared.Core.Behaviors
             {
                 response = await next();
                 var slidingExpiration = request.SlidingExpiration ?? TimeSpan.FromHours(_settings.SlidingExpiration);
+                if (slidingExpiration <= TimeSpan.Zero)
+                {
+                    throw new CustomException(_localizer["Cache Sliding Expiration must be greater than 0."], statusCode: HttpStatusCode.BadRequest);
+                }
                 var options = new DistributedCacheEntryOptions { SlidingExpiration = slidingExpiration };
                 var serializedData = Encoding.Default.GetBytes(_jsonSerializer.Serialize(response));
                 await _cache.SetAsync((string)request.CacheKey, serializedData, options, cancellationToken);
                 return response;
             }
 
-            var cachedResponse = await _cache.GetAsync((string)request.CacheKey, cancellationToken);
+            var cachedResponse = !string.IsNullOrWhiteSpace(request.CacheKey) ? await _cache.GetAsync(request.CacheKey, cancellationToken) : null;
             if (cachedResponse != null)
             {
                 response = _jsonSerializer.Deserialize<TResponse>(Encoding.Default.GetString(cachedResponse));

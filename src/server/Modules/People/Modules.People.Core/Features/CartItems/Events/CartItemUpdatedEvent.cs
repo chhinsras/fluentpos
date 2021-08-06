@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Core.Features.CartItems.Commands;
 using FluentPOS.Shared.Core.Domain;
 
@@ -21,6 +22,7 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Events
             Quantity = command.Quantity;
             Id = command.Id;
             AggregateId = command.Id;
+            RelatedEntities = new[] { typeof(CartItem) };
         }
     }
 }

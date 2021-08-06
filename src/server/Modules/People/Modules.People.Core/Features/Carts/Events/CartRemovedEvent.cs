@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Shared.Core.Domain;
 
 namespace FluentPOS.Modules.People.Core.Features.Carts.Events
@@ -11,6 +12,7 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Events
         {
             Id = id;
             AggregateId = id;
+            RelatedEntities = new[] { typeof(Cart) };
         }
     }
 }

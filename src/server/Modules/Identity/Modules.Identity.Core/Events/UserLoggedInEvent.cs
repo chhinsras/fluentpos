@@ -1,4 +1,5 @@
 using System;
+using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Shared.Core.Domain;
 
 namespace FluentPOS.Modules.Identity.Core.Events
@@ -14,6 +15,7 @@ namespace FluentPOS.Modules.Identity.Core.Events
             UserId = userId;
             Timestamp = DateTime.Now;
             AggregateId = userId;
+            RelatedEntities = new[] { typeof(FluentUser) };
         }
     }
 }

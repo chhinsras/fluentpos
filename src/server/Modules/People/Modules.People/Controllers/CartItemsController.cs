@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Core.Features.CartItems.Commands;
 using FluentPOS.Modules.People.Core.Features.CartItems.Queries;
 using FluentPOS.Shared.Core.Constants;
+using FluentPOS.Shared.Core.Features.Common.Filters;
 using FluentPOS.Shared.DTOs.People.CartItems;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +16,10 @@ namespace FluentPOS.Modules.People.Controllers
     {
         [HttpGet("{id}")]
         [Authorize(Policy = Permissions.CartItems.View)]
-        public async Task<IActionResult> GetCartItemByIdAsync(Guid id, bool bypassCache)
+        public async Task<IActionResult> GetCartItemByIdAsync([FromQuery] GetByIdCacheableFilter<Guid, CartItem> filter)
         {
-            var cartItem = await Mediator.Send(new GetCartItemByIdQuery(id, bypassCache));
+            var request = Mapper.Map<GetCartItemByIdQuery>(filter);
+            var cartItem = await Mediator.Send(request);
             return Ok(cartItem);
         }
         /// <summary>

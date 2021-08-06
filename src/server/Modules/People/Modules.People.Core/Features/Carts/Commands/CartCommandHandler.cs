@@ -4,10 +4,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentPOS.Modules.People.Core.Abstractions;
-using FluentPOS.Modules.People.Core.Constants;
 using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Core.Exceptions;
 using FluentPOS.Modules.People.Core.Features.Carts.Events;
+using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Wrapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -62,7 +62,7 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Commands
             cart.AddDomainEvent(new CartRemovedEvent(cart.Id));
             _context.Carts.Remove(cart);
             await _context.SaveChangesAsync(cancellationToken);
-            await _cache.RemoveAsync(PeopleCacheKeys.GetCartByIdCacheKey(command.Id), cancellationToken);
+            await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, Cart>(command.Id), cancellationToken);
             return await Result<Guid>.SuccessAsync(cart.Id, _localizer["Cart Deleted"]);
         }
     }

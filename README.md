@@ -60,7 +60,7 @@ Clone this repository to your local machine.
 
 1. Install the latest [.NET 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
 2. Install the latest DOTNET & EF CLI Tools by using this command `dotnet tool install --global dotnet-ef` 
-3. Install the latest version of Visual Studio IDE 2019 (v16.8 and above) 🚀
+3. Install the latest version of Visual Studio IDE 2019 (v16.8 and above) OR Visual Studio Code 🚀
 4. It's recommended to use Postgres DB as it comes by default with fluentpos. Install [PostgreSQL](https://www.postgresql.org/download/). 
 5. As for quick DB Management, we love [Azure Data Studio](https://docs.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver15)
 
@@ -82,6 +82,11 @@ Clone this repository to your local machine.
 - Run `ng serve`
 - Navigate to localhost:4200 on your browser
 
+#### Notes for VS Code
+1. Open up workspace/fluentpos.code-workspace
+2. Make sure you have VS Code install and .NET and Angular related extensions
+3. Open terminal Session
+4. Running API with CLI command: `dotnet watch watch`
 
 https://user-images.githubusercontent.com/31455818/126076884-47989b52-368e-4714-b90b-093779a7607f.mp4
 

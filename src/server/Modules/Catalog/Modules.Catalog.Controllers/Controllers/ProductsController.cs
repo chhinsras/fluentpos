@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using FluentPOS.Modules.Catalog.Core.Entities;
+using FluentPOS.Shared.Core.Features.Common.Filters;
 
 namespace FluentPOS.Modules.Catalog.Controllers
 {
@@ -17,16 +19,17 @@ namespace FluentPOS.Modules.Catalog.Controllers
         public async Task<IActionResult> GetAllAsync([FromQuery] PaginatedProductFilter filter)
         {
             var request = Mapper.Map<GetProductsQuery>(filter);
-            var brands = await Mediator.Send(request);
-            return Ok(brands);
+            var products = await Mediator.Send(request);
+            return Ok(products);
         }
 
         [HttpGet("{id}")]
         [Authorize(Policy = Permissions.Products.View)]
-        public async Task<IActionResult> GetByIdAsync(Guid id, bool bypassCache)
+        public async Task<IActionResult> GetByIdAsync([FromQuery] GetByIdCacheableFilter<Guid, Product> filter)
         {
-            var brand = await Mediator.Send(new GetProductByIdQuery(id, bypassCache));
-            return Ok(brand);
+            var request = Mapper.Map<GetProductByIdQuery>(filter);
+            var product = await Mediator.Send(request);
+            return Ok(product);
         }
 
         [HttpPost]

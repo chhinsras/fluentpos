@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using FluentPOS.Modules.People.Core.Entities;
+using FluentPOS.Shared.Core.Features.Common.Filters;
 
 namespace FluentPOS.Modules.People.Controllers
 {
@@ -23,9 +25,10 @@ namespace FluentPOS.Modules.People.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Policy = Permissions.Customers.View)]
-        public async Task<IActionResult> GetByIdAsync(Guid id, bool bypassCache)
+        public async Task<IActionResult> GetByIdAsync([FromQuery] GetByIdCacheableFilter<Guid, Customer> filter)
         {
-            var customer = await Mediator.Send(new GetCustomerByIdQuery(id, bypassCache));
+            var request = Mapper.Map<GetCustomerByIdQuery>(filter);
+            var customer = await Mediator.Send(request);
             return Ok(customer);
         }
 

@@ -2,19 +2,18 @@
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Filters;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Domain;
+using FluentPOS.Shared.Core.Features.Common.Filters;
 
 namespace FluentPOS.Shared.Infrastructure.Controllers
 {
     [ApiController]
-    public abstract class ExtendedAttributesController<TEntityId, TEntity> : ControllerBase
+    public abstract class ExtendedAttributesController<TEntityId, TEntity> : CommonBaseController
         where TEntity : class, IEntity<TEntityId>
     {
-        protected abstract IMediator Mediator { get; }
-
         [HttpGet]
         public virtual async Task<IActionResult> GetAllAsync([FromQuery] PaginatedExtendedAttributeFilter<TEntityId, TEntity> filter)
         {
@@ -22,10 +21,11 @@ namespace FluentPOS.Shared.Infrastructure.Controllers
             return Ok(extendedAttributes);
         }
 
-        [HttpGet("{id}")]
-        public virtual async Task<IActionResult> GetByIdAsync(Guid id, bool bypassCache)
+        [HttpGet("{id:guid}")]
+        public virtual async Task<IActionResult> GetByIdAsync([FromQuery] GetByIdCacheableFilter<Guid, ExtendedAttribute<TEntityId, TEntity>> filter)
         {
-            var extendedAttribute = await Mediator.Send(new GetExtendedAttributeByIdQuery<TEntityId, TEntity>(id, bypassCache));
+            var request = Mapper.Map<GetExtendedAttributeByIdQuery<TEntityId, TEntity>>(filter);
+            var extendedAttribute = await Mediator.Send(request);
             return Ok(extendedAttribute);
         }
 

@@ -17,6 +17,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AccessDenialComponent } from './components/access-denial/access-denial.component';
 import { HasPermissionDirective } from '../directives/has-permission.directive';
 import { HasRoleDirective } from '../directives/has-role.directive';
+import { UserApiService } from '../api/identity/user-api.service';
+import { RoleApiService } from '../api/identity/role-api.service';
+import { IdentityApiService } from '../api/identity/identity-api.service';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,7 @@ import { HasRoleDirective } from '../directives/has-role.directive';
   providers: [
     BrandApiService, CategoryApiService, ProductApiService,
     CustomerApiService,
+    IdentityApiService, UserApiService, RoleApiService
   ],
   exports: [
     ReactiveFormsModule,

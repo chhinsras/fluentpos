@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
-using FluentPOS.Modules.Catalog.Core.Constants;
 using FluentPOS.Modules.Catalog.Core.Entities;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Modules.Catalog.Core.Features.Products.Events;
@@ -15,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Constants;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
 {
@@ -80,7 +80,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
                 product.AddDomainEvent(new ProductUpdatedEvent(product));
                 _context.Products.Update(product);
                 await _context.SaveChangesAsync(cancellationToken);
-                await _cache.RemoveAsync(CatalogCacheKeys.GetProductByIdCacheKey(command.Id), cancellationToken);
+                await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, Product>(command.Id), cancellationToken);
                 return await Result<Guid>.SuccessAsync(product.Id, _localizer["Product Updated"]);
             }
             else
@@ -97,7 +97,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
                 product.AddDomainEvent(new ProductRemovedEvent(product.Id));
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync(cancellationToken);
-                await _cache.RemoveAsync(CatalogCacheKeys.GetProductByIdCacheKey(command.Id), cancellationToken);
+                await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, Product>(command.Id), cancellationToken);
                 return await Result<Guid>.SuccessAsync(product.Id, _localizer["Product Deleted"]);
             }
             else
