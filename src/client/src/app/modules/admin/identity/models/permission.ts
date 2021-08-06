@@ -6,7 +6,7 @@ export interface Permission {
 }
 
 export interface RoleClaim {
-    id: string
+    id: number
     roleId: string
     type: string
     value: string

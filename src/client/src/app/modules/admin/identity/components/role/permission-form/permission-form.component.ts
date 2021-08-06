@@ -1,8 +1,10 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { Permission } from '../../../models/permission';
+import { Permission, RoleClaim } from '../../../models/permission';
 import { Role } from '../../../models/role';
 import { RoleService } from '../../../services/role.service';
 
@@ -15,20 +17,23 @@ export class PermissionFormComponent implements OnInit {
   permissionForm: FormGroup;
   formTitle: string;
 
-  permissions: Permission;
-
+  displayedColumns: string[] = ['id', 'type', 'group', 'value', 'description', 'selected'];
+  permissions = new MatTableDataSource<Permission>();
+  
   constructor(@Inject(MAT_DIALOG_DATA) public data: Role, private roleService: RoleService, private toastr: ToastrService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-   this.getPermissions();
+   this.getRolePermissions();
   }
 
-  getPermissions() {
-    this.roleService.getPermissionsByRoleId(this.data.id).subscribe(response => {
-      console.log(response);
-      this.permissions = response;
-
-   console.log(this.permissions);
+  getRolePermissions() {
+    this.roleService.getRolePermissionsByRoleId(this.data.id).subscribe(response => {
+      this.permissions.data = [...this.permissions.data, response.data];
     });
   }
+  togglePermission(claim: RoleClaim) {
+    console.log(this.permissions.data[0].roleClaims);
+  }
+
+
 }
