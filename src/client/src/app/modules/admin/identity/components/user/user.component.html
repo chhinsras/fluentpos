@@ -1,22 +1,8 @@
 <div [hidden]="!users">
-    <app-table
-      [title]="'Users'"
-      [subtitle]="'Manage, Register, Update or Remove Users here.'"
-      [data]="users && users.data"
-      [columns]="userColumns"
-      [isFilterable]="true"
-      (onFilter)="filter($event)"
-      (onReload)="reload()"
-      (onCreateForm)="openForm()"
-      (onEditForm)="openForm($event)"
-      (onSort)="sort($event)"
-      (onDelete)="remove($event)"
-    >
-    </app-table>
-    <app-pagination
-      [totalCount]="users && users.totalCount"
-      [pageSize]="users && users.pageSize"
-      (onPageChanged)="pageChanged($event)"
-    ></app-pagination>
-  </div>
-  
+  <app-table [title]="'Users'" [subtitle]="'Manage, Register, Update or Remove Users here.'"
+    [data]="users && users.data" [columns]="userColumns" (onFilter)="filter($event)"
+    (onReload)="reload()" (onCreateForm)="openForm()" (onEditForm)="openForm($event)" (onSort)="sort($event)"
+    (onDelete)="remove($event)" [totalCount]="users && users.totalCount" [pageSize]="users && users.pageSize"
+    (onPageChanged)="pageChanged($event)">
+  </app-table>
+</div>

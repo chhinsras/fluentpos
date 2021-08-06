@@ -5,3 +5,17 @@ table {
 .text-right {
   text-align: right !important;
 }
+td.mat-cell{
+  border-bottom-style:dotted;
+  height: 60px!important;
+}
+
+th.mat-header-cell{
+  border-bottom-style: none;
+  
+}
+.mat-icon {
+  width: 17px;
+  height: 17px;
+  font-size: 17px;
+}

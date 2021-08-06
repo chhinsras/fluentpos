@@ -12,6 +12,8 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DeleteDialogComponent } from 'src/app/modules/admin/shared/components/delete-dialog/delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-table',
@@ -22,6 +24,9 @@ export class TableComponent implements OnInit, AfterViewInit {
   public tableDataSource = new MatTableDataSource([]);
   public displayedColumns: string[];
   searchString: string;
+  @Input() totalCount: number;
+  @Input() pageSize: number;
+  @Output() onPageChanged = new EventEmitter<PaginatedFilter>();
 
   @ViewChild(MatSort, { static: true }) matSort: MatSort;
 
@@ -29,7 +34,6 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Input() subtitle: string;
 
   @Input() isSortable = false;
-  @Input() isFilterable = false;
   @Input() columns: TableColumn[];
 
   @Input() set data(data: any[]) {
@@ -99,5 +103,12 @@ export class TableComponent implements OnInit, AfterViewInit {
         this.onDelete.emit($event);
       }
     });
+  }
+  onPageChange(pageEvent: PageEvent) {
+    const event: PaginatedFilter = {
+      pageNumber: pageEvent.pageIndex + 1 ?? 1,
+      pageSize: pageEvent.pageSize ?? 10,
+    };
+    this.onPageChanged.emit(event);
   }
 }

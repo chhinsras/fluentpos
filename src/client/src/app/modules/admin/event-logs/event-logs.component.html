@@ -44,5 +44,5 @@
         <tr mat-row *matRowDef="let search; columns: eventLogColumns;">
         </tr>
     </table>
-    <app-pagination [totalCount]="eventLogs && eventLogs.totalCount" [pageSize]="eventLogs && eventLogs.pageSize" (pageChangeEvent)="handlePageChange($event)"></app-pagination>
+    <!-- <app-pagination [totalCount]="eventLogs && eventLogs.totalCount" [pageSize]="eventLogs && eventLogs.pageSize" (pageChangeEvent)="handlePageChange($event)"></app-pagination> -->
 </mat-card>
