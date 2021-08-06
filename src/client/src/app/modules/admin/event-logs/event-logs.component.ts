@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, Pipe, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EventLog } from 'src/app/core/models/event-logs/event-log';
@@ -20,6 +21,7 @@ import { EventLogService } from './services/event-log.service';
     ]),
   ],
 })
+
 export class EventLogsComponent implements OnInit {
 
   eventLogs: PaginatedResult<EventLog>;
@@ -29,7 +31,7 @@ export class EventLogsComponent implements OnInit {
   searchString: string;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private eventLogService: EventLogService) { }
+  constructor(private eventLogService: EventLogService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.getEventLogs();
@@ -44,6 +46,7 @@ export class EventLogsComponent implements OnInit {
       { name: 'Action', dataKey: 'action', position: 'right' },
     ];
   }
+
   public reload(): void {
     this.searchString = this.eventLogParams.searchString = '';
     this.eventLogParams.pageNumber = 0;
@@ -53,7 +56,7 @@ export class EventLogsComponent implements OnInit {
   getEventLogs(): void {
     this.eventLogService.getEventLogs(this.eventLogParams).subscribe((result) => {
       this.eventLogs = result;
-      this.dataSource.data = this.eventLogs.data;
+      this.dataSource.data = this.eventLogs.data.filter(date => (date.timestamp = this.datePipe.transform(date.timestamp, 'MM/dd/yyyy hh:mm:ss a')));
     });
   }
   handlePageChange(event: PaginatedFilter): void {
