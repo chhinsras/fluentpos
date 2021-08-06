@@ -1,3 +1,4 @@
+<mat-spinner *ngIf="!permissions" diameter="40"></mat-spinner>
 <div *ngIf="permissions">
     <div *ngFor="let permission of permissions.data.roleClaims">
         <p>{{permission.value}}</p>
