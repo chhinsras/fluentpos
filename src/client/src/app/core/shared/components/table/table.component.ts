@@ -40,6 +40,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Output() onReload: EventEmitter<any> = new EventEmitter<any>();
   @Output() onSort: EventEmitter<Sort> = new EventEmitter<Sort>();
 
+  @Output() onPermissionsForm: EventEmitter<any> = new EventEmitter();
   @Output() onCreateForm: EventEmitter<any> = new EventEmitter();
   @Output() onEditForm: EventEmitter<any> = new EventEmitter();
   @Output() onDelete: EventEmitter<string> = new EventEmitter<string>();
@@ -59,6 +60,10 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   setTableDataSource(data: any) {
     this.tableDataSource = new MatTableDataSource<any>(data);
+  }
+
+  openPermissionsForm($event: any) {
+    this.onPermissionsForm.emit($event);
   }
 
   openCreateForm() {

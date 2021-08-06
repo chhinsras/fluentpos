@@ -1,5 +1,6 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import { Permission } from 'src/app/modules/admin/identity/models/permission';
 import { Role } from 'src/app/modules/admin/identity/models/role';
 import {environment} from 'src/environments/environment';
 
@@ -24,10 +25,31 @@ export class RoleApiService {
   }
 
   update(role: Role) {
-    return this.http.put(this.baseUrl, role);
+    return this.http.post(this.baseUrl, role);
   }
 
   delete(id: string) {
     return this.http.delete(this.baseUrl + id);
   }
+
+  getPermissions(roleId: string) {
+    return this.http.get(this.baseUrl + `permissions/byrole/${roleId}`);
+  }
+
+  getAllClaims() {
+    return this.http.get(this.baseUrl + `permissions`)
+  }
+
+  getClaim(id: number) {
+    return this.http.get(this.baseUrl + `permissions/${id}`);
+  }
+
+  updatePermissions(permission: Permission) {
+    return this.http.put(this.baseUrl + 'permissions/update', permission);
+  }
+
+  deleteClaim(id: number) {
+    return this.http.delete(this.baseUrl + `permissions/${id}`)
+  }
+
 }
