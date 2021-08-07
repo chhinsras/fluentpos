@@ -21,7 +21,7 @@ export class EventLogDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.jsonData = this.parseToJson(this.data.data);
     this.jsonNewValues = this.parseToJson(this.data.newValues);
-    this.jsonOldValues = this.parseToJson(this.jsonOldValues);
+    this.jsonOldValues = this.parseToJson(this.data.oldValues);
   }
   parseToJson(str: string) {
     if (str) {
@@ -34,7 +34,7 @@ export class EventLogDetailsComponent implements OnInit {
             }
           }
           catch
-          {}
+          { }
         });
       }
       return json;
