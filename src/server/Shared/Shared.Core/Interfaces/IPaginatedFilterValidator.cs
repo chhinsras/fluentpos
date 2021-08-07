@@ -1,4 +1,12 @@
-﻿using FluentPOS.Shared.Core.Contracts;
+﻿// <copyright file="IPaginatedFilterValidator.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Extensions;
 using FluentPOS.Shared.DTOs.Filters;
 using FluentValidation;
@@ -7,8 +15,8 @@ using Microsoft.Extensions.Localization;
 namespace FluentPOS.Shared.Core.Interfaces
 {
     internal interface IPaginatedFilterValidator<TEntityId, TEntity, TFilter>
-        where TFilter : PaginatedFilter
         where TEntity : class, IEntity<TEntityId>
+        where TFilter : PaginatedFilter
     {
         static void UseRules(AbstractValidator<TFilter> validator, IStringLocalizer localizer)
         {

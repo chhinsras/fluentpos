@@ -1,4 +1,12 @@
-﻿#nullable enable
+﻿// <copyright file="ValidatorExtensions.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +26,12 @@ namespace FluentPOS.Shared.Core.Extensions
                 .NotEmpty()
                 .Must(value =>
                 {
-                    if (value == null) return false;
-                    var isJson = true;
+                    if (value == null)
+                    {
+                        return false;
+                    }
+
+                    bool isJson = true;
                     value = value.Trim();
                     try
                     {
@@ -29,32 +41,33 @@ namespace FluentPOS.Shared.Core.Extensions
                     {
                         isJson = false;
                     }
-                    isJson = isJson && value.StartsWith("{") && value.EndsWith("}")
-                             || value.StartsWith("[") && value.EndsWith("]");
 
-                    return isJson;
+                    return (isJson && value.StartsWith("{") && value.EndsWith("}")) || (value.StartsWith("[") && value.EndsWith("]"));
                 })
                 .WithMessage("'{PropertyName}' must be a valid JSON string.");
 
         public static IRuleBuilderOptions<T, string?> MustContainCorrectOrderingsFor<T>(
             this IRuleBuilderInitial<T, string?> ruleBuilder,
             Type orderedType,
-            IStringLocalizer localizer) where T : class
+            IStringLocalizer localizer)
+                where T : class
             => ruleBuilder
                 .Cascade(CascadeMode.Stop)
                 .Must((_, value, context) =>
                 {
-                    var orderings = new OrderByConverter().Convert(value);
+                    string[]? orderings = new OrderByConverter().Convert(value);
                     if (orderings == null)
+                    {
                         return true;
+                    }
 
-                    var result = true;
+                    bool result = true;
                     var orderedProperties = new List<string>();
                     var propertyNames = orderedType
                         .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                         .Select(p => p.Name.ToLowerInvariant())
                         .ToList();
-                    foreach (var ordering in orderings)
+                    foreach (string? ordering in orderings)
                     {
                         var orderingParts = ordering
                             .Trim()
@@ -69,8 +82,8 @@ namespace FluentPOS.Shared.Core.Extensions
                             continue;
                         }
 
-                        var propertyName = orderingParts.First();
-                        var sortDirection = orderingParts.Last();
+                        string propertyName = orderingParts.First();
+                        string sortDirection = orderingParts.Last();
 
                         switch (sortDirection)
                         {
@@ -103,6 +116,6 @@ namespace FluentPOS.Shared.Core.Extensions
 
                     return result;
                 })
-                .WithMessage(x => localizer["The {PropertyName} property must contain correct comma separated orderings: '<property1> <direction>,<property2> <direction>'."]);
+                .WithMessage(_ => localizer["The {PropertyName} property must contain correct comma separated orderings: '<property1> <direction>,<property2> <direction>'."]);
     }
 }

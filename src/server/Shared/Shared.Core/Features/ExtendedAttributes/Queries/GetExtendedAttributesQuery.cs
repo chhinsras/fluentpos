@@ -1,4 +1,12 @@
-﻿#nullable enable
+﻿// <copyright file="GetExtendedAttributesQuery.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+#nullable enable
 
 using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Filters;
@@ -13,10 +21,15 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
         where TEntity : class, IEntity<TEntityId>
     {
         public int PageNumber { get; }
+
         public int PageSize { get; }
+
         public string? SearchString { get; }
+
         public string[] OrderBy { get; }
+
         public TEntityId? EntityId { get; }
+
         public ExtendedAttributeType? Type { get; }
 
         public GetExtendedAttributesQuery(PaginatedExtendedAttributeFilter<TEntityId, TEntity> filter)

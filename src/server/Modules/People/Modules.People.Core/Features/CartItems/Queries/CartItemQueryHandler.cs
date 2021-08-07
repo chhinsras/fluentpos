@@ -53,7 +53,7 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Queries
             var mappedCartItems = _mapper.Map<PaginatedResult<GetCartItemsResponse>>(cartItemList);
             foreach (GetCartItemsResponse item in mappedCartItems.Data)
             {
-                var details = await _productService.GetDetails(item.ProductId);
+                var details = await _productService.GetDetailsAsync(item.ProductId);
                 if (details.Succeeded)
                 {
                     item.ProductName = details.Data.Name;

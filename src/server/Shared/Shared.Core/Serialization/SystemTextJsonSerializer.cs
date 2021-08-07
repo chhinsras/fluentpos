@@ -1,7 +1,15 @@
-﻿using System;
+﻿// <copyright file="SystemTextJsonSerializer.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
+using System.Text.Json;
 using FluentPOS.Shared.Core.Interfaces.Serialization;
 using Microsoft.Extensions.Options;
-using System.Text.Json;
 
 namespace FluentPOS.Shared.Core.Serialization
 {

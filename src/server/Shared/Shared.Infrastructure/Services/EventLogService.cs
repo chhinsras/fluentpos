@@ -62,7 +62,7 @@ namespace FluentPOS.Shared.Infrastructure.Services
         public async Task<Result<string>> LogCustomEventAsync(LogEventRequest request)
         {
             var log = _mapper.Map<EventLog>(request);
-            await _logger.Save(log, default);
+            await _logger.SaveAsync(log, default);
             return await Result<string>.SuccessAsync(data: log.Id.ToString());
         }
     }

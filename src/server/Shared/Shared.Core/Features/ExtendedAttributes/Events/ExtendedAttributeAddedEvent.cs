@@ -1,9 +1,17 @@
-﻿#nullable enable
+﻿// <copyright file="ExtendedAttributeAddedEvent.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
 
-using FluentPOS.Shared.Core.Domain;
-using FluentPOS.Shared.DTOs.ExtendedAttributes;
+#nullable enable
+
 using System;
 using FluentPOS.Shared.Core.Contracts;
+using FluentPOS.Shared.Core.Domain;
+using FluentPOS.Shared.DTOs.ExtendedAttributes;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
 {
@@ -11,18 +19,31 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
         where TEntity : class, IEntity<TEntityId>
     {
         public TEntityId EntityId { get; set; }
+
         public string EntityName { get; set; }
+
         public ExtendedAttributeType Type { get; set; }
+
         public string Key { get; set; }
+
         public decimal? Decimal { get; set; }
+
         public string? Text { get; set; }
+
         public DateTime? DateTime { get; set; }
+
         public string? Json { get; set; }
+
         public bool? Boolean { get; set; }
+
         public int? Integer { get; set; }
+
         public string? ExternalId { get; set; }
+
         public string? Group { get; set; }
+
         public string? Description { get; set; }
+
         public bool IsActive { get; set; }
 
         public ExtendedAttributeAddedEvent(ExtendedAttribute<TEntityId, TEntity> extendedAttribute)

@@ -1,9 +1,17 @@
-﻿using FluentPOS.Shared.Core.Contracts;
+﻿// <copyright file="ExtendedAttributeEventHandler.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System.Threading;
+using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Contracts;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
 {
@@ -27,19 +35,25 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
             _localizer = localizer;
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public Task Handle(ExtendedAttributeAddedEvent<TEntityId, TEntity> notification, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             _logger.LogInformation(_localizer[$"{nameof(ExtendedAttributeAddedEvent<TEntityId, TEntity>)} For {typeof(TEntity).Name} Raised."]);
             return Task.CompletedTask;
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public Task Handle(ExtendedAttributeUpdatedEvent<TEntityId, TEntity> notification, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             _logger.LogInformation(_localizer[$"{nameof(ExtendedAttributeUpdatedEvent<TEntityId, TEntity>)} For {typeof(TEntity).Name} Raised."]);
             return Task.CompletedTask;
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public Task Handle(ExtendedAttributeRemovedEvent<TEntity> notification, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             _logger.LogInformation(_localizer[$"{nameof(ExtendedAttributeRemovedEvent<TEntity>)} For {typeof(TEntity).Name} Raised. {notification.Id} Removed."]);
             return Task.CompletedTask;

@@ -7,7 +7,14 @@
     },
     "documentationRules": {
       "companyName": "Fluentpos",
-      "copyrightText": "Copyright (c) {companyName}. All rights reserved."
+      "copyrightText": "--------------------------------------------------------------------------------------------------\nCopyright (c) {companyName}. All rights reserved.\nThe core team: {iammukeshm}, {chhinsras}, {unchase}.\nLicensed under the {licenseName} license. See {licenseFile} file in the project root for full license information.\n--------------------------------------------------------------------------------------------------",
+      "variables": {
+        "licenseName": "MIT",
+        "licenseFile": "LICENSE",
+        "iammukeshm": "Mukesh Murugan (iammukeshm)",
+        "chhinsras": "Chhin Sras (chhinsras)",
+        "unchase": "Nikolay Chebotov (unchase)"
+      }
     }
   }
 }

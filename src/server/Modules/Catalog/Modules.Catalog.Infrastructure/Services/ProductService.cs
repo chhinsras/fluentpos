@@ -17,7 +17,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Services
             _mediator = mediator;
         }
 
-        public async Task<Result<GetProductByIdResponse>> GetDetails(Guid productId)
+        public async Task<Result<GetProductByIdResponse>> GetDetailsAsync(Guid productId)
         {
             return await _mediator.Send(new GetProductByIdQuery(productId, false));
         }

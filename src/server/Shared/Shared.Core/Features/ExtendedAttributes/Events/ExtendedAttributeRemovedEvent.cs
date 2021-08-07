@@ -1,11 +1,20 @@
-﻿using FluentPOS.Shared.Core.Domain;
+﻿// <copyright file="ExtendedAttributeRemovedEvent.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
 using System;
+using FluentPOS.Shared.Core.Domain;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
 {
     public class ExtendedAttributeRemovedEvent<TEntity> : Event
     {
         public Guid Id { get; }
+
         public string EntityName { get; set; }
 
         public ExtendedAttributeRemovedEvent(Guid id)

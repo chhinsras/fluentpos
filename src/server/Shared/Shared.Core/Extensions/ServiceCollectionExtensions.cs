@@ -1,4 +1,15 @@
-﻿using FluentPOS.Shared.Core.Behaviors;
+﻿// <copyright file="ServiceCollectionExtensions.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
+using System.Linq;
+using System.Reflection;
+using FluentPOS.Shared.Core.Behaviors;
 using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.Features.Common.Queries.Validators;
 using FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands;
@@ -16,9 +27,6 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Linq;
-using System.Reflection;
 
 namespace FluentPOS.Shared.Core.Extensions
 {
@@ -45,7 +53,9 @@ namespace FluentPOS.Shared.Core.Extensions
                     .Configure<JsonSerializerSettingsOptions>(configureOptions =>
                     {
                         if (!configureOptions.JsonSerializerOptions.Converters.Any(c => c.GetType() == typeof(TimespanJsonConverter)))
+                        {
                             configureOptions.JsonSerializerOptions.Converters.Add(new TimespanJsonConverter());
+                        }
                     });
             }
             else if (options.UseNewtonsoftJson)
@@ -53,10 +63,12 @@ namespace FluentPOS.Shared.Core.Extensions
                 services
                     .AddSingleton<IJsonSerializer, NewtonSoftJsonSerializer>();
             }
+
             return services;
         }
 
-        public static T GetOptions<T>(this IServiceCollection services, string sectionName) where T : new()
+        public static T GetOptions<T>(this IServiceCollection services, string sectionName)
+            where T : new()
         {
             using var serviceProvider = services.BuildServiceProvider();
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();

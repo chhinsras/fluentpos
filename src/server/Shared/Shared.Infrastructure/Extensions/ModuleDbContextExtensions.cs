@@ -44,13 +44,13 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                         var oldValues = relatedEntriesChanges.ToDictionary(x => x.entityEntry.Entity.GetType().Name, y => y.oldValues);
                         var newValues = relatedEntriesChanges.ToDictionary(x => x.entityEntry.Entity.GetType().Name, y => y.newValues);
                         var relatedChanges = (oldValues.Count == 0 ? null : jsonSerializer.Serialize(oldValues), newValues.Count == 0 ? null : jsonSerializer.Serialize(newValues));
-                        await eventLogger.Save(domainEvent, relatedChanges);
+                        await eventLogger.SaveAsync(domainEvent, relatedChanges);
                         await mediator.Publish(domainEvent, cancellationToken);
 
                     }
                     else
                     {
-                        await eventLogger.Save(domainEvent, (null, null));
+                        await eventLogger.SaveAsync(domainEvent, (null, null));
                         await mediator.Publish(domainEvent, cancellationToken);
                     }
                 });
