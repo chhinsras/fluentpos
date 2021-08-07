@@ -1,12 +1,14 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, Pipe, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EventLog } from 'src/app/core/models/event-logs/event-log';
 import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
 import { TableColumn } from 'src/app/core/shared/components/table/table-column';
+import { EventLogDetailsComponent } from './components/event-log-details/event-log-details.component';
 import { EventLogParams } from './models/eventLogParams';
 import { EventLogService } from './services/event-log.service';
 @Component({
@@ -23,7 +25,6 @@ import { EventLogService } from './services/event-log.service';
 })
 
 export class EventLogsComponent implements OnInit {
-
   eventLogs: PaginatedResult<EventLog>;
   eventLogColumns: TableColumn[];
   eventLogParams = new EventLogParams();
@@ -31,7 +32,7 @@ export class EventLogsComponent implements OnInit {
   searchString: string;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private eventLogService: EventLogService, private datePipe: DatePipe) { }
+  constructor(private eventLogService: EventLogService, private datePipe: DatePipe, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getEventLogs();
@@ -77,6 +78,9 @@ export class EventLogsComponent implements OnInit {
     console.log(this.eventLogParams);
     this.getEventLogs();
   }
-  viewDetails(): void {
+  viewDetails(log?: EventLog): void {
+    const dialogRef = this.dialog.open(EventLogDetailsComponent, {
+      data: log,
+    });
   }
 }
