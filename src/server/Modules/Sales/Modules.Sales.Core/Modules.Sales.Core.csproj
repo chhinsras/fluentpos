@@ -5,4 +5,7 @@
     <RootNamespace>FluentPOS.Modules.Sales.Core</RootNamespace>
     <AssemblyName>FluentPOS.Modules.Sales.Core</AssemblyName>
   </PropertyGroup>
+   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Shared.Core\Shared.Core.csproj" />
+  </ItemGroup>
 </Project>
