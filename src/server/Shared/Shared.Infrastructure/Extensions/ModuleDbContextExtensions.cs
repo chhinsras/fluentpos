@@ -1,4 +1,12 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="ModuleDbContextExtensions.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,13 +28,13 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             IMediator mediator,
             List<(EntityEntry entityEntry, string oldValues, string newValues)> changes,
             IJsonSerializer jsonSerializer,
-            CancellationToken cancellationToken = new()
-            )
+            CancellationToken cancellationToken = new())
                 where TModuleDbContext : DbContext, IModuleDbContext
         {
             var domainEntities = context.ChangeTracker
                 .Entries<IBaseEntity>()
-                .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any());
+                .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any())
+                .ToList();
 
             var domainEvents = domainEntities
                 .SelectMany(x => x.Entity.DomainEvents)
@@ -46,7 +54,6 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                         var relatedChanges = (oldValues.Count == 0 ? null : jsonSerializer.Serialize(oldValues), newValues.Count == 0 ? null : jsonSerializer.Serialize(newValues));
                         await eventLogger.SaveAsync(domainEvent, relatedChanges);
                         await mediator.Publish(domainEvent, cancellationToken);
-
                     }
                     else
                     {

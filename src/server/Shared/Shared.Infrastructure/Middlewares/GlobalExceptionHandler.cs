@@ -1,4 +1,17 @@
-﻿using FluentPOS.Shared.Core.Exceptions;
+﻿// <copyright file="GlobalExceptionHandler.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Text.Json;
+using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Exceptions;
 using FluentPOS.Shared.Core.Interfaces.Serialization;
 using FluentPOS.Shared.Core.Serialization;
 using FluentPOS.Shared.Core.Settings;
@@ -7,11 +20,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace FluentPOS.Shared.Infrastructure.Middlewares
 {
@@ -21,7 +29,10 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
         private readonly SerializationSettings _serializationSettings;
         private readonly IJsonSerializer _jsonSerializer;
 
-        public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger, IOptions<SerializationSettings> serializationSettings, IJsonSerializer jsonSerializer)
+        public GlobalExceptionHandler(
+            ILogger<GlobalExceptionHandler> logger,
+            IOptions<SerializationSettings> serializationSettings,
+            IJsonSerializer jsonSerializer)
         {
             _logger = logger;
             _serializationSettings = serializationSettings.Value;
@@ -41,7 +52,9 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
                 if (exception is not CustomException && exception.InnerException != null)
                 {
                     while (exception.InnerException != null)
+                    {
                         exception = exception.InnerException;
+                    }
                 }
                 var responseModel = await ErrorResult<string>.ReturnErrorAsync(exception.Message);
                 responseModel.Source = exception.Source;
@@ -54,7 +67,7 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
                         responseModel.Messages = e.ErrorMessages;
                         break;
 
-                    case KeyNotFoundException e:
+                    case KeyNotFoundException:
                         response.StatusCode = responseModel.ErrorCode = (int)HttpStatusCode.NotFound;
                         break;
 
@@ -63,7 +76,7 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
                         break;
                 }
 
-                var result = string.Empty;
+                string result = string.Empty;
                 if (_serializationSettings.UseNewtonsoftJson)
                 {
                     result = _jsonSerializer.Serialize(responseModel, new JsonSerializerSettingsOptions

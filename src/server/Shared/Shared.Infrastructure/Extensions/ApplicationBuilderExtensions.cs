@@ -1,10 +1,18 @@
-﻿using FluentPOS.Shared.Core.Interfaces.Services;
+﻿// <copyright file="ApplicationBuilderExtensions.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System.Runtime.CompilerServices;
+using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Infrastructure.Middlewares;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("FluentPOS.Bootstrapper")]
 
