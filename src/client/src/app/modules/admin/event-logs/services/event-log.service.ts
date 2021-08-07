@@ -12,11 +12,12 @@ import { EventLogParams } from '../models/eventLogParams';
 })
 export class EventLogService {
 
-  constructor(private api: EventLogApiService){
+  constructor(private api: EventLogApiService) {
   }
 
   getEventLogs(eventLogParams: EventLogParams): Observable<PaginatedResult<EventLog>> {
     let params = new HttpParams();
+    if (eventLogParams.searchString) params = params.append('searchString', eventLogParams.searchString.toString());
     if (eventLogParams.pageNumber) params = params.append('pageNumber', eventLogParams.pageNumber.toString());
     if (eventLogParams.pageSize) params = params.append('pageSize', eventLogParams.pageSize.toString());
     return this.api.getAlls(params)

@@ -25,7 +25,7 @@ export class BrandComponent implements OnInit {
     public brandService: BrandService,
     public dialog: MatDialog,
     public toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getBrands();

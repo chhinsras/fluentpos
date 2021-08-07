@@ -69,10 +69,12 @@ export class EventLogsComponent implements OnInit {
     this.getEventLogs();
   }
 
-  public doFilter(): void {
-    this.eventLogParams.searchString = this.searchString.trim().toLocaleLowerCase();
+  public filter($event: string): void {
+
+    this.eventLogParams.searchString = $event.trim().toLocaleLowerCase();
     this.eventLogParams.pageNumber = 0;
     this.eventLogParams.pageSize = 0;
+    console.log(this.eventLogParams);
     this.getEventLogs();
   }
   viewDetails(): void {
