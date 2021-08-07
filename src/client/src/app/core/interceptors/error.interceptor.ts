@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {AuthService} from '../services/auth.service';
+import { Injectable } from '@angular/core';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -18,6 +18,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         switch (response.error.errorCode) {
           case 400:
             if (response.error.messages) {
+              this.toastr.error(response.error.exception);
+            }
+            else {
               this.toastr.error(response.error.exception);
             }
             break;
