@@ -15,13 +15,13 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Events
 
         public int Quantity { get; set; }
 
-        public CartItemAddedEvent(Guid id, AddCartItemCommand command)
+        public CartItemAddedEvent(CartItem cartItem)
         {
-            CartId = command.CartId;
-            ProductId = command.ProductId;
-            Quantity = command.Quantity;
-            Id = id;
-            AggregateId = id;
+            CartId = cartItem.CartId;
+            ProductId = cartItem.ProductId;
+            Quantity = cartItem.Quantity;
+            Id = cartItem.Id;
+            AggregateId = cartItem.Id;
             RelatedEntities = new[] { typeof(CartItem) };
         }
     }

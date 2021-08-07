@@ -33,7 +33,6 @@ export class ErrorInterceptor implements HttpInterceptor {
           case 500:
             console.log(response.error.exception);
             this.toastr.error('Something Went Wrong');
-            this.router.navigateByUrl('/server-error');
             break;
           default:
             this.toastr.error('Something Went Wrong');

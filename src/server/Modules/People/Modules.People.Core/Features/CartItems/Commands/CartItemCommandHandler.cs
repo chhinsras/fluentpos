@@ -58,7 +58,7 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Commands
             //TODO - how to check if product does not exist (placed in another module)?
 
             var cartItem = _mapper.Map<CartItem>(command);
-            cart.AddDomainEvent(new CartItemAddedEvent(cartItem.Id, command));
+            cart.AddDomainEvent(new CartItemAddedEvent(cartItem));
             _context.CartItems.Add(cartItem);
             await _context.SaveChangesAsync(cancellationToken);
             return await Result<Guid>.SuccessAsync(cartItem.Id, _localizer["Cart Item Saved"]);
