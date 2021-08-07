@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using FluentPOS.Shared.Core.EventLogging;
 using FluentPOS.Shared.Core.Exceptions;
 using FluentPOS.Shared.Core.Extensions;
@@ -18,15 +19,18 @@ namespace FluentPOS.Shared.Infrastructure.Services
 {
     public class EventLogService : IEventLogService
     {
+        private readonly IEventLogger _logger;
         private readonly IApplicationDbContext _dbContext;
         private readonly IStringLocalizer<EventLogService> _localizer;
-
+        private readonly IMapper _mapper;
         public EventLogService(
             IApplicationDbContext dbContext,
-            IStringLocalizer<EventLogService> localizer)
+            IStringLocalizer<EventLogService> localizer, IMapper mapper, IEventLogger logger)
         {
             _dbContext = dbContext;
             _localizer = localizer;
+            _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<PaginatedResult<EventLog>> GetAllAsync(GetEventLogsRequest request)
@@ -53,6 +57,13 @@ namespace FluentPOS.Shared.Infrastructure.Services
                 .ToPaginatedListAsync(request.PageNumber, request.PageSize);
             if (eventLogList == null) throw new CustomException(_localizer["Event Logs Not Found!"], statusCode: HttpStatusCode.NotFound);
             return eventLogList;
+        }
+
+        public async Task<Result<string>> LogCustomEventAsync(LogEventRequest request)
+        {
+            var log = _mapper.Map<EventLog>(request);
+            await _logger.Save(log, default);
+            return await Result<string>.SuccessAsync(data: log.Id.ToString());
         }
     }
 }

@@ -23,11 +23,11 @@ namespace FluentPOS.Shared.Infrastructure.EventLogging
             _jsonSerializer = jsonSerializer;
         }
 
-        public async Task Save<T>(T @event, (string oldValues,string newValues) changes) where T : Event
+        public async Task Save<T>(T @event, (string oldValues, string newValues) changes) where T : Event
         {
             var serializedData = _jsonSerializer.Serialize(@event, @event.GetType());
 
-            var userEmail = _user.GetUserEmail();
+            var userEmail = string.IsNullOrWhiteSpace(_user.GetUserEmail()) ? "Anonymous" : _user.GetUserEmail();
             var userId = _user.GetUserId();
             var thisEvent = new EventLog(
                 @event,

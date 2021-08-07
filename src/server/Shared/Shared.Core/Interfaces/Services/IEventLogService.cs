@@ -8,5 +8,6 @@ namespace FluentPOS.Shared.Core.Interfaces.Services
     public interface IEventLogService
     {
         Task<PaginatedResult<EventLog>> GetAllAsync(GetEventLogsRequest request);
+        Task<Result<string>> LogCustomEventAsync(LogEventRequest request);
     }
 }

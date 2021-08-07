@@ -25,7 +25,7 @@ import { EventLogService } from './services/event-log.service';
 export class EventLogsComponent implements OnInit {
 
   eventLogs: PaginatedResult<EventLog>;
-  eventLogColumns: TableColumn[];//string[] = ['id', 'email', 'messageType', 'timestamp'];
+  eventLogColumns: TableColumn[];
   eventLogParams = new EventLogParams();
   dataSource = new MatTableDataSource<EventLog>([]);
   searchString: string;
@@ -39,8 +39,8 @@ export class EventLogsComponent implements OnInit {
   }
   initColumns(): void {
     this.eventLogColumns = [
-      { name: 'Id', dataKey: 'id', isSortable: true, isShowable: true },
       { name: 'Event', dataKey: 'messageType', isSortable: true, isShowable: true },
+      { name: 'Description', dataKey: 'description', isSortable: true, isShowable: true },
       { name: 'Invoked By', dataKey: 'email', isSortable: true, isShowable: true },
       { name: 'Time Stamp', dataKey: 'timestamp', isSortable: true, isShowable: true },
       { name: 'Action', dataKey: 'action', position: 'right' },

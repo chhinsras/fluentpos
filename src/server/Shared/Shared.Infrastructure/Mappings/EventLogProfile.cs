@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentPOS.Shared.Core.EventLogging;
 using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.DTOs.Identity.EventLogs;
 
@@ -10,6 +11,7 @@ namespace FluentPOS.Shared.Infrastructure.Mappings
         {
             CreateMap<PaginatedEventLogsFilter, GetEventLogsRequest>()
                 .ForMember(dest => dest.OrderBy, opt => opt.ConvertUsing<string>(new OrderByConverter()));
+            CreateMap<LogEventRequest, EventLog>().ReverseMap();
         }
     }
 }

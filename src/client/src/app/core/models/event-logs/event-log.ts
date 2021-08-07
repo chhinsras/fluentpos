@@ -7,4 +7,5 @@ export class EventLog {
     userId: string;
     messageType: string;
     timestamp: string;
+    description: string;
 }
