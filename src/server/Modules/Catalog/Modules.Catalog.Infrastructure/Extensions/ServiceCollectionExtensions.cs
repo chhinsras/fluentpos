@@ -1,4 +1,5 @@
-﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
+﻿using System.Reflection;
+using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Infrastructure.Persistence;
 using FluentPOS.Modules.Catalog.Infrastructure.Services;
 using FluentPOS.Shared.Core.Interfaces.Services;
@@ -7,7 +8,6 @@ using FluentPOS.Shared.Infrastructure.Extensions;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace FluentPOS.Modules.Catalog.Infrastructure.Extensions
 {

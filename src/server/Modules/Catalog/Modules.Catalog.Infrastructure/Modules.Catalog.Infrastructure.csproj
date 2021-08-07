@@ -5,6 +5,14 @@
     <RootNamespace>FluentPOS.Modules.Catalog.Infrastructure</RootNamespace>
     <AssemblyName>FluentPOS.Modules.Catalog.Infrastructure</AssemblyName>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>FluentPOS.Modules.Catalog.Infrastructure.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>FluentPOS.Modules.Catalog.Infrastructure.xml</DocumentationFile>
+  </PropertyGroup>
   
   <ItemGroup>
     <None Include="Persistence\SeedData\**" CopyToOutputDirectory="PreserveNewest" />
