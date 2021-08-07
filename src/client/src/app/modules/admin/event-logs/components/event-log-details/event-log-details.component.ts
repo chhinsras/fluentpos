@@ -24,7 +24,20 @@ export class EventLogDetailsComponent implements OnInit {
     this.jsonOldValues = this.parseToJson(this.jsonOldValues);
   }
   parseToJson(str: string) {
-    var json = JSON.parse(str);
-    return json;
+    if (str) {
+      var json = JSON.parse(str);
+      if (json) {
+        Object.keys(json).forEach(function (k) {
+          try {
+            if (json[k]) {
+              json[k] = JSON.parse(json[k])
+            }
+          }
+          catch
+          {}
+        });
+      }
+      return json;
+    }
   }
 }
