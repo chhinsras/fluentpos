@@ -1,6 +1,6 @@
 <div [hidden]="!eventLogs">
-    <app-table [title]="'eventLogs.title'" [subtitle]="'eventLogs.subtitle'"
-        [data]="eventLogs && eventLogs.data" [columns]="eventLogColumns" (onView)="viewDetails()" (onReload)="reload()"
+    <app-table [title]="'eventLogs.title'" [subtitle]="'eventLogs.subtitle'" [data]="eventLogs && eventLogs.data"
+        [columns]="eventLogColumns" (onFilter)="filter($event)" (onView)="viewDetails()" (onReload)="reload()"
         [totalCount]="eventLogs && eventLogs.totalCount" [pageSize]="eventLogs && eventLogs.pageSize"
         (onPageChanged)="handlePageChange($event)">
     </app-table>

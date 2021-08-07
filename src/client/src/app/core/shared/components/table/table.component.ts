@@ -14,6 +14,7 @@ import { DeleteDialogComponent } from 'src/app/modules/admin/shared/components/d
 import { MatDialog } from '@angular/material/dialog';
 import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
 import { PageEvent } from '@angular/material/paginator';
+import { CustomAction } from './custom-action';
 
 @Component({
   selector: 'app-table',
@@ -23,6 +24,8 @@ import { PageEvent } from '@angular/material/paginator';
 export class TableComponent implements OnInit, AfterViewInit {
   public tableDataSource = new MatTableDataSource([]);
   public displayedColumns: string[];
+  @Input() customActionOneData: CustomAction;
+  @Input() customAction: CustomAction;
   searchString: string;
   @Input() totalCount: number;
   @Input() pageSize: number;
@@ -43,15 +46,14 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Output() onFilter: EventEmitter<string> = new EventEmitter<string>();
   @Output() onReload: EventEmitter<any> = new EventEmitter<any>();
   @Output() onSort: EventEmitter<Sort> = new EventEmitter<Sort>();
-
-  @Output() onPermissionsForm: EventEmitter<any> = new EventEmitter();
+  @Output() onCustomActionOne: EventEmitter<any> = new EventEmitter();
   @Output() onCreateForm: EventEmitter<any> = new EventEmitter();
   @Output() onEditForm: EventEmitter<any> = new EventEmitter();
   @Output() onView: EventEmitter<any> = new EventEmitter();
   @Output() onDelete: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(public dialog: MatDialog) {}
-
+  constructor(public dialog: MatDialog) { }
+  gold: EventEmitter<{ data: CustomAction }>[];
   ngOnInit(): void {
     const columnNames = this.columns.map(
       (tableColumn: TableColumn) => tableColumn.name
@@ -66,9 +68,8 @@ export class TableComponent implements OnInit, AfterViewInit {
   setTableDataSource(data: any) {
     this.tableDataSource = new MatTableDataSource<any>(data);
   }
-
-  openPermissionsForm($event: any) {
-    this.onPermissionsForm.emit($event);
+  openCustomActionOne($event: any) {
+    this.onCustomActionOne.emit($event);
   }
 
   openCreateForm() {
@@ -77,6 +78,9 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   openEditForm($event?) {
     this.onEditForm.emit($event);
+  }
+  openViewForm($event?) {
+    this.onView.emit($event);
   }
 
   handleReload() {

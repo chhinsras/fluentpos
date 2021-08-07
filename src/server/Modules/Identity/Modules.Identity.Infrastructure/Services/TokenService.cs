@@ -1,6 +1,7 @@
 ﻿using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Modules.Identity.Core.Settings;
+using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Core.Wrapper;
@@ -29,6 +30,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
         private readonly SmsSettings _smsSettings;
         private readonly MailSettings _mailSettings;
         private readonly JwtSettings _config;
+        private readonly IEventLogService _eventLog;
 
         public TokenService(
             UserManager<FluentUser> userManager,
@@ -36,7 +38,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             IOptions<JwtSettings> config,
             IStringLocalizer<TokenService> localizer,
             IOptions<SmsSettings> smsSettings,
-            IOptions<MailSettings> mailSettings)
+            IOptions<MailSettings> mailSettings, IEventLogService eventLog)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -44,6 +46,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             _smsSettings = smsSettings.Value;
             _mailSettings = mailSettings.Value;
             _config = config.Value;
+            _eventLog = eventLog;
         }
 
         public async Task<IResult<TokenResponse>> GetTokenAsync(TokenRequest request, string ipAddress)
@@ -65,6 +68,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             await _userManager.UpdateAsync(user);
             var token = await GenerateJwtAsync(user, ipAddress);
             var response = new TokenResponse(token, user.RefreshToken, user.RefreshTokenExpiryTime);
+            await _eventLog.LogCustomEventAsync(new() { Description = $"Generated Tokens for {user.Email}.", Email = user.Email });
             return await Result<TokenResponse>.SuccessAsync(response);
         }
 

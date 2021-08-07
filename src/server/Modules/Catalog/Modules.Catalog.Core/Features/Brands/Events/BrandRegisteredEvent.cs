@@ -19,6 +19,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Events
             Id = brand.Id;
             AggregateId = brand.Id;
             RelatedEntities = new[] { typeof(Brand) };
+            Description = $"Brand {Name} registered.";
         }
     }
 }

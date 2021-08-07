@@ -25,5 +25,12 @@ namespace FluentPOS.Modules.Identity.Controllers
             var eventLogs = await _eventLog.GetAllAsync(request);
             return Ok(eventLogs);
         }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> LogCustomEvent(LogEventRequest request)
+        {
+            var result = await _eventLog.LogCustomEventAsync(request);
+            return Ok(result);
+        }
     }
 }

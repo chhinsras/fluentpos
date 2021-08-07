@@ -6,5 +6,6 @@ export class EventLog {
     email: string;
     userId: string;
     messageType: string;
-    timestamp: Date;
+    timestamp: string;
+    description: string;
 }

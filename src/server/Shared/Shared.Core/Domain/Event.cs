@@ -13,10 +13,11 @@ namespace FluentPOS.Shared.Core.Domain
         public IEnumerable<Type> RelatedEntities { get; protected set; }
 
         public DateTime Timestamp { get; private set; }
-
-        protected Event()
+        public string Description { get; set; }
+        protected Event(string description = null)
         {
             Timestamp = DateTime.Now;
+            Description = description;
         }
     }
 }

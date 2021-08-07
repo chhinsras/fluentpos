@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, Pipe, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EventLog } from 'src/app/core/models/event-logs/event-log';
@@ -20,16 +21,17 @@ import { EventLogService } from './services/event-log.service';
     ]),
   ],
 })
+
 export class EventLogsComponent implements OnInit {
 
   eventLogs: PaginatedResult<EventLog>;
-  eventLogColumns: TableColumn[];//string[] = ['id', 'email', 'messageType', 'timestamp'];
+  eventLogColumns: TableColumn[];
   eventLogParams = new EventLogParams();
   dataSource = new MatTableDataSource<EventLog>([]);
   searchString: string;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private eventLogService: EventLogService) { }
+  constructor(private eventLogService: EventLogService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.getEventLogs();
@@ -37,13 +39,14 @@ export class EventLogsComponent implements OnInit {
   }
   initColumns(): void {
     this.eventLogColumns = [
-      { name: 'Id', dataKey: 'id', isSortable: true, isShowable: true },
       { name: 'Event', dataKey: 'messageType', isSortable: true, isShowable: true },
+      { name: 'Description', dataKey: 'description', isSortable: true, isShowable: true },
       { name: 'Invoked By', dataKey: 'email', isSortable: true, isShowable: true },
       { name: 'Time Stamp', dataKey: 'timestamp', isSortable: true, isShowable: true },
       { name: 'Action', dataKey: 'action', position: 'right' },
     ];
   }
+
   public reload(): void {
     this.searchString = this.eventLogParams.searchString = '';
     this.eventLogParams.pageNumber = 0;
@@ -53,7 +56,7 @@ export class EventLogsComponent implements OnInit {
   getEventLogs(): void {
     this.eventLogService.getEventLogs(this.eventLogParams).subscribe((result) => {
       this.eventLogs = result;
-      this.dataSource.data = this.eventLogs.data;
+      this.dataSource.data = this.eventLogs.data.filter(date => (date.timestamp = this.datePipe.transform(date.timestamp, 'MM/dd/yyyy hh:mm:ss a')));
     });
   }
   handlePageChange(event: PaginatedFilter): void {
@@ -66,10 +69,12 @@ export class EventLogsComponent implements OnInit {
     this.getEventLogs();
   }
 
-  public doFilter(): void {
-    this.eventLogParams.searchString = this.searchString.trim().toLocaleLowerCase();
+  public filter($event: string): void {
+
+    this.eventLogParams.searchString = $event.trim().toLocaleLowerCase();
     this.eventLogParams.pageNumber = 0;
     this.eventLogParams.pageSize = 0;
+    console.log(this.eventLogParams);
     this.getEventLogs();
   }
   viewDetails(): void {

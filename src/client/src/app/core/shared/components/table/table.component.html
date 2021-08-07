@@ -68,12 +68,12 @@
                     </ng-container>
 
                     <ng-container *ngIf="tableColumn.dataKey === 'action'">
-                        <button *ngIf="title === 'Roles'" mat-raised-button color="info"
-                            (click)="openPermissionsForm(element)">
-                            Manage Permissions
+                        <button *ngIf="customActionOneData" mat-raised-button color="{{customActionOneData.color}}"
+                            (click)="openCustomActionOne(element)">
+                            <mat-icon>{{customActionOneData.icon}}</mat-icon> {{customActionOneData.title}}
                         </button>
                         <button *ngIf="onView.observers.length>0" mat-raised-button color="primary"
-                            (click)="openEditForm(element)">
+                            (click)="openViewForm(element)">
                             <mat-icon>remove_red_eye</mat-icon> View
                         </button>
                         <button *ngIf="onEditForm.observers.length>0" mat-raised-button color="accent"
@@ -94,7 +94,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns" ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     <!-- Pagination -->
     <mat-paginator [length]="totalCount" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"

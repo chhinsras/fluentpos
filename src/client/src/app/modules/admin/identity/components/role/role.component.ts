@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Sort } from '@angular/material/sort';
 import { TableColumn } from 'src/app/core/shared/components/table/table-column';
 import { PermissionFormComponent } from './permission-form/permission-form.component';
+import { CustomAction } from 'src/app/core/shared/components/table/custom-action';
 
 @Component({
   selector: 'app-role',
@@ -21,12 +22,13 @@ export class RoleComponent implements OnInit {
   roleColumns: TableColumn[];
   roleParams = new RoleParams();
   searchString: string;
+  permissionActionData: CustomAction = new CustomAction('Manage Permissions');
 
   constructor(
     public roleService: RoleService,
     public dialog: MatDialog,
     public toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getRoles();
