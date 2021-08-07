@@ -13,6 +13,7 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Events
             Id = id;
             AggregateId = id;
             RelatedEntities = new[] { typeof(CartItem) };
+            Description = $"Removed Item from Cart.";
         }
     }
 }

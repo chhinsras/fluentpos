@@ -56,8 +56,13 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
         {
             var result = new List<(EntityEntry entityEntry, string oldValues, string newValues)>();
             ChangeTracker.DetectChanges();
-            foreach (var entry in ChangeTracker.Entries())
+            var changedEntities = ChangeTracker.Entries();
+            foreach (var entry in changedEntities)
             {
+                if (entry.State == EntityState.Unchanged)
+                {
+                    continue;
+                }
                 var previousData = new Dictionary<string, object>();
                 var currentData = new Dictionary<string, object>();
                 foreach (var property in entry.Properties)
@@ -66,6 +71,8 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
                     var originalValue = entry.GetDatabaseValues()?.GetValue<object>(propertyName);
                     switch (entry.State)
                     {
+                        case EntityState.Unchanged:
+                            break;
                         case EntityState.Added:
                             currentData[propertyName] = property.CurrentValue;
                             break;

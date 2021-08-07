@@ -77,7 +77,7 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Commands
             }
 
             cartItem = _mapper.Map<CartItem>(command);
-            cartItem.AddDomainEvent(new CartItemUpdatedEvent(command));
+            cartItem.AddDomainEvent(new CartItemUpdatedEvent(cartItem));
             _context.CartItems.Update(cartItem);
             await _context.SaveChangesAsync(cancellationToken);
             await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, CartItem>(command.Id), cancellationToken);

@@ -15,7 +15,7 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Events
 
         public int Quantity { get; set; }
 
-        public CartItemUpdatedEvent(UpdateCartItemCommand command)
+        public CartItemUpdatedEvent(CartItem command)
         {
             CartId = command.CartId;
             ProductId = command.ProductId;
@@ -23,6 +23,7 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Events
             Id = command.Id;
             AggregateId = command.Id;
             RelatedEntities = new[] { typeof(CartItem) };
+            Description = $"Updated Cart Item.";
         }
     }
 }
