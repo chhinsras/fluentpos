@@ -35,7 +35,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
 
     public class ExtendedAttributeQueryHandler<TEntityId, TEntity, TExtendedAttribute> :
         IRequestHandler<GetExtendedAttributesQuery<TEntityId, TEntity>, PaginatedResult<GetExtendedAttributesResponse<TEntityId>>>,
-        IRequestHandler<GetExtendedAttributeByIdQuery<TEntityId>, Result<GetExtendedAttributeByIdResponse<TEntityId>>>
+        IRequestHandler<GetExtendedAttributeByIdQuery<TEntityId, TEntity>, Result<GetExtendedAttributeByIdResponse<TEntityId>>>
             where TEntity : class, IEntity<TEntityId>
             where TExtendedAttribute : ExtendedAttribute<TEntityId, TEntity>
     {
@@ -103,7 +103,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
         }
 
 #pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
-        public async Task<Result<GetExtendedAttributeByIdResponse<TEntityId>>> Handle(GetExtendedAttributeByIdQuery<TEntityId> query, CancellationToken cancellationToken)
+        public async Task<Result<GetExtendedAttributeByIdResponse<TEntityId>>> Handle(GetExtendedAttributeByIdQuery<TEntityId, TEntity> query, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             var extendedAttribute = await _context.ExtendedAttributes.Where(b => b.Id == query.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);

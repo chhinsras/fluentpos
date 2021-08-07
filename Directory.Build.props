@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <CodeAnalysisRuleSet>(SolutionDir)fluentpos.ruleset</CodeAnalysisRuleSet>
+        <CodeAnalysisRuleSet>$(SolutionDir)fluentpos.ruleset</CodeAnalysisRuleSet>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
