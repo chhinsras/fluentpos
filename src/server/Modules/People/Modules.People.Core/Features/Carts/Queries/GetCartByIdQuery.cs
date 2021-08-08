@@ -32,5 +32,9 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Queries
             CacheKey = CacheKeys.Common.GetEntityByIdCacheKey<Guid, Cart>(cartId);
             SlidingExpiration = slidingExpiration;
         }
+        public GetCartByIdQuery()
+        {
+
+        }
     }
 }

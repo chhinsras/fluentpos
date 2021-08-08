@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentPOS.Modules.Sales.Core.Abstractions;
 using FluentPOS.Modules.Sales.Core.Entities;
+using FluentPOS.Shared.Core.IntegrationServices.Catalog;
 using FluentPOS.Shared.Core.IntegrationServices.People;
 using FluentPOS.Shared.Core.Wrapper;
 using MediatR;
@@ -27,16 +28,18 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
     internal sealed class RegisterSaleCommandHandler : IRequestHandler<RegisterSaleCommand, Result<Guid>>
     {
         private readonly ICartService _cartService;
+        private readonly IProductService _productService;
         private readonly ISalesDbContext _salesContext;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<RegisterSaleCommandHandler> _localizer;
 
-        public RegisterSaleCommandHandler(IMapper mapper, IStringLocalizer<RegisterSaleCommandHandler> localizer, ISalesDbContext salesContext, ICartService cartService)
+        public RegisterSaleCommandHandler(IMapper mapper, IStringLocalizer<RegisterSaleCommandHandler> localizer, ISalesDbContext salesContext, ICartService cartService, IProductService productService)
         {
             _mapper = mapper;
             _localizer = localizer;
             _salesContext = salesContext;
             _cartService = cartService;
+            _productService = productService;
         }
 
 #pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
@@ -59,6 +62,18 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             var customer = cartDetails.Data.Customer;
             var order = new Order();
             order.AddCustomer(customer);
+            var items = cartDetails.Data.CartItems;
+            foreach (var item in items)
+            {
+                var productResponse = await _productService.GetDetailsAsync(item.ProductId);
+                if (productResponse.Succeeded)
+                {
+                    var product = productResponse.Data;
+                    order.AddProduct(item.ProductId, product.Name, item.Quantity);
+                }
+            }
+            await _salesContext.Orders.AddAsync(order);
+            await _salesContext.SaveChangesAsync();
             return await Result<Guid>.SuccessAsync(order.Id, _localizer["Order Created"]);
         }
     }

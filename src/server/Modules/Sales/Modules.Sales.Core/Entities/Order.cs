@@ -7,6 +7,7 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.DTOs.People.Customers;
 
@@ -36,6 +37,8 @@ namespace FluentPOS.Modules.Sales.Core.Entities
 
         public string Note { get; set; }
 
+        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+
         public void AddCustomer(GetCustomerByIdResponse customer)
         {
             this.CustomerId = customer.Id;
@@ -44,5 +47,14 @@ namespace FluentPOS.Modules.Sales.Core.Entities
             this.CustomerPhone = customer.Phone;
         }
 
+        public void AddProduct(Product product)
+        {
+            this.Products.Add(product);
+        }
+
+        internal void AddProduct(Guid productId, string name, int quantity)
+        {
+            this.Products.Add(new Product() { ProductId = productId, Quantity = quantity });
+        }
     }
 }
