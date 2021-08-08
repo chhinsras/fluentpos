@@ -17,7 +17,7 @@
         <div *ngIf="onFilter.observers.length>0" class="right">
             <mat-form-field>
                 <input matInput [(ngModel)]="searchString" name="searchString" type="text" autocomplete="off"
-                    (keyup)="handleFilter()" placeholder="{{'components.table.filter'|translate}} {{ title }}" />
+                    (keyup)="handleFilter()" placeholder="{{'components.table.filter'|translate}} {{ title | translate}}" />
             </mat-form-field>
         </div>
     </div>
