@@ -1,4 +1,12 @@
-﻿using System;
+﻿// <copyright file="CartCommandHandler.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +33,6 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Commands
         private readonly IStringLocalizer<CartCommandHandler> _localizer;
         private readonly IDistributedCache _cache;
 
-
         public CartCommandHandler(
             IPeopleDbContext context,
             IMapper mapper,
@@ -38,7 +45,9 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Commands
             _cache = cache;
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public async Task<Result<Guid>> Handle(CreateCartCommand command, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             if (!await _context.Customers.AnyAsync(p => p.Id == command.CustomerId, cancellationToken))
             {
@@ -52,13 +61,16 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Commands
             return await Result<Guid>.SuccessAsync(cart.Id, _localizer["Cart Created"]);
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public async Task<Result<Guid>> Handle(RemoveCartCommand command, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             var cart = await _context.Carts.FirstOrDefaultAsync(b => b.Id == command.Id, cancellationToken);
             if (cart == null)
             {
                 throw new PeopleException(_localizer["Cart Not Found!"], HttpStatusCode.NotFound);
             }
+
             cart.AddDomainEvent(new CartRemovedEvent(cart.Id));
             _context.Carts.Remove(cart);
             await _context.SaveChangesAsync(cancellationToken);

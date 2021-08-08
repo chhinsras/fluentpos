@@ -1,4 +1,4 @@
-﻿// <copyright file="IPeopleDbContext.cs" company="Fluentpos">
+﻿// <copyright file="CustomerTypes.cs" company="Fluentpos">
 // --------------------------------------------------------------------------------------------------
 // Copyright (c) Fluentpos. All rights reserved.
 // The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
@@ -6,18 +6,11 @@
 // --------------------------------------------------------------------------------------------------
 // </copyright>
 
-using FluentPOS.Modules.People.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using FluentPOS.Shared.Core.Interfaces;
-
-namespace FluentPOS.Modules.People.Core.Abstractions
+namespace FluentPOS.Modules.People.Core.Constants
 {
-    public interface IPeopleDbContext : IDbContext
+    public static class CustomerTypes
     {
-        public DbSet<Customer> Customers { get; set; }
-
-        public DbSet<Cart> Carts { get; set; }
-
-        public DbSet<CartItem> CartItems { get; set; }
+        public const string General = "General";
+        public const string VIP = "VIP";
     }
 }

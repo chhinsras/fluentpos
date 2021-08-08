@@ -1,4 +1,12 @@
-﻿using System;
+﻿// <copyright file="CartItemQueryHandler.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -29,7 +37,11 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Queries
         private readonly IStringLocalizer<CartItemQueryHandler> _localizer;
         private readonly IProductService _productService;
 
-        public CartItemQueryHandler(IPeopleDbContext context, IMapper mapper, IStringLocalizer<CartItemQueryHandler> localizer, IProductService productService)
+        public CartItemQueryHandler(
+            IPeopleDbContext context,
+            IMapper mapper,
+            IStringLocalizer<CartItemQueryHandler> localizer,
+            IProductService productService)
         {
             _context = context;
             _mapper = mapper;
@@ -37,21 +49,31 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Queries
             _productService = productService;
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public async Task<PaginatedResult<GetCartItemsResponse>> Handle(GetCartItemsQuery request, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             Expression<Func<CartItem, GetCartItemsResponse>> expression = e => new GetCartItemsResponse(e.Id, e.CartId, e.ProductId, e.Quantity);
             var queryable = _context.CartItems.AsQueryable();
 
-            var ordering = new OrderByConverter().Convert(request.OrderBy);
+            string ordering = new OrderByConverter().Convert(request.OrderBy);
             queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderBy(a => a.Id);
 
-            if (request.CartId != null && !request.CartId.Equals(Guid.Empty)) queryable = queryable.Where(x => x.CartId.Equals(request.CartId));
+            if (request.CartId != null && !request.CartId.Equals(Guid.Empty))
+            {
+                queryable = queryable.Where(x => x.CartId.Equals(request.CartId));
+            }
+
             var cartItemList = await queryable
                 .Select(expression)
                 .ToPaginatedListAsync(request.PageNumber, request.PageSize);
-            if (cartItemList == null) throw new CartNotFoundException();
+            if (cartItemList == null)
+            {
+                throw new CartNotFoundException();
+            }
+
             var mappedCartItems = _mapper.Map<PaginatedResult<GetCartItemsResponse>>(cartItemList);
-            foreach (GetCartItemsResponse item in mappedCartItems.Data)
+            foreach (var item in mappedCartItems.Data)
             {
                 var details = await _productService.GetDetailsAsync(item.ProductId);
                 if (details.Succeeded)
@@ -61,13 +83,20 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Queries
                     item.Rate = details.Data.Price;
                 }
             }
+
             return mappedCartItems;
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public async Task<Result<GetCartItemByIdResponse>> Handle(GetCartItemByIdQuery query, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             var cartItem = await _context.CartItems.Where(b => b.Id == query.Id).FirstOrDefaultAsync(cancellationToken);
-            if (cartItem == null) throw new PeopleException(_localizer["Cart Item Not Found!"], HttpStatusCode.NotFound);
+            if (cartItem == null)
+            {
+                throw new PeopleException(_localizer["Cart Item Not Found!"], HttpStatusCode.NotFound);
+            }
+
             var mappedCartItem = _mapper.Map<GetCartItemByIdResponse>(cartItem);
             return await Result<GetCartItemByIdResponse>.SuccessAsync(mappedCartItem);
         }
