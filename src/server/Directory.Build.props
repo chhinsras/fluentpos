@@ -4,6 +4,7 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -12,8 +13,8 @@
         <PackageReference Include="Roslynator.Analyzers" Version="3.2.0">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <AdditionalFiles Include="$(SolutionDir)stylecop.json" Link="stylecop.json" />
-        <AdditionalFiles Include="$(SolutionDir)fluentpos.ruleset" Link="fluentpos.ruleset" />
-        <AdditionalFiles Include="$(SolutionDir).editorconfig" Link=".editorconfig" />
+        <AdditionalFiles Include="$(SolutionDir)stylecop.json" Link="Properties\stylecop.json" />
+        <AdditionalFiles Include="$(SolutionDir)fluentpos.ruleset" Link="Properties\fluentpos.ruleset" />
+        <AdditionalFiles Include="$(SolutionDir).editorconfig" Link="Properties\.editorconfig" />
     </ItemGroup>
 </Project>

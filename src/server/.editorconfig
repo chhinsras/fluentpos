@@ -142,3 +142,9 @@ dotnet_diagnostic.CA1720.severity = none
 
 # SA1601: Partial elements should be documented
 dotnet_diagnostic.SA1601.severity = silent
+
+# CA1711 Rename type name UserEventHandler so that it does not end in 'EventHandler'
+dotnet_diagnostic.CA1711.severity = none
+
+[**/Persistence/Migrations/*.cs]
+dotnet_diagnostics.SA1633.severity = none
