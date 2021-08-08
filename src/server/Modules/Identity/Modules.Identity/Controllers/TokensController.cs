@@ -1,8 +1,16 @@
-﻿using FluentPOS.Shared.Core.Interfaces.Services.Identity;
+﻿// <copyright file="TokensController.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Interfaces.Services.Identity;
 using FluentPOS.Shared.DTOs.Identity.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Controllers
 {
@@ -32,12 +40,17 @@ namespace FluentPOS.Modules.Identity.Controllers
             return Ok(response);
         }
 
+        // ReSharper disable once InconsistentNaming
         private string GenerateIPAddress()
         {
             if (Request.Headers.ContainsKey("X-Forwarded-For"))
+            {
                 return Request.Headers["X-Forwarded-For"];
+            }
             else
+            {
                 return HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString();
+            }
         }
     }
 }

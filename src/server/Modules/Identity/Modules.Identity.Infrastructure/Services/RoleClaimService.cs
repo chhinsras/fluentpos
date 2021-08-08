@@ -1,6 +1,19 @@
-﻿using AutoMapper;
+﻿// <copyright file="RoleClaimService.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
+using FluentPOS.Modules.Identity.Core.Features.RoleClaims.Events;
 using FluentPOS.Modules.Identity.Core.Helpers;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Interfaces.Services.Identity;
@@ -9,11 +22,6 @@ using FluentPOS.Shared.DTOs.Identity.Roles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentPOS.Modules.Identity.Core.Features.RoleClaims.Events;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
@@ -51,8 +59,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
 
         public async Task<int> GetCountAsync()
         {
-            var count = await _db.RoleClaims.AsNoTracking().CountAsync();
-            return count;
+            return await _db.RoleClaims.AsNoTracking().CountAsync();
         }
 
         public async Task<Result<RoleClaimResponse>> GetByIdAsync(int id)
@@ -91,6 +98,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 {
                     return await Result<string>.FailAsync(_localizer["Similar Role Claim already exists."]);
                 }
+
                 var roleClaim = _mapper.Map<FluentRoleClaim>(request);
                 await _db.RoleClaims.AddAsync(roleClaim);
                 roleClaim.AddDomainEvent(new RoleClaimAddedEvent(roleClaim));
@@ -175,6 +183,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                             {
                                 permission.Description = roleClaim.Description;
                             }
+
                             if (roleClaim?.Group != null)
                             {
                                 permission.Group = roleClaim.Group;
@@ -188,6 +197,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     return await Result<PermissionResponse>.FailAsync(roleClaimsResult.Messages);
                 }
             }
+
             response.RoleClaims = allPermissions;
             return await Result<PermissionResponse>.SuccessAsync(response);
         }
@@ -221,7 +231,9 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     {
                         return await Result<string>.FailAsync(string.Format(
                             _localizer["Not allowed to deselect {0} or {1} or {2} for this Role."],
-                            Shared.Core.Constants.Permissions.Roles.View, Shared.Core.Constants.Permissions.RoleClaims.View, Shared.Core.Constants.Permissions.RoleClaims.Edit));
+                            Shared.Core.Constants.Permissions.Roles.View,
+                            Shared.Core.Constants.Permissions.RoleClaims.View,
+                            Shared.Core.Constants.Permissions.RoleClaims.Edit));
                     }
                 }
 
@@ -230,9 +242,10 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 {
                     await _roleManager.RemoveClaimAsync(role, claim);
                 }
+
                 foreach (var claim in selectedClaims)
                 {
-                    var addResult = await _roleManager.AddPermissionClaim(role, claim.Value);
+                    var addResult = await _roleManager.AddPermissionClaimAsync(role, claim.Value);
                     if (!addResult.Succeeded)
                     {
                         errors.AddRange(addResult.Errors.Select(e => _localizer[e.Description].ToString()));

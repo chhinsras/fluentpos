@@ -1,9 +1,17 @@
-﻿using FluentPOS.Shared.Core.Interfaces.Services;
+﻿// <copyright file="TwilioSmsService.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.DTOs.Sms;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
@@ -25,8 +33,8 @@ namespace FluentPOS.Shared.Infrastructure.Services
         {
             try
             {
-                var accountSid = _settings.SmsAccountIdentification;
-                var authToken = _settings.SmsAccountPassword;
+                string accountSid = _settings.SmsAccountIdentification;
+                string authToken = _settings.SmsAccountPassword;
 
                 TwilioClient.Init(accountSid, authToken);
 

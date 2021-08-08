@@ -1,4 +1,12 @@
-﻿using System;
+﻿// <copyright file="RoleClaimAddedEvent.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Shared.Core.Domain;
 
@@ -7,10 +15,15 @@ namespace FluentPOS.Modules.Identity.Core.Features.RoleClaims.Events
     public class RoleClaimAddedEvent : Event
     {
         public int Id { get; }
+
         public string RoleId { get; }
+
         public string ClaimType { get; }
+
         public string ClaimValue { get; }
+
         public string Group { get; }
+
         public string Description { get; }
 
         public RoleClaimAddedEvent(FluentRoleClaim roleClaim)

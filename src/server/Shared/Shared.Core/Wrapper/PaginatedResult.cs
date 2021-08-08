@@ -1,4 +1,12 @@
-﻿using System;
+﻿// <copyright file="PaginatedResult.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 
 namespace FluentPOS.Shared.Core.Wrapper
@@ -37,6 +45,7 @@ namespace FluentPOS.Shared.Core.Wrapper
         public int TotalPages { get; set; }
 
         public int TotalCount { get; set; }
+
         public int PageSize { get; set; }
 
         public bool HasPreviousPage => CurrentPage > 1;

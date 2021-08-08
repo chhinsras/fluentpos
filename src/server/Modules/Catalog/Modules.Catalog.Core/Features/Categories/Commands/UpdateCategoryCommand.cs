@@ -1,16 +1,28 @@
-﻿using FluentPOS.Shared.Core.Wrapper;
+﻿// <copyright file="UpdateCategoryCommand.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
+using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Upload;
 using MediatR;
-using System;
 
 namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Commands
 {
-    public partial class UpdateCategoryCommand : IRequest<Result<Guid>>
+    public class UpdateCategoryCommand : IRequest<Result<Guid>>
     {
         public Guid Id { get; set; }
+
         public string Name { get; set; }
+
         public string ImageUrl { get; set; }
+
         public string Detail { get; set; }
+
         public UploadRequest UploadRequest { get; set; }
     }
 }

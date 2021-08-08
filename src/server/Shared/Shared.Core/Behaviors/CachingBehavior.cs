@@ -1,4 +1,18 @@
-﻿using FluentPOS.Shared.Core.Interfaces.Serialization;
+﻿// <copyright file="CachingBehavior.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
+using System.Net;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Exceptions;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using FluentPOS.Shared.Core.Queries;
 using FluentPOS.Shared.Core.Settings;
 using MediatR;
@@ -6,12 +20,6 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
-using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Exceptions;
 
 namespace FluentPOS.Shared.Core.Behaviors
 {
@@ -20,7 +28,8 @@ namespace FluentPOS.Shared.Core.Behaviors
         // for localization
     }
 
-    public class CachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : ICacheable
+    public class CachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : ICacheable
     {
         private readonly IDistributedCache _cache;
         private readonly ILogger _logger;
@@ -37,7 +46,9 @@ namespace FluentPOS.Shared.Core.Behaviors
             _settings = settings.Value;
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             TResponse response;
             if (request.BypassCache)
@@ -45,6 +56,7 @@ namespace FluentPOS.Shared.Core.Behaviors
                 _logger.LogInformation(string.Format(_localizer["Bypassing Cache for -> '{0}'."], request.CacheKey));
                 return await next();
             }
+
             async Task<TResponse> GetResponseAndAddToCache()
             {
                 response = await next();
@@ -53,13 +65,14 @@ namespace FluentPOS.Shared.Core.Behaviors
                 {
                     throw new CustomException(_localizer["Cache Sliding Expiration must be greater than 0."], statusCode: HttpStatusCode.BadRequest);
                 }
+
                 var options = new DistributedCacheEntryOptions { SlidingExpiration = slidingExpiration };
-                var serializedData = Encoding.Default.GetBytes(_jsonSerializer.Serialize(response));
-                await _cache.SetAsync((string)request.CacheKey, serializedData, options, cancellationToken);
+                byte[] serializedData = Encoding.Default.GetBytes(_jsonSerializer.Serialize(response));
+                await _cache.SetAsync(request.CacheKey, serializedData, options, cancellationToken);
                 return response;
             }
 
-            var cachedResponse = !string.IsNullOrWhiteSpace(request.CacheKey) ? await _cache.GetAsync(request.CacheKey, cancellationToken) : null;
+            byte[] cachedResponse = !string.IsNullOrWhiteSpace(request.CacheKey) ? await _cache.GetAsync(request.CacheKey, cancellationToken) : null;
             if (cachedResponse != null)
             {
                 response = _jsonSerializer.Deserialize<TResponse>(Encoding.Default.GetString(cachedResponse));

@@ -1,16 +1,24 @@
-﻿using FluentPOS.Modules.People.Core.Abstractions;
+﻿// <copyright file="PeopleDbContext.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
+using FluentPOS.Modules.People.Core.Abstractions;
 using FluentPOS.Modules.People.Core.Entities;
+using FluentPOS.Modules.People.Core.Entities.ExtendedAttributes;
 using FluentPOS.Modules.People.Infrastructure.Extensions;
 using FluentPOS.Shared.Core.EventLogging;
 using FluentPOS.Shared.Core.Interfaces;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System;
-using FluentPOS.Modules.People.Core.Entities.ExtendedAttributes;
-using FluentPOS.Shared.Core.Interfaces.Serialization;
 
 namespace FluentPOS.Modules.People.Infrastructure.Persistence
 {
@@ -28,8 +36,9 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence
             DbContextOptions<PeopleDbContext> options,
             IMediator mediator,
             IEventLogger eventLogger,
-            IOptions<PersistenceSettings> persistenceOptions, IJsonSerializer json)
-                : base(options, mediator, eventLogger, persistenceOptions,json)
+            IOptions<PersistenceSettings> persistenceOptions,
+            IJsonSerializer json)
+                : base(options, mediator, eventLogger, persistenceOptions, json)
         {
             _persistenceOptions = persistenceOptions.Value;
             _json = json;

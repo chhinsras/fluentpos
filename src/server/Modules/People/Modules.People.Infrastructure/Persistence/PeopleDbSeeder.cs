@@ -1,14 +1,22 @@
-﻿using FluentPOS.Modules.People.Core.Entities;
-using FluentPOS.Shared.Core.Interfaces.Serialization;
-using FluentPOS.Shared.Core.Interfaces.Services;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
+﻿// <copyright file="PeopleDbSeeder.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using FluentPOS.Modules.People.Core.Entities;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
+using FluentPOS.Shared.Core.Interfaces.Services;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 
 namespace FluentPOS.Modules.People.Infrastructure.Persistence
 {
@@ -19,7 +27,11 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence
         private readonly IStringLocalizer<PeopleDbContext> _localizer;
         private readonly IJsonSerializer _jsonSerializer;
 
-        public PeopleDbSeeder(ILogger<PeopleDbSeeder> logger, PeopleDbContext db, IStringLocalizer<PeopleDbContext> localizer, IJsonSerializer jsonSerializer)
+        public PeopleDbSeeder(
+            ILogger<PeopleDbSeeder> logger,
+            PeopleDbContext db,
+            IStringLocalizer<PeopleDbContext> localizer,
+            IJsonSerializer jsonSerializer)
         {
             _logger = logger;
             _db = db;
@@ -44,10 +56,10 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence
         {
             Task.Run(async () =>
             {
-                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 if (!_db.Customers.Any())
                 {
-                    var customerData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/customers.json");
+                    string customerData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/customers.json");
                     var customers = _jsonSerializer.Deserialize<List<Customer>>(customerData);
 
                     if (customers != null)

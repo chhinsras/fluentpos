@@ -1,4 +1,12 @@
-﻿using System;
+﻿// <copyright file="TimespanJsonConverter.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
@@ -6,19 +14,19 @@ using System.Text.RegularExpressions;
 namespace FluentPOS.Shared.Core.Serialization
 {
     /// <summary>
-    /// The new Json.NET doesn't support Timespan at this time
-    /// https://github.com/dotnet/corefx/issues/38641
+    /// The new Json.NET doesn't support Timespan at this time.
+    /// https://github.com/dotnet/corefx/issues/38641.
     /// </summary>
     public class TimespanJsonConverter : JsonConverter<TimeSpan>
     {
         /// <summary>
-        /// Format: Days.Hours:Minutes:Seconds:Milliseconds
+        /// Format: Days.Hours:Minutes:Seconds:Milliseconds.
         /// </summary>
         public const string TimeSpanFormatString = @"d\.hh\:mm\:ss\:FFF";
 
         public override TimeSpan Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var s = reader.GetString();
+            string s = reader.GetString();
             if (string.IsNullOrWhiteSpace(s))
             {
                 return TimeSpan.Zero;
@@ -34,7 +42,7 @@ namespace FluentPOS.Shared.Core.Serialization
 
         public override void Write(Utf8JsonWriter writer, TimeSpan value, JsonSerializerOptions options)
         {
-            var timespanFormatted = $"{value.ToString(TimeSpanFormatString)}";
+            string timespanFormatted = $"{value.ToString(TimeSpanFormatString)}";
             writer.WriteStringValue(timespanFormatted);
         }
     }

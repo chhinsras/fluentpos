@@ -1,16 +1,24 @@
-﻿using FluentPOS.Shared.Core.Domain;
+﻿// <copyright file="ModuleDbContext.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.EventLogging;
+using FluentPOS.Shared.Core.Interfaces;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using System.Threading;
-using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Interfaces;
-using System.Collections.Generic;
-using FluentPOS.Shared.Core.Interfaces.Serialization;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Options;
 
 namespace FluentPOS.Shared.Infrastructure.Persistence
 {
@@ -27,7 +35,9 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
             DbContextOptions options,
             IMediator mediator,
             IEventLogger eventLogger,
-            IOptions<PersistenceSettings> persistenceOptions, IJsonSerializer json) : base(options)
+            IOptions<PersistenceSettings> persistenceOptions,
+            IJsonSerializer json)
+                : base(options)
         {
             _mediator = mediator;
             _eventLogger = eventLogger;
@@ -41,6 +51,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
             {
                 modelBuilder.HasDefaultSchema(Schema);
             }
+
             modelBuilder.Ignore<Event>();
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
@@ -52,6 +63,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
             var changes = OnBeforeSaveChanges();
             return await this.SaveChangeWithPublishEventsAsync(_eventLogger, _mediator, changes, _json, cancellationToken);
         }
+
         private List<(EntityEntry entityEntry, string oldValues, string newValues)> OnBeforeSaveChanges()
         {
             var result = new List<(EntityEntry entityEntry, string oldValues, string newValues)>();
@@ -63,12 +75,13 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
                 {
                     continue;
                 }
+
                 var previousData = new Dictionary<string, object>();
                 var currentData = new Dictionary<string, object>();
                 foreach (var property in entry.Properties)
                 {
                     string propertyName = property.Metadata.Name;
-                    var originalValue = entry.GetDatabaseValues()?.GetValue<object>(propertyName);
+                    object originalValue = entry.GetDatabaseValues()?.GetValue<object>(propertyName);
                     switch (entry.State)
                     {
                         case EntityState.Unchanged:
@@ -87,15 +100,19 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
                                 previousData[propertyName] = originalValue;
                                 currentData[propertyName] = property.CurrentValue;
                             }
+
                             break;
                     }
                 }
-                var oldValues = previousData.Count == 0 ? null : _json.Serialize(previousData);
-                var newValues = currentData.Count == 0 ? null : _json.Serialize(currentData);
+
+                string oldValues = previousData.Count == 0 ? null : _json.Serialize(previousData);
+                string newValues = currentData.Count == 0 ? null : _json.Serialize(currentData);
                 result.Add((entry, oldValues, newValues));
             }
+
             return result;
         }
+
         public override int SaveChanges()
         {
             var changes = OnBeforeSaveChanges();

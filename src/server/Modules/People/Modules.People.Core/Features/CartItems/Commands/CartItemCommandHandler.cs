@@ -1,4 +1,12 @@
-﻿using System;
+﻿// <copyright file="CartItemCommandHandler.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -39,7 +47,9 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Commands
             _cache = cache;
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public async Task<Result<Guid>> Handle(AddCartItemCommand command, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             var cart = await _context
                 .Carts
@@ -50,12 +60,13 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Commands
             {
                 throw new PeopleException(_localizer["Cart Not Found!"], HttpStatusCode.NotFound);
             }
+
             if (cart.CartItems.Any(i => i.ProductId == command.ProductId))
             {
                 throw new PeopleException(_localizer["Product already added to the Cart."], HttpStatusCode.BadRequest);
             }
 
-            //TODO - how to check if product does not exist (placed in another module)?
+            // TODO - how to check if product does not exist (placed in another module)?
 
             var cartItem = _mapper.Map<CartItem>(command);
             cart.AddDomainEvent(new CartItemAddedEvent(cartItem));
@@ -64,13 +75,16 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Commands
             return await Result<Guid>.SuccessAsync(cartItem.Id, _localizer["Cart Item Saved"]);
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public async Task<Result<Guid>> Handle(UpdateCartItemCommand command, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             var cartItem = await _context.CartItems.Where(i => i.Id == command.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
             if (cartItem == null)
             {
                 throw new PeopleException(_localizer["Cart Item Not Found!"], HttpStatusCode.NotFound);
             }
+
             if (await _context.CartItems.AsNoTracking().AnyAsync(i => i.Id != command.Id && i.CartId == command.CartId && i.ProductId == command.ProductId, cancellationToken))
             {
                 throw new PeopleException(_localizer["Cart Item with the same Product already exists in the Cart."], HttpStatusCode.BadRequest);
@@ -84,13 +98,16 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Commands
             return await Result<Guid>.SuccessAsync(cartItem.Id, _localizer["Cart Item Updated"]);
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public async Task<Result<Guid>> Handle(RemoveCartItemCommand command, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             var cartItem = await _context.CartItems.FirstOrDefaultAsync(b => b.Id == command.Id, cancellationToken);
             if (cartItem == null)
             {
                 throw new PeopleException(_localizer["Cart Item Not Found!"], HttpStatusCode.NotFound);
             }
+
             cartItem.AddDomainEvent(new CartItemRemovedEvent(cartItem.Id));
             _context.CartItems.Remove(cartItem);
             await _context.SaveChangesAsync(cancellationToken);

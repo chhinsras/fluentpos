@@ -1,4 +1,12 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="IdentityDbContext.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentPOS.Modules.Identity.Core.Abstractions;
@@ -37,7 +45,8 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
             DbContextOptions<IdentityDbContext> options,
             IOptions<PersistenceSettings> persistenceOptions,
             IMediator mediator,
-            IEventLogger eventLogger, IJsonSerializer json)
+            IEventLogger eventLogger,
+            IJsonSerializer json)
                 : base(options)
         {
             _mediator = mediator;
@@ -54,11 +63,13 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
             modelBuilder.ApplyIdentityConfiguration(_persistenceOptions);
         }
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var changes = OnBeforeSaveChanges();
             return await this.SaveChangeWithPublishEventsAsync(_eventLogger, _mediator, changes, _json, cancellationToken);
         }
+
         private List<(EntityEntry entityEntry, string oldValues, string newValues)> OnBeforeSaveChanges()
         {
             var result = new List<(EntityEntry entityEntry, string oldValues, string newValues)>();
@@ -70,7 +81,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                 foreach (var property in entry.Properties)
                 {
                     string propertyName = property.Metadata.Name;
-                    var originalValue = entry.GetDatabaseValues()?.GetValue<object>(propertyName);
+                    object originalValue = entry.GetDatabaseValues()?.GetValue<object>(propertyName);
                     switch (entry.State)
                     {
                         case EntityState.Added:
@@ -79,21 +90,22 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                         case EntityState.Deleted:
                             previousData[propertyName] = originalValue;
                             break;
-
                         case EntityState.Modified:
-
                             if (property.IsModified && originalValue?.Equals(property.CurrentValue) == false)
                             {
                                 previousData[propertyName] = originalValue;
                                 currentData[propertyName] = property.CurrentValue;
                             }
+
                             break;
                     }
                 }
-                var oldValues = previousData.Count == 0 ? null : _json.Serialize(previousData);
-                var newValues = currentData.Count == 0 ? null : _json.Serialize(currentData);
+
+                string oldValues = previousData.Count == 0 ? null : _json.Serialize(previousData);
+                string newValues = currentData.Count == 0 ? null : _json.Serialize(currentData);
                 result.Add((entry, oldValues, newValues));
             }
+
             return result;
         }
 
@@ -107,6 +119,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
         {
             return SaveChanges();
         }
+
         DbSet<FluentUser> IExtendedAttributeDbContext<string, FluentUser, UserExtendedAttribute>.GetEntities() => Users;
 
         DbSet<UserExtendedAttribute> IExtendedAttributeDbContext<string, FluentUser, UserExtendedAttribute>.ExtendedAttributes { get; set; }

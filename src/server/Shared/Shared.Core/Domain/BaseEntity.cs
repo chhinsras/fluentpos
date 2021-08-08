@@ -1,6 +1,14 @@
-﻿using FluentPOS.Shared.Core.Contracts;
+﻿// <copyright file="BaseEntity.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
 using System;
 using System.Collections.Generic;
+using FluentPOS.Shared.Core.Contracts;
 
 namespace FluentPOS.Shared.Core.Domain
 {
@@ -14,6 +22,7 @@ namespace FluentPOS.Shared.Core.Domain
         }
 
         private List<Event> _domainEvents;
+
         public IReadOnlyCollection<Event> DomainEvents => _domainEvents?.AsReadOnly();
 
         public void AddDomainEvent(Event domainEvent)

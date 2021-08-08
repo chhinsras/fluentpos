@@ -1,4 +1,12 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="Result.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FluentPOS.Shared.Core.Wrapper
@@ -77,7 +85,9 @@ namespace FluentPOS.Shared.Core.Wrapper
     public class ErrorResult<T> : Result<T>
     {
         public string Source { get; set; }
+
         public string Exception { get; set; }
+
         public int ErrorCode { get; set; }
     }
 

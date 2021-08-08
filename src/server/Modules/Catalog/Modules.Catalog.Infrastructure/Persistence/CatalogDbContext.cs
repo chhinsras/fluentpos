@@ -1,16 +1,24 @@
-﻿using FluentPOS.Modules.Catalog.Core.Abstractions;
+﻿// <copyright file="CatalogDbContext.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
+using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Entities;
+using FluentPOS.Modules.Catalog.Core.Entities.ExtendedAttributes;
 using FluentPOS.Modules.Catalog.Infrastructure.Extensions;
 using FluentPOS.Shared.Core.EventLogging;
 using FluentPOS.Shared.Core.Interfaces;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
 using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System;
-using FluentPOS.Modules.Catalog.Core.Entities.ExtendedAttributes;
-using FluentPOS.Shared.Core.Interfaces.Serialization;
 
 namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
 {
@@ -20,14 +28,17 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
         IExtendedAttributeDbContext<Guid, Product, ProductExtendedAttribute>
     {
         private readonly PersistenceSettings _persistenceOptions;
+
         private readonly IJsonSerializer _json;
+
         protected override string Schema => "Catalog";
 
         public CatalogDbContext(
             DbContextOptions<CatalogDbContext> options,
             IMediator mediator,
             IEventLogger eventLogger,
-            IOptions<PersistenceSettings> persistenceOptions, IJsonSerializer json)
+            IOptions<PersistenceSettings> persistenceOptions,
+            IJsonSerializer json)
                 : base(options, mediator, eventLogger, persistenceOptions, json)
         {
             _persistenceOptions = persistenceOptions.Value;
@@ -35,7 +46,9 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
         }
 
         public DbSet<Product> Products { get; set; }
+
         public DbSet<Brand> Brands { get; set; }
+
         public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -51,7 +64,9 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
         DbSet<Product> IExtendedAttributeDbContext<Guid, Product, ProductExtendedAttribute>.GetEntities() => Products;
 
         DbSet<BrandExtendedAttribute> IExtendedAttributeDbContext<Guid, Brand, BrandExtendedAttribute>.ExtendedAttributes { get; set; }
+
         DbSet<CategoryExtendedAttribute> IExtendedAttributeDbContext<Guid, Category, CategoryExtendedAttribute>.ExtendedAttributes { get; set; }
+
         DbSet<ProductExtendedAttribute> IExtendedAttributeDbContext<Guid, Product, ProductExtendedAttribute>.ExtendedAttributes { get; set; }
     }
 }

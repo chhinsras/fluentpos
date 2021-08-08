@@ -17,7 +17,7 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence.Migrations
             modelBuilder
                 .HasDefaultSchema("People")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.7")
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("FluentPOS.Modules.People.Core.Entities.Cart", b =>

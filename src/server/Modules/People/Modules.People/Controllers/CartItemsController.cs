@@ -1,4 +1,12 @@
-﻿using System;
+﻿// <copyright file="CartItemsController.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
 using System.Threading.Tasks;
 using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Core.Features.CartItems.Commands;
@@ -22,11 +30,10 @@ namespace FluentPOS.Modules.People.Controllers
             var cartItem = await Mediator.Send(request);
             return Ok(cartItem);
         }
+
         /// <summary>
-        /// Gets all Cart Items for a particular CartId
+        /// Gets all Cart Items for a particular CartId.
         /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = Permissions.CartItems.ViewAll)]
         public async Task<IActionResult> GetCartItemsAsync([FromQuery] PaginatedCartItemFilter filter)
