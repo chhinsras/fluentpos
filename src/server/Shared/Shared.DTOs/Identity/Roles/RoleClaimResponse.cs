@@ -1,6 +1,6 @@
-﻿// <copyright file="RoleClaimResponse.cs" company="Fluentpos">
+﻿// <copyright file="RoleClaimResponse.cs" company="FluentPOS">
 // --------------------------------------------------------------------------------------------------
-// Copyright (c) Fluentpos. All rights reserved.
+// Copyright (c) FluentPOS. All rights reserved.
 // The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------
