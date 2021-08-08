@@ -12,6 +12,9 @@
   <PropertyGroup>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>FluentPOS.Bootstrapper.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Hangfire" Version="1.7.24" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.8">
