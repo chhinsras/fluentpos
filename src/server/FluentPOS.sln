@@ -28,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Infrastructure", "Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Core", "Shared\Shared.Core\Shared.Core.csproj", "{0CDC02BA-FA0C-4081-9CB1-976009E527A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Catalog", "Modules\Catalog\Modules.Catalog.Controllers\Modules.Catalog.csproj", "{F117E9E7-AE75-46E7-AF89-5E7FD80A4F9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Catalog", "Modules\Catalog\Modules.Catalog\Modules.Catalog.csproj", "{F117E9E7-AE75-46E7-AF89-5E7FD80A4F9A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{D1E949DF-445D-4218-B8BA-8FCA0DBFE1B6}"
 EndProject
