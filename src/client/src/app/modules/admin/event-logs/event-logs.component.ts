@@ -57,7 +57,7 @@ export class EventLogsComponent implements OnInit {
   getEventLogs(): void {
     this.eventLogService.getEventLogs(this.eventLogParams).subscribe((result) => {
       this.eventLogs = result;
-      this.dataSource.data = this.eventLogs.data.filter(data => (data.timestamp = this.datePipe.transform(data.timestamp, 'MM/dd/yyyy hh:mm:ss a', data.messageType = data.messageType.replace(/([A-Z])/g, ' $1').replace('Event','').trim())));
+      this.dataSource.data = this.eventLogs.data.filter(data => (data.timestamp = this.datePipe.transform(data.timestamp, 'MM/dd/yyyy hh:mm:ss a', data.messageType = data.messageType.replace(/([A-Z])/g, ' $1').replace('Event', '').trim())));
     });
   }
   handlePageChange(event: PaginatedFilter): void {
@@ -80,7 +80,7 @@ export class EventLogsComponent implements OnInit {
   }
   viewDetails(log?: EventLog): void {
     const dialogRef = this.dialog.open(EventLogDetailsComponent, {
-      data: log,
+      data: log
     });
   }
 }

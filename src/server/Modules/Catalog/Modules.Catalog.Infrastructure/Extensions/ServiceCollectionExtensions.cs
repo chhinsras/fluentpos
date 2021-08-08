@@ -11,7 +11,7 @@ using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Infrastructure.Persistence;
 using FluentPOS.Modules.Catalog.Infrastructure.Services;
 using FluentPOS.Shared.Core.Interfaces.Services;
-using FluentPOS.Shared.Core.Interfaces.Services.Catalog;
+using FluentPOS.Shared.Core.IntegrationServices.Catalog;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using MediatR;

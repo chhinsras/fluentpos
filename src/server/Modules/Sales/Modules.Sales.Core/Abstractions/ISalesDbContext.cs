@@ -1,4 +1,4 @@
-// <copyright file="IProductService.cs" company="Fluentpos">
+// <copyright file="ISalesDbContext.cs" company="Fluentpos">
 // --------------------------------------------------------------------------------------------------
 // Copyright (c) Fluentpos. All rights reserved.
 // The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
@@ -6,15 +6,18 @@
 // --------------------------------------------------------------------------------------------------
 // </copyright>
 
-using System;
-using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Wrapper;
-using FluentPOS.Shared.DTOs.Catalogs.Products;
+using FluentPOS.Modules.Sales.Core.Entities;
+using Microsoft.EntityFrameworkCore;
+using FluentPOS.Shared.Core.Interfaces;
 
-namespace FluentPOS.Shared.Core.Interfaces.Services.Catalog
+namespace FluentPOS.Modules.Sales.Core.Abstractions
 {
-    public interface IProductService
+    public interface ISalesDbContext : IDbContext
     {
-        Task<Result<GetProductByIdResponse>> GetDetailsAsync(Guid productId);
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }

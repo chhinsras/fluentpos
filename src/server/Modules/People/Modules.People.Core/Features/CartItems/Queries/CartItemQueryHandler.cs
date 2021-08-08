@@ -18,7 +18,7 @@ using FluentPOS.Modules.People.Core.Abstractions;
 using FluentPOS.Modules.People.Core.Entities;
 using FluentPOS.Modules.People.Core.Exceptions;
 using FluentPOS.Shared.Core.Extensions;
-using FluentPOS.Shared.Core.Interfaces.Services.Catalog;
+using FluentPOS.Shared.Core.IntegrationServices.Catalog;
 using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.People.CartItems;

@@ -1,4 +1,4 @@
-﻿// <copyright file="GetCartByIdResponse.cs" company="Fluentpos">
+// <copyright file="BaseController.cs" company="Fluentpos">
 // --------------------------------------------------------------------------------------------------
 // Copyright (c) Fluentpos. All rights reserved.
 // The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
@@ -6,14 +6,15 @@
 // --------------------------------------------------------------------------------------------------
 // </copyright>
 
-﻿using System;
-﻿using System.Collections.Generic;
-﻿using FluentPOS.Shared.DTOs.People.CartItems;
+using FluentPOS.Shared.Infrastructure.Controllers;
+using Microsoft.AspNetCore.Mvc;
 
-﻿namespace FluentPOS.Shared.DTOs.People.Carts
+namespace FluentPOS.Modules.Sales.Controllers
 {
-    public record GetCartByIdResponse(Guid Id, Guid CustomerId, DateTime Timestamp)
+    [ApiController]
+    [Route(BasePath + "/[controller]")]
+    internal abstract class BaseController : CommonBaseController
     {
-         public ICollection<GetCartItemByIdResponse> CartItems { get; set; }
+        protected internal new const string BasePath = CommonBaseController.BasePath + "/sales";
     }
 }

@@ -27,7 +27,7 @@ namespace FluentPOS.Shared.Core.Domain
         protected Event(string description = null)
         {
             Timestamp = DateTime.Now;
-            EventDescription = description;
+            EventDescription = EventDescription;
         }
     }
 }
