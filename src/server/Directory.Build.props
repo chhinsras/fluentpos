@@ -1,8 +1,8 @@
 <Project>
     <PropertyGroup>
         <CodeAnalysisRuleSet>$(SolutionDir)fluentpos.ruleset</CodeAnalysisRuleSet>
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
@@ -13,8 +13,8 @@
         <PackageReference Include="Roslynator.Analyzers" Version="3.2.0">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <AdditionalFiles Include="$(SolutionDir)stylecop.json" Link="Properties\stylecop.json" />
-        <AdditionalFiles Include="$(SolutionDir)fluentpos.ruleset" Link="Properties\fluentpos.ruleset" />
-        <AdditionalFiles Include="$(SolutionDir).editorconfig" Link="Properties\.editorconfig" />
+        <AdditionalFiles Include="$(SolutionDir)stylecop.json" Link="stylecop.json" />
+        <AdditionalFiles Include="$(SolutionDir)fluentpos.ruleset" Link="fluentpos.ruleset" />
+        <AdditionalFiles Include="$(SolutionDir).editorconfig" Link=".editorconfig" />
     </ItemGroup>
 </Project>
