@@ -26,7 +26,7 @@ namespace FluentPOS.Modules.People.Infrastructure.Extensions
                     .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
                 {
                     property.SetColumnType("decimal(23,2)");
-                }x
+                }
             }
 
             builder.Entity<CustomerExtendedAttribute>(entity =>
