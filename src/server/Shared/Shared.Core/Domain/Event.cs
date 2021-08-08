@@ -22,12 +22,12 @@ namespace FluentPOS.Shared.Core.Domain
 
         public DateTime Timestamp { get; private set; }
 
-        public string EventDescription { get; set; }
+        public string Description { get; set; }
 
         protected Event(string description = null)
         {
             Timestamp = DateTime.Now;
-            EventDescription = description;
+            Description = description;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace FluentPOS.Shared.Core.EventLogging
             OldValues = changes.oldValues;
             NewValues = changes.newValues;
             UserId = userId;
-            EventDescription = theEvent.EventDescription;
+            Description = theEvent.Description;
         }
 
         protected EventLog()
