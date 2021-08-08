@@ -1,4 +1,4 @@
-﻿// <copyright file="RoleProfile.cs" company="Fluentpos">
+﻿// <copyright file="IRoleService.cs" company="Fluentpos">
 // --------------------------------------------------------------------------------------------------
 // Copyright (c) Fluentpos. All rights reserved.
 // The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
@@ -6,17 +6,23 @@
 // --------------------------------------------------------------------------------------------------
 // </copyright>
 
-using AutoMapper;
-using FluentPOS.Modules.Identity.Core.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Identity.Roles;
 
-namespace FluentPOS.Modules.Identity.Infrastructure.Mappings
+namespace FluentPOS.Modules.Identity.Core.Abstractions
 {
-    public class RoleProfile : Profile
+    public interface IRoleService
     {
-        public RoleProfile()
-        {
-            CreateMap<RoleResponse, FluentRole>().ReverseMap();
-        }
+        Task<Result<List<RoleResponse>>> GetAllAsync();
+
+        Task<int> GetCountAsync();
+
+        Task<Result<RoleResponse>> GetByIdAsync(string id);
+
+        Task<Result<string>> SaveAsync(RoleRequest request);
+
+        Task<Result<string>> DeleteAsync(string id);
     }
 }

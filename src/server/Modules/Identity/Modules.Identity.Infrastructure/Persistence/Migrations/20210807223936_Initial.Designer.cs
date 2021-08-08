@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20210623145546_AddFluentRoleClaim")]
-    partial class AddFluentRoleClaim
+    [Migration("20210807223936_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,8 +19,116 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
             modelBuilder
                 .HasDefaultSchema("Identity")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.7")
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+            modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.ExtendedAttributes.RoleExtendedAttribute", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool?>("Boolean")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("DateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<decimal?>("Decimal")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EntityId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ExternalId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Group")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("Integer")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Json")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
+                    b.Property<byte>("Type")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("RoleExtendedAttributes");
+                });
+
+            modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.ExtendedAttributes.UserExtendedAttribute", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool?>("Boolean")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("DateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<decimal?>("Decimal")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EntityId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ExternalId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Group")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("Integer")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Json")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
+                    b.Property<byte>("Type")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("UserExtendedAttributes");
+                });
 
             modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.FluentRole", b =>
                 {
@@ -166,54 +274,6 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.UserExtendedAttribute", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DateTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<decimal?>("Decimal")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("EntityId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ExternalId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Group")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Json")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Key")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("text");
-
-                    b.Property<byte>("Type")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EntityId");
-
-                    b.ToTable("UserExtendedAttributes");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -294,6 +354,28 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
                     b.ToTable("UserTokens");
                 });
 
+            modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.ExtendedAttributes.RoleExtendedAttribute", b =>
+                {
+                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.FluentRole", "Entity")
+                        .WithMany("ExtendedAttributes")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Entity");
+                });
+
+            modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.ExtendedAttributes.UserExtendedAttribute", b =>
+                {
+                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.FluentUser", "Entity")
+                        .WithMany("ExtendedAttributes")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Entity");
+                });
+
             modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.FluentRoleClaim", b =>
                 {
                     b.HasOne("FluentPOS.Modules.Identity.Core.Entities.FluentRole", "Role")
@@ -303,17 +385,6 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.UserExtendedAttribute", b =>
-                {
-                    b.HasOne("FluentPOS.Modules.Identity.Core.Entities.FluentUser", "Entity")
-                        .WithMany("ExtendedAttributes")
-                        .HasForeignKey("EntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Entity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -360,6 +431,8 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FluentPOS.Modules.Identity.Core.Entities.FluentRole", b =>
                 {
+                    b.Navigation("ExtendedAttributes");
+
                     b.Navigation("RoleClaims");
                 });
 

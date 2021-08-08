@@ -1,8 +1,16 @@
-﻿using FluentPOS.Shared.Core.Constants;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
+﻿// <copyright file="PermissionPolicyProvider.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
 using System;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Constants;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Permissions
 {
@@ -25,6 +33,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Permissions
                 policy.AddRequirements(new PermissionRequirement(policyName));
                 return Task.FromResult(policy.Build());
             }
+
             return FallbackPolicyProvider.GetPolicyAsync(policyName);
         }
 

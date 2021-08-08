@@ -1,6 +1,21 @@
-﻿using FluentPOS.Modules.Identity.Core.Abstractions;
+﻿// <copyright file="IdentityService.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
+using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Exceptions;
+using FluentPOS.Modules.Identity.Core.Features.Users.Events;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Core.Settings;
@@ -13,13 +28,6 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using FluentPOS.Modules.Identity.Core.Features.Users.Events;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Services
 {
@@ -58,6 +66,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             {
                 throw new IdentityException(string.Format(_localizer["Username {0} is already taken."], request.UserName));
             }
+
             var user = new FluentUser
             {
                 Email = request.Email,
@@ -75,6 +84,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     throw new IdentityException(string.Format(_localizer["Phone number {0} is already registered."], request.PhoneNumber));
                 }
             }
+
             var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
             if (userWithSameEmail == null)
             {
@@ -99,7 +109,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     if (_mailSettings.EnableVerification)
                     {
                         // send verification email
-                        var emailVerificationUri = await GetEmailVerificationUri(user, origin);
+                        string emailVerificationUri = await GetEmailVerificationUriAsync(user, origin);
                         var mailRequest = new MailRequest
                         {
                             From = "mail@codewithmukesh.com",
@@ -115,7 +125,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     if (_smsSettings.EnableVerification)
                     {
                         // send verification sms
-                        var mobilePhoneVerificationCode = await GetMobilePhoneVerificationCode(user);
+                        string mobilePhoneVerificationCode = await GetMobilePhoneVerificationCodeAsync(user);
                         var smsRequest = new SmsRequest
                         {
                             Number = user.PhoneNumber,
@@ -139,18 +149,18 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             }
         }
 
-        private async Task<string> GetEmailVerificationUri(FluentUser user, string origin)
+        private async Task<string> GetEmailVerificationUriAsync(FluentUser user, string origin)
         {
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var route = "api/v1/identity/confirm-email/";
+            string route = "api/v1/identity/confirm-email/";
             var endpointUri = new Uri(string.Concat($"{origin}/", route));
-            var verificationUri = QueryHelpers.AddQueryString(endpointUri.ToString(), "userId", user.Id);
+            string verificationUri = QueryHelpers.AddQueryString(endpointUri.ToString(), "userId", user.Id);
             verificationUri = QueryHelpers.AddQueryString(verificationUri, "code", code);
             return verificationUri;
         }
 
-        private async Task<string> GetMobilePhoneVerificationCode(FluentUser user)
+        private async Task<string> GetMobilePhoneVerificationCodeAsync(FluentUser user)
         {
             return await _userManager.GenerateChangePhoneNumberTokenAsync(user, user.PhoneNumber);
         }
@@ -162,6 +172,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             {
                 throw new IdentityException(_localizer["An error occurred while confirming E-Mail."]);
             }
+
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
@@ -188,6 +199,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             {
                 throw new IdentityException(_localizer["An error occurred while confirming Mobile Phone."]);
             }
+
             var result = await _userManager.ChangePhoneNumberAsync(user, user.PhoneNumber, code);
             if (result.Succeeded)
             {
@@ -214,20 +226,22 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 // Don't reveal that the user does not exist or is not confirmed
                 throw new IdentityException(_localizer["An Error has occurred!"]);
             }
+
             // For more information on how to enable account confirmation and password reset please
             // visit https://go.microsoft.com/fwlink/?LinkID=532713
-            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            string code = await _userManager.GeneratePasswordResetTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var route = "account/reset-password";
+            string route = "account/reset-password";
             var endpointUri = new Uri(string.Concat($"{origin}/", route));
-            var passwordResetUrl = QueryHelpers.AddQueryString(endpointUri.ToString(), "Token", code);
+            string passwordResetUrl = QueryHelpers.AddQueryString(endpointUri.ToString(), "Token", code);
             var mailRequest = new MailRequest
             {
                 Body = string.Format(_localizer["Please reset your password by <a href='{0}>clicking here</a>."], HtmlEncoder.Default.Encode(passwordResetUrl)),
                 Subject = _localizer["Reset Password"],
                 To = request.Email
             };
-            //BackgroundJob.Enqueue(() => _mailService.SendAsync(mailRequest));
+
+            // BackgroundJob.Enqueue(() => _mailService.SendAsync(mailRequest));
             return await Result.SuccessAsync(_localizer["Password Reset Mail has been sent to your authorized Email."]);
         }
 

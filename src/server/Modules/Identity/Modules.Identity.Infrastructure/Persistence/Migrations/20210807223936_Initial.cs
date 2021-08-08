@@ -1,31 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+﻿// <copyright file="20210807223936_Initial.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
 using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
                 name: "Identity");
-
-            migrationBuilder.CreateTable(
-                name: "RoleClaims",
-                schema: "Identity",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RoleId = table.Column<string>(type: "text", nullable: true),
-                    ClaimType = table.Column<string>(type: "text", nullable: true),
-                    ClaimValue = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleClaims", x => x.Id);
-                });
 
             migrationBuilder.CreateTable(
                 name: "Roles",
@@ -77,35 +69,60 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
+                name: "RoleClaims",
+                schema: "Identity",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Description = table.Column<string>(type: "text", nullable: true),
                     Group = table.Column<string>(type: "text", nullable: true),
-                    RoleId1 = table.Column<string>(type: "text", nullable: true),
                     RoleId = table.Column<string>(type: "text", nullable: false),
                     ClaimType = table.Column<string>(type: "text", nullable: true),
                     ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.PrimaryKey("PK_RoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_Roles_RoleId",
+                        name: "FK_RoleClaims_Roles_RoleId",
                         column: x => x.RoleId,
                         principalSchema: "Identity",
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleExtendedAttributes",
+                schema: "Identity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    EntityId = table.Column<string>(type: "text", nullable: false),
+                    Type = table.Column<byte>(type: "smallint", nullable: false),
+                    Key = table.Column<string>(type: "text", nullable: false),
+                    Decimal = table.Column<decimal>(type: "numeric", nullable: true),
+                    Text = table.Column<string>(type: "text", nullable: true),
+                    DateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Json = table.Column<string>(type: "text", nullable: true),
+                    Boolean = table.Column<bool>(type: "boolean", nullable: true),
+                    Integer = table.Column<int>(type: "integer", nullable: true),
+                    ExternalId = table.Column<string>(type: "text", nullable: true),
+                    Group = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleExtendedAttributes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_Roles_RoleId1",
-                        column: x => x.RoleId1,
+                        name: "FK_RoleExtendedAttributes_Roles_EntityId",
+                        column: x => x.EntityId,
                         principalSchema: "Identity",
                         principalTable: "Roles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -125,6 +142,38 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_UserClaims_Users_UserId",
                         column: x => x.UserId,
+                        principalSchema: "Identity",
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserExtendedAttributes",
+                schema: "Identity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    EntityId = table.Column<string>(type: "text", nullable: false),
+                    Type = table.Column<byte>(type: "smallint", nullable: false),
+                    Key = table.Column<string>(type: "text", nullable: false),
+                    Decimal = table.Column<decimal>(type: "numeric", nullable: true),
+                    Text = table.Column<string>(type: "text", nullable: true),
+                    DateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Json = table.Column<string>(type: "text", nullable: true),
+                    Boolean = table.Column<bool>(type: "boolean", nullable: true),
+                    Integer = table.Column<int>(type: "integer", nullable: true),
+                    ExternalId = table.Column<string>(type: "text", nullable: true),
+                    Group = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserExtendedAttributes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserExtendedAttributes_Users_EntityId",
+                        column: x => x.EntityId,
                         principalSchema: "Identity",
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -203,14 +252,16 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_RoleId",
-                table: "AspNetRoleClaims",
+                name: "IX_RoleClaims_RoleId",
+                schema: "Identity",
+                table: "RoleClaims",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_RoleId1",
-                table: "AspNetRoleClaims",
-                column: "RoleId1");
+                name: "IX_RoleExtendedAttributes_EntityId",
+                schema: "Identity",
+                table: "RoleExtendedAttributes",
+                column: "EntityId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
@@ -224,6 +275,12 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
                 schema: "Identity",
                 table: "UserClaims",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserExtendedAttributes_EntityId",
+                schema: "Identity",
+                table: "UserExtendedAttributes",
+                column: "EntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserLogins_UserId",
@@ -254,14 +311,19 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AspNetRoleClaims");
-
-            migrationBuilder.DropTable(
                 name: "RoleClaims",
                 schema: "Identity");
 
             migrationBuilder.DropTable(
+                name: "RoleExtendedAttributes",
+                schema: "Identity");
+
+            migrationBuilder.DropTable(
                 name: "UserClaims",
+                schema: "Identity");
+
+            migrationBuilder.DropTable(
+                name: "UserExtendedAttributes",
                 schema: "Identity");
 
             migrationBuilder.DropTable(

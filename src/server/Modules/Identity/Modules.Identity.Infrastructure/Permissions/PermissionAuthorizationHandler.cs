@@ -1,14 +1,23 @@
-﻿using FluentPOS.Shared.Core.Constants;
-using Microsoft.AspNetCore.Authorization;
+﻿// <copyright file="PermissionAuthorizationHandler.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
 using System.Linq;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Permissions
 {
     internal class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
     {
         public PermissionAuthorizationHandler()
-        { }
+        {
+        }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
