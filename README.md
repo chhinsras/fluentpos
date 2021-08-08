@@ -4,7 +4,7 @@
   </a>
   <h3 align="center">fluentpos - Open Source Point Of Sales / Inventory Management Solution</h3>
   <p align="center">
-    Built with ASP.NET Core 5.0 WebAPI & Angular 12 Material
+    Built with ASP.NET Core 5.0 WebAPI & Angular 12 Material UI
   </p>
 </p>
 
