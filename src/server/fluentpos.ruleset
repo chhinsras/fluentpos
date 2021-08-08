@@ -6,7 +6,7 @@
     <Rule Id="CA1021" Action="Warning" />
     <Rule Id="CA1040" Action="Warning" />
     <Rule Id="CA1045" Action="Warning" />
-    <Rule Id="CA1501" Action="Warning" />
+    <Rule Id="CA1501" Action="None" />
     <Rule Id="CA1504" Action="Warning" />
     <Rule Id="CA1505" Action="Warning" />
     <Rule Id="CA1700" Action="Warning" />
@@ -144,5 +144,7 @@
     <Rule Id="SA1643" Action="None" />
     <Rule Id="SA1648" Action="None" />
     <Rule Id="SX1309" Action="Warning" />
+    <Rule Id="SA1503" Action="None" />
+    <Rule Id="SA1501" Action="None" />
   </Rules>
 </RuleSet>

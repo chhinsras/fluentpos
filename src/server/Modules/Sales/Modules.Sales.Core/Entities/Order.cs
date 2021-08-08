@@ -8,6 +8,7 @@
 
 using System;
 using FluentPOS.Shared.Core.Domain;
+using FluentPOS.Shared.DTOs.People.Customers;
 
 namespace FluentPOS.Modules.Sales.Core.Entities
 {
@@ -34,6 +35,14 @@ namespace FluentPOS.Modules.Sales.Core.Entities
         public bool IsPaid { get; set; }
 
         public string Note { get; set; }
+
+        public void AddCustomer(GetCustomerByIdResponse customer)
+        {
+            this.CustomerId = customer.Id;
+            this.CustomerName = customer.Name;
+            this.CustomerEmail = customer.Email;
+            this.CustomerPhone = customer.Phone;
+        }
 
     }
 }

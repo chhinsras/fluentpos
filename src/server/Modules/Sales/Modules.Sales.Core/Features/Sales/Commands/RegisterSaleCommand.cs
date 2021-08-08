@@ -11,6 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentPOS.Modules.Sales.Core.Abstractions;
+using FluentPOS.Modules.Sales.Core.Entities;
+using FluentPOS.Shared.Core.IntegrationServices.People;
 using FluentPOS.Shared.Core.Wrapper;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -24,19 +26,21 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
 
     internal sealed class RegisterSaleCommandHandler : IRequestHandler<RegisterSaleCommand, Result<Guid>>
     {
+        private readonly ICartService _cartService;
         private readonly ISalesDbContext _salesContext;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<RegisterSaleCommandHandler> _localizer;
 
-        public RegisterSaleCommandHandler(IMapper mapper, IStringLocalizer<RegisterSaleCommandHandler> localizer, ISalesDbContext salesContext)
+        public RegisterSaleCommandHandler(IMapper mapper, IStringLocalizer<RegisterSaleCommandHandler> localizer, ISalesDbContext salesContext, ICartService cartService)
         {
             _mapper = mapper;
             _localizer = localizer;
             _salesContext = salesContext;
+            _cartService = cartService;
         }
 
 #pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
-        public Task<Result<Guid>> Handle(RegisterSaleCommand command, CancellationToken cancellationToken)
+        public async Task<Result<Guid>> Handle(RegisterSaleCommand command, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             // From CartId
@@ -46,7 +50,16 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             // Save to Sales.Order,Transactions and Product
             // Delete CartItem and Cart
 
-            return null;
+            var cartDetails = await _cartService.GetDetailsAsync(command.CartId);
+
+            // Do all mandatory null checks
+            if (cartDetails == null || cartDetails.Data == null) throw new Exception();
+            if (cartDetails.Data.Customer == null) throw new Exception("Customer Invalid!");
+            if (cartDetails.Data.CartItems == null) throw new Exception("Empty Cart!");
+            var customer = cartDetails.Data.Customer;
+            var order = new Order();
+            order.AddCustomer(customer);
+            return await Result<Guid>.SuccessAsync(order.Id, _localizer["Order Created"]);
         }
     }
 }

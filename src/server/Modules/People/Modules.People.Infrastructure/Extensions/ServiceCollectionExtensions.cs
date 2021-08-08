@@ -9,6 +9,8 @@
 using System.Reflection;
 using FluentPOS.Modules.People.Core.Abstractions;
 using FluentPOS.Modules.People.Infrastructure.Persistence;
+using FluentPOS.Modules.People.Infrastructure.Services;
+using FluentPOS.Shared.Core.IntegrationServices.People;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using FluentPOS.Shared.Infrastructure.Persistence;
@@ -25,6 +27,7 @@ namespace FluentPOS.Modules.People.Infrastructure.Extensions
                  .AddScoped<IPeopleDbContext>(provider => provider.GetService<PeopleDbContext>());
             services.AddExtendedAttributeDbContextsFromAssembly(typeof(PeopleDbContext), Assembly.GetAssembly(typeof(IPeopleDbContext)));
             services.AddTransient<IDatabaseSeeder, PeopleDbSeeder>();
+            services.AddTransient<ICartService, CartService>();
             return services;
         }
 
