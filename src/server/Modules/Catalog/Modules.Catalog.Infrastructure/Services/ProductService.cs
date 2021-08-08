@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using FluentPOS.Modules.Catalog.Core.Features.Products.Queries;
-using FluentPOS.Shared.Core.Interfaces.Services.Catalog;
+using FluentPOS.Shared.Core.IntegrationServices.Catalog;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Catalogs.Products;
 using MediatR;
