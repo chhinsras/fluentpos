@@ -17,7 +17,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
             modelBuilder
                 .HasDefaultSchema("Catalog")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.7")
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.Brand", b =>
@@ -40,7 +40,27 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.BrandExtendedAttribute", b =>
+            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Detail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.ExtendedAttributes.BrandExtendedAttribute", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,27 +113,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     b.ToTable("BrandExtendedAttributes");
                 });
 
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.Category", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Detail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.CategoryExtendedAttribute", b =>
+            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.ExtendedAttributes.CategoryExtendedAttribute", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -164,6 +164,59 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     b.HasIndex("EntityId");
 
                     b.ToTable("CategoryExtendedAttributes");
+                });
+
+            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.ExtendedAttributes.ProductExtendedAttribute", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool?>("Boolean")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("DateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<decimal?>("Decimal")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ExternalId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Group")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("Integer")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Json")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
+                    b.Property<byte>("Type")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("ProductExtendedAttributes");
                 });
 
             modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.Product", b =>
@@ -220,60 +273,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.ProductExtendedAttribute", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<bool?>("Boolean")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("DateTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<decimal?>("Decimal")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("EntityId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("ExternalId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Group")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("Integer")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Json")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Key")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("text");
-
-                    b.Property<byte>("Type")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EntityId");
-
-                    b.ToTable("ProductExtendedAttributes");
-                });
-
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.BrandExtendedAttribute", b =>
+            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.ExtendedAttributes.BrandExtendedAttribute", b =>
                 {
                     b.HasOne("FluentPOS.Modules.Catalog.Core.Entities.Brand", "Entity")
                         .WithMany("ExtendedAttributes")
@@ -284,9 +284,20 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     b.Navigation("Entity");
                 });
 
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.CategoryExtendedAttribute", b =>
+            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.ExtendedAttributes.CategoryExtendedAttribute", b =>
                 {
                     b.HasOne("FluentPOS.Modules.Catalog.Core.Entities.Category", "Entity")
+                        .WithMany("ExtendedAttributes")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Entity");
+                });
+
+            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.ExtendedAttributes.ProductExtendedAttribute", b =>
+                {
+                    b.HasOne("FluentPOS.Modules.Catalog.Core.Entities.Product", "Entity")
                         .WithMany("ExtendedAttributes")
                         .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -312,17 +323,6 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.ProductExtendedAttribute", b =>
-                {
-                    b.HasOne("FluentPOS.Modules.Catalog.Core.Entities.Product", "Entity")
-                        .WithMany("ExtendedAttributes")
-                        .HasForeignKey("EntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Entity");
                 });
 
             modelBuilder.Entity("FluentPOS.Modules.Catalog.Core.Entities.Brand", b =>
