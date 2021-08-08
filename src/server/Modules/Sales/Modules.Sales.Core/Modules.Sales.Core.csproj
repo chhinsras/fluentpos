@@ -7,10 +7,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>FluentPOS.Modules.Sales.Core.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>..\..\..\fluentpos.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>FluentPOS.Modules.Sales.Core.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>..\..\..\fluentpos.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
   <ItemGroup>
@@ -22,6 +24,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <AdditionalFiles Include="..\..\..\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Shared.Core\Shared.Core.csproj" />
