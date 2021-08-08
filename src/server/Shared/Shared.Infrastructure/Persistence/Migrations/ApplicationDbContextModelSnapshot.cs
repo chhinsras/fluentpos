@@ -32,10 +32,10 @@ namespace FluentPOS.Shared.Infrastructure.Persistence.Migrations
                     b.Property<string>("Data")
                         .HasColumnType("text");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("EventDescription")
                         .HasColumnType("text");
 
                     b.Property<string>("MessageType")

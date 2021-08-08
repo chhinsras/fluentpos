@@ -31,6 +31,7 @@ namespace FluentPOS.Shared.Infrastructure.Services
         private readonly IApplicationDbContext _dbContext;
         private readonly IStringLocalizer<EventLogService> _localizer;
         private readonly IMapper _mapper;
+
         public EventLogService(
             IApplicationDbContext dbContext,
             IStringLocalizer<EventLogService> localizer,

@@ -35,6 +35,7 @@ namespace FluentPOS.Shared.Infrastructure.Utilities
                     values.Add(propertyValue.ToString());
                 }
             }
+
             return values;
         }
     }

@@ -20,9 +20,11 @@ namespace FluentPOS.Shared.Infrastructure.Controllers
         protected internal const string BasePath = "api/v{version:apiVersion}";
 
         private IMediator _mediatorInstance;
+
         protected IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
 
         private IMapper _mapperInstance;
+
         protected IMapper Mapper => _mapperInstance ??= HttpContext.RequestServices.GetService<IMapper>();
     }
 }

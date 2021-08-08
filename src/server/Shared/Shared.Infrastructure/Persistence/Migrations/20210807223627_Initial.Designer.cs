@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FluentPOS.Shared.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210807050855_added-description")]
-    partial class addeddescription
+    [Migration("20210807223627_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,10 +34,10 @@ namespace FluentPOS.Shared.Infrastructure.Persistence.Migrations
                     b.Property<string>("Data")
                         .HasColumnType("text");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("EventDescription")
                         .HasColumnType("text");
 
                     b.Property<string>("MessageType")

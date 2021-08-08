@@ -10,6 +10,10 @@
     <DocumentationFile>FluentPOS.Shared.Core.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>FluentPOS.Shared.Core.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Services\**" />
     <EmbeddedResource Remove="Services\**" />

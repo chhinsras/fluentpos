@@ -51,6 +51,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
             {
                 modelBuilder.HasDefaultSchema(Schema);
             }
+
             modelBuilder.Ignore<Event>();
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
@@ -62,6 +63,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
             var changes = OnBeforeSaveChanges();
             return await this.SaveChangeWithPublishEventsAsync(_eventLogger, _mediator, changes, _json, cancellationToken);
         }
+
         private List<(EntityEntry entityEntry, string oldValues, string newValues)> OnBeforeSaveChanges()
         {
             var result = new List<(EntityEntry entityEntry, string oldValues, string newValues)>();
@@ -73,6 +75,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
                 {
                     continue;
                 }
+
                 var previousData = new Dictionary<string, object>();
                 var currentData = new Dictionary<string, object>();
                 foreach (var property in entry.Properties)
@@ -97,15 +100,19 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
                                 previousData[propertyName] = originalValue;
                                 currentData[propertyName] = property.CurrentValue;
                             }
+
                             break;
                     }
                 }
+
                 string oldValues = previousData.Count == 0 ? null : _json.Serialize(previousData);
                 string newValues = currentData.Count == 0 ? null : _json.Serialize(currentData);
                 result.Add((entry, oldValues, newValues));
             }
+
             return result;
         }
+
         public override int SaveChanges()
         {
             var changes = OnBeforeSaveChanges();

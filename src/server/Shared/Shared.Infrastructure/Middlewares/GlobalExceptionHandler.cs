@@ -56,6 +56,7 @@ namespace FluentPOS.Shared.Infrastructure.Middlewares
                         exception = exception.InnerException;
                     }
                 }
+
                 var responseModel = await ErrorResult<string>.ReturnErrorAsync(exception.Message);
                 responseModel.Source = exception.Source;
                 responseModel.Exception = exception.Message;

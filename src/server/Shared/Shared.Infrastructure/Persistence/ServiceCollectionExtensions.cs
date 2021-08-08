@@ -31,6 +31,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
                 string connectionString = options.ConnectionStrings.MSSQL;
                 services.AddMSSQL<T>(connectionString);
             }
+
             return services;
         }
 

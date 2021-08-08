@@ -82,10 +82,8 @@ namespace FluentPOS.Shared.Core.Extensions
                             continue;
                         }
 
-                        string propertyName = orderingParts.First();
-                        string sortDirection = orderingParts.Last();
-
-                        switch (sortDirection)
+                        string propertyName = orderingParts[0];
+                        switch (orderingParts.Last())
                         {
                             case "asc":
                             case "desc":
