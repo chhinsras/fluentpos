@@ -1,4 +1,4 @@
-// <copyright file="GetBrandByIdResponse.cs" company="Fluentpos">
+// <copyright file="RegisterSaleCommand.cs" company="Fluentpos">
 // --------------------------------------------------------------------------------------------------
 // Copyright (c) Fluentpos. All rights reserved.
 // The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
@@ -17,11 +17,11 @@ using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
 {
-    //Will Return back the Order Id
     public class RegisterSaleCommand : IRequest<Result<Guid>>
     {
         public Guid CartId { get; set; }
     }
+
     internal sealed class RegisterSaleCommandHandler : IRequestHandler<RegisterSaleCommand, Result<Guid>>
     {
         private readonly ISalesDbContext _salesContext;
@@ -35,15 +35,18 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             _salesContext = salesContext;
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public Task<Result<Guid>> Handle(RegisterSaleCommand command, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-            //From CartId
-            //Get Customer ID, Use Intergration Services to Get Customer Details
-            //Get CartItem Details, Use Intergration Services to Get Product Details
-            //Calculate Tax, Total
-            //Save to Sales.Order,Transactions and Product
-            //Delete CartItem and Cart 
-            return default;
+            // From CartId
+            // Get Customer ID, Use Intergration Services to Get Customer Details
+            // Get CartItem Details, Use Intergration Services to Get Product Details
+            // Calculate Tax, Total
+            // Save to Sales.Order,Transactions and Product
+            // Delete CartItem and Cart
+
+            return null;
         }
     }
 }

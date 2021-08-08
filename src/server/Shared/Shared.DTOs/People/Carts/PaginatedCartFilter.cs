@@ -6,10 +6,11 @@
 // --------------------------------------------------------------------------------------------------
 // </copyright>
 
+using System;
+using FluentPOS.Shared.DTOs.Filters;
+
 namespace FluentPOS.Shared.DTOs.People.Carts
 {
-    using System;
-    using FluentPOS.Shared.DTOs.Filters;
     public class PaginatedCartFilter : PaginatedFilter
     {
         public string SearchString { get; set; }

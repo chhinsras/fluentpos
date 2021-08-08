@@ -1,3 +1,12 @@
+// <copyright file="SalesDbContext.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
 using FluentPOS.Modules.Sales.Core.Abstractions;
 using FluentPOS.Modules.Sales.Core.Entities;
 using FluentPOS.Shared.Core.EventLogging;
@@ -7,7 +16,6 @@ using FluentPOS.Shared.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System;
 using FluentPOS.Shared.Core.Interfaces.Serialization;
 
 namespace FluentPOS.Modules.Sales.Infrastructure.Persistence
@@ -23,7 +31,8 @@ namespace FluentPOS.Modules.Sales.Infrastructure.Persistence
             DbContextOptions<SalesDbContext> options,
             IMediator mediator,
             IEventLogger eventLogger,
-            IOptions<PersistenceSettings> persistenceOptions, IJsonSerializer json)
+            IOptions<PersistenceSettings> persistenceOptions,
+            IJsonSerializer json)
                 : base(options, mediator, eventLogger, persistenceOptions, json)
         {
             _persistenceOptions = persistenceOptions.Value;

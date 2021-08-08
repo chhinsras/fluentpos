@@ -202,6 +202,7 @@ namespace FluentPOS.Shared.Core.Constants
             public const string ViewAll = "Permissions.EventLogs.ViewAll";
             public const string Create = "Permissions.EventLogs.Create";
         }
+
         [DisplayName("Sales")]
         [Description("Sales Permissions")]
         public static class Sales

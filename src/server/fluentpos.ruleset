@@ -107,6 +107,7 @@
     <Rule Id="RCS1185" Action="None" />
     <Rule Id="RCS1194" Action="None" />
     <Rule Id="RCS1207" Action="Hidden" />
+    <Rule Id="RCS1210" Action="None" />
     <Rule Id="RCS1219" Action="None" />
     <Rule Id="RCS1231" Action="Info" />
   </Rules>
@@ -118,10 +119,14 @@
     <Rule Id="SA1202" Action="Info" />
     <Rule Id="SA1204" Action="None" />
     <Rule Id="SA1210" Action="None" />
+    <Rule Id="SA1300" Action="None" />
     <Rule Id="SA1309" Action="None" />
     <Rule Id="SA1401" Action="None" />
+    <Rule Id="SA1402" Action="None" />
     <Rule Id="SA1413" Action="None" />
+    <Rule Id="SA1508" Action="None" />
     <Rule Id="SA1512" Action="None" />
+    <Rule Id="SA1516" Action="None" />
     <Rule Id="SA1600" Action="Info" />
     <Rule Id="SA1601" Action="None" />
     <Rule Id="SA1602" Action="None" />
