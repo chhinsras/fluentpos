@@ -5,4 +5,14 @@
     <RootNamespace>FluentPOS.Modules.Sales.Infrastructure</RootNamespace>
     <AssemblyName>FluentPOS.Modules.Sales.Infrastructure</AssemblyName>
   </PropertyGroup>
+
+    <ItemGroup>
+    <None Include="Persistence\SeedData\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules.Sales.Core\Modules.Sales.Core.csproj" />
+  </ItemGroup>
+  
 </Project>
