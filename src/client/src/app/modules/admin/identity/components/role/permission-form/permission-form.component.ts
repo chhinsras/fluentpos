@@ -1,8 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
+import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
+import { TableColumn } from 'src/app/core/shared/components/table/table-column';
 import { RoleClaim } from '../../../models/permission';
 import { Role } from '../../../models/role';
 import { RoleService } from '../../../services/role.service';
@@ -20,6 +23,7 @@ export class PermissionFormComponent implements OnInit {
   permissions = new MatTableDataSource();
   filterValues = {};
   filterSelectObj = [];
+  permissionColumns: TableColumn[];
   
   constructor(@Inject(MAT_DIALOG_DATA) public data: Role, private roleService: RoleService, private toastr: ToastrService, private fb: FormBuilder) {
     this.filterSelectObj = [
@@ -45,6 +49,7 @@ export class PermissionFormComponent implements OnInit {
 
   ngOnInit(): void {
    this.getRolePermissions();
+   this.initColumns();
   }
 
   getRolePermissions() {
@@ -55,6 +60,16 @@ export class PermissionFormComponent implements OnInit {
       });
     });
     
+  }
+
+  initColumns(): void {
+    this.permissionColumns = [
+      { name: 'Id', dataKey: 'id', isSortable: true, isShowable: true },
+      { name: 'Type', dataKey: 'type', isSortable: true, isShowable: true },
+      { name: 'Group', dataKey: 'group', isSortable: true, isShowable: true },
+      { name: 'Value', dataKey: 'value', isSortable: true, isShowable: true },
+      { name: 'Action', dataKey: 'action', position: 'right' },
+    ];
   }
 
   getFilterObject(fullObj, key) {
@@ -82,5 +97,36 @@ export class PermissionFormComponent implements OnInit {
       value.modelValue = undefined;
     })
     this.permissions.filter = "";
+  }
+
+
+
+
+
+
+  pageChanged(event: PaginatedFilter): void {
+    // this.permissionParams.pageNumber = event.pageNumber;
+    // this.permissionParams.pageSize = event.pageSize;
+    // this.getBrands();
+  }
+
+  sort($event: Sort): void {
+    // this.permissionParams.orderBy = $event.active + ' ' + $event.direction;
+    // console.log(this.permissionParams.orderBy);
+    // this.getBrands();
+  }
+
+  filter($event: string): void {
+    // this.permissionParams.searchString = $event.trim().toLocaleLowerCase();
+    // this.permissionParams.pageNumber = 0;
+    // this.permissionParams.pageSize = 0;
+    // this.getBrands();
+  }
+
+  reload(): void {
+    // this.permissionParams.searchString = '';
+    // this.permissionParams.pageNumber = 0;
+    // this.permissionParams.pageSize = 0;
+    this.getRolePermissions();
   }
 }
