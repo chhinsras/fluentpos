@@ -27,7 +27,10 @@ namespace FluentPOS.Shared.Core.Domain
         protected Event(string description = null)
         {
             Timestamp = DateTime.Now;
-            EventDescription = EventDescription;
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                EventDescription = description;
+            }
         }
     }
 }

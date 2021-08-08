@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------------------------------------
 // </copyright>
 
+using System;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -19,7 +20,7 @@ namespace FluentPOS.Shared.Infrastructure.Swagger.Filters
             var paths = new OpenApiPaths();
 
             foreach (var (key, value) in swaggerDoc.Paths)
-                paths.Add(key.Replace("v{version}", swaggerDoc.Info.Version), value);
+                paths.Add(key.Replace("v{version}", swaggerDoc.Info.Version, StringComparison.InvariantCultureIgnoreCase), value);
 
             swaggerDoc.Paths = paths;
         }

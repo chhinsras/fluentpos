@@ -34,6 +34,5 @@ namespace FluentPOS.Modules.Sales.Core.Entities
         public bool IsPaid { get; set; }
 
         public string Note { get; set; }
-
     }
 }

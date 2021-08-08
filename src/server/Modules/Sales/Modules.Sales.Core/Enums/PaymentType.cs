@@ -8,10 +8,12 @@
 
 namespace FluentPOS.Modules.Sales.Core.Enums
 {
-    public enum PaymentType
+    public enum PaymentType : byte
     {
         Cash,
+
         CreditCard,
+
         GiftCard
     }
 }

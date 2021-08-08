@@ -50,7 +50,9 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
             _localizer = localizer;
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public async Task<PaginatedResult<GetExtendedAttributesResponse<TEntityId>>> Handle(GetExtendedAttributesQuery<TEntityId, TEntity> request, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             Expression<Func<TExtendedAttribute, GetExtendedAttributesResponse<TEntityId>>> expression = e => new GetExtendedAttributesResponse<TEntityId>(e.Id, e.EntityId, e.Type, e.Key, e.Decimal, e.Text, e.DateTime, e.Json, e.Boolean, e.Integer, e.ExternalId, e.Group, e.Description, e.IsActive);
 
@@ -95,9 +97,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
                 throw new CustomException(string.Format(_localizer["{0} Extended Attributes Not Found!"], typeof(TEntity).Name), statusCode: HttpStatusCode.NotFound);
             }
 
-            var mappedExtendedAttributes = _mapper.Map<PaginatedResult<GetExtendedAttributesResponse<TEntityId>>>(extendedAttributeList);
-
-            return mappedExtendedAttributes;
+            return _mapper.Map<PaginatedResult<GetExtendedAttributesResponse<TEntityId>>>(extendedAttributeList);
         }
 
 #pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
