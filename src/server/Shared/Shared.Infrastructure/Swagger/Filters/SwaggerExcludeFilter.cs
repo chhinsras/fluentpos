@@ -1,4 +1,12 @@
-﻿using System;
+﻿// <copyright file="SwaggerExcludeFilter.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
 using System.Linq;
 using System.Reflection;
 using FluentPOS.Shared.Core.Attributes;
@@ -13,7 +21,10 @@ namespace FluentPOS.Shared.Infrastructure.Swagger.Filters
         /// <inheritdoc/>
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            if (context?.MethodInfo == null) return;
+            if (context?.MethodInfo == null)
+            {
+                return;
+            }
 
             var parameters = context.MethodInfo.GetParameters();
             var properties = parameters.SelectMany(x => x.ParameterType.GetProperties());

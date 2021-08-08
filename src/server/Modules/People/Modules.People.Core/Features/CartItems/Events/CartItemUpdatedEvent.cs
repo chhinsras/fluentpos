@@ -1,6 +1,13 @@
-﻿using System;
+﻿// <copyright file="CartItemUpdatedEvent.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
 using FluentPOS.Modules.People.Core.Entities;
-using FluentPOS.Modules.People.Core.Features.CartItems.Commands;
 using FluentPOS.Shared.Core.Domain;
 
 namespace FluentPOS.Modules.People.Core.Features.CartItems.Events
@@ -23,7 +30,7 @@ namespace FluentPOS.Modules.People.Core.Features.CartItems.Events
             Id = command.Id;
             AggregateId = command.Id;
             RelatedEntities = new[] { typeof(CartItem) };
-            Description = $"Updated Cart Item.";
+            EventDescription = "Updated Cart Item.";
         }
     }
 }

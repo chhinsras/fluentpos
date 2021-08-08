@@ -1,4 +1,15 @@
-﻿using FluentPOS.Modules.Identity.Core.Constants;
+﻿// <copyright file="IdentityDbSeeder.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using FluentPOS.Modules.Identity.Core.Abstractions;
+using FluentPOS.Modules.Identity.Core.Constants;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Helpers;
 using FluentPOS.Shared.Core.Constants;
@@ -7,9 +18,6 @@ using FluentPOS.Shared.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using FluentPOS.Modules.Identity.Core.Abstractions;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
 {
@@ -48,7 +56,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
             Task.Run(async () =>
             {
                 var roleList = new List<string> { RoleConstants.SuperAdmin, RoleConstants.Admin, RoleConstants.Manager, RoleConstants.Accountant, RoleConstants.Cashier, RoleConstants.Staff };
-                foreach (var roleName in roleList)
+                foreach (string roleName in roleList)
                 {
                     var role = new FluentRole(roleName);
                     var roleInDb = await _roleManager.FindByNameAsync(roleName);
@@ -65,7 +73,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
         {
             Task.Run(async () =>
             {
-                //Check if Role Exists
+                // Check if Role Exists
                 var superAdminRole = new FluentRole(RoleConstants.SuperAdmin);
                 var superAdminRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.SuperAdmin);
                 if (superAdminRoleInDb == null)
@@ -73,7 +81,8 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                     await _roleManager.CreateAsync(superAdminRole);
                     superAdminRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.SuperAdmin);
                 }
-                //Check if User Exists
+
+                // Check if User Exists
                 var superUser = new FluentUser
                 {
                     FirstName = "Mukesh",
@@ -102,9 +111,9 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                     }
                 }
 
-                foreach (var permission in typeof(Shared.Core.Constants.Permissions).GetNestedClassesStaticStringValues())
+                foreach (string permission in typeof(Shared.Core.Constants.Permissions).GetNestedClassesStaticStringValues())
                 {
-                    await _roleManager.AddPermissionClaim(superAdminRoleInDb, permission);
+                    await _roleManager.AddPermissionClaimAsync(superAdminRoleInDb, permission);
                 }
             }).GetAwaiter().GetResult();
         }
@@ -113,7 +122,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
         {
             Task.Run(async () =>
             {
-                //Check if Role Exists
+                // Check if Role Exists
                 var basicRole = new FluentRole(RoleConstants.Staff);
                 var basicRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.Staff);
                 if (basicRoleInDb == null)
@@ -121,7 +130,8 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                     await _roleManager.CreateAsync(basicRole);
                     basicRoleInDb = await _roleManager.FindByNameAsync(RoleConstants.Staff);
                 }
-                //Check if User Exists
+
+                // Check if User Exists
                 var basicUser = new FluentUser
                 {
                     FirstName = "John",

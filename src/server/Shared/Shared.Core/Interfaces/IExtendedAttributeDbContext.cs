@@ -1,13 +1,21 @@
-﻿using FluentPOS.Shared.Core.Contracts;
+﻿// <copyright file="IExtendedAttributeDbContext.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System.ComponentModel.DataAnnotations.Schema;
+using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Domain;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FluentPOS.Shared.Core.Interfaces
 {
     public interface IExtendedAttributeDbContext<TEntityId, TEntity, TExtendedAttribute> : IDbContext
-        where TExtendedAttribute : ExtendedAttribute<TEntityId, TEntity>
         where TEntity : class, IEntity<TEntityId>
+        where TExtendedAttribute : ExtendedAttribute<TEntityId, TEntity>
     {
         [NotMapped]
         public DbSet<TEntity> Entities => GetEntities();

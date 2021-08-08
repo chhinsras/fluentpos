@@ -1,4 +1,18 @@
-﻿using FluentPOS.Modules.Identity.Core.Abstractions;
+﻿// <copyright file="ServiceCollectionExtensions.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
+using System.Net;
+using System.Reflection;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Modules.Identity.Core.Exceptions;
 using FluentPOS.Modules.Identity.Core.Settings;
@@ -16,12 +30,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Net;
-using System.Reflection;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
 {
@@ -70,7 +78,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
             this IServiceCollection services, IConfiguration config)
         {
             var jwtSettings = services.GetOptions<JwtSettings>(nameof(JwtSettings));
-            var key = Encoding.ASCII.GetBytes(jwtSettings.Key);
+            byte[] key = Encoding.ASCII.GetBytes(jwtSettings.Key);
             services
                 .AddAuthentication(authentication =>
                 {
@@ -99,6 +107,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Extensions
                             {
                                 throw new IdentityException("You are not Authorized.", statusCode: HttpStatusCode.Unauthorized);
                             }
+
                             return Task.CompletedTask;
                         },
                         OnForbidden = context =>

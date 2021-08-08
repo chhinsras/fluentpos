@@ -1,5 +1,21 @@
-﻿using FluentPOS.Shared.Core.Domain;
+﻿// <copyright file="ServiceCollectionExtensions.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.EventLogging;
+using FluentPOS.Shared.Core.Exceptions;
 using FluentPOS.Shared.Core.Extensions;
 using FluentPOS.Shared.Core.Interfaces;
 using FluentPOS.Shared.Core.Interfaces.Services;
@@ -11,22 +27,14 @@ using FluentPOS.Shared.Infrastructure.Middlewares;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using FluentPOS.Shared.Infrastructure.Services;
 using FluentPOS.Shared.Infrastructure.Swagger.Filters;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using FluentPOS.Shared.Core.Exceptions;
-using FluentValidation;
 using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 [assembly: InternalsVisibleTo("Bootstrapper")]
@@ -61,7 +69,6 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             {
                 o.AssumeDefaultVersionWhenUnspecified = true;
                 o.DefaultApiVersion = new ApiVersion(1, 0);
-
             });
             services.AddControllers()
                 .ConfigureApplicationPartManager(manager =>
@@ -120,13 +127,13 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
         {
             return services.AddSwaggerGen(options =>
             {
-                var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
                 {
                     if (!assembly.IsDynamic)
                     {
-                        var xmlFile = $"{assembly.GetName().Name}.xml";
-                        var xmlPath = Path.Combine(baseDirectory, xmlFile);
+                        string xmlFile = $"{assembly.GetName().Name}.xml";
+                        string xmlPath = Path.Combine(baseDirectory, xmlFile);
                         if (File.Exists(xmlPath))
                         {
                             options.IncludeXmlComments(xmlPath);
@@ -142,7 +149,9 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                 options.DocInclusionPredicate((version, desc) =>
                 {
                     if (!desc.TryGetMethodInfo(out var methodInfo))
+                    {
                         return false;
+                    }
 
                     var versions = methodInfo
                         .DeclaringType?

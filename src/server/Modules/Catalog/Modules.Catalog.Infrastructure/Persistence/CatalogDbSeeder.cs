@@ -1,14 +1,22 @@
-﻿using FluentPOS.Modules.Catalog.Core.Entities;
-using FluentPOS.Shared.Core.Interfaces.Serialization;
-using FluentPOS.Shared.Core.Interfaces.Services;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
+﻿// <copyright file="CatalogDbSeeder.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using FluentPOS.Modules.Catalog.Core.Entities;
+using FluentPOS.Shared.Core.Interfaces.Serialization;
+using FluentPOS.Shared.Core.Interfaces.Services;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 
 namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
 {
@@ -46,10 +54,10 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
         {
             Task.Run(async () =>
             {
-                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 if (!_db.Brands.Any())
                 {
-                    var brandData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/brands.json");
+                    string brandData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/brands.json");
                     var brands = _jsonSerializer.Deserialize<List<Brand>>(brandData);
 
                     if (brands != null)
@@ -70,10 +78,10 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
         {
             Task.Run(async () =>
             {
-                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 if (!_db.Categories.Any())
                 {
-                    var categoryData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/categories.json");
+                    string categoryData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/categories.json");
                     var categories = _jsonSerializer.Deserialize<List<Category>>(categoryData);
 
                     if (categories != null)
@@ -94,10 +102,10 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence
         {
             Task.Run(async () =>
             {
-                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 if (!_db.Products.Any())
                 {
-                    var productData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/products.json");
+                    string productData = await File.ReadAllTextAsync(path + @"/Persistence/SeedData/products.json");
                     var products = _jsonSerializer.Deserialize<List<Product>>(productData);
 
                     if (products != null)

@@ -1,10 +1,18 @@
-﻿using FluentPOS.Shared.Core.Contracts;
+﻿// <copyright file="UpdateExtendedAttributeCommandValidator.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+using System;
+using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Extensions;
 using FluentPOS.Shared.Core.Interfaces.Serialization;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
-using System;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators
 {
@@ -14,11 +22,11 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Commands.Validators
         protected UpdateExtendedAttributeCommandValidator(IStringLocalizer localizer, IJsonSerializer jsonSerializer)
         {
             RuleFor(request => request.Id)
-                .NotEqual(Guid.Empty).WithMessage(x => localizer["The {PropertyName} property cannot be empty."]);
+                .NotEqual(Guid.Empty).WithMessage(_ => localizer["The {PropertyName} property cannot be empty."]);
             RuleFor(request => request.EntityId)
-                .NotEqual(default(TEntityId)).WithMessage(x => localizer["The {PropertyName} property cannot be default."]);
+                .NotEqual(default(TEntityId)).WithMessage(_ => localizer["The {PropertyName} property cannot be default."]);
             RuleFor(request => request.Key)
-                .NotEmpty().WithMessage(x => localizer["The {PropertyName} property cannot be empty."]);
+                .NotEmpty().WithMessage(_ => localizer["The {PropertyName} property cannot be empty."]);
 
             When(request => request.Type == ExtendedAttributeType.Decimal, () =>
             {

@@ -1,4 +1,12 @@
-﻿namespace FluentPOS.Shared.Core.Settings
+﻿// <copyright file="PersistenceSettings.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
+namespace FluentPOS.Shared.Core.Settings
 {
     public class PersistenceSettings
     {
@@ -10,6 +18,7 @@
 
         public class PersistenceConnectionStrings
         {
+            // ReSharper disable once InconsistentNaming
             public string MSSQL { get; set; }
 
             public string Postgres { get; set; }

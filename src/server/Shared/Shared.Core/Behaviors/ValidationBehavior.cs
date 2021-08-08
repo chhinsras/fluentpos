@@ -1,11 +1,19 @@
-﻿using FluentPOS.Shared.Core.Exceptions;
-using FluentValidation;
-using MediatR;
-using Microsoft.Extensions.Localization;
+﻿// <copyright file="ValidationBehavior.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Exceptions;
+using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Shared.Core.Behaviors
 {
@@ -26,11 +34,13 @@ namespace FluentPOS.Shared.Core.Behaviors
             _localizer = localizer;
         }
 
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             if (_validators.Any())
             {
-                var context = new FluentValidation.ValidationContext<TRequest>(request);
+                var context = new ValidationContext<TRequest>(request);
                 var validationResults = await Task.WhenAll(_validators.Select(v => v.ValidateAsync(context, cancellationToken)));
                 var failures = validationResults.SelectMany(r => r.Errors).Where(f => f != null).ToList();
 
@@ -40,6 +50,7 @@ namespace FluentPOS.Shared.Core.Behaviors
                     throw new CustomValidationException(_localizer, errorMessages);
                 }
             }
+
             return await next();
         }
     }
