@@ -5,9 +5,6 @@
     <RootNamespace>FluentPOS.Modules.Sales.Core</RootNamespace>
     <AssemblyName>FluentPOS.Modules.Sales.Core</AssemblyName>
   </PropertyGroup>
-   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\Shared.Core\Shared.Core.csproj" />
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>FluentPOS.Modules.Sales.Core.xml</DocumentationFile>
   </PropertyGroup>
@@ -15,7 +12,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>FluentPOS.Modules.Sales.Core.xml</DocumentationFile>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Roslynator.Analyzers" Version="3.2.0">
       <PrivateAssets>all</PrivateAssets>
@@ -25,5 +22,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Shared.Core\Shared.Core.csproj" />
   </ItemGroup>
 </Project>

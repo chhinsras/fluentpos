@@ -1,3 +1,11 @@
+// <copyright file="GetBrandByIdResponse.cs" company="Fluentpos">
+// --------------------------------------------------------------------------------------------------
+// Copyright (c) Fluentpos. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------
+// </copyright>
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,7 +35,7 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             _salesContext = salesContext;
         }
 
-        public async Task<Result<Guid>> Handle(RegisterSaleCommand command, CancellationToken cancellationToken)
+        public Task<Result<Guid>> Handle(RegisterSaleCommand command, CancellationToken cancellationToken)
         {
             //From CartId
             //Get Customer ID, Use Intergration Services to Get Customer Details
