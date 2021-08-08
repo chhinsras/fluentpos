@@ -2,11 +2,13 @@
 <RuleSet Name="Fluentpos Rules" Description="These rules represent Fluentpos preferences and enforce consistent code quality guidelines." ToolsVersion="16.0">
   <Include Path="basicdesignguidelinerules.ruleset" Action="Default" />
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1014" Action="None" />
     <Rule Id="CA1020" Action="Warning" />
     <Rule Id="CA1021" Action="Warning" />
     <Rule Id="CA1040" Action="Warning" />
     <Rule Id="CA1045" Action="Warning" />
     <Rule Id="CA1501" Action="Warning" />
+    <Rule Id="CA1502" Action="None" />
     <Rule Id="CA1504" Action="Warning" />
     <Rule Id="CA1505" Action="Warning" />
     <Rule Id="CA1700" Action="Warning" />
@@ -30,11 +32,10 @@
     <Rule Id="CA1725" Action="Info" />
     <Rule Id="CA1726" Action="Warning" />
     <Rule Id="CA2204" Action="Warning" />
-    <Rule Id="CA1502" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
     <Rule Id="AD0001" Action="Info" />
-    <Rule Id="CS1591" Action="None" />
+    <Rule Id="CS1591" Action="Info" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
     <Rule Id="IDE0007" Action="None" />
@@ -63,7 +64,7 @@
     <Rule Id="RCS1029" Action="Info" />
     <Rule Id="RCS1030" Action="None" />
     <Rule Id="RCS1031" Action="Info" />
-    <Rule Id="RCS1046" Action="None" />
+    <Rule Id="RCS1046" Action="Info" />
     <Rule Id="RCS1053" Action="None" />
     <Rule Id="RCS1054" Action="Hidden" />
     <Rule Id="RCS1057" Action="Info" />
@@ -122,12 +123,11 @@
     <Rule Id="SA1210" Action="None" />
     <Rule Id="SA1300" Action="None" />
     <Rule Id="SA1309" Action="None" />
+    <Rule Id="SA1313" Action="None" />
     <Rule Id="SA1401" Action="None" />
     <Rule Id="SA1402" Action="None" />
     <Rule Id="SA1413" Action="None" />
-    <Rule Id="SA1508" Action="None" />
     <Rule Id="SA1512" Action="None" />
-    <Rule Id="SA1516" Action="None" />
     <Rule Id="SA1600" Action="Info" />
     <Rule Id="SA1601" Action="None" />
     <Rule Id="SA1602" Action="None" />

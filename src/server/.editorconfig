@@ -146,5 +146,8 @@ dotnet_diagnostic.SA1601.severity = silent
 # CA1711 Rename type name UserEventHandler so that it does not end in 'EventHandler'
 dotnet_diagnostic.CA1711.severity = none
 
+# CA1307: Specify StringComparison for clarity
+dotnet_diagnostic.CA1307.severity = none
+
 [**/Persistence/Migrations/*.cs]
 dotnet_diagnostics.SA1633.severity = none

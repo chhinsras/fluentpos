@@ -9,7 +9,6 @@
 using System.Reflection;
 using FluentPOS.Modules.Sales.Core.Abstractions;
 using FluentPOS.Modules.Sales.Infrastructure.Persistence;
-using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Infrastructure.Extensions;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;

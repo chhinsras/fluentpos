@@ -6,11 +6,9 @@
 // --------------------------------------------------------------------------------------------------
 // </copyright>
 
-using System;
 using FluentPOS.Modules.Sales.Core.Abstractions;
 using FluentPOS.Modules.Sales.Core.Entities;
 using FluentPOS.Shared.Core.EventLogging;
-using FluentPOS.Shared.Core.Interfaces;
 using FluentPOS.Shared.Core.Settings;
 using FluentPOS.Shared.Infrastructure.Persistence;
 using MediatR;
@@ -40,7 +38,9 @@ namespace FluentPOS.Modules.Sales.Infrastructure.Persistence
         }
 
         public DbSet<Order> Orders { get; set; }
+
         public DbSet<Product> Products { get; set; }
+
         public DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
