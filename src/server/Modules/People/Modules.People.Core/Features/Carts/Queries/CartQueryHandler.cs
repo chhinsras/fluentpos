@@ -83,7 +83,7 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Queries
         public async Task<Result<GetCartByIdResponse>> Handle(GetCartByIdQuery query, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-            var cart = await _context.Carts.AsNoTracking().Where(c => c.Id == query.Id).FirstOrDefaultAsync(cancellationToken);
+            var cart = await _context.Carts.AsNoTracking().Where(c => c.Id == query.Id).Include(a => a.CartItems).Include(c => c.Customer).FirstOrDefaultAsync(cancellationToken);
             if (cart == null)
             {
                 throw new PeopleException(_localizer["Cart Not Found!"], HttpStatusCode.NotFound);
