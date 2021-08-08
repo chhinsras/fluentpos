@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 using System;
 using FluentPOS.Shared.Core.Interfaces.Serialization;
 
-namespace FluentPOS.Modules.People.Infrastructure.Persistence
+namespace FluentPOS.Modules.Sales.Infrastructure.Persistence
 {
     public sealed class SalesDbContext : ModuleDbContext, ISalesDbContext
     {
@@ -32,7 +32,6 @@ namespace FluentPOS.Modules.People.Infrastructure.Persistence
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Customer> Customers { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

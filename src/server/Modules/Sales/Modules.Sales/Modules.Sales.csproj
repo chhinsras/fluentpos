@@ -10,5 +10,9 @@
     <DocumentationFile>FluentPOS.Modules.Sales.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\Modules.Sales.Infrastructure\Modules.Sales.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules.Sales.Core\Modules.Sales.Core.csproj" />
+  </ItemGroup>
+  
 </Project>

@@ -8,7 +8,7 @@ namespace FluentPOS.Modules.Sales.Core.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddPeopleCore(this IServiceCollection services)
+        public static IServiceCollection AddSalesCore(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

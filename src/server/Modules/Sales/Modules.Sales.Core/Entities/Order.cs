@@ -7,6 +7,9 @@ namespace FluentPOS.Modules.Sales.Core.Entities
     {
         public DateTime TimeStamp { get; private set; }
         public Guid CustomerId { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerPhone { get; set; }
+        public string CustomerEmail { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Tax { get; set; }
         public decimal Discount { get; set; }
