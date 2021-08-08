@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map } from 'rxjs/operators';
 import { BrandApiService } from 'src/app/core/api/catalog/brand-api.service';
 import { ProductApiService } from 'src/app/core/api/catalog/product-api.service';
