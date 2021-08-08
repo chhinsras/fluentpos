@@ -6,6 +6,14 @@
     <AssemblyName>FluentPOS.Modules.Sales.Infrastructure</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>FluentPOS.Modules.Sales.Infrastructure.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>FluentPOS.Modules.Sales.Infrastructure.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Roslynator.Analyzers" Version="3.2.0">
       <PrivateAssets>all</PrivateAssets>
