@@ -41,7 +41,7 @@ export class EventLogsComponent implements OnInit {
   initColumns(): void {
     this.eventLogColumns = [
       { name: 'Event', dataKey: 'messageType', isSortable: true, isShowable: true },
-      { name: 'Description', dataKey: 'description', isSortable: true, isShowable: true },
+      { name: 'Description', dataKey: 'eventDescription', isSortable: true, isShowable: true },
       { name: 'Invoked By', dataKey: 'email', isSortable: true, isShowable: true },
       { name: 'Time Stamp', dataKey: 'timestamp', isSortable: true, isShowable: true },
       { name: 'Action', dataKey: 'action', position: 'right' },
