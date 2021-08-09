@@ -16,6 +16,7 @@ using FluentPOS.Shared.Core.IntegrationServices.Catalog;
 using FluentPOS.Shared.Core.IntegrationServices.People;
 using FluentPOS.Shared.Core.Wrapper;
 using MediatR;
+using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
 {
@@ -71,6 +72,7 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
                     order.AddProduct(item.ProductId, product.Name, item.Quantity);
                 }
             }
+
             await _salesContext.Orders.AddAsync(order);
             await _salesContext.SaveChangesAsync();
             return await Result<Guid>.SuccessAsync(order.Id, _localizer["Order Created"]);

@@ -25,6 +25,7 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Queries
         public string CacheKey { get; protected set; }
 
         public TimeSpan? SlidingExpiration { get; protected set; }
+
         public GetCartByIdQuery(Guid cartId, bool bypassCache = false, TimeSpan? slidingExpiration = null)
         {
             Id = cartId;
@@ -32,9 +33,9 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Queries
             CacheKey = CacheKeys.Common.GetEntityByIdCacheKey<Guid, Cart>(cartId);
             SlidingExpiration = slidingExpiration;
         }
+
         public GetCartByIdQuery()
         {
-
         }
     }
 }
