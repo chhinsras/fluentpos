@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Modules\Catalog\Modules.Catalog.Controllers\Modules.Catalog.csproj" />
+    <ProjectReference Include="..\Modules\Catalog\Modules.Catalog\Modules.Catalog.csproj" />
     <ProjectReference Include="..\Modules\Identity\Modules.Identity\Modules.Identity.csproj" />
     <ProjectReference Include="..\Modules\People\Modules.People\Modules.People.csproj" />
     <ProjectReference Include="..\Modules\Sales\Modules.Sales\Modules.Sales.csproj" />

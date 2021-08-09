@@ -25,6 +25,5 @@ namespace FluentPOS.Modules.Sales.Core.Entities
         public decimal TenderedAmount { get; set; }
 
         public string Note { get; set; }
-
     }
 }
