@@ -28,6 +28,6 @@ namespace FluentPOS.Modules.Sales.Core.Entities
 
         public decimal Discount { get; set; }
 
-        public decimal Total { get; private set; }
+        public decimal Total { get; set; }
     }
 }

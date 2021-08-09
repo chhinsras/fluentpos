@@ -69,7 +69,7 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
                 if (productResponse.Succeeded)
                 {
                     var product = productResponse.Data;
-                    order.AddProduct(item.ProductId, product.Name, item.Quantity);
+                    order.AddProduct(item.ProductId, product.Name, item.Quantity, product.Price, product.Tax);
                 }
             }
 

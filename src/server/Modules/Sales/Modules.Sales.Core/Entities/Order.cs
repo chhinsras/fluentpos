@@ -52,9 +52,16 @@ namespace FluentPOS.Modules.Sales.Core.Entities
             this.Products.Add(product);
         }
 
-        internal void AddProduct(Guid productId, string name, int quantity)
+        internal void AddProduct(Guid productId, string name, int quantity, decimal rate, decimal tax)
         {
-            this.Products.Add(new Product() { ProductId = productId, Quantity = quantity });
+            this.Products.Add(new Product()
+            {
+                ProductId = productId,
+                Quantity = quantity,
+                Tax = tax * quantity,
+                Price = quantity * rate,
+                Total = (quantity * rate) + tax * quantity
+            });
         }
     }
 }
