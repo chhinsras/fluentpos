@@ -33,7 +33,7 @@ namespace FluentPOS.Modules.Catalog.Core.Entities
 
         public string ImageUrl { get; set; }
 
-        public string Tax { get; set; }
+        public decimal Tax { get; set; }
 
         public string TaxMethod { get; set; }
 

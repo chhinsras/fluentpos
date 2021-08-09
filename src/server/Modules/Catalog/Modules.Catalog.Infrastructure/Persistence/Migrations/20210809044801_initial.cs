@@ -1,17 +1,9 @@
-﻿// <copyright file="20210807224013_Initial.cs" company="FluentPOS">
-// --------------------------------------------------------------------------------------------------
-// Copyright (c) FluentPOS. All rights reserved.
-// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-// --------------------------------------------------------------------------------------------------
-// </copyright>
-
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -125,7 +117,7 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     Cost = table.Column<decimal>(type: "numeric", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
-                    Tax = table.Column<string>(type: "text", nullable: true),
+                    Tax = table.Column<decimal>(type: "numeric", nullable: false),
                     TaxMethod = table.Column<string>(type: "text", nullable: true),
                     BarcodeSymbology = table.Column<string>(type: "text", nullable: true),
                     IsAlert = table.Column<bool>(type: "boolean", nullable: false),
