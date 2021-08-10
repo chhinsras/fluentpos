@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { TableColumn } from 'src/app/core/shared/components/table/table-column';
 import { User } from '../../../models/user';
-import { UserRole } from '../../../models/userRole';
+import { UserRole, UserRoleModel } from '../../../models/userRole';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { UserService } from '../../../services/user.service';
   styleUrls: ['./user-role-form.component.scss']
 })
 export class UserRoleFormComponent implements OnInit {
-  userRoles: UserRole[];
+  userRoles: UserRoleModel[];
   userRoleColumns: TableColumn[];
   searchString: string;
 
@@ -29,7 +29,7 @@ export class UserRoleFormComponent implements OnInit {
 
   getUsers(): void {
     this.userService.getUserRoles(this.data.id).subscribe((result) => {
-      this.userRoles = result.data;
+      this.userRoles = result.data.userRoles;
     });
   }
 
