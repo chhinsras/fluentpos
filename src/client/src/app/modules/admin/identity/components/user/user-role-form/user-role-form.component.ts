@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { CustomAction } from 'src/app/core/shared/components/table/custom-action';
 import { TableColumn } from 'src/app/core/shared/components/table/table-column';
 import { User } from '../../../models/user';
 import { UserRole, UserRoleModel } from '../../../models/userRole';
@@ -15,6 +16,7 @@ export class UserRoleFormComponent implements OnInit {
   userRoles: UserRoleModel[];
   userRoleColumns: TableColumn[];
   searchString: string;
+  userRoleActionData: CustomAction = new CustomAction('Update User Roles', 'update', 'primary');
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: User,
@@ -41,5 +43,7 @@ export class UserRoleFormComponent implements OnInit {
     ];
   }
 
+  submitUserRoles($event): void{
 
+  }
 }
