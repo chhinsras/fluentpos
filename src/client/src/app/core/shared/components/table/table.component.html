@@ -63,7 +63,7 @@
         ">
                 <td mat-cell *matCellDef="let element" [class.text-right]="tableColumn.position == 'right'"
                     [ngClass]="{ 'text-right': tableColumn.dataKey === 'action' }">
-                    <ng-container *ngIf="tableColumn.isShowable">
+                    <ng-container *ngIf="tableColumn.isShowable && tableColumn.dataKey !== 'selected'">
                         <span *ngIf="tableColumn.dataKey !== 'isAlert'"> {{ element | dataPropertyGetter:
                             tableColumn.dataKey}}
                         </span>
