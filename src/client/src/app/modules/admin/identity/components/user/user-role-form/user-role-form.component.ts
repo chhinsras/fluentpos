@@ -44,6 +44,6 @@ export class UserRoleFormComponent implements OnInit {
   }
 
   submitUserRoles($event): void{
-
+    console.log($event);
   }
 }

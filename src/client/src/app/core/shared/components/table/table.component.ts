@@ -74,8 +74,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   handleCustomAction() {
-    this.onCustomAction.emit(this.tableDataSource);
-    console.log(this.tableDataSource);
+    this.onCustomAction.emit(this.tableDataSource.data);
   }
 
   openCreateForm() {
