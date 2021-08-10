@@ -1,1 +1,7 @@
-<p>user-role-form works!</p>
+<div [hidden]="!userRoles">
+  <app-table [title]="'User Roles'" [subtitle]="'Manage User Role here.'"
+      [data]="userRoles" [columns]="userRoleColumns"
+    >
+  </app-table>
+</div>
+

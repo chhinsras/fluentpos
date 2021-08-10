@@ -45,9 +45,9 @@ export class UserService {
       .pipe(map((response: IResult<string>) => response));
   }
 
-  getUserRoles(id: string) {
+  getUserRoles(id: string): Observable<Result<UserRole[]>> {
     return this.api
       .getUserRoles(id)
-      .pipe(map((response: Observable<Result<UserRole[]>>) => response));
+      .pipe(map((response: Result<UserRole[]>) => response));
   }
 }

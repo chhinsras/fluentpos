@@ -1,5 +1,4 @@
 export interface UserRole {
-  id: string
-  roleName: string,
-  selected: boolean
+  roleName: string;
+  selected: boolean;
 }
