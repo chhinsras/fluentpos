@@ -24,7 +24,7 @@ export class PermissionFormComponent implements OnInit {
   filterValues = {};
   filterSelectObj = [];
   permissionColumns: TableColumn[];
-  
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: Role, private roleService: RoleService, private toastr: ToastrService, private fb: FormBuilder) {
     this.filterSelectObj = [
       {
@@ -59,7 +59,7 @@ export class PermissionFormComponent implements OnInit {
         o.options = this.getFilterObject(response.data.roleClaims, o.columnProp);
       });
     });
-    
+
   }
 
   initColumns(): void {

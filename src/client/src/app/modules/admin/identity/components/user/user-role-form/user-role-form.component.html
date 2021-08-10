@@ -1,0 +1,8 @@
+<div [hidden]="!userRoles">
+  <app-table [title]="'User Roles'" [subtitle]="'Manage User Role here.'"
+      [data]="userRoles" [columns]="userRoleColumns"
+      [customActionData]="userRoleActionData" (onCustomAction)="submitUserRoles($event)"
+    >
+  </app-table>
+</div>
+

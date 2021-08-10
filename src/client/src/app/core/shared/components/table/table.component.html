@@ -14,6 +14,11 @@
                 <mat-icon>refresh</mat-icon> {{'components.table.reload'|translate}}
             </a>
         </div>
+        <div *ngIf="customActionData" class="right">
+          <a mat-raised-button color="{{customActionData.color}}" (click)="handleCustomAction()">
+            <mat-icon>{{customActionData.icon}}</mat-icon> {{ customActionData.title }}
+          </a>
+        </div>
         <div *ngIf="onFilter.observers.length>0" class="right">
             <mat-form-field>
                 <input matInput [(ngModel)]="searchString" name="searchString" type="text" autocomplete="off"
@@ -58,7 +63,7 @@
         ">
                 <td mat-cell *matCellDef="let element" [class.text-right]="tableColumn.position == 'right'"
                     [ngClass]="{ 'text-right': tableColumn.dataKey === 'action' }">
-                    <ng-container *ngIf="tableColumn.isShowable">
+                    <ng-container *ngIf="tableColumn.isShowable && tableColumn.dataKey !== 'selected'">
                         <span *ngIf="tableColumn.dataKey !== 'isAlert'"> {{ element | dataPropertyGetter:
                             tableColumn.dataKey}}
                         </span>
@@ -67,6 +72,20 @@
                             ({{element.alertQuantity}})</span>
                     </ng-container>
 
+                    <ng-container *ngIf="tableColumn.dataKey === 'selected'">
+                        <!-- <mat-header-cell *matHeaderCellDef>
+                          <mat-checkbox (change)="$event ? masterToggle() : null"
+                                        [checked]="selection.hasValue() && isAllSelected()"
+                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                        [aria-label]="checkboxLabel()">
+                          </mat-checkbox>
+                        </mat-header-cell> -->
+                          <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="element.selected = !element.selected"
+                                        [checked]="element.selected"
+                                        >
+                          </mat-checkbox>
+                    </ng-container>
                     <ng-container *ngIf="tableColumn.dataKey === 'action'">
                         <button *ngIf="customActionOneData" mat-raised-button color="{{customActionOneData.color}}"
                             (click)="openCustomActionOne(element)">
