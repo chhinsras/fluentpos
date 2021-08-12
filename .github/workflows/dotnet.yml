@@ -14,13 +14,19 @@ jobs:
     steps:
     - name: 🛒 Checkout repository
       uses: actions/checkout@v2
+      
     - name: ⚙️ Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+
+    - name: 🧹 Clean
+      run: dotnet clean -c Release && dotnet nuget locals all --clear
+
     - name: 🔁 Restore dependencies
       run: dotnet restore
       working-directory: src/server
+      
     - name: 🛠️ Build
       run: dotnet build --no-restore
       working-directory: src/server
