@@ -30,3 +30,6 @@ jobs:
     - name: 🛠️ Build
       run: dotnet build --no-restore
       working-directory: src/server
+
+#   - name: 🧪 Run unit tests
+#     run: dotnet test src/server -c Release --no-build
