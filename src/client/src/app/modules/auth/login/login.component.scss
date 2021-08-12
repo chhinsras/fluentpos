@@ -1,9 +1,34 @@
 mat-card {
-  max-width: 400px;
   margin: 2em auto;
   text-align: center;
 }
 
 mat-form-field {
   display: block;
+}
+
+.mat-card-login
+{
+  max-width: 1000px!important;
+padding: 0px!important;
+}
+
+.mat-card-content-login
+{
+padding: 0px!important;
+}
+
+.login-form
+{
+  padding: 40px;
+  align-self: center;
+}
+
+.login-image
+{
+  background: url('/assets/images/bg-login.jpg');
+  background-position: center;
+  background-size: cover;
+  width: 500px;
+  height: 750px;
 }
