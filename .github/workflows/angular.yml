@@ -14,16 +14,18 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v2
+      - name: 🛒 Checkout repository
+        uses: actions/checkout@v2
       
-      - uses: actions/setup-node@v2
+      - name: ⚙️ Setup Node
+        uses: actions/setup-node@v2
         with:
           node-version: '14'
           
-      - name: Install Dependencies
+      - name: 🔁 Install Dependencies
         run: npm install
         working-directory: ./src/client/
     
-      - name: Build Application
+      - name: 🛠️ Build Application
         run: npm run build
         working-directory: ./src/client/
