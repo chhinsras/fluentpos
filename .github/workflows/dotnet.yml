@@ -21,7 +21,7 @@ jobs:
         dotnet-version: 5.0.x
 
     - name: 🧹 Clean
-      run: dotnet clean -c Release && dotnet nuget locals all --clear
+      run: dotnet clean src/server/FluentPOS.sln -c Release && dotnet nuget locals all --clear
 
     - name: 🔁 Restore dependencies
       run: dotnet restore
