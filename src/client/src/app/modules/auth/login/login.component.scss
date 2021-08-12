@@ -1,6 +1,9 @@
 mat-card {
-  margin: 2em auto;
+  margin: 5em auto;
   text-align: center;
+  display: block;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 mat-form-field {
@@ -11,6 +14,13 @@ mat-form-field {
 {
   max-width: 1000px!important;
 padding: 0px!important;
+}
+
+@media (max-width: 991px) {
+  .mat-card-login
+  {
+    margin: 40px;
+  }
 }
 
 .mat-card-content-login
