@@ -7,10 +7,11 @@
 // </copyright>
 
 using System;
+using FluentPOS.Shared.Core.Domain;
 
 namespace FluentPOS.Modules.Sales.Core.Entities
 {
-    public class Product
+    public class Product : BaseEntity
     {
         public Guid OrderId { get; set; }
 

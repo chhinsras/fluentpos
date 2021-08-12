@@ -27,7 +27,7 @@ namespace FluentPOS.Modules.People.Infrastructure.Services
 
         public async Task<Result<GetCartByIdResponse>> GetDetailsAsync(Guid cartId)
         {
-            return await _mediator.Send(new GetCartByIdQuery(cartId, false));
+            return await _mediator.Send(new GetCartByIdQuery(cartId, true));
         }
     }
 }

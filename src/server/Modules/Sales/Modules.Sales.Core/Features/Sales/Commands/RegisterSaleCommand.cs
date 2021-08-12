@@ -9,6 +9,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using AutoMapper;
 using FluentPOS.Modules.Sales.Core.Abstractions;
 using FluentPOS.Modules.Sales.Core.Entities;
@@ -52,7 +53,7 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             // Calculate Tax, Total
             // Save to Sales.Order,Transactions and Product
             // Delete CartItem and Cart
-
+            var order = Order.InitializeOrder();
             var cartDetails = await _cartService.GetDetailsAsync(command.CartId);
 
             // Do all mandatory null checks
@@ -60,7 +61,7 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             if (cartDetails.Data.Customer == null) throw new Exception("Customer Invalid!");
             if (cartDetails.Data.CartItems == null) throw new Exception("Empty Cart!");
             var customer = cartDetails.Data.Customer;
-            var order = new Order();
+
             order.AddCustomer(customer);
             var items = cartDetails.Data.CartItems;
             foreach (var item in items)
@@ -72,9 +73,9 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
                     order.AddProduct(item.ProductId, product.Name, item.Quantity, product.Price, product.Tax);
                 }
             }
-
             await _salesContext.Orders.AddAsync(order);
-            await _salesContext.SaveChangesAsync();
+            await _salesContext.SaveChangesAsync(default);
+
             return await Result<Guid>.SuccessAsync(order.Id, _localizer["Order Created"]);
         }
     }
