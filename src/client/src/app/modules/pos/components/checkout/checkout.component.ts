@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Customer } from 'src/app/modules/admin/people/models/customer';
-import { CustomerService } from 'src/app/modules/admin/people/services/customer.service';
 import { CartItem } from '../../models/cart';
 import { CheckOut } from '../../models/checkOut';
 import { CartService } from '../../services/cart.service';
+import { CheckoutService } from '../../services/checkout.service';
 
 @Component({
   selector: 'app-checkout',
@@ -13,7 +13,7 @@ import { CartService } from '../../services/cart.service';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: CheckOut, public customerService:CustomerService, public cartService:CartService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: CheckOut,public dialog: MatDialog, public cartService: CartService, public checkOutService: CheckoutService) { }
   cartItems: CartItem[];
   cartId: string;
   customer: Customer;
@@ -22,5 +22,10 @@ export class CheckoutComponent implements OnInit {
     this.cartItems = this.data.cartItems;
     this.customer = this.cartService.currentCustomer;
   }
-
+  submitOrder() {
+    this.checkOutService.submitOrder(this.cartId).subscribe((result) => {
+      this.cartService.reset();
+      this.dialog.closeAll();
+    });
+  }
 }

@@ -75,7 +75,7 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             }
             await _salesContext.Orders.AddAsync(order);
             await _salesContext.SaveChangesAsync(default);
-
+            await _cartService.RemoveCartAsync(command.CartId);
             return await Result<Guid>.SuccessAsync(order.Id, _localizer["Order Created"]);
         }
     }

@@ -35,6 +35,6 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-raised-button [mat-dialog-close]="true">{{'common.cancel'|translate}}</button>
-  <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial
+  <button mat-raised-button (click)="submitOrder()"
     color="accent">{{'dialogs.checkOut.button'|translate}}</button>
 </mat-dialog-actions>
