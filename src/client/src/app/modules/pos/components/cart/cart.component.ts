@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ToastrService } from 'ngx-toastr';
 import { CartItem } from '../../models/cart';
 import { CartService } from '../../services/cart.service';
+import { CheckoutComponent } from '../checkout/checkout.component';
 
 @Component({
   selector: 'app-cart',
@@ -13,7 +15,7 @@ export class CartComponent implements OnInit {
   @Input() cart: MatSidenav;
   cartItems: CartItem[];
   total: number = 0;
-  constructor(public cartService: CartService, private toastr: ToastrService) { }
+  constructor(public cartService: CartService, private toastr: ToastrService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadCurrentCart();
@@ -53,5 +55,12 @@ export class CartComponent implements OnInit {
       const customerId = this.cartService.getCurrentCustomer();
       const cart = this.cartService.loadCurrentCart();
     }
+  }
+  openCheckoutDialog() {
+    const dialogRef = this.dialog.open(CheckoutComponent,{
+      data: this.cartService.cartId,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

@@ -15,7 +15,7 @@ export class CartService {
   private cartItems$ = new Subject<CartItem[]>();
   private cartItems: CartItem[] = [];
   private currentCustomer: Customer;
-  private cartId: string;
+  public cartId: string;
   public isCartLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(private cartApi: CartApiService, private cartItemApi: CartItemsApiService, private cartItemsApi: CartItemsApiService, private toastr: ToastrService) { }
   private updateCart(cartItemId: string, productId: string, quantity: number) {

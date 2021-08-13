@@ -1,0 +1,10 @@
+<h2 mat-dialog-title translate>dialogs.checkOut.title</h2>
+#{{this.cartId}}
+<mat-dialog-content class="mat-typography" translate>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button>{{'common.cancel'|translate}}</button>
+    <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial
+        color="accent">{{'dialogs.checkOut.button'|translate}}</button>
+</mat-dialog-actions>
