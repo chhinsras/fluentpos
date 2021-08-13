@@ -14,7 +14,7 @@ import { Product } from '../models/product';
 export class CartService {
   private cartItems$ = new Subject<CartItem[]>();
   private cartItems: CartItem[] = [];
-  private currentCustomer: Customer;
+  public currentCustomer: Customer;
   public cartId: string;
   public isCartLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(private cartApi: CartApiService, private cartItemApi: CartItemsApiService, private cartItemsApi: CartItemsApiService, private toastr: ToastrService) { }
