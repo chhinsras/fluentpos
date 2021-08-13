@@ -14,6 +14,7 @@ import { UserService } from './services/user.service';
 import { RoleService } from './services/role.service';
 import { IdentityService } from './services/identity.service';
 import { PermissionFormComponent } from './components/role/permission-form/permission-form.component';
+import { UserRoleFormComponent } from './components/user/user-role-form/user-role-form.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PermissionFormComponent } from './components/role/permission-form/permi
     RoleComponent,
     UserFormComponent,
     RoleFormComponent,
-    PermissionFormComponent
+    PermissionFormComponent,
+    UserRoleFormComponent
   ],
   imports: [
     CommonModule,

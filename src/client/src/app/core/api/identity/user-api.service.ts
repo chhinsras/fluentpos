@@ -30,4 +30,9 @@ export class UserApiService {
   delete(id: string) {
     return this.http.delete(this.baseUrl + id);
   }
+
+  getUserRoles(id: string) {
+    return this.http.get(this.baseUrl + `roles/${id}`);
+  }
+
 }

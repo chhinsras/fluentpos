@@ -5,8 +5,10 @@ import { map } from 'rxjs/operators';
 import { UserApiService } from 'src/app/core/api/identity/user-api.service';
 import { IResult } from 'src/app/core/models/wrappers/IResult';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
+import { Result } from 'src/app/core/models/wrappers/Result';
 import { User } from '../models/user';
 import { UserParams } from '../models/userParams';
+import { UserRole } from '../models/userRole';
 
 @Injectable()
 export class UserService {
@@ -41,5 +43,11 @@ export class UserService {
     return this.api
       .delete(id)
       .pipe(map((response: IResult<string>) => response));
+  }
+
+  getUserRoles(id: string): Observable<Result<UserRole>> {
+    return this.api
+      .getUserRoles(id)
+      .pipe(map((response: Result<UserRole>) => response));
   }
 }

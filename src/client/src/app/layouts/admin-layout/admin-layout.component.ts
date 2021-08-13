@@ -15,7 +15,7 @@ export class AdminLayoutComponent implements OnInit {
   title = 'fluentpos';
   fullName: string;
   email: string;
-
+  alertIsVisible: boolean = true;
   constructor(private authService: AuthService, public busyService: BusyService) { }
 
   ngOnInit() {
@@ -24,5 +24,9 @@ export class AdminLayoutComponent implements OnInit {
   getUserDetails() {
     this.fullName = this.authService.getFullName;
     this.email = this.authService.getEmail;
+  }
+  hideAlert() {
+    this.alertIsVisible = false;
+
   }
 }

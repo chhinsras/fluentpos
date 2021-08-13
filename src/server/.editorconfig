@@ -150,4 +150,12 @@ dotnet_diagnostic.CA1711.severity = none
 dotnet_diagnostic.CA1307.severity = none
 
 [**/Persistence/Migrations/*.cs]
-dotnet_diagnostics.SA1633.severity = none
+
+# SA1633: File should have header
+dotnet_diagnostic.SA1633.severity = none
+
+# RCS1205 Order named arguments according to the order of parameters.
+dotnet_diagnostic.RCS1205.severity = none
+
+# SA1518 File may not end with a newline character
+dotnet_diagnostic.SA1518.severity = none

@@ -9,6 +9,8 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { ToastrService } from 'ngx-toastr';
 import { Sort } from '@angular/material/sort';
 import { TableColumn } from 'src/app/core/shared/components/table/table-column';
+import { CustomAction } from 'src/app/core/shared/components/table/custom-action';
+import { UserRoleFormComponent } from './user-role-form/user-role-form.component';
 
 @Component({
   selector: 'app-user',
@@ -20,6 +22,7 @@ export class UserComponent implements OnInit {
   userColumns: TableColumn[];
   userParams = new UserParams();
   searchString: string;
+  userRoleActionData: CustomAction = new CustomAction('Manage User Roles');
 
   constructor(
     public userService: UserService,
@@ -51,7 +54,7 @@ export class UserComponent implements OnInit {
       { name: 'Action', dataKey: 'action', position: 'right' },
     ];
   }
-  
+
   pageChanged(event: PaginatedFilter): void {
     this.userParams.pageNumber = event.pageNumber;
     this.userParams.pageSize = event.pageSize;
@@ -94,5 +97,16 @@ export class UserComponent implements OnInit {
     this.userParams.pageNumber = 0;
     this.userParams.pageSize = 0;
     this.getUsers();
+  }
+
+  openUserRolesForm(user: User): void {
+    const dialogRef = this.dialog.open(UserRoleFormComponent, {
+      data: user
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getUsers();
+      }
+    });
   }
 }
