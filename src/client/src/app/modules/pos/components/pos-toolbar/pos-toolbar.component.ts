@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { ThemeService } from 'src/app/core/services/theme.service';
+import { CustomerService } from 'src/app/modules/admin/people/services/customer.service';
 import { Customer } from '../../models/customer';
 import { CartService } from '../../services/cart.service';
 import { PosService } from '../../services/pos.service';
@@ -23,7 +24,7 @@ export class PosToolbarComponent implements OnInit {
   ngOnInit(): void {
     this.cart.toggle();
     this.cartService.get().subscribe(res => this.cartItemCount = res.length);
-    this.customer = this.cartService.getCurrentCustomer();
+    this.cartService.getCurrentCustomer().subscribe(res=>this.customer = res);
     let themeVariant = this.localStorageService.getItem('themeVariant');
     this.darkModeIcon = themeVariant === 'dark-theme' ? 'bedtime' : 'wb_sunny';
     this.isDarkMode = themeVariant === 'dark-theme';

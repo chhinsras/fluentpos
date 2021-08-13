@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20210807224013_Initial")]
-    partial class Initial
+    [Migration("20210813125949_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -260,8 +260,8 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("Tax")
-                        .HasColumnType("text");
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("TaxMethod")
                         .HasColumnType("text");

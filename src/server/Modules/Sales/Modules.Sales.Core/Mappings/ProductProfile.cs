@@ -1,21 +1,22 @@
+// <copyright file="ProductProfile.cs" company="FluentPOS">
 // --------------------------------------------------------------------------------------------------
-// <copyright file="ICartService.cs" company="FluentPOS">
 // Copyright (c) FluentPOS. All rights reserved.
 // The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-// </copyright>
 // --------------------------------------------------------------------------------------------------
+// </copyright>
 
-using System;
-using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Wrapper;
-using FluentPOS.Shared.DTOs.People.Carts;
+using AutoMapper;
+using FluentPOS.Modules.Sales.Core.Entities;
+using FluentPOS.Shared.DTOs.Catalogs.Products;
 
-namespace FluentPOS.Shared.Core.IntegrationServices.People
+namespace FluentPOS.Modules.Sales.Core.Mappings
 {
-    public interface ICartService
+    public class ProductProfile : Profile
     {
-        Task<Result<GetCartByIdResponse>> GetDetailsAsync(Guid cartId);
-        Task<Result<Guid>> RemoveCartAsync(Guid cartId);
+        public ProductProfile()
+        {
+            CreateMap<GetProductByIdResponse, Product>().ReverseMap();
+        }
     }
 }

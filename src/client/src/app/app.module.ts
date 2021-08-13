@@ -27,6 +27,7 @@ import { BusyService } from './core/services/busy.service';
 import { PermissionGuard } from './core/guards/permission.guard';
 import { RoleGuard } from './core/guards/role.guard';
 import { DatePipe } from '@angular/common';
+import { CustomerService } from './modules/admin/people/services/customer.service';
 
 export function rootLoaderFactory(http: HttpClient)
 {
@@ -62,9 +63,9 @@ export function rootLoaderFactory(http: HttpClient)
     AuthGuard,
     PermissionGuard,
     RoleGuard,
-    AuthService, 
-    LocalStorageService, 
-    MultilingualService, 
+    AuthService,
+    LocalStorageService,
+    MultilingualService,
     BusyService,
     DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

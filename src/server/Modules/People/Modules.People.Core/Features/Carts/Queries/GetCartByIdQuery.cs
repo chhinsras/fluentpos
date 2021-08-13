@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------------------------------
 
 using System;
+using FluentPOS.Modules.People.Core.Entities;
+using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Queries;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.People.Carts;
@@ -23,5 +25,17 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Queries
         public string CacheKey { get; protected set; }
 
         public TimeSpan? SlidingExpiration { get; protected set; }
+
+        public GetCartByIdQuery(Guid cartId, bool bypassCache = false, TimeSpan? slidingExpiration = null)
+        {
+            Id = cartId;
+            BypassCache = bypassCache;
+            CacheKey = CacheKeys.Common.GetEntityByIdCacheKey<Guid, Cart>(cartId);
+            SlidingExpiration = slidingExpiration;
+        }
+
+        public GetCartByIdQuery()
+        {
+        }
     }
 }

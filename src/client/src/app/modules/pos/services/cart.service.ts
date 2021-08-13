@@ -14,8 +14,9 @@ import { Product } from '../models/product';
 export class CartService {
   private cartItems$ = new Subject<CartItem[]>();
   private cartItems: CartItem[] = [];
-  private currentCustomer: Customer;
-  private cartId: string;
+  public currentCustomer: Customer;
+  public currentCustomer$ = new Subject<Customer>();
+  public cartId: string;
   public isCartLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(private cartApi: CartApiService, private cartItemApi: CartItemsApiService, private cartItemsApi: CartItemsApiService, private toastr: ToastrService) { }
   private updateCart(cartItemId: string, productId: string, quantity: number) {
@@ -25,6 +26,13 @@ export class CartService {
   }
   private deleteFromCart(cartItemId: string) {
     this.cartItemApi.delete(cartItemId).subscribe((res) => this.toastr.info(res.messages[0]));
+  }
+  reset()
+  {
+    this.cartItems = [];
+    this.cartItems$.next(this.cartItems);
+    this.currentCustomer = null;
+    this.currentCustomer$.next(this.currentCustomer);
   }
   add(product: Product, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == product.id);
@@ -50,7 +58,6 @@ export class CartService {
 
   }
   increase(productId: string, quantity: number = 1) {
-    console.log(this.cartItems);
     var foundItem = this.cartItems.find(a => a.productId == productId);
     if (foundItem) {
       foundItem.quantity = foundItem.quantity + quantity;
@@ -88,9 +95,10 @@ export class CartService {
   }
   setCurrentCustomer(customer: Customer) {
     this.currentCustomer = customer;
+    this.currentCustomer$.next(this.currentCustomer);
   }
   getCurrentCustomer() {
-    return this.currentCustomer;
+    return this.currentCustomer$.asObservable();
   }
   private calculate(cartItems: CartItem[]): CartItem[] {
     cartItems.forEach(function (part, index, theArray) {
@@ -119,7 +127,6 @@ export class CartService {
               this.isCartLoading.next(false);
             }
             else {
-              console.log('no items');
               this.isCartLoading.next(false);
             }
           });

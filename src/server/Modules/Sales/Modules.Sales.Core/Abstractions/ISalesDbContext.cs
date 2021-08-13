@@ -9,6 +9,8 @@
 using FluentPOS.Modules.Sales.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using FluentPOS.Shared.Core.Interfaces;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Data;
 
 namespace FluentPOS.Modules.Sales.Core.Abstractions
 {

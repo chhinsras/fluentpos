@@ -1,0 +1,40 @@
+<h2 mat-dialog-title translate>dialogs.checkOut.title</h2>
+<mat-dialog-content class="mat-typography" translate>
+  <div class="row" style="min-width: 1000px;">
+    <div class="col-6">
+      <div style="margin-bottom: 0;background: rgba(0,0,0,.01);">
+        <div *ngIf="cartItems">
+          <div *ngFor="let item of cartItems" class="row" style="margin:2px;padding:10px;border-radius: 5px;">
+            <div class="col-2" style="font-size: large;align-self: center;">
+              X {{item.quantity}}
+            </div>
+            <div class="col-10" style="align-self: center;">
+              <h4 style="margin: 0px!important;">{{item.displayName}}</h4>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!cartItems|| cartItems.length==0" style="height: 60vh!important;">
+          <mat-card>
+            <mat-card-content style="padding: 40px;text-align: center;opacity: 60%;">
+              <h2 translate>
+                pos.cartEmpty</h2>
+              <p translate>pos.startAddingProducts</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Customer</mat-label>
+        <input matInput autocomplete="off" name="searchString" type="text"
+          autocomplete="off" readonly value="{{this.customer.name}}" />
+      </mat-form-field>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button [mat-dialog-close]="true">{{'common.cancel'|translate}}</button>
+  <button mat-raised-button (click)="submitOrder()"
+    color="accent">{{'dialogs.checkOut.button'|translate}}</button>
+</mat-dialog-actions>

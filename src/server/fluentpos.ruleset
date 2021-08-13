@@ -144,5 +144,7 @@
     <Rule Id="SA1643" Action="None" />
     <Rule Id="SA1648" Action="None" />
     <Rule Id="SX1309" Action="Warning" />
+    <Rule Id="SA1503" Action="None" />
+    <Rule Id="SA1501" Action="None" />
   </Rules>
 </RuleSet>

@@ -30,7 +30,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Events
 
         public string ImageUrl { get; }
 
-        public string Tax { get; }
+        public decimal Tax { get; }
 
         public string TaxMethod { get; }
 

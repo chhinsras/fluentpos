@@ -6,14 +6,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------
 
-﻿using System;
-﻿using System.Collections.Generic;
-﻿using FluentPOS.Shared.DTOs.People.CartItems;
+using System;
+using System.Collections.Generic;
+using FluentPOS.Shared.DTOs.People.CartItems;
+using FluentPOS.Shared.DTOs.People.Customers;
 
-﻿namespace FluentPOS.Shared.DTOs.People.Carts
+namespace FluentPOS.Shared.DTOs.People.Carts
 {
     public record GetCartByIdResponse(Guid Id, Guid CustomerId, DateTime Timestamp)
     {
-         public ICollection<GetCartItemByIdResponse> CartItems { get; set; }
+        public GetCustomerByIdResponse Customer { get; set; }
+        public ICollection<GetCartItemByIdResponse> CartItems { get; set; }
     }
 }

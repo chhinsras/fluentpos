@@ -258,8 +258,8 @@ namespace FluentPOS.Modules.Catalog.Infrastructure.Persistence.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("Tax")
-                        .HasColumnType("text");
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("TaxMethod")
                         .HasColumnType("text");
