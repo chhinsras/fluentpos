@@ -36,9 +36,12 @@ padding: 0px!important;
 
 .login-image
 {
-  background: url('/assets/images/bg-login.jpg');
+  background: url('/assets/images/50124-user-profile.gif') no-repeat center #ffffff;
   background-position: center;
   background-size: cover;
   width: 500px;
-  height: 750px;
+  height: 700px;
+  border: inset 130px transparent;
+  box-sizing: border-box;
+
 }
