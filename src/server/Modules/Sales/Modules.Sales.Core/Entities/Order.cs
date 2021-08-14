@@ -43,6 +43,7 @@ namespace FluentPOS.Modules.Sales.Core.Entities
         {
             return new Order() { TimeStamp = DateTime.Now };
         }
+
         public void AddCustomer(GetCustomerByIdResponse customer)
         {
             this.CustomerId = customer.Id;
