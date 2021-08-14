@@ -15,7 +15,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using FluentPOS.Shared.Core.Interfaces.Serialization;
-using System.Data;
 
 namespace FluentPOS.Modules.Sales.Infrastructure.Persistence
 {

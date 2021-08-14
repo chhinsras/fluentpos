@@ -9,7 +9,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Transactions;
 using AutoMapper;
 using FluentPOS.Modules.Sales.Core.Abstractions;
 using FluentPOS.Modules.Sales.Core.Entities;
@@ -73,8 +72,9 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
                     order.AddProduct(item.ProductId, product.Name, item.Quantity, product.Price, product.Tax);
                 }
             }
-            await _salesContext.Orders.AddAsync(order);
-            await _salesContext.SaveChangesAsync(default);
+
+            await _salesContext.Orders.AddAsync(order, cancellationToken);
+            await _salesContext.SaveChangesAsync(cancellationToken);
             await _cartService.RemoveCartAsync(command.CartId);
             return await Result<Guid>.SuccessAsync(order.Id, _localizer["Order Created"]);
         }
