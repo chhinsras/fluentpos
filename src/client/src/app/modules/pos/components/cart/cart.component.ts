@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ToastrService } from 'ngx-toastr';
+import { DeleteDialogComponent } from 'src/app/core/shared/components/delete-dialog/delete-dialog.component';
 import { CartItem } from '../../models/cart';
 import { CheckOut } from '../../models/checkOut';
 import { CartService } from '../../services/cart.service';
@@ -66,6 +67,17 @@ export class CartComponent implements OnInit {
       data: checkOutData,
     });
     dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+  openClearCartDialog() {
+    console.log('Hi');
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: 'Do you want to clear this cart?',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.cartService.clearCart();
+      }
     });
   }
 }

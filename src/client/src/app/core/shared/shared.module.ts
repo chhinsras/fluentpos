@@ -19,6 +19,7 @@ import { HasRoleDirective } from '../directives/has-role.directive';
 import { UserApiService } from '../api/identity/user-api.service';
 import { RoleApiService } from '../api/identity/role-api.service';
 import { IdentityApiService } from '../api/identity/identity-api.service';
+import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { IdentityApiService } from '../api/identity/identity-api.service';
     DataPropertyGetterPipe,
     AccessDenialComponent,
     HasPermissionDirective,
-    HasRoleDirective
+    HasRoleDirective,
+    DeleteDialogComponent
   ],
   imports: [
     CommonModule,
