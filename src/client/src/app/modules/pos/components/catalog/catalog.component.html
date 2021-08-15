@@ -54,7 +54,7 @@
                             {{product.localeName}}
                         </mat-card-content>
                         <mat-card-actions style="padding:0px 0px 0px 10px">
-                            <button mat-raised-button color="accent" (click)="addToCart(product)">
+                            <button [disabled]="(cartService.isCartInvalid | async) || (cartService.IsProductBeingAdded | async)" mat-raised-button color="accent" (click)="addToCart(product)">
                                 <span><span style="margin-right: 10px;" class="fas fa-plus"></span>Add</span>
                             </button>
                             <button mat-raised-button color="info">

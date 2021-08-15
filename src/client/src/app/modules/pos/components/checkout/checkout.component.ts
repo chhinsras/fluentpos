@@ -13,19 +13,21 @@ import { CheckoutService } from '../../services/checkout.service';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: CheckOut,public dialog: MatDialog, public cartService: CartService, public checkOutService: CheckoutService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: CheckOut, public dialog: MatDialog, public cartService: CartService, public checkOutService: CheckoutService) { }
   cartItems: CartItem[];
   cartId: string;
   customer: Customer;
+  isBeingProcessed: boolean = false;
   ngOnInit(): void {
     this.cartId = this.data.cartId;
     this.cartItems = this.data.cartItems;
     this.customer = this.cartService.currentCustomer;
   }
   submitOrder() {
+    this.isBeingProcessed = true;
     this.checkOutService.submitOrder(this.cartId).subscribe((result) => {
       this.cartService.reset();
       this.dialog.closeAll();
-    });
+    }).add(() => this.isBeingProcessed = false);
   }
 }
