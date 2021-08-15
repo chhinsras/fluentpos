@@ -25,7 +25,8 @@ export class CatalogComponent implements OnInit {
   brandAutoComplete = new FormControl();
   showImage: boolean = false;
   hasProductsLoaded: boolean = false;
-  constructor(private posService: PosService, private toastr: ToastrService, private cartService: CartService, public busyService: BusyService) { }
+  invalidCart: boolean = true;
+  constructor(private posService: PosService, private toastr: ToastrService, public cartService: CartService, public busyService: BusyService) { }
 
   ngOnInit(): void {
     this.productParams.pageSize = 16;

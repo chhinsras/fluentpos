@@ -18,23 +18,34 @@ export class CartService {
   public currentCustomer$ = new Subject<Customer>();
   public cartId: string;
   public isCartLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isCartInvalid: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public IsProductBeingAdded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(private cartApi: CartApiService, private cartItemApi: CartItemsApiService, private cartItemsApi: CartItemsApiService, private toastr: ToastrService) { }
   private updateCart(cartItemId: string, productId: string, quantity: number) {
+    this.IsProductBeingAdded.next(true);
     var cartItem = new CartItemApiModel(this.cartId, productId, quantity);
     cartItem.id = cartItemId;
-    this.cartItemApi.update(cartItem).subscribe((res) => this.toastr.info(res.messages[0]));
+    this.cartItemApi.update(cartItem).subscribe((res) => this.toastr.info(res.messages[0], '', {
+      positionClass: 'toast-top-right'
+    })).add(() => this.IsProductBeingAdded.next(false));
   }
   private deleteFromCart(cartItemId: string) {
-    this.cartItemApi.delete(cartItemId).subscribe((res) => this.toastr.info(res.messages[0]));
+    this.cartItemApi.delete(cartItemId).subscribe((res) => this.toastr.info(res.messages[0], '', {
+      positionClass: 'toast-top-right'
+    }));
   }
-  reset()
-  {
+  reset() {
     this.cartItems = [];
     this.cartItems$.next(this.cartItems);
     this.currentCustomer = null;
     this.currentCustomer$.next(this.currentCustomer);
+    this.cartId = null;
+    this.isCartInvalid.next(true);
   }
   add(product: Product, quantity: number = 1) {
+    if (!this.cartId) { return; }
+
+    this.IsProductBeingAdded.next(true);
     var foundItem = this.cartItems.find(a => a.productId == product.id);
     if (foundItem) {
       foundItem.quantity = foundItem.quantity + quantity;
@@ -45,19 +56,22 @@ export class CartService {
       var cartItem = new CartItemApiModel(this.cartId, product.id, quantity);
       this.cartItemApi.create(cartItem).subscribe((res) => {
         if (res && res.succeeded) {
-          this.toastr.info(res.messages[0]);
+          this.toastr.info(res.messages[0], '', {
+            positionClass: 'toast-top-right'
+          });
           var foundItem = this.cartItems.find(a => a.productId == product.id);
           if (foundItem) {
             foundItem.id = res.data;
           }
         }
-      });
+      }).add(()=>this.IsProductBeingAdded.next(false));
     }
     this.cartItems$.next(this.calculate(this.cartItems));
 
 
   }
   increase(productId: string, quantity: number = 1) {
+    if (!this.cartId) { return; }
     var foundItem = this.cartItems.find(a => a.productId == productId);
     if (foundItem) {
       foundItem.quantity = foundItem.quantity + quantity;
@@ -67,6 +81,7 @@ export class CartService {
   }
   reduce(productId: string, quantity: number = 1) {
     var foundItem = this.cartItems.find(a => a.productId == productId);
+    if (!this.cartId) { return; }
     if (foundItem) {
       if (foundItem.quantity > 1) {
         foundItem.quantity = foundItem.quantity - quantity;
@@ -80,6 +95,7 @@ export class CartService {
     this.cartItems$.next(this.calculate(this.cartItems));
   }
   remove(productId: string) {
+    if (!this.cartId) { return; }
     var foundItem = this.cartItems.find(a => a.productId == productId);
     if (foundItem) {
       this.cartItems.splice(this.cartItems.indexOf(foundItem), 1);
@@ -96,6 +112,7 @@ export class CartService {
   setCurrentCustomer(customer: Customer) {
     this.currentCustomer = customer;
     this.currentCustomer$.next(this.currentCustomer);
+    this.isCartInvalid.next(false);
   }
   getCurrentCustomer() {
     return this.currentCustomer$.asObservable();

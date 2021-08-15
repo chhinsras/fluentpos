@@ -58,7 +58,8 @@
     "checkOut": {
       "title": "Checkout",
       "message": "Make an Order!",
-      "button" : "Confirm"
+      "button" : "Confirm",
+      "buttonProcessing" : "Processing..."
     },
     "delete": {
       "title": "Delete Confirmation",
@@ -119,6 +120,8 @@
     "toggleImage": "Toggle Image",
     "cart": "Cart",
     "cartEmpty": "Cart is Empty",
-    "startAddingProducts": "Start Adding Products from the Catalog Tab."
+    "startAddingProducts": "Start Adding Products from the Catalog Tab.",
+    "cartInvalidMessage" : "Get started by selecting a new customer!",
+    "cartInvalid": "Select a Customer"
   }
 }

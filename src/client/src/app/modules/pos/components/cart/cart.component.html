@@ -39,15 +39,24 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="!cartItems|| cartItems.length==0" style="height: 60vh!important;">
+            <div *ngIf="!(cartService.isCartInvalid | async) && (!cartItems || cartItems.length==0)" style="height: 60vh!important;">
                 <mat-card>
-                    <mat-card-content style="padding: 40px;text-align: center;opacity: 60%;">
-                        <h2 translate>
-                            pos.cartEmpty</h2>
-                        <p translate>pos.startAddingProducts</p>
-                    </mat-card-content>
-                </mat-card>
+                  <mat-card-content style="padding: 40px;text-align: center;opacity: 60%;">
+                      <h2 translate>
+                          pos.cartEmpty</h2>
+                      <p translate>pos.startAddingProducts</p>
+                  </mat-card-content>
+              </mat-card>
             </div>
+            <div *ngIf="(cartService.isCartInvalid | async)" style="height: 60vh!important;">
+              <mat-card>
+                  <mat-card-content style="padding: 40px;text-align: center;opacity: 60%;">
+                      <h2 translate>
+                          pos.cartInvalid</h2>
+                      <p translate>pos.cartInvalidMessage</p>
+                  </mat-card-content>
+              </mat-card>
+          </div>
         </div>
     </ng-template>
 

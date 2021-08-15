@@ -27,14 +27,19 @@
     <div class="col-6">
       <mat-form-field appearance="outline">
         <mat-label>Customer</mat-label>
-        <input matInput autocomplete="off" name="searchString" type="text"
-          autocomplete="off" readonly value="{{this.customer.name}}" />
+        <input matInput autocomplete="off" name="searchString" type="text" autocomplete="off" readonly
+          value="{{this.customer.name}}" />
       </mat-form-field>
     </div>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-raised-button [mat-dialog-close]="true">{{'common.cancel'|translate}}</button>
-  <button mat-raised-button (click)="submitOrder()"
-    color="accent">{{'dialogs.checkOut.button'|translate}}</button>
+  <button *ngIf="!isBeingProcessed" mat-raised-button (click)="submitOrder()" color="accent">{{'dialogs.checkOut.button'|translate}}</button>
+  <button *ngIf="isBeingProcessed" mat-raised-button color="accent" disabled>
+    <mat-icon>
+      <mat-spinner diameter="20">
+      </mat-spinner>
+    </mat-icon> {{'dialogs.checkOut.buttonProcessing'|translate}}
+  </button>
 </mat-dialog-actions>
