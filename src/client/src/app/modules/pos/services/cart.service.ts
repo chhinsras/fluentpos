@@ -152,7 +152,7 @@ export class CartService {
           //create cart
           this.cartApi.create(customerId).subscribe((data) => {
             if (data && data.succeeded) {
-              this.toastr.info(data.messages[0]);
+              //this.toastr.info(data.messages[0]);
               this.isCartLoading.next(false);
               this.cartId = data.data;
               this.cartItems$.next(this.calculate(this.cartItems));
