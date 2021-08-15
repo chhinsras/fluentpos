@@ -7,6 +7,7 @@
 // --------------------------------------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,7 +27,8 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Commands
 {
     internal class CartCommandHandler :
         IRequestHandler<CreateCartCommand, Result<Guid>>,
-        IRequestHandler<RemoveCartCommand, Result<Guid>>
+        IRequestHandler<RemoveCartCommand, Result<Guid>>,
+        IRequestHandler<ClearCartCommand, Result<Guid>>
     {
         private readonly IPeopleDbContext _context;
         private readonly IMapper _mapper;
@@ -76,6 +78,27 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Commands
             await _context.SaveChangesAsync(cancellationToken);
             await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, Cart>(command.Id), cancellationToken);
             return await Result<Guid>.SuccessAsync(cart.Id, _localizer["Cart Deleted"]);
+        }
+
+#pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
+        public async Task<Result<Guid>> Handle(ClearCartCommand command, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
+        {
+            var cart = await _context.Carts.FirstOrDefaultAsync(b => b.Id == command.Id, cancellationToken);
+            if (cart == null)
+            {
+                throw new PeopleException(_localizer["Cart Not Found!"], HttpStatusCode.NotFound);
+            }
+
+            var cartItems = await _context.CartItems.Where(a => a.CartId == command.Id).ToListAsync();
+            if (cartItems.Count > 0)
+            {
+                _context.CartItems.RemoveRange(cartItems);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+
+            await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, Cart>(command.Id), cancellationToken);
+            return await Result<Guid>.SuccessAsync(cart.Id, _localizer["Cart Cleared"]);
         }
     }
 }

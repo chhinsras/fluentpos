@@ -34,6 +34,14 @@ export class CartService {
       positionClass: 'toast-top-right'
     }));
   }
+  clearCart()
+  {
+    var cartId = this.cartId;
+    this.cartApi.clear(cartId).subscribe(() => {
+      this.cartItems = [];
+      this.cartItems$.next(this.cartItems);
+    });
+  }
   reset() {
     this.cartItems = [];
     this.cartItems$.next(this.cartItems);

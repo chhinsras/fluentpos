@@ -53,5 +53,12 @@ namespace FluentPOS.Modules.People.Controllers
         {
             return Ok(await Mediator.Send(new RemoveCartCommand(id)));
         }
+
+        [HttpDelete("clear/{id}")]
+        [Authorize(Policy = Permissions.Carts.Remove)]
+        public async Task<IActionResult> ClearAsync(Guid id)
+        {
+            return Ok(await Mediator.Send(new ClearCartCommand(id)));
+        }
     }
 }
