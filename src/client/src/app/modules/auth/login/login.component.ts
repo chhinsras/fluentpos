@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   returnUrl: string;
-
+  isBeingLoggedIn: boolean = false;
   constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {
     this.initializeForm();
   }
@@ -30,11 +30,12 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isBeingLoggedIn = true;
     this.loginForm.disable()
     this.authService.login(this.loginForm.value)
       .pipe(filter(result => result?.succeeded === true))
       .subscribe(() => this.router.navigateByUrl(this.returnUrl),
-        error => { console.log(error); this.loginForm.enable(); });
+        error => { console.log(error); this.loginForm.enable();  }).add(()=>this.isBeingLoggedIn = false);
   }
 
   fillSuperAdminCredentials() {
