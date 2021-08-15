@@ -18,10 +18,14 @@ export class CheckoutComponent implements OnInit {
   cartId: string;
   customer: Customer;
   isBeingProcessed: boolean = false;
+  total: number = 0;
   ngOnInit(): void {
     this.cartId = this.data.cartId;
     this.cartItems = this.data.cartItems;
     this.customer = this.cartService.currentCustomer;
+    this.cartItems.forEach(arg => {
+      this.total += arg.total;
+    });
   }
   submitOrder() {
     this.isBeingProcessed = true;
