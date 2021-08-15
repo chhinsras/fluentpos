@@ -21,8 +21,16 @@
                   Please provide a valid password
                 </mat-error>
               </mat-form-field>
-              <button mat-raised-button color="primary" style="width:100%;height: 50px;" [disabled]="!loginForm.valid"
-                type="submit">Login</button>
+              <button *ngIf="!isBeingLoggedIn" mat-raised-button color="primary" style="width:100%;height: 50px;"
+                [disabled]="!loginForm.valid" type="submit"> Sign In
+              </button>
+              <button *ngIf="isBeingLoggedIn" mat-raised-button color="primary" style="width:100%;height: 50px;"
+                [disabled]="!loginForm.valid" type="submit">
+                <mat-icon>
+                  <mat-spinner diameter="20">
+                  </mat-spinner>
+                </mat-icon> Logging you in..
+              </button>
             </form>
             <div class="row">
               <div class="col"><button mat-raised-button color="accent" style="width:100%;height: 50px"
