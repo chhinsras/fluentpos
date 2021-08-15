@@ -77,5 +77,20 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Commands
             await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, Cart>(command.Id), cancellationToken);
             return await Result<Guid>.SuccessAsync(cart.Id, _localizer["Cart Deleted"]);
         }
+
+        #pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
+        public async Task<Result<Guid>> Handle(ClearCartCommand command, CancellationToken cancellationToken)
+#pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
+        {
+            var cart = await _context.Carts.FirstOrDefaultAsync(b => b.Id == command.Id, cancellationToken);
+            if (cart == null)
+            {
+                throw new PeopleException(_localizer["Cart Not Found!"], HttpStatusCode.NotFound);
+            }
+            cart.CartItems.Clear();
+            await _context.SaveChangesAsync(cancellationToken);
+            await _cache.RemoveAsync(CacheKeys.Common.GetEntityByIdCacheKey<Guid, Cart>(command.Id), cancellationToken);
+            return await Result<Guid>.SuccessAsync(cart.Id, _localizer["Cart Cleared"]);
+        }
     }
 }
