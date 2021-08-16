@@ -9,6 +9,7 @@
 using System.Threading.Tasks;
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Shared.Core.Constants;
+using FluentPOS.Shared.DTOs.Identity.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,6 +47,14 @@ namespace FluentPOS.Modules.Identity.Controllers
         {
             var userRoles = await _userService.GetRolesAsync(id);
             return Ok(userRoles);
+        }
+
+        [HttpPut("roles/{id}")]
+        [Authorize(Policy = Permissions.Users.Edit)]
+        public async Task<IActionResult> UpdateUserRolesAsync(string id, UserRolesRequest request)
+        {
+            var result = await _userService.UpdateUserRolesAsync(id, request);
+            return Ok(result);
         }
     }
 }
