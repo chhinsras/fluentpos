@@ -1,3 +1,9 @@
+<div *ngIf="!userRoles" class="d-flex justify-center">
+  <mat-icon>
+    <mat-spinner diameter="20">
+    </mat-spinner>
+  </mat-icon> Loading ...
+</div>
 <div [hidden]="!userRoles">
   <app-table [title]="'User Roles'" [subtitle]="'Manage User Role here.'"
       [data]="userRoles" [columns]="userRoleColumns"
