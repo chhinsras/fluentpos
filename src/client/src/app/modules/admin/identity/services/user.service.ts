@@ -50,4 +50,10 @@ export class UserService {
       .getUserRoles(id)
       .pipe(map((response: Result<UserRole>) => response));
   }
+
+  updateUserRoles(id: string, request: UserRole): Observable<IResult<string>> {
+    return this.api
+      .updateUserRoles(id, request)
+      .pipe(map((response: IResult<string>) => response));
+  }
 }

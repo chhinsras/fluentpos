@@ -1,6 +1,7 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import { User } from 'src/app/modules/admin/identity/models/user';
+import { UserRole } from 'src/app/modules/admin/identity/models/userRole';
 import {environment} from 'src/environments/environment';
 
 @Injectable()
@@ -35,4 +36,7 @@ export class UserApiService {
     return this.http.get(this.baseUrl + `roles/${id}`);
   }
 
+  updateUserRoles(id: string, request: UserRole) {
+    return this.http.put(this.baseUrl + `roles/${id}`, request);
+  }
 }

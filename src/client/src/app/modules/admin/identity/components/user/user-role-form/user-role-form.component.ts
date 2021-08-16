@@ -1,10 +1,10 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { CustomAction } from 'src/app/core/shared/components/table/custom-action';
 import { TableColumn } from 'src/app/core/shared/components/table/table-column';
 import { User } from '../../../models/user';
-import { UserRole, UserRoleModel } from '../../../models/userRole';
+import { UserRoleModel } from '../../../models/userRole';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class UserRoleFormComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: User,
+    private dialogRef: MatDialog,
     public userService: UserService,
     public toastr: ToastrService
   ) { }
@@ -44,6 +45,9 @@ export class UserRoleFormComponent implements OnInit {
   }
 
   submitUserRoles($event): void{
-    console.log($event);
+    this.userService.updateUserRoles(this.data.id, { userRoles: $event}).subscribe((result) => {
+      this.toastr.success(result.messages[0]);
+      this.dialogRef.closeAll();
+    });
   }
 }
