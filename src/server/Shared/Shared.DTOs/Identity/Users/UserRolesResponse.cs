@@ -17,6 +17,7 @@ namespace FluentPOS.Shared.DTOs.Identity.Users
 
     public class UserRoleModel
     {
+        public string RoleId { get; set; }
         public string RoleName { get; set; }
 
         public bool Selected { get; set; }
