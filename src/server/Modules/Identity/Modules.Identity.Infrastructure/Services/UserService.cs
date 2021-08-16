@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
+using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Identity.Users;
 using Microsoft.AspNetCore.Identity;
@@ -81,10 +82,19 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             return await Result<UserRolesResponse>.SuccessAsync(result);
         }
 
-        public async Task<IResult<string>> UpdateUserRolesAsync(string id, UserRolesRequest request)
+        public async Task<IResult<string>> UpdateUserRolesAsync(string userId, UserRolesRequest request)
         {
-            var user = await _userManager.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
-            if (user == null) return await Result<string>.FailAsync(string.Format(_localizer["User Id {0} Not Found."], id));
+            var user = await _userManager.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return await Result<string>.FailAsync(_localizer["User Not Found."]);
+            }
+
+            if (await _userManager.IsInRoleAsync(user, RoleConstants.SuperAdmin))
+            {
+                return await Result<string>.FailAsync(_localizer["Not Allowed."]);
+            }
+
             foreach (var userRole in request.UserRoles)
             {
                 // Check if Role Exists
@@ -93,13 +103,18 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     if (userRole.Selected)
                     {
                         if (!await _userManager.IsInRoleAsync(user, userRole.RoleName))
+                        {
                             await _userManager.AddToRoleAsync(user, userRole.RoleName);
-                    } else {
+                        }
+                    }
+                    else
+                    {
                         await _userManager.RemoveFromRoleAsync(user, userRole.RoleName);
                     }
                 }
             }
-            return await Result<string>.SuccessAsync(string.Format(_localizer["User Roles Updated Successfully."]));
+
+            return await Result<string>.SuccessAsync(userId, string.Format(_localizer["User Roles Updated Successfully."]));
         }
     }
 }
