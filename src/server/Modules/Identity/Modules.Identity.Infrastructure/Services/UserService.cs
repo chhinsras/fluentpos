@@ -80,5 +80,26 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
             var result = new UserRolesResponse { UserRoles = viewModel };
             return await Result<UserRolesResponse>.SuccessAsync(result);
         }
+
+        public async Task<IResult<string>> UpdateUserRolesAsync(string id, UserRolesRequest request)
+        {
+            var user = await _userManager.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
+            if (user == null) return await Result<string>.FailAsync(string.Format(_localizer["User Id {0} Not Found."], id));
+            foreach (var userRole in request.UserRoles)
+            {
+                // Check if Role Exists
+                if (await _roleManager.FindByNameAsync(userRole.RoleName) != null)
+                {
+                    if (userRole.Selected)
+                    {
+                        if (!await _userManager.IsInRoleAsync(user, userRole.RoleName))
+                            await _userManager.AddToRoleAsync(user, userRole.RoleName);
+                    } else {
+                        await _userManager.RemoveFromRoleAsync(user, userRole.RoleName);
+                    }
+                }
+            }
+            return await Result<string>.SuccessAsync(string.Format(_localizer["User Roles Updated Successfully."]));
+        }
     }
 }
