@@ -37,7 +37,7 @@ export class UserRoleFormComponent implements OnInit {
 
   initColumns(): void {
     this.userRoleColumns = [
-      { name: 'Id', dataKey: 'id', isSortable: true, isShowable: true },
+      { name: 'RoleId', dataKey: 'roleId', isSortable: true, isShowable: true },
       { name: 'RoleName', dataKey: 'roleName', isSortable: true, isShowable: true },
       { name: 'Selected', dataKey: 'selected', isSortable: true, isShowable: true },
     ];
