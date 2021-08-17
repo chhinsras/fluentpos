@@ -101,6 +101,10 @@ export class TableComponent implements OnInit, AfterViewInit {
     sortParams.active = this.columns.find(
       (column) => column.name === sortParams.active
     ).dataKey;
+    if (sortParams.direction == "")
+    {
+      sortParams.direction = "asc";
+      }
     this.onSort.emit(sortParams);
   }
 
