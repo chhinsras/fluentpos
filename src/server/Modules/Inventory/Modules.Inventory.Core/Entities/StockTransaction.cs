@@ -6,9 +6,19 @@ namespace FluentPOS.Modules.Inventory.Core.Entities
 {
     public class StockTransaction : BaseEntity
     {
-        public Guid ProductId { get; set; }
-        public DateTime Timestamp { get; set; } = DateTime.Now;
-        public decimal Quantity{ get; set; }
-        public TransactionType Type{ get; set; }
+        public StockTransaction(Guid productId, decimal quantity, TransactionType type)
+        {
+            this.ProductId = productId;
+            this.Quantity = quantity;
+            this.Type = type;
+        }
+
+        public Guid ProductId { get; private set; }
+
+        public DateTime Timestamp { get; private set; }
+
+        public decimal Quantity { get; private set; }
+        
+        public TransactionType Type { get; private set; }
     }
 }
