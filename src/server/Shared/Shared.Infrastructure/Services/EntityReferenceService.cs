@@ -41,9 +41,10 @@ namespace FluentPOS.Shared.Infrastructure.Services
             await _context.SaveChangesAsync();
             return referenceNumber;
         }
+
         private string GenerateReferenceNumber(string entity, int count, string monthYearString)
         {
-            return $"{entity.First()}/{monthYearString}/{count.ToString().PadLeft(5, '0')}";
+            return $"{entity.First()}-{monthYearString}-{count.ToString().PadLeft(5, '0')}";
         }
     }
 }

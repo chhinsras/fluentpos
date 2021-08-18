@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { Customer } from 'src/app/modules/admin/people/models/customer';
 import { CartItem } from '../../models/cart';
 import { CheckOut } from '../../models/checkOut';
@@ -13,7 +14,7 @@ import { CheckoutService } from '../../services/checkout.service';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: CheckOut, public dialog: MatDialog, public cartService: CartService, public checkOutService: CheckoutService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: CheckOut, public dialog: MatDialog, public cartService: CartService,private toastr: ToastrService, public checkOutService: CheckoutService) { }
   cartItems: CartItem[];
   cartId: string;
   customer: Customer;
@@ -30,6 +31,7 @@ export class CheckoutComponent implements OnInit {
   submitOrder() {
     this.isBeingProcessed = true;
     this.checkOutService.submitOrder(this.cartId).subscribe((result) => {
+      this.toastr.info(result.messages[0]);
       this.cartService.reset();
       this.dialog.closeAll();
     }).add(() => this.isBeingProcessed = false);

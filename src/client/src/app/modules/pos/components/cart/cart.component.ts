@@ -70,7 +70,6 @@ export class CartComponent implements OnInit {
     });
   }
   openClearCartDialog() {
-    console.log('Hi');
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: 'Do you want to clear this cart?',
     });
