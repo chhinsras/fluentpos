@@ -17,6 +17,7 @@ using FluentPOS.Shared.Core.Domain;
 using FluentPOS.Shared.Core.EventLogging;
 using FluentPOS.Shared.Core.Exceptions;
 using FluentPOS.Shared.Core.Extensions;
+using FluentPOS.Shared.Core.IntegrationServices.Application;
 using FluentPOS.Shared.Core.Interfaces;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.Core.Settings;
@@ -52,6 +53,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             services.Configure<MailSettings>(config.GetSection(nameof(MailSettings)));
             services.Configure<SmsSettings>(config.GetSection(nameof(SmsSettings)));
             services.AddTransient<IEventLogService, EventLogService>();
+            services.AddTransient<IEntityReferenceService, EntityReferenceService>();
             return services;
         }
 
