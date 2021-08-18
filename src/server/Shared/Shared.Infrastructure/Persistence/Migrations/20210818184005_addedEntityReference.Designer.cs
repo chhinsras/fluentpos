@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FluentPOS.Shared.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210808141852_DescriptionFix")]
-    partial class DescriptionFix
+    [Migration("20210818184005_addedEntityReference")]
+    partial class addedEntityReference
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,30 @@ namespace FluentPOS.Shared.Infrastructure.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+            modelBuilder.Entity("FluentPOS.Shared.Core.Entities.EntityReference", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("Count")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Entity")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("LastUpdateOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("MonthYearString")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EntityReferences");
+                });
 
             modelBuilder.Entity("FluentPOS.Shared.Core.EventLogging.EventLog", b =>
                 {

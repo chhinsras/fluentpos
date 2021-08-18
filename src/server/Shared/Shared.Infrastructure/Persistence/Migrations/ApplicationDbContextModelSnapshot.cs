@@ -20,6 +20,30 @@ namespace FluentPOS.Shared.Infrastructure.Persistence.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("FluentPOS.Shared.Core.Entities.EntityReference", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("Count")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Entity")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("LastUpdateOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("MonthYearString")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EntityReferences");
+                });
+
             modelBuilder.Entity("FluentPOS.Shared.Core.EventLogging.EventLog", b =>
                 {
                     b.Property<Guid>("Id")
