@@ -8,6 +8,7 @@
 
 using FluentPOS.Modules.Catalog.Extensions;
 using FluentPOS.Modules.Identity.Extensions;
+using FluentPOS.Modules.Inventory.Extensions;
 using FluentPOS.Modules.People.Extensions;
 using FluentPOS.Modules.Sales.Extensions;
 using FluentPOS.Shared.Core.Extensions;
@@ -38,7 +39,8 @@ namespace FluentPOS.Bootstrapper
                 .AddSharedApplication(_config)
                 .AddCatalogModule(_config)
                 .AddPeopleModule(_config)
-                .AddSalesModule(_config);
+                .AddSalesModule(_config)
+                .AddInventoryModule(_config);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

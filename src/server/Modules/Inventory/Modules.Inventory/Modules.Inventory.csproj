@@ -28,5 +28,8 @@
     </PackageReference>
     <AdditionalFiles Include="..\..\..\stylecop.json" />
   </ItemGroup>
-
+<ItemGroup>
+    <ProjectReference Include="..\Modules.Inventory.Infrastructure\Modules.Inventory.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules.Inventory.Core\Modules.Inventory.Core.csproj" />
+  </ItemGroup>
 </Project>

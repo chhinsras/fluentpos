@@ -13,6 +13,7 @@ using AutoMapper;
 using FluentPOS.Modules.Sales.Core.Abstractions;
 using FluentPOS.Modules.Sales.Core.Entities;
 using FluentPOS.Shared.Core.IntegrationServices.Catalog;
+using FluentPOS.Shared.Core.IntegrationServices.Inventory;
 using FluentPOS.Shared.Core.IntegrationServices.People;
 using FluentPOS.Shared.Core.Wrapper;
 using MediatR;
@@ -23,6 +24,7 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
     internal sealed class SaleCommandHandler :
         IRequestHandler<RegisterSaleCommand, Result<Guid>>
     {
+        private readonly IStockService _stockService;
         private readonly ICartService _cartService;
         private readonly IProductService _productService;
         private readonly ISalesDbContext _salesContext;
@@ -34,13 +36,15 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             IStringLocalizer<SaleCommandHandler> localizer,
             ISalesDbContext salesContext,
             ICartService cartService,
-            IProductService productService)
+            IProductService productService,
+            IStockService stockService)
         {
             _mapper = mapper;
             _localizer = localizer;
             _salesContext = salesContext;
             _cartService = cartService;
             _productService = productService;
+            _stockService = stockService;
         }
 
 #pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
@@ -74,6 +78,7 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             foreach(var product in order.Products)
             {
                 //Inventory Operations Here
+                await _stockService.RecordTransaction(product.ProductId, product.Quantity, product.OrderId.ToString());
             }
             return await Result<Guid>.SuccessAsync(order.Id, _localizer["Order Created"]);
         }
