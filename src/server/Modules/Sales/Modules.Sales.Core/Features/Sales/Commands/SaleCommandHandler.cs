@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentPOS.Modules.Sales.Core.Abstractions;
 using FluentPOS.Modules.Sales.Core.Entities;
+using FluentPOS.Shared.Core.IntegrationServices.Application;
 using FluentPOS.Shared.Core.IntegrationServices.Catalog;
 using FluentPOS.Shared.Core.IntegrationServices.Inventory;
 using FluentPOS.Shared.Core.IntegrationServices.People;
@@ -24,6 +25,7 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
     internal sealed class SaleCommandHandler :
         IRequestHandler<RegisterSaleCommand, Result<Guid>>
     {
+        private readonly IEntityReferenceService _referenceService;
         private readonly IStockService _stockService;
         private readonly ICartService _cartService;
         private readonly IProductService _productService;
@@ -37,7 +39,7 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             ISalesDbContext salesContext,
             ICartService cartService,
             IProductService productService,
-            IStockService stockService)
+            IStockService stockService, IEntityReferenceService referenceService)
         {
             _mapper = mapper;
             _localizer = localizer;
@@ -45,13 +47,16 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             _cartService = cartService;
             _productService = productService;
             _stockService = stockService;
+            _referenceService = referenceService;
         }
 
 #pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public async Task<Result<Guid>> Handle(RegisterSaleCommand command, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
+
             var order = Order.InitializeOrder();
+            await _referenceService.TrackAsync(order.GetType().Name);
             var cartDetails = await _cartService.GetDetailsAsync(command.CartId);
 
             // Do all mandatory null checks
