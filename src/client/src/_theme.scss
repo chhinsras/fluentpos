@@ -3,7 +3,7 @@
 // Define the default theme (same as the example above).
 $app-primary: mat-palette($mat-indigo);
 $app-accent: mat-palette($mat-pink, A200, A100, A400);
-$app-warn: mat-palette($mat-deep-orange, A400, A400, A400);
+$app-warn: mat-palette($mat-deep-orange);
 $app-theme: mat-light-theme(( color: ( primary: $app-primary, accent: $app-accent, warn:$app-warn)));
 $custom-typography: mat-typography-config($font-family: 'Poppins,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif');
 @include mat-core($custom-typography);
