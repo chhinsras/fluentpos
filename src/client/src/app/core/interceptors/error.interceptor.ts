@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
-      catchError((response) => {
+      catchError((response: HttpErrorResponse) => {
         switch (response.error.errorCode) {
           case 400:
             if (response.error.messages) {
@@ -25,20 +25,25 @@ export class ErrorInterceptor implements HttpInterceptor {
             }
             break;
           case 401:
-            this.authService.tryRefreshingToken();
+            this.toastr.error('Authentication Failure', response.error.exception);
+            //this.authService.tryRefreshingToken();
             break;
           case 403:
             this.toastr.error(response.error.exception);
             break;
           case 404:
-            this.router.navigateByUrl('/not-found');
+            this.toastr.error('Not Found!', response.error.exception);
+            //this.router.navigateByUrl('/not-found');
             break;
           case 500:
-            console.log(response.error.exception);
-            this.toastr.error('Something Went Wrong');
+            this.toastr.error('Something Went Wrong', response.error.exception);
             break;
           default:
-            this.toastr.error('Something Went Wrong');
+            if (response.status === 0) {
+              this.toastr.error('Unable to Connect to fluentPOS Server.', response.error.exception);
+              break;
+            }
+            this.toastr.error('Something Went Wrong', response.error.exception);
             break;
         }
         return throwError(response.error);
