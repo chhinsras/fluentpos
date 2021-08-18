@@ -16,6 +16,7 @@ namespace FluentPOS.Modules.Sales.Core.Entities
     public class Order : BaseEntity
     {
         public string ReferenceNumber { get; private set; }
+
         public DateTime TimeStamp { get; private set; }
 
         public Guid CustomerId { get; private set; }
@@ -42,16 +43,17 @@ namespace FluentPOS.Modules.Sales.Core.Entities
 
         public static Order InitializeOrder()
         {
-            return new Order() { TimeStamp = DateTime.Now };
+            return new Order { TimeStamp = DateTime.Now };
         }
 
         public void AddCustomer(GetCustomerByIdResponse customer)
         {
-            this.CustomerId = customer.Id;
-            this.CustomerName = customer.Name;
-            this.CustomerEmail = customer.Email;
-            this.CustomerPhone = customer.Phone;
+            CustomerId = customer.Id;
+            CustomerName = customer.Name;
+            CustomerEmail = customer.Email;
+            CustomerPhone = customer.Phone;
         }
+
         public void SetReferenceNumber(string referenceNumber)
         {
             ReferenceNumber = referenceNumber;
@@ -59,12 +61,12 @@ namespace FluentPOS.Modules.Sales.Core.Entities
 
         public void AddProduct(Product product)
         {
-            this.Products.Add(product);
+            Products.Add(product);
         }
 
         internal void AddProduct(Guid productId, string name, int quantity, decimal rate, decimal tax)
         {
-            this.Products.Add(new Product()
+            Products.Add(new Product
             {
                 ProductId = productId,
                 Quantity = quantity,
