@@ -7,7 +7,7 @@ export interface Product {
   price: number;
   cost: number;
   imageUrl: string;
-  tax: string;
+  tax: number;
   taxMethod: string;
   barcodeSymbology: string;
   isAlert?: boolean;

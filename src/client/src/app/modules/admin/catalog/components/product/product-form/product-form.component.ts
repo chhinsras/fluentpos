@@ -46,7 +46,7 @@ export class ProductFormComponent implements OnInit {
       localeName: [this.data && this.data.localeName, Validators.required],
       price: [this.data && this.data.price, Validators.required],
       cost: [this.data && this.data.cost, Validators.required],
-      tax: [this.data && this.data.tax && this.data.tax === 'YES', Validators.required],
+      tax: [this.data && this.data.tax , Validators.required],
       taxMethod: [this.data && this.data.taxMethod, Validators.required],
       barcodeSymbology: [this.data && this.data.barcodeSymbology, Validators.required],
       isAlert: [!!(this.data && this.data.isAlert), Validators.required],
@@ -62,8 +62,8 @@ export class ProductFormComponent implements OnInit {
 
   getBrands() {
     this.brandService.getBrands(this.brandParams).subscribe((response) => { this.brands = response; });
-  }  
-  
+  }
+
   getCategories() {
     this.categoryService.getCategories(this.categoryParams).subscribe((response) => { this.categories = response; });
   }
@@ -72,12 +72,10 @@ export class ProductFormComponent implements OnInit {
     // TODO after successful update/insert, refresh table view in component product.component.ts
     if (this.productForm.valid) {
       if (this.productForm.get('id').value === '' || this.productForm.get('id').value == null) {
-        this.productForm.get('tax').setValue(this.productForm.get('tax').value ? 'YES' : 'NO');
         this.productService.createProduct(this.productForm.value).subscribe(response => {
           this.toastr.success(response.messages[0]);
         });
       } else {
-        this.productForm.get('tax').setValue(this.productForm.get('tax').value ? 'YES' : 'NO');
         this.productService.updateProduct(this.productForm.value).subscribe(response => {
           this.toastr.success(response.messages[0]);
         });
