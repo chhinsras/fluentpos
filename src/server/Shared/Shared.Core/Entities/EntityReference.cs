@@ -1,5 +1,12 @@
+// --------------------------------------------------------------------------------------------------
+// <copyright file="EntityReference.cs" company="FluentPOS">
+// Copyright (c) FluentPOS. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// --------------------------------------------------------------------------------------------------
+
 using System;
-using FluentPOS.Shared.Core.Domain;
 
 namespace FluentPOS.Shared.Core.Entities
 {
@@ -16,8 +23,9 @@ namespace FluentPOS.Shared.Core.Entities
         public void Increment()
         {
             LastUpdateOn = DateTime.Now;
-            Count = Count + 1;
+            Count++;
         }
+
         public int Id { get; private set; }
 
         public string Entity { get; private set; }

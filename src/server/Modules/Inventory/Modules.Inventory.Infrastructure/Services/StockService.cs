@@ -51,9 +51,9 @@ namespace FluentPOS.Modules.Inventory.Infrastructure.Services
                     }
                     else
                     {
-                        var newStockRecord = new Stock(productId);
-                        newStockRecord.ReduceQuantity(quantity);
-                        _context.Stocks.Add(newStockRecord);
+                        stockRecord = new Stock(productId);
+                        stockRecord.ReduceQuantity(quantity);
+                        _context.Stocks.Add(stockRecord);
                     }
 
                     break;
@@ -65,9 +65,9 @@ namespace FluentPOS.Modules.Inventory.Infrastructure.Services
                     }
                     else
                     {
-                        var newStockRecord = new Stock(productId);
-                        newStockRecord.IncreaseQuantity(quantity);
-                        _context.Stocks.Add(newStockRecord);
+                        stockRecord = new Stock(productId);
+                        stockRecord.IncreaseQuantity(quantity);
+                        _context.Stocks.Add(stockRecord);
                     }
 
                     break;

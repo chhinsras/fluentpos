@@ -1,3 +1,11 @@
+// --------------------------------------------------------------------------------------------------
+// <copyright file="EntityReferenceService.cs" company="FluentPOS">
+// Copyright (c) FluentPOS. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// --------------------------------------------------------------------------------------------------
+
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,22 +26,18 @@ namespace FluentPOS.Shared.Infrastructure.Services
 
         public async Task<string> TrackAsync(string entityName)
         {
-            var referenceNumber = string.Empty;
-            var monthYearString = DateTime.Now.ToString("MMyy");
-            var recordExists = _context.EntityReferences.Any(a => a.Entity == entityName && a.MonthYearString == monthYearString);
-            if (recordExists)
+            string referenceNumber;
+            string monthYearString = DateTime.Now.ToString("MMyy");
+            var record = _context.EntityReferences.FirstOrDefault(a => a.Entity == entityName && a.MonthYearString == monthYearString);
+            if (record != null)
             {
-                var record = _context.EntityReferences.Where(a => a.Entity == entityName && a.MonthYearString == monthYearString).FirstOrDefault();
-                if (record != null)
-                {
-                    record.Increment();
-                    _context.EntityReferences.Update(record);
-                    referenceNumber = GenerateReferenceNumber(entityName, record.Count, monthYearString);
-                }
+                record.Increment();
+                _context.EntityReferences.Update(record);
+                referenceNumber = GenerateReferenceNumber(entityName, record.Count, monthYearString);
             }
             else
             {
-                var record = new EntityReference(entityName);
+                record = new EntityReference(entityName);
                 _context.EntityReferences.Add(record);
                 referenceNumber = GenerateReferenceNumber(entityName, record.Count, monthYearString);
             }
@@ -44,7 +48,7 @@ namespace FluentPOS.Shared.Infrastructure.Services
 
         private string GenerateReferenceNumber(string entity, int count, string monthYearString)
         {
-            return $"{entity.First()}-{monthYearString}-{count.ToString().PadLeft(5, '0')}";
+            return $"{entity[0]}-{monthYearString}-{count.ToString().PadLeft(5, '0')}";
         }
     }
 }

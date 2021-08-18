@@ -9,7 +9,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using FluentPOS.Modules.Sales.Core.Abstractions;
 using FluentPOS.Modules.Sales.Core.Entities;
 using FluentPOS.Shared.Core.IntegrationServices.Application;
@@ -30,18 +29,16 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
         private readonly ICartService _cartService;
         private readonly IProductService _productService;
         private readonly ISalesDbContext _salesContext;
-        private readonly IMapper _mapper;
         private readonly IStringLocalizer<SaleCommandHandler> _localizer;
 
         public SaleCommandHandler(
-            IMapper mapper,
             IStringLocalizer<SaleCommandHandler> localizer,
             ISalesDbContext salesContext,
             ICartService cartService,
             IProductService productService,
-            IStockService stockService, IEntityReferenceService referenceService)
+            IStockService stockService,
+            IEntityReferenceService referenceService)
         {
-            _mapper = mapper;
             _localizer = localizer;
             _salesContext = salesContext;
             _cartService = cartService;
@@ -56,7 +53,7 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
         {
 
             var order = Order.InitializeOrder();
-            var referenceNumber = await _referenceService.TrackAsync(order.GetType().Name);
+            string referenceNumber = await _referenceService.TrackAsync(order.GetType().Name);
             order.SetReferenceNumber(referenceNumber);
             var cartDetails = await _cartService.GetDetailsAsync(command.CartId);
 
