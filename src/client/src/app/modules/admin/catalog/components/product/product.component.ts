@@ -40,7 +40,7 @@ export class ProductComponent implements OnInit {
 
   initColumns(): void {
     this.productColumns = [
-      { name: 'Id', dataKey: 'id', isSortable: true, isShowable: true },
+      //{ name: 'Id', dataKey: 'id', isSortable: true, isShowable: true },
       { name: 'Name', dataKey: 'name', isSortable: true, isShowable: true },
       { name: 'LocaleName', dataKey: 'localeName', isSortable: true, isShowable: true },
       { name: 'BrandName', dataKey: 'brandName', isSortable: true, isShowable: true },
@@ -50,12 +50,12 @@ export class ProductComponent implements OnInit {
       { name: 'Cost', dataKey: 'cost', isSortable: true, isShowable: true },
       { name: 'Tax', dataKey: 'tax', isSortable: true , isShowable: true},
       { name: 'TaxMethod', dataKey: 'taxMethod', isSortable: false , isShowable: false},
-      { name: 'BarcodeSymbology', dataKey: 'barcodeSymbology', isSortable: true, isShowable: true },
-      { name: 'IsAlert', dataKey: 'isAlert', isSortable: true, isShowable: true },
+      //{ name: 'BarcodeSymbology', dataKey: 'barcodeSymbology', isSortable: true, isShowable: true },
+      //{ name: 'IsAlert', dataKey: 'isAlert', isSortable: true, isShowable: true },
       { name: 'Action', dataKey: 'action', position: 'right' },
     ];
   }
-  
+
   pageChanged(event: PaginatedFilter): void {
     this.productParams.pageNumber = event.pageNumber;
     this.productParams.pageSize = event.pageSize;
