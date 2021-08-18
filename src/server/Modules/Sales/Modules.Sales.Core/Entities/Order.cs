@@ -15,6 +15,7 @@ namespace FluentPOS.Modules.Sales.Core.Entities
 {
     public class Order : BaseEntity
     {
+        public string ReferenceNumber { get; private set; }
         public DateTime TimeStamp { get; private set; }
 
         public Guid CustomerId { get; private set; }
@@ -50,6 +51,10 @@ namespace FluentPOS.Modules.Sales.Core.Entities
             this.CustomerName = customer.Name;
             this.CustomerEmail = customer.Email;
             this.CustomerPhone = customer.Phone;
+        }
+        public void SetReferenceNumber(string referenceNumber)
+        {
+            ReferenceNumber = referenceNumber;
         }
 
         public void AddProduct(Product product)

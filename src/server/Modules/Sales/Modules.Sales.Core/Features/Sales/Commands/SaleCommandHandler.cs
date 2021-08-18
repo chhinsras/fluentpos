@@ -56,7 +56,8 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
         {
 
             var order = Order.InitializeOrder();
-            await _referenceService.TrackAsync(order.GetType().Name);
+            var referenceNumber = await _referenceService.TrackAsync(order.GetType().Name);
+            order.SetReferenceNumber(referenceNumber);
             var cartDetails = await _cartService.GetDetailsAsync(command.CartId);
 
             // Do all mandatory null checks
@@ -82,8 +83,7 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             await _cartService.RemoveCartAsync(command.CartId);
             foreach(var product in order.Products)
             {
-                //Inventory Operations Here
-                await _stockService.RecordTransaction(product.ProductId, product.Quantity, product.OrderId.ToString());
+                await _stockService.RecordTransaction(product.ProductId, product.Quantity, order.ReferenceNumber);
             }
             return await Result<Guid>.SuccessAsync(order.Id, _localizer["Order Created"]);
         }
