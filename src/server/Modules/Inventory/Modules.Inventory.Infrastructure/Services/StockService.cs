@@ -37,11 +37,12 @@ namespace FluentPOS.Modules.Inventory.Infrastructure.Services
         /// </summary>
         /// <param name="productId">Product Id.</param>
         /// <param name="quantity">Quantity.</param>
+        /// <param name="referenceNumber">Reference Number.</param>
         /// <param name="isSale">Is Sale.</param>
         /// <returns>Task Completed.</returns>
         public async Task RecordTransaction(Guid productId, decimal quantity, string referenceNumber, bool isSale = true)
         {
-            // TODO - Move this to MediatR
+            // TODO - Move this to MediatR, maybe? - Important, DO NOT make an API endpoint for this.
 
             var transactionType = isSale ? TransactionType.Sale : TransactionType.Purchase;
             var stockTransaction = new StockTransaction(productId, quantity, transactionType, referenceNumber);
