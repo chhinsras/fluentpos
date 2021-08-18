@@ -27,4 +27,7 @@
     </PackageReference>
     <AdditionalFiles Include="..\..\..\stylecop.json" />
   </ItemGroup>
+   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Shared.Core\Shared.Core.csproj" />
+  </ItemGroup>
 </Project>
