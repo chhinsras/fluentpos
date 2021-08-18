@@ -29,7 +29,7 @@ namespace FluentPOS.Modules.Inventory.Infrastructure.Persistence
             _json = json;
         }
 
-         public DbSet<Stock> Stocks { get; set; }
+        public DbSet<Stock> Stocks { get; set; }
 
         public DbSet<StockTransaction> StockTransactions { get; set; }
 

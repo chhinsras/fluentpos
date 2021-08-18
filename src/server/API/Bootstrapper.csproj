@@ -38,6 +38,7 @@
     <ProjectReference Include="..\Modules\Identity\Modules.Identity\Modules.Identity.csproj" />
     <ProjectReference Include="..\Modules\People\Modules.People\Modules.People.csproj" />
     <ProjectReference Include="..\Modules\Sales\Modules.Sales\Modules.Sales.csproj" />
+     <ProjectReference Include="..\Modules\Inventory\Modules.Inventory\Modules.Inventory.csproj" />
     <ProjectReference Include="..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
   </ItemGroup>
 
