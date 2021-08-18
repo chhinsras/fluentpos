@@ -47,12 +47,6 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
         public async Task<Result<Guid>> Handle(RegisterSaleCommand command, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-            // From CartId
-            // Get Customer ID, Use Integration Services to Get Customer Details
-            // Get CartItem Details, Use Integration Services to Get Product Details
-            // Calculate Tax, Total
-            // Save to Sales.Order,Transactions and Product
-            // Delete CartItem and Cart
             var order = Order.InitializeOrder();
             var cartDetails = await _cartService.GetDetailsAsync(command.CartId);
 
@@ -77,6 +71,10 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             await _salesContext.Orders.AddAsync(order, cancellationToken);
             await _salesContext.SaveChangesAsync(cancellationToken);
             await _cartService.RemoveCartAsync(command.CartId);
+            foreach(var product in order.Products)
+            {
+                //Inventory Operations Here
+            }
             return await Result<Guid>.SuccessAsync(order.Id, _localizer["Order Created"]);
         }
     }
