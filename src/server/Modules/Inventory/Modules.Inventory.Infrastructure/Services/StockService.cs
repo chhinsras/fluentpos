@@ -8,11 +8,14 @@
 
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using FluentPOS.Modules.Inventory.Core.Abstractions;
 using FluentPOS.Modules.Inventory.Core.Entities;
 using FluentPOS.Modules.Inventory.Core.Enums;
+using FluentPOS.Modules.Inventory.Core.Exceptions;
 using FluentPOS.Shared.Core.IntegrationServices.Inventory;
+using Microsoft.Extensions.Localization;
 
 namespace FluentPOS.Modules.Inventory.Infrastructure.Services
 {
@@ -22,14 +25,19 @@ namespace FluentPOS.Modules.Inventory.Infrastructure.Services
     public class StockService : IStockService
     {
         private readonly IInventoryDbContext _context;
+        private readonly IStringLocalizer<StockService> _localizer;
 
         /// <summary>
         /// Stock Service.
         /// </summary>
-        /// <param name="context">Context.</param>s
-        public StockService(IInventoryDbContext context)
+        /// <param name="context">Context.</param>
+        /// <param name="localizer">Localizer.</param>
+        public StockService(
+            IInventoryDbContext context,
+            IStringLocalizer<StockService> localizer)
         {
             _context = context;
+            _localizer = localizer;
         }
 
         /// <summary>
@@ -48,18 +56,28 @@ namespace FluentPOS.Modules.Inventory.Infrastructure.Services
             var stockTransaction = new StockTransaction(productId, quantity, transactionType, referenceNumber);
             await _context.StockTransactions.AddAsync(stockTransaction);
 
-            var hasStockRecord = _context.Stocks.Any(a => a.ProductId == productId);
+            bool hasStockRecord = _context.Stocks.Any(a => a.ProductId == productId);
             if (hasStockRecord)
             {
                 if (isSale)
                 {
-                    var stockRecord = _context.Stocks.Where(s => s.ProductId == productId).FirstOrDefault();
+                    var stockRecord = _context.Stocks.FirstOrDefault(s => s.ProductId == productId);
+                    if (stockRecord == null)
+                    {
+                        throw new InventoryException(_localizer["Stock Record Not Found"], HttpStatusCode.NotFound);
+                    }
+
                     stockRecord.ReduceQuantity(quantity);
                     _context.Stocks.Update(stockRecord);
                 }
                 else
                 {
-                    var stockRecord = _context.Stocks.Where(s => s.ProductId == productId).FirstOrDefault();
+                    var stockRecord = _context.Stocks.FirstOrDefault(s => s.ProductId == productId);
+                    if (stockRecord == null)
+                    {
+                        throw new InventoryException(_localizer["Stock Record Not Found"], HttpStatusCode.NotFound);
+                    }
+
                     stockRecord.IncreaseQuantity(quantity);
                     _context.Stocks.Update(stockRecord);
                 }

@@ -77,9 +77,10 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             await _cartService.RemoveCartAsync(command.CartId);
             foreach(var product in order.Products)
             {
-                //Inventory Operations Here
+                // Inventory Operations Here
                 await _stockService.RecordTransaction(product.ProductId, product.Quantity, product.OrderId.ToString());
             }
+
             return await Result<Guid>.SuccessAsync(order.Id, _localizer["Order Created"]);
         }
     }

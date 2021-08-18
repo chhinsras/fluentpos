@@ -1,3 +1,11 @@
+// --------------------------------------------------------------------------------------------------
+// <copyright file="StockTransaction.cs" company="FluentPOS">
+// Copyright (c) FluentPOS. All rights reserved.
+// The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// --------------------------------------------------------------------------------------------------
+
 using System;
 using FluentPOS.Modules.Inventory.Core.Enums;
 using FluentPOS.Shared.Core.Domain;
@@ -8,11 +16,11 @@ namespace FluentPOS.Modules.Inventory.Core.Entities
     {
         public StockTransaction(Guid productId, decimal quantity, TransactionType type, string referenceNumber)
         {
-            this.ProductId = productId;
-            this.Quantity = quantity;
-            this.Type = type;
-            this.ReferenceNumber = referenceNumber;
-            this.Timestamp = DateTime.Now;
+            ProductId = productId;
+            Quantity = quantity;
+            Type = type;
+            ReferenceNumber = referenceNumber;
+            Timestamp = DateTime.Now;
         }
 
         public Guid ProductId { get; private set; }
