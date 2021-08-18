@@ -87,21 +87,21 @@
                           </mat-checkbox>
                     </ng-container>
                     <ng-container *ngIf="tableColumn.dataKey === 'action'">
-                        <button *ngIf="customActionOneData" mat-raised-button color="{{customActionOneData.color}}"
+                        <button *ngIf="customActionOneData" mat-raised-button matTooltip="{{customActionOneData.title}}" color="{{customActionOneData.color}}"
                             (click)="openCustomActionOne(element)">
-                            <mat-icon>{{customActionOneData.icon}}</mat-icon> {{customActionOneData.title}}
+                            <mat-icon>{{customActionOneData.icon}}</mat-icon>
                         </button>
-                        <button *ngIf="onView.observers.length>0" mat-raised-button color="primary"
+                        <button *ngIf="onView.observers.length>0"  mat-raised-button color="primary"
                             (click)="openViewForm(element)">
-                            <mat-icon>remove_red_eye</mat-icon> View
+                            <mat-icon>remove_red_eye</mat-icon>
                         </button>
-                        <button *ngIf="onEditForm.observers.length>0" mat-raised-button color="accent"
+                        <button *ngIf="onEditForm.observers.length>0" matTooltip="Edit" mat-raised-button color="accent"
                             (click)="openEditForm(element)">
-                            <mat-icon>mode_edit</mat-icon> Edit
+                            <mat-icon>mode_edit</mat-icon>
                         </button>
-                        <button *ngIf="onDelete.observers.length>0" mat-raised-button color="warn"
+                        <button *ngIf="onDelete.observers.length>0" matTooltip="Delete" mat-raised-button color="danger"
                             (click)="openDeleteConfirmationDialog(element.id)">
-                            <mat-icon>delete</mat-icon> Delete
+                            <mat-icon>delete</mat-icon>
                         </button>
                     </ng-container>
                 </td>
