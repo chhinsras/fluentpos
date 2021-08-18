@@ -39,12 +39,12 @@ namespace FluentPOS.Modules.Inventory.Infrastructure.Services
         /// <param name="quantity">Quantity.</param>
         /// <param name="isSale">Is Sale.</param>
         /// <returns>Task Completed.</returns>
-        public async Task RecordTransaction(Guid productId, decimal quantity, bool isSale = true)
+        public async Task RecordTransaction(Guid productId, decimal quantity, string referenceNumber, bool isSale = true)
         {
             // TODO - Move this to MediatR
 
             var transactionType = isSale ? TransactionType.Sale : TransactionType.Purchase;
-            var stockTransaction = new StockTransaction(productId, quantity, transactionType);
+            var stockTransaction = new StockTransaction(productId, quantity, transactionType, referenceNumber);
             await _context.StockTransactions.AddAsync(stockTransaction);
 
             var hasStockRecord = _context.Stocks.Any(a => a.ProductId == productId);

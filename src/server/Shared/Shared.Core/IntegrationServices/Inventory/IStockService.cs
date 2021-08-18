@@ -5,6 +5,6 @@ namespace FluentPOS.Shared.Core.IntegrationServices.Inventory
 {
     public interface IStockService
     {
-        public Task RecordTransaction(Guid productId, decimal quantity, bool isSale = true);
+        public Task RecordTransaction(Guid productId, decimal quantity, string referenceNumber, bool isSale = true);
     }
 }
