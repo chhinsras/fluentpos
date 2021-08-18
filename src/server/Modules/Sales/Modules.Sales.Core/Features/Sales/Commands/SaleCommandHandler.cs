@@ -51,7 +51,6 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
         public async Task<Result<Guid>> Handle(RegisterSaleCommand command, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-
             var order = Order.InitializeOrder();
             string referenceNumber = await _referenceService.TrackAsync(order.GetType().Name);
             order.SetReferenceNumber(referenceNumber);
@@ -64,8 +63,7 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             var customer = cartDetails.Data.Customer;
 
             order.AddCustomer(customer);
-            var items = cartDetails.Data.CartItems;
-            foreach (var item in items)
+            foreach (var item in cartDetails.Data.CartItems)
             {
                 var productResponse = await _productService.GetDetailsAsync(item.ProductId);
                 if (productResponse.Succeeded)
@@ -82,7 +80,8 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             {
                 await _stockService.RecordTransaction(product.ProductId, product.Quantity, order.ReferenceNumber);
             }
-            return await Result<Guid>.SuccessAsync(order.Id, _localizer[$"Order {order.ReferenceNumber} Created"]);
+
+            return await Result<Guid>.SuccessAsync(order.Id, string.Format(_localizer["Order {0} Created"], order.ReferenceNumber));
         }
     }
 }
