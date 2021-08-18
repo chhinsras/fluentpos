@@ -16,9 +16,7 @@ using FluentPOS.Shared.Core.IntegrationServices.Inventory;
 
 namespace FluentPOS.Modules.Inventory.Infrastructure.Services
 {
-    /// <summary>
-    /// Integration Services for Inventory Module.
-    /// </summary>
+    /// <inheritdoc/>
     public class StockService : IStockService
     {
         private readonly IInventoryDbContext _context;
@@ -26,20 +24,14 @@ namespace FluentPOS.Modules.Inventory.Infrastructure.Services
         /// <summary>
         /// Stock Service.
         /// </summary>
-        /// <param name="context">Context.</param>s
-        public StockService(IInventoryDbContext context)
+        /// <param name="context">Context.</param>
+        public StockService(
+            IInventoryDbContext context)
         {
             _context = context;
         }
 
-        /// <summary>
-        /// Record Transaction.
-        /// </summary>
-        /// <param name="productId">Product Id.</param>
-        /// <param name="quantity">Quantity.</param>
-        /// <param name="referenceNumber">Reference Number.</param>
-        /// <param name="isSale">Is Sale.</param>
-        /// <returns>Task Completed.</returns>
+        /// <inheritdoc/>
         public async Task RecordTransaction(Guid productId, decimal quantity, string referenceNumber, bool isSale = true)
         {
             // TODO - Move this to MediatR, maybe? - Important, DO NOT make an API endpoint for this.
@@ -48,35 +40,40 @@ namespace FluentPOS.Modules.Inventory.Infrastructure.Services
             var stockTransaction = new StockTransaction(productId, quantity, transactionType, referenceNumber);
             await _context.StockTransactions.AddAsync(stockTransaction);
 
-            var hasStockRecord = _context.Stocks.Any(a => a.ProductId == productId);
-            if (hasStockRecord)
+            var stockRecord = _context.Stocks.FirstOrDefault(s => s.ProductId == productId);
+            switch (transactionType)
             {
-                if (isSale)
-                {
-                    var stockRecord = _context.Stocks.Where(s => s.ProductId == productId).FirstOrDefault();
-                    stockRecord.ReduceQuantity(quantity);
-                    _context.Stocks.Update(stockRecord);
-                }
-                else
-                {
-                    var stockRecord = _context.Stocks.Where(s => s.ProductId == productId).FirstOrDefault();
-                    stockRecord.IncreaseQuantity(quantity);
-                    _context.Stocks.Update(stockRecord);
-                }
-            }
-            else
-            {
-                var stockRecord = new Stock(productId);
-                if (isSale)
-                {
-                    stockRecord.ReduceQuantity(quantity);
-                }
-                else
-                {
-                    stockRecord.IncreaseQuantity(quantity);
-                }
+                case TransactionType.Sale:
+                    if (stockRecord != null)
+                    {
+                        stockRecord.ReduceQuantity(quantity);
+                        _context.Stocks.Update(stockRecord);
+                    }
+                    else
+                    {
+                        var newStockRecord = new Stock(productId);
+                        newStockRecord.ReduceQuantity(quantity);
+                        _context.Stocks.Add(newStockRecord);
+                    }
 
-                _context.Stocks.Add(stockRecord);
+                    break;
+                case TransactionType.Purchase:
+                    if (stockRecord != null)
+                    {
+                        stockRecord.IncreaseQuantity(quantity);
+                        _context.Stocks.Update(stockRecord);
+                    }
+                    else
+                    {
+                        var newStockRecord = new Stock(productId);
+                        newStockRecord.IncreaseQuantity(quantity);
+                        _context.Stocks.Add(newStockRecord);
+                    }
+
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(transactionType), transactionType, null);
             }
 
             await _context.SaveChangesAsync();
