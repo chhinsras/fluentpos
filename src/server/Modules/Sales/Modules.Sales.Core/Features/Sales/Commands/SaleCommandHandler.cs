@@ -78,12 +78,11 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Commands
             await _salesContext.Orders.AddAsync(order, cancellationToken);
             await _salesContext.SaveChangesAsync(cancellationToken);
             await _cartService.RemoveCartAsync(command.CartId);
-            foreach(var product in order.Products)
+            foreach (var product in order.Products)
             {
                 await _stockService.RecordTransaction(product.ProductId, product.Quantity, order.ReferenceNumber);
             }
-
-            return await Result<Guid>.SuccessAsync(order.Id, _localizer["Order Created"]);
+            return await Result<Guid>.SuccessAsync(order.Id, _localizer[$"Order {order.ReferenceNumber} Created"]);
         }
     }
 }

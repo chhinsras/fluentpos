@@ -48,7 +48,7 @@ namespace FluentPOS.Shared.Infrastructure.Services
 
         private string GenerateReferenceNumber(string entity, int count, string monthYearString)
         {
-            return $"{entity[0]}/{monthYearString}/{count.ToString().PadLeft(5, '0')}";
+            return $"{entity[0]}-{monthYearString}-{count.ToString().PadLeft(5, '0')}";
         }
     }
 }
