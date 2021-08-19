@@ -9,66 +9,94 @@
         <mat-card class="module-card" style="margin: 0px;">
           <mat-card-content>
             <div class="row">
-              <div class="col-4" style="padding:10px;text-align: center;align-self: center;">
+              <div class="col-4" style="text-align: center;align-self: center;">
                 <div>
-                  <button mat-raised-button color="info">
-                    <span><span style="margin-right: 10px;" class="fas fa-upload"></span>Upload</span>
-                  </button>
-                </div>
-              </div>
-              <div class="col-8" style="padding:10px">
-                <div class="row">
-                  <div class="col-6">
-                    <mat-form-field appearance="outline">
-                      <mat-label>First Name</mat-label>
-                      <input matInput autocomplete="off" type="text" autocomplete="off" readonly />
-                    </mat-form-field>
-                    <mat-form-field appearance="outline">
-                      <mat-label>Phone Number</mat-label>
-                      <input matInput autocomplete="off" type="text" autocomplete="off" readonly />
-                    </mat-form-field>
-                  </div>
-                  <div class="col-6">
-                    <mat-form-field appearance="outline">
-                      <mat-label>Second Name</mat-label>
-                      <input matInput autocomplete="off" type="text" autocomplete="off" readonly />
-                    </mat-form-field>
-                    <mat-form-field appearance="outline">
-                      <mat-label>Email</mat-label>
-                      <input disabled matInput autocomplete="off" type="text" autocomplete="off" readonly />
-                    </mat-form-field>
-                  </div>
-                </div>
+                  <mat-card class="module-card">
+                    <mat-card-content>
+                      <div class="row">
+                        <div class="col-6"> <img style="border-radius: 350px; max-width: 200px;min-width: 200px;"
+                            src="https://www.adobe.com/content/dam/cc/us/en/creativecloud/photography/discover/portrait-photography/CODERED_B1_portrait_photography-P4a_438x447.jpg.img.jpg">
+                        </div>
+                        <div class="col-6" style="text-align: left;align-self: center;">
+                          <p>Mukesh Murugan</p>
+                          <p>iammukeshm@gmail.com</p>
+                          <button mat-raised-button color="accent">
+                            <span><span style="margin-right: 10px;" class="fas fa-upload"></span>Upload Image</span>
+                          </button>
+                        </div>
+                      </div>
 
+                    </mat-card-content>
+                  </mat-card>
+
+                </div>
               </div>
+              <div class="col-8">
+                <mat-card class="module-card">
+                  <mat-card-content>
+
+                    <div class="row">
+                      <div class="col-6">
+                        <mat-form-field appearance="outline">
+                          <mat-label>First Name</mat-label>
+                          <input matInput autocomplete="off" type="text" autocomplete="off" readonly />
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                          <mat-label>Phone Number</mat-label>
+                          <input matInput autocomplete="off" type="text" autocomplete="off" readonly />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-6">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Second Name</mat-label>
+                          <input matInput autocomplete="off" type="text" autocomplete="off" readonly />
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                          <mat-label>Email</mat-label>
+                          <input disabled matInput autocomplete="off" type="text" autocomplete="off" readonly />
+                        </mat-form-field>
+                      </div>
+
+                    </div>
+                  </mat-card-content>
+                  <mat-action-row>
+
+                  </mat-action-row>
+                  <mat-card-actions style="text-align: right;padding: 16px;">
+                    <button mat-raised-button color="accent">
+                      <span><span style="margin-right: 10px;" class="fas fa-upload"></span>Upload Image</span>
+                    </button>
+                </mat-card-actions>
+                </mat-card>
+              </div>
+
             </div>
           </mat-card-content>
         </mat-card>
-
       </mat-tab>
       <mat-tab label="Security">
         <mat-card class="module-card" style="margin: 0px;">
           <mat-card-content>
-                <div class="row">
-                  <div class="col-4">
-                    <mat-form-field appearance="outline">
-                      <mat-label>Current Password</mat-label>
-                      <input matInput autocomplete="off" type="text" autocomplete="off" readonly />
-                    </mat-form-field>
-                  </div>
-                  <div class="col-4">
-                    <mat-form-field appearance="outline">
-                      <mat-label>New Password</mat-label>
-                      <input matInput autocomplete="off" type="text" autocomplete="off" readonly />
-                    </mat-form-field>
-                  </div>
-                  <div class="col-4">
-                    <mat-form-field appearance="outline">
-                      <mat-label>Confirm Password</mat-label>
-                      <input matInput autocomplete="off" type="text" autocomplete="off" readonly />
-                    </mat-form-field>
-                  </div>
-                </div>
+            <div class="row">
+              <div class="col-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Current Password</mat-label>
+                  <input matInput autocomplete="off" type="text" autocomplete="off" readonly />
+                </mat-form-field>
+              </div>
+              <div class="col-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>New Password</mat-label>
+                  <input matInput autocomplete="off" type="text" autocomplete="off" readonly />
+                </mat-form-field>
+              </div>
+              <div class="col-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Confirm Password</mat-label>
+                  <input matInput autocomplete="off" type="text" autocomplete="off" readonly />
+                </mat-form-field>
+              </div>
+            </div>
           </mat-card-content>
         </mat-card>
 
