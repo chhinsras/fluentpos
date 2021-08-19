@@ -8,7 +8,7 @@
       <span style="font-weight:lighter;font-size: larger;" translate>site.title</span>
     </a>
     <span class="nav-spacer"></span>
-    <button mat-raised-button routerLink="/pos" style="background: rgba(0,0,0,.2);" color="accent" class="d-none d-lg-block">POS</button>
+
     <a mat-icon-button matTooltip="{{'site.fork'|translate}}" href="https://github.com/fluentpos/fluentpos/"
       target="_blank" class="d-none d-sm-block">
       <mat-icon class="fab fa-github"></mat-icon>
@@ -18,15 +18,16 @@
       <mat-icon>{{darkModeIcon}}</mat-icon>
     </a>
     <mat-divider vertical style="height:50%;margin: 10px;"></mat-divider>
-    <a mat-button style="background: rgba(0,0,0,.2);margin-right: 5px;" href="https://opencollective.com/fluentpos"
-      target="_blank" class="d-none d-sm-block">
-      <span style="font-weight:lighter;font-size: small;" translate>site.support</span>
-    </a>
 
+    <a mat-raised-button color="primary" style="margin-right: 5px;" href="https://opencollective.com/fluentpos" target="_blank"
+      class="d-none d-sm-block">
+      <span style="font-weight:lighter;font-size: small;" translate><span style="margin-right: 10px;" class="fas fa-info"></span> site.support</span>
+    </a>
+    <button mat-raised-button routerLink="/pos" color="primary" class="d-none d-lg-block"><span style="margin-right: 10px;" class="fas fa-cash-register"></span>POS</button>
     <button mat-raised-button color="accent" [matMenuTriggerFor]="userMenu">
-      <span><span style="margin-right: 10px;" class="fas fa-user"></span>{{fullName}}</span>
+      <span><span style="margin-right: 10px;" class="fas fa-caret-down"></span>{{fullName}}</span>
     </button>
-    <button mat-raised-button style="background: rgba(0,0,0,.2);" color="accent" class="d-sm-none">More</button>
+    <button mat-raised-button  color="accent" class="d-sm-none"><span style="margin-right: 10px;" class="fas fa-caret-down"> </span>More</button>
     <mat-menu #userMenu="matMenu" style="padding-top: 0!important;">
       <mat-card style="padding-top: 16px!important;margin-bottom: 0px!important;">
         <mat-card-header>
