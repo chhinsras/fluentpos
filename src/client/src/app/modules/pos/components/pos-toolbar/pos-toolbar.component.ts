@@ -22,7 +22,6 @@ export class PosToolbarComponent implements OnInit {
   @Input() darkModeIcon: string;
   @Input() isDarkMode: boolean;
   ngOnInit(): void {
-    this.cart.toggle();
     this.cartService.get().subscribe(res => this.cartItemCount = res.length);
     this.cartService.getCurrentCustomer().subscribe(res=>this.customer = res);
     let themeVariant = this.localStorageService.getItem('themeVariant');

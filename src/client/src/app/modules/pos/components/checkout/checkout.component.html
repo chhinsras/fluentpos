@@ -1,7 +1,22 @@
 <h2 mat-dialog-title translate>dialogs.checkOut.title</h2>
 <mat-dialog-content class="mat-typography" translate>
-  <div class="row" style="min-width: 1000px;padding: 20px 0px 20px 0px;">
-    <div class="col-6">
+  <div class="row" style="padding: 20px 0px 20px 0px;">
+    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Customer</mat-label>
+        <input matInput autocomplete="off" type="text" autocomplete="off" readonly value="{{this.customer.name}}" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Customer Email</mat-label>
+        <input matInput autocomplete="off" type="text" autocomplete="off" readonly value="{{this.customer.email}}" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Customer Phone Number</mat-label>
+        <input matInput autocomplete="off" type="text" autocomplete="off" readonly value="{{this.customer.phone}}" />
+      </mat-form-field>
+
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
       <div *ngIf="cartItems && cartItems.length !=0">
         <mat-card
           style="margin:0px!important;border-radius: 0px!important;padding: 30px;max-height: 300px;overflow: scroll;">
@@ -18,7 +33,7 @@
         </mat-card>
       </div>
       <div *ngIf="cartItems && cartItems.length !=0" class="checkout">
-        <mat-card style="margin:0px!important;border-radius: 0px!important;padding: 30px;">
+        <mat-card style="border-radius: 0px!important;padding: 30px;">
           <mat-card-content style="padding: 0!important;margin-bottom: 0px;">
             <div class="row">
               <div class="col-6">Discount</div>
@@ -45,21 +60,7 @@
         </mat-card>
       </div>
     </div>
-    <div class="col-6">
-      <mat-form-field appearance="outline">
-        <mat-label>Customer</mat-label>
-        <input matInput autocomplete="off" type="text" autocomplete="off" readonly value="{{this.customer.name}}" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Customer Email</mat-label>
-        <input matInput autocomplete="off" type="text" autocomplete="off" readonly value="{{this.customer.email}}" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Customer Phone Number</mat-label>
-        <input matInput autocomplete="off" type="text" autocomplete="off" readonly value="{{this.customer.phone}}" />
-      </mat-form-field>
 
-    </div>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

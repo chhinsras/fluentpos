@@ -4,7 +4,7 @@
         <button mat-icon-button routerLink="/home">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <a mat-button>
+        <a mat-button  class="d-none d-sm-block">
             <span style="font-weight:lighter;font-size: larger;" translate>pos.title</span>
         </a>
         <span class="nav-spacer"></span>
@@ -15,13 +15,11 @@
         <a *ngIf="!customer" mat-raised-button color="danger" style="margin-right: 5px;" (click)="openCustomerSelectionForm()">
             <span style="font-weight:lighter;font-size: small;" translate>pos.selectCustomer</span>
         </a>
-        <a *ngIf="customer" mat-button style="font-weight:lighter;font-size: small; background: rgba(0,0,0,.2);border-radius: 4px 0px 0px 4px!important;" translate>
+        <a *ngIf="customer" color="accent" (click)="openCustomerSelectionForm()" mat-raised-button style="font-weight:lighter;font-size: small; border-radius: 4px 0px 0px 4px!important;" translate>
             <span style="margin-right: 10px;" class="fas fa-user-circle"></span>
             {{customer.name}}
         </a>
-        <a *ngIf="customer" mat-raised-button style="margin-right: 5px;" color="accent" (click)="openCustomerSelectionForm()">
-            <span style="font-weight:lighter;font-size: small;" translate>pos.changeCustomer</span>
-        </a>
+
         <button mat-icon-button (click)="cart.toggle()">
             <mat-icon matBadge="{{cartItemCount}}" matBadgeColor="warn">shopping_cart</mat-icon>
         </button>
