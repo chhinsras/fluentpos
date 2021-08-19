@@ -3,9 +3,15 @@
 }
 
 .sidenav {
-    min-width: 250px;
-    width: 30%;
     border: 0 solid rgba(0, 0, 0, 0.5);
+    width: 30vw;
+}
+
+
+@media screen and (max-width:906px) {
+  .sidenav {
+    width: 100vw;
+   }
 }
 
 .container {
