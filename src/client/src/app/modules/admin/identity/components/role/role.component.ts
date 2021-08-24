@@ -58,7 +58,8 @@ export class RoleComponent implements OnInit {
 
   openPermissionsForm(role: Role): void {
     const dialogRef = this.dialog.open(RolePermissionFormComponent, {
-      data: role
+      data: role,
+      panelClass: 'mat-dialog-container-no-padding'
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
