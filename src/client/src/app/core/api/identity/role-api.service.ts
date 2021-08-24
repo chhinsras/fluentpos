@@ -36,6 +36,10 @@ export class RoleApiService {
     return this.http.get(this.baseUrl + `permissions/byrole/${roleId}`);
   }
 
+  updateRolePermissions(request: Permission) {
+    return this.http.put(this.baseUrl + 'permissions', request);
+  }
+
   getAllClaims() {
     return this.http.get(this.baseUrl + `permissions`)
   }

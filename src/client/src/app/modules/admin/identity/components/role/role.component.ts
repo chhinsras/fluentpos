@@ -9,7 +9,7 @@ import { RoleFormComponent } from './role-form/role-form.component';
 import { ToastrService } from 'ngx-toastr';
 import { Sort } from '@angular/material/sort';
 import { TableColumn } from 'src/app/core/shared/components/table/table-column';
-import { PermissionFormComponent } from './permission-form/permission-form.component';
+import { RolePermissionFormComponent } from './role-permission-form/role-permission-form.component';
 import { CustomAction } from 'src/app/core/shared/components/table/custom-action';
 
 @Component({
@@ -57,7 +57,7 @@ export class RoleComponent implements OnInit {
   }
 
   openPermissionsForm(role: Role): void {
-    const dialogRef = this.dialog.open(PermissionFormComponent, {
+    const dialogRef = this.dialog.open(RolePermissionFormComponent, {
       data: role,
       height: '90%',
       width: '100%'

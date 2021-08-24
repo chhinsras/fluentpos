@@ -1,8 +1,0 @@
-<div [hidden]="!permissions">
-  <app-table [title]="'Permissions'" [subtitle]="'Manage, Register, Update or Remove Permissions here.'"
-      [data]="permissions && permissions.data" [columns]="permissionColumns" (onFilter)="filter($event)"
-      (onReload)="reload()" (onSort)="sort($event)" 
-    
-    >
-  </app-table>
-</div>
