@@ -1,7 +1,7 @@
 export interface Permission {
     roleId: string
-    roleName: string
-    description: string
+    // roleName: string
+    // description: string
     roleClaims: RoleClaim[]
 }
 

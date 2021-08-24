@@ -1,0 +1,15 @@
+<div *ngIf="!rolePermission" class="d-flex justify-center">
+  <mat-icon>
+    <mat-spinner diameter="20">
+    </mat-spinner>
+  </mat-icon> Loading ...
+</div>
+<div [hidden]="!rolePermission">
+
+  <app-table [title]="'Role Permissions'" [subtitle]="'Manage Role Permission here.'"
+      [data]="rolePermission && rolePermission.roleClaims" [columns]="rolePermissionColumns"
+      [customActionData]="rolePermissionActionData" (onCustomAction)="submitRolePermission($event)"
+    >
+  </app-table>
+</div>
+

@@ -6,7 +6,7 @@ import { RoleApiService } from 'src/app/core/api/identity/role-api.service';
 import { IResult } from 'src/app/core/models/wrappers/IResult';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
 import { Result } from 'src/app/core/models/wrappers/Result';
-import { Permission } from '../models/permission';
+import { Permission, RoleClaim } from '../models/permission';
 import { Role } from '../models/role';
 import { RoleParams } from '../models/roleParams';
 
@@ -57,11 +57,15 @@ export class RoleService {
       .pipe(map((response: Result<Permission>) => response));
   }
 
+  updateRolePermissions(request: Permission): Observable<IResult<string>> {
+    return this.api
+      .updateRolePermissions(request)
+      .pipe(map((response: IResult<string>) => response));
+  }
+
   getAllClaims() {}
 
   getClaimById(id: number) {}
-
-  updatePermissions(permission: Permission) {}
 
   deleteClaimById(id: number) {}
 }
