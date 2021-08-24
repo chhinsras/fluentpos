@@ -20,6 +20,7 @@ using FluentPOS.Shared.Core.Exceptions;
 using FluentPOS.Shared.Core.Extensions;
 using FluentPOS.Shared.Core.Interfaces;
 using FluentPOS.Shared.Core.Mappings.Converters;
+using FluentPOS.Shared.Core.Utilities;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
 using MediatR;
@@ -94,7 +95,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
 
             if (extendedAttributeList == null)
             {
-                throw new CustomException(string.Format(_localizer["{0} Extended Attributes Not Found!"], typeof(TEntity).Name), statusCode: HttpStatusCode.NotFound);
+                throw new CustomException(string.Format(_localizer["{0} Extended Attributes Not Found!"], typeof(TEntity).GetGenericTypeName()), statusCode: HttpStatusCode.NotFound);
             }
 
             return _mapper.Map<PaginatedResult<GetExtendedAttributesResponse<TEntityId>>>(extendedAttributeList);
@@ -107,7 +108,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
             var extendedAttribute = await _context.ExtendedAttributes.Where(b => b.Id == query.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
             if (extendedAttribute == null)
             {
-                throw new CustomException(string.Format(_localizer["{0} Extended Attribute Not Found!"], typeof(TEntity).Name), statusCode: HttpStatusCode.NotFound);
+                throw new CustomException(string.Format(_localizer["{0} Extended Attribute Not Found!"], typeof(TEntity).GetGenericTypeName()), statusCode: HttpStatusCode.NotFound);
             }
 
             var mappedExtendedAttribute = _mapper.Map<GetExtendedAttributeByIdResponse<TEntityId>>(extendedAttribute);
