@@ -11,6 +11,7 @@
 using System;
 using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.Domain;
+using FluentPOS.Shared.Core.Utilities;
 using FluentPOS.Shared.DTOs.ExtendedAttributes;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
@@ -49,7 +50,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
         public ExtendedAttributeAddedEvent(ExtendedAttribute<TEntityId, TEntity> extendedAttribute)
         {
             EntityId = extendedAttribute.EntityId;
-            EntityName = typeof(TEntity).Name;
+            EntityName = typeof(TEntity).GetGenericTypeName();
             Type = extendedAttribute.Type;
             Key = extendedAttribute.Key;
             Decimal = extendedAttribute.Decimal;

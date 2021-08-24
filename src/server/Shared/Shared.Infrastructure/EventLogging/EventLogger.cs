@@ -34,18 +34,31 @@ namespace FluentPOS.Shared.Infrastructure.EventLogging
         public async Task SaveAsync<T>(T @event, (string oldValues, string newValues) changes)
             where T : Event
         {
-            string serializedData = _jsonSerializer.Serialize(@event, @event.GetType());
+            if (@event is EventLog eventLog)
+            {
+                await _context.EventLogs.AddAsync(eventLog);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                string serializedData = _jsonSerializer.Serialize(@event, @event.GetType());
 
-            string userEmail = string.IsNullOrWhiteSpace(_user.GetUserEmail()) ? "Anonymous" : _user.GetUserEmail();
-            var userId = _user.GetUserId();
-            var thisEvent = new EventLog(
-                @event,
-                serializedData,
-                changes,
-                string.IsNullOrWhiteSpace(userEmail) ? _user.Name : userEmail,
-                userId);
-            await _context.EventLogs.AddAsync(thisEvent);
-            await _context.SaveChangesAsync();
+                string userEmail = _user.GetUserEmail();
+                if (string.IsNullOrWhiteSpace(userEmail))
+                {
+                    userEmail = "Anonymous";
+                }
+
+                var userId = _user.GetUserId();
+                var thisEvent = new EventLog(
+                    @event,
+                    serializedData,
+                    changes,
+                    userEmail,
+                    userId);
+                await _context.EventLogs.AddAsync(thisEvent);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace FluentPOS.Modules.Inventory.Core.Extensions
 {
     /// <summary>
-    /// Extensions for IServiceCollection
+    /// Extensions for IServiceCollection.
     /// </summary>
     public static class ServiceCollectionExtensions
     {

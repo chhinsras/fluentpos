@@ -8,6 +8,7 @@
 
 using System;
 using FluentPOS.Shared.Core.Domain;
+using FluentPOS.Shared.Core.Utilities;
 
 namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
 {
@@ -21,7 +22,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Events
         {
             Id = id;
             AggregateId = id;
-            EntityName = typeof(TEntity).Name;
+            EntityName = typeof(TEntity).GetGenericTypeName();
             RelatedEntities = new[] { typeof(TEntity) };
         }
     }
