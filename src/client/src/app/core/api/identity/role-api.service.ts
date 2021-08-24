@@ -37,7 +37,7 @@ export class RoleApiService {
   }
 
   updateRolePermissions(request: Permission) {
-    return this.http.put(this.baseUrl + 'permissions', request);
+    return this.http.put(this.baseUrl + 'permissions/update', request);
   }
 
   getAllClaims() {
@@ -46,10 +46,6 @@ export class RoleApiService {
 
   getClaim(id: number) {
     return this.http.get(this.baseUrl + `permissions/${id}`);
-  }
-
-  updatePermissions(permission: Permission) {
-    return this.http.put(this.baseUrl + 'permissions/update', permission);
   }
 
   deleteClaim(id: number) {

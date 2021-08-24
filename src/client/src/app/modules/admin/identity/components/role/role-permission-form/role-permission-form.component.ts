@@ -52,7 +52,7 @@ export class RolePermissionFormComponent implements OnInit {
   }
 
   submitRolePermission($event: Permission): void{
-    this.roleService.updateRolePermissionsByRoleId($event).subscribe((result) => {
+    this.roleService.updateRolePermissions($event).subscribe((result) => {
       this.toastr.success(result.messages[0]);
       this.dialogRef.closeAll();
     });

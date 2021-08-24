@@ -57,7 +57,7 @@ export class RoleService {
       .pipe(map((response: Result<Permission>) => response));
   }
 
-  updateRolePermissionsByRoleId(request: Permission): Observable<IResult<string>> {
+  updateRolePermissions(request: Permission): Observable<IResult<string>> {
     return this.api
       .updateRolePermissions(request)
       .pipe(map((response: IResult<string>) => response));
@@ -66,8 +66,6 @@ export class RoleService {
   getAllClaims() {}
 
   getClaimById(id: number) {}
-
-  updatePermissions(permission: Permission) {}
 
   deleteClaimById(id: number) {}
 }

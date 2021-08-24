@@ -69,7 +69,7 @@ export class RoleComponent implements OnInit {
 
   openForm(role?: Role): void {
     const dialogRef = this.dialog.open(RoleFormComponent, {
-      data: role,
+      data: role
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {

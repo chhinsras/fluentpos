@@ -236,3 +236,10 @@ table {
 .position-fixed {
     position: fixed
 }
+
+.cdk-global-overlay-wrapper {
+  overflow: auto;
+  pointer-events: auto;  // needed for chrome but prevents backdrop click close
+  max-height: 90%;
+  margin: 20px;
+}
