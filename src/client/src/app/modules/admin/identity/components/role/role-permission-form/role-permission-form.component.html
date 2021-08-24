@@ -6,7 +6,7 @@
 </div>
 <div [hidden]="!rolePermission">
   <app-table [title]="'Role Permissions'" [subtitle]="'Manage Role Permissionhere.'"
-      [data]="rolePermission.roleClaims" [columns]="rolePermissionColumns"
+      [data]="rolePermission && rolePermission.roleClaims" [columns]="rolePermissionColumns"
       [customActionData]="rolePermissionActionData" (onCustomAction)="submitRolePermission($event)"
     >
   </app-table>
