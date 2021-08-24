@@ -8,9 +8,9 @@ import { Role } from '../../../models/role';
 import { RoleService } from '../../../services/role.service';
 
 @Component({
-  selector: 'app-role-Permission-form',
-  templateUrl: './role-Permission-form.component.html',
-  styleUrls: ['./role-Permission-form.component.scss']
+  selector: 'app-role-permission-form',
+  templateUrl: './role-permission-form.component.html',
+  styleUrls: ['./role-permission-form.component.scss']
 })
 export class RolePermissionFormComponent implements OnInit {
   rolePermission: Permission;
