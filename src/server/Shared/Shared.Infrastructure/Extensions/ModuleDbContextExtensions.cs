@@ -14,6 +14,7 @@ using FluentPOS.Shared.Core.Contracts;
 using FluentPOS.Shared.Core.EventLogging;
 using FluentPOS.Shared.Core.Interfaces;
 using FluentPOS.Shared.Core.Interfaces.Serialization;
+using FluentPOS.Shared.Core.Utilities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -49,8 +50,8 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                     var relatedEntriesChanges = changes.Where(x => domainEvent.RelatedEntities.Any(t => t == x.entityEntry.Entity.GetType())).ToList();
                     if (relatedEntriesChanges.Any())
                     {
-                        var oldValues = relatedEntriesChanges.ToDictionary(x => x.entityEntry.Entity.GetType().Name, y => y.oldValues);
-                        var newValues = relatedEntriesChanges.ToDictionary(x => x.entityEntry.Entity.GetType().Name, y => y.newValues);
+                        var oldValues = relatedEntriesChanges.ToDictionary(x => x.entityEntry.Entity.GetType().GetGenericTypeName(), y => y.oldValues);
+                        var newValues = relatedEntriesChanges.ToDictionary(x => x.entityEntry.Entity.GetType().GetGenericTypeName(), y => y.newValues);
                         var relatedChanges = (oldValues.Count == 0 ? null : jsonSerializer.Serialize(oldValues), newValues.Count == 0 ? null : jsonSerializer.Serialize(newValues));
                         await eventLogger.SaveAsync(domainEvent, relatedChanges);
                         await mediator.Publish(domainEvent, cancellationToken);
