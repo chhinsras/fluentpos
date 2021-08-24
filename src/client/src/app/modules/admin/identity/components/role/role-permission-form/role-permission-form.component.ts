@@ -1,20 +1,16 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
 import { CustomAction } from 'src/app/core/shared/components/table/custom-action';
 import { TableColumn } from 'src/app/core/shared/components/table/table-column';
-import { Permission, RoleClaim } from '../../../models/permission';
+import { Permission } from '../../../models/permission';
 import { Role } from '../../../models/role';
 import { RoleService } from '../../../services/role.service';
 
 @Component({
-  selector: 'app-role-Permission-form',
-  templateUrl: './role-Permission-form.component.html',
-  styleUrls: ['./role-Permission-form.component.scss']
+  selector: 'app-role-permission-form',
+  templateUrl: './role-permission-form.component.html',
+  styleUrls: ['./role-permission-form.component.scss']
 })
 export class RolePermissionFormComponent implements OnInit {
   rolePermission: Permission;
