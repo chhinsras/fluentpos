@@ -5,7 +5,7 @@
   </mat-icon> Loading ...
 </div>
 <div [hidden]="!rolePermission">
-  <app-table [title]="'Role Permissions'" [subtitle]="'Manage Role Permissionhere.'"
+  <app-table [title]="'Role Permissions'" [subtitle]="'Manage Role Permission here.'"
       [data]="rolePermission && rolePermission.roleClaims" [columns]="rolePermissionColumns"
       [customActionData]="rolePermissionActionData" (onCustomAction)="submitRolePermission($event)"
     >

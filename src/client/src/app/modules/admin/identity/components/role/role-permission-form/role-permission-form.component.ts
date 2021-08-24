@@ -42,7 +42,7 @@ export class RolePermissionFormComponent implements OnInit {
 
   initColumns(): void {
     this.rolePermissionColumns = [
-      { name: 'Id', dataKey: 'id', isSortable: true, isShowable: true },
+      // { name: 'Id', dataKey: 'id', isSortable: true, isShowable: true },
       { name: 'Type', dataKey: 'type', isSortable: true, isShowable: true },
       { name: 'Group', dataKey: 'group', isSortable: true, isShowable: true },
       { name: 'Value', dataKey: 'value', isSortable: true, isShowable: true },
