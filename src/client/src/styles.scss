@@ -243,3 +243,9 @@ table {
   max-height: 90%;
   margin: 20px;
 }
+
+.mat-dialog-container-no-padding {
+  mat-dialog-container {
+    padding: 0;
+  }
+}

@@ -101,7 +101,8 @@ export class UserComponent implements OnInit {
 
   openUserRolesForm(user: User): void {
     const dialogRef = this.dialog.open(UserRoleFormComponent, {
-      data: user
+      data: user,
+      panelClass: 'mat-dialog-container-no-padding'
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
