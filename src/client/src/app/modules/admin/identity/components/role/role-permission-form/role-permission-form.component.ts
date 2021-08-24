@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
 import { CustomAction } from 'src/app/core/shared/components/table/custom-action';
 import { TableColumn } from 'src/app/core/shared/components/table/table-column';
-import { Permission } from '../../../models/permission';
+import { Permission, RoleClaim } from '../../../models/permission';
 import { Role } from '../../../models/role';
 import { RoleService } from '../../../services/role.service';
 
@@ -51,8 +51,8 @@ export class RolePermissionFormComponent implements OnInit {
     ];
   }
 
-  submitRolePermission($event: Permission): void{
-    this.roleService.updateRolePermissions($event).subscribe((result) => {
+  submitRolePermission($event): void{
+    this.roleService.updateRolePermissions({roleId: this.data.id, roleClaims: $event}).subscribe((result) => {
       this.toastr.success(result.messages[0]);
       this.dialogRef.closeAll();
     });
