@@ -92,17 +92,14 @@ export class ProductFormComponent implements OnInit {
 
   onSubmit() {
     // TODO after successful update/insert, refresh table view in component product.component.ts
-    console.log(this.url);
-    // var upload = new Upload();
-    // upload.data = this.url;
-    // upload.name = this.url.
+
     if (this.productForm.valid) {
       if (this.productForm.get('id').value === '' || this.productForm.get('id').value == null) {
-        this.productService.createProduct(this.productForm.value).subscribe(response => {
+        this.productService.createProduct(this.productForm.value, this.upload).subscribe(response => {
           this.toastr.success(response.messages[0]);
         });
       } else {
-        this.productService.updateProduct(this.productForm.value).subscribe(response => {
+        this.productService.updateProduct(this.productForm.value, this.upload).subscribe(response => {
           this.toastr.success(response.messages[0]);
         });
       }

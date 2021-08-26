@@ -17,5 +17,5 @@ export interface Product {
   isAlert?: boolean;
   alertQuantity: number;
   detail: string;
-  upload?: Upload;
+  uploadRequest?: Upload;
 }

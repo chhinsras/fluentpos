@@ -6,7 +6,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------
 
+using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.DTOs.Upload;
@@ -23,7 +25,9 @@ namespace FluentPOS.Shared.Infrastructure.Services
                 return Task.FromResult(string.Empty);
             }
 
-            var streamData = new MemoryStream(request.Data);
+            var base64Data = Regex.Match(request.Data, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+
+            var streamData = new MemoryStream(Convert.FromBase64String(base64Data));
             if (streamData.Length > 0)
             {
                 string folder = request.UploadType.ToDescriptionString();

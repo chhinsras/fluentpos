@@ -16,6 +16,6 @@ namespace FluentPOS.Shared.DTOs.Upload
 
         public UploadType UploadType { get; set; }
 
-        public byte[] Data { get; set; }
+        public string Data { get; set; }
     }
 }
