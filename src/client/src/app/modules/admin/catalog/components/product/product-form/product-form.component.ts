@@ -2,6 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ToastrService} from 'ngx-toastr';
+import { Upload } from 'src/app/core/models/uploads/upload';
+import { UploadType } from 'src/app/core/models/uploads/upload-type';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
 import { Brand } from '../../../models/brand';
 import { BrandParams } from '../../../models/brandParams';
@@ -24,6 +26,10 @@ export class ProductFormComponent implements OnInit {
   brandParams = new BrandParams();
   categories: PaginatedResult<Category>;
   categoryParams = new CategoryParams();
+
+  upload = new Upload();
+
+  url: any = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: Product, private productService: ProductService, private brandService: BrandService, private categoryService: CategoryService,
         private toastr: ToastrService, private fb: FormBuilder) {
@@ -68,8 +74,28 @@ export class ProductFormComponent implements OnInit {
     this.categoryService.getCategories(this.categoryParams).subscribe((response) => { this.categories = response; });
   }
 
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      this.upload.fileName = event.target.files[0].name;
+      this.upload.extension = event.target.files[0].name.split('.').shift();
+      this.upload.uploadType = UploadType.Product;
+
+      reader.onloadend = (event) => { // called once readAsDataURL is completed
+        this.url = event.target.result;
+        this.upload.data = event.target.result;
+      }
+    }
+  }
+
   onSubmit() {
     // TODO after successful update/insert, refresh table view in component product.component.ts
+    console.log(this.url);
+    // var upload = new Upload();
+    // upload.data = this.url;
+    // upload.name = this.url.
     if (this.productForm.valid) {
       if (this.productForm.get('id').value === '' || this.productForm.get('id').value == null) {
         this.productService.createProduct(this.productForm.value).subscribe(response => {
