@@ -7,6 +7,7 @@
 // --------------------------------------------------------------------------------------------------
 
 using FluentPOS.Shared.Core.Contracts;
+using FluentPOS.Shared.Core.Utilities;
 
 namespace FluentPOS.Shared.Core.Constants
 {
@@ -17,7 +18,7 @@ namespace FluentPOS.Shared.Core.Constants
             public static string GetEntityByIdCacheKey<TEntityId, TEntity>(TEntityId id)
                 where TEntity : class, IEntity<TEntityId>
             {
-                return $"GetEntity-{typeof(TEntity).FullName}-{id}";
+                return $"GetEntity-{typeof(TEntity).GetGenericTypeName()}-{id}";
             }
         }
     }
