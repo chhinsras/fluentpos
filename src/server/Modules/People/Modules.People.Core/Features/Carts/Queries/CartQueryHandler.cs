@@ -50,7 +50,7 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Queries
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             Expression<Func<Cart, GetCartsResponse>> expression = e => new GetCartsResponse(e.Id, e.CustomerId, e.Timestamp);
-            var queryable = _context.Carts.AsQueryable();
+            var queryable = _context.Carts.AsNoTracking().AsQueryable();
 
             string ordering = new OrderByConverter().Convert(request.OrderBy);
             queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderBy(a => a.Id);
@@ -83,7 +83,12 @@ namespace FluentPOS.Modules.People.Core.Features.Carts.Queries
         public async Task<Result<GetCartByIdResponse>> Handle(GetCartByIdQuery query, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-            var cart = await _context.Carts.AsNoTracking().Where(c => c.Id == query.Id).Include(a => a.CartItems).Include(c => c.Customer).FirstOrDefaultAsync(cancellationToken);
+            var cart = await _context.Carts.AsNoTracking()
+                .Where(c => c.Id == query.Id)
+                .Include(a => a.CartItems)
+                .Include(c => c.Customer)
+                .FirstOrDefaultAsync(cancellationToken);
+
             if (cart == null)
             {
                 throw new PeopleException(_localizer["Cart Not Found!"], HttpStatusCode.NotFound);
