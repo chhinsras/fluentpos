@@ -12,7 +12,7 @@ namespace FluentPOS.Shared.DTOs.Upload
 {
     public enum UploadType
     {
-        [Description(@"Images\Catalog\Products")]
+        [Description(@"Images/Catalog/Products")]
         Product,
 
         [Description(@"Images\Catalog\Brands")]
