@@ -32,14 +32,10 @@ namespace FluentPOS.Shared.Infrastructure.Services
             var streamData = new MemoryStream(Convert.FromBase64String(base64Data));
             if (streamData.Length > 0)
             {
-                string folder;
-                if (OperatingSystemHelper.GetOperatingSystem() == OSPlatform.OSX) {
-                    string tempFolder = request.UploadType.ToDescriptionString();
-                    folder = tempFolder.Replace(@"\", @"/");
-                }
-                else
+                string folder = request.UploadType.ToDescriptionString();
+                if (OperatingSystemHelper.GetOperatingSystem() == OSPlatform.OSX)
                 {
-                    folder = request.UploadType.ToDescriptionString();
+                    folder = folder.Replace(@"\", @"/");
                 }
 
                 string folderName = Path.Combine("Files", folder);
