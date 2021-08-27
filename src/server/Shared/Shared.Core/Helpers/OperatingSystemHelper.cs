@@ -6,19 +6,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------
 
-
 using System;
 using System.Runtime.InteropServices;
 
 namespace FluentPOS.Shared.Core.Helpers
 {
     /// <summary>
-    /// OperatingSystemHelper
+    /// OperatingSystemHelper.
     /// </summary>
     public static class OperatingSystemHelper
     {
          /// <summary>
-         /// GetOperatingSystem
+         /// GetOperatingSystem.
          /// </summary>
         public static OSPlatform GetOperatingSystem()
         {

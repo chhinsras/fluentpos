@@ -44,7 +44,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddApplicationLayer(this IServiceCollection services, IConfiguration config)
+        private static IServiceCollection AddApplicationLayer(this IServiceCollection services, IConfiguration config)
         {
             services.AddTransient<IUploadService, UploadService>();
             services.AddTransient<IMailService, SmtpMailService>();
@@ -57,7 +57,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             return services;
         }
 
-        public static IServiceCollection AddSharedInfrastructure(this IServiceCollection services, IConfiguration config)
+        internal static IServiceCollection AddSharedInfrastructure(this IServiceCollection services, IConfiguration config)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
@@ -234,11 +234,8 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 
         private static IServiceCollection AddApplicationSettings(this IServiceCollection services, IConfiguration configuration)
         {
-            ApplicationSettings applicationSettings = new ApplicationSettings();
-            configuration.GetSection("ApplicationSettings").Bind(applicationSettings);
-            //Create singleton from instance
-            services.AddSingleton<ApplicationSettings>(applicationSettings);
-            return services;
+            return services
+                .Configure<ApplicationSettings>(configuration.GetSection(nameof(ApplicationSettings)));
         }
 
         private static IServiceCollection AddCorsPolicy(this IServiceCollection services)
