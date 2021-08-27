@@ -78,20 +78,8 @@ export class ProductFormComponent implements OnInit {
     this.productService.getProductImageById(this.data.id).subscribe((response) => { this.url = response.data; });
   }
 
-  onSelectFile(event) {
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-
-      this.upload.fileName = event.target.files[0].name.split('.').shift()
-      this.upload.extension = event.target.files[0].name.split('.').pop();
-      this.upload.uploadType = UploadType.Product;
-
-      reader.onloadend = (event) => { // called once readAsDataURL is completed
-        this.url = event.target.result;
-        this.upload.data = event.target.result;
-      }
-    }
+  onSelectFile($event) {
+    this.upload = $event;
   }
 
   onSubmit() {
