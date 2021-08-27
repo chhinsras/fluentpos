@@ -8,8 +8,10 @@
 
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Helpers;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.DTOs.Upload;
 using FluentPOS.Shared.Infrastructure.Extensions;
@@ -30,7 +32,13 @@ namespace FluentPOS.Shared.Infrastructure.Services
             var streamData = new MemoryStream(Convert.FromBase64String(base64Data));
             if (streamData.Length > 0)
             {
-                string folder = request.UploadType.ToDescriptionString();
+                string folder = "";
+                if (OperatingSystemHelper.GetOperatingSystem() == OSPlatform.OSX) {
+                    string tempFolder = request.UploadType.ToDescriptionString();
+                    folder = tempFolder.Replace(@"\", @"/");
+                } else {
+                    folder = request.UploadType.ToDescriptionString();
+                }
                 string folderName = Path.Combine("Files", folder);
                 string pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 bool exists = Directory.Exists(pathToSave);
