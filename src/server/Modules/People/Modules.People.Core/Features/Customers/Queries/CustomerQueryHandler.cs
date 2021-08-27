@@ -52,7 +52,7 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Queries
         {
             Expression<Func<Customer, GetCustomersResponse>> expression = e => new GetCustomersResponse(e.Id, e.Name, e.Phone, e.Email, e.ImageUrl, e.Type);
 
-            var queryable = _context.Customers.OrderBy(x => x.Id).AsQueryable();
+            var queryable = _context.Customers.AsNoTracking().OrderBy(x => x.Id).AsQueryable();
 
             string ordering = new OrderByConverter().Convert(request.OrderBy);
             queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderBy(a => a.Id);
@@ -72,9 +72,7 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Queries
                 throw new PeopleException(_localizer["Customers Not Found!"], HttpStatusCode.NotFound);
             }
 
-            var mappedCustomers = _mapper.Map<PaginatedResult<GetCustomersResponse>>(customerList);
-
-            return mappedCustomers;
+            return _mapper.Map<PaginatedResult<GetCustomersResponse>>(customerList);
         }
 
 #pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
@@ -95,7 +93,11 @@ namespace FluentPOS.Modules.People.Core.Features.Customers.Queries
         public async Task<Result<string>> Handle(GetCustomerImageQuery request, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-            string data = await _context.Customers.Where(c => c.Id == request.Id).Select(a => a.ImageUrl).FirstOrDefaultAsync(cancellationToken);
+            string data = await _context.Customers.AsNoTracking()
+                .Where(c => c.Id == request.Id)
+                .Select(a => a.ImageUrl)
+                .FirstOrDefaultAsync(cancellationToken);
+
             return await Result<string>.SuccessAsync(data: data);
         }
     }
