@@ -29,8 +29,6 @@ export class ProductFormComponent implements OnInit {
 
   upload = new Upload();
 
-  url: any = [];
-
   constructor(@Inject(MAT_DIALOG_DATA) public data: Product, private productService: ProductService, private brandService: BrandService, private categoryService: CategoryService,
         private toastr: ToastrService, private fb: FormBuilder) {
   }
@@ -84,7 +82,6 @@ export class ProductFormComponent implements OnInit {
       this.upload.uploadType = UploadType.Product;
 
       reader.onloadend = (event) => { // called once readAsDataURL is completed
-        this.url = event.target.result;
         this.upload.data = event.target.result;
       }
     }

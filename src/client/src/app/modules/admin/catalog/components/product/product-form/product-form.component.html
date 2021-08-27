@@ -1,101 +1,107 @@
 <h2 mat-dialog-title>{{formTitle}}</h2>
 <form (ngSubmit)="onSubmit()" [formGroup]="productForm">
-  <mat-dialog-content [style.width.px]=660 class="mat-typography">
+  <mat-dialog-content class="mat-typography">
     <div class="row">
       <input formControlName="id" type="hidden">
-      <div class="col-xs-12 col-md-6">
-        <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input autocomplete="off" formControlName="name" matInput placeholder="Name" required>
-          <mat-error>Please provide a valid name</mat-error>
-        </mat-form-field>
+      <div class="col-xs-12 col-md-3">
+
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <img style="border-radius: 20px;max-width:100%;max-height:100%;"
+            [src]="this.upload.data">
+          </div>
+            <input #file type="file" accept="image/*" hidden (change)="onSelectFile($event)">
+            <button style="width: 100%;" type="button" (click)="file.click()" mat-raised-button color="accent">
+              <span><span style="margin-right: 10px;" class="fas fa-upload"></span>Upload Image</span>
+            </button>
+        </div>
+      <div class="col-xs-12 col-md-9">
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input autocomplete="off" formControlName="name" matInput placeholder="Name" required>
+      <mat-error>Please provide a valid name</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <mat-form-field>
+      <mat-label>Locale Name</mat-label>
+      <input autocomplete="off" formControlName="localeName" matInput placeholder="Locale Name" required>
+      <mat-error>Please provide a valid locale name</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <mat-form-field>
+      <mat-label>Cost</mat-label>
+      <input autocomplete="off" formControlName="cost" matInput placeholder="Cost" required type="number">
+      <mat-error>Please provide a valid Cost value</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <mat-form-field>
+      <mat-label>Price</mat-label>
+      <input autocomplete="off" formControlName="price" matInput placeholder="Price" required type="number">
+      <mat-error>Please provide a valid Price value</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <mat-form-field  *ngIf="brands && brands.data">
+      <mat-select placeholder="Select Brand" [(value)]="data && data.brandId" formControlName="brandId">
+        <mat-option *ngFor="let brand of brands.data" [value]="brand.id">
+          {{ brand.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <mat-form-field  *ngIf="categories && categories.data">
+      <mat-select placeholder="Select Category" [(value)]="data && data.categoryId" formControlName="categoryId">
+        <mat-option *ngFor="let category of categories.data" [value]="category.id">
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <mat-form-field>
+      <mat-label>Tax</mat-label>
+      <input autocomplete="off" formControlName="tax" matInput placeholder="Tax" required type="number">
+      <mat-error>Please provide a valid Tax</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Tax Method</mat-label>
+      <input autocomplete="off" formControlName="taxMethod" matInput placeholder="Tax Method" required>
+      <mat-error>Please provide a valid Tax Method</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <mat-checkbox color="primary" formControlName="isAlert" id="isAlert">Alert Active</mat-checkbox>
+    <mat-form-field>
+      <mat-label>Alert Quantity</mat-label>
+      <input autocomplete="off" formControlName="alertQuantity" matInput placeholder="Alert Quantity" required
+             type="number">
+      <mat-error>Please provide a valid Barcode</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <mat-form-field>
+      <mat-label>Barcode Symbology</mat-label>
+      <input autocomplete="off" formControlName="barcodeSymbology" matInput placeholder="Barcode Symbology" required>
+      <mat-error>Please provide a valid Barcode</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <mat-form-field>
+      <mat-label>Detail</mat-label>
+      <input autocomplete="off" formControlName="detail" matInput placeholder="Detail">
+      <mat-error>
+        Please provide a valid detail
+      </mat-error>
+    </mat-form-field>
+  </div>
+</div>
       </div>
-      <div class="col-xs-12 col-md-6">
-        <mat-form-field>
-          <mat-label>Locale Name</mat-label>
-          <input autocomplete="off" formControlName="localeName" matInput placeholder="Locale Name" required>
-          <mat-error>Please provide a valid locale name</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-xs-12 col-md-6">
-        <mat-form-field>
-          <mat-label>Cost</mat-label>
-          <input autocomplete="off" formControlName="cost" matInput placeholder="Cost" required type="number">
-          <mat-error>Please provide a valid Cost value</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-xs-12 col-md-6">
-        <mat-form-field>
-          <mat-label>Price</mat-label>
-          <input autocomplete="off" formControlName="price" matInput placeholder="Price" required type="number">
-          <mat-error>Please provide a valid Price value</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-xs-12 col-md-6">
-        <mat-form-field  *ngIf="brands && brands.data">
-          <mat-select placeholder="Select Brand" [(value)]="data && data.brandId" formControlName="brandId">
-            <mat-option *ngFor="let brand of brands.data" [value]="brand.id">
-              {{ brand.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-xs-12 col-md-6">
-        <mat-form-field  *ngIf="categories && categories.data">
-          <mat-select placeholder="Select Category" [(value)]="data && data.categoryId" formControlName="categoryId">
-            <mat-option *ngFor="let category of categories.data" [value]="category.id">
-              {{ category.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-xs-12 col-md-6">
-        <mat-form-field>
-          <mat-label>Tax</mat-label>
-          <input autocomplete="off" formControlName="tax" matInput placeholder="Tax" required type="number">
-          <mat-error>Please provide a valid Tax</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Tax Method</mat-label>
-          <input autocomplete="off" formControlName="taxMethod" matInput placeholder="Tax Method" required>
-          <mat-error>Please provide a valid Tax Method</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-xs-12 col-md-6">
-        <mat-checkbox color="primary" formControlName="isAlert" id="isAlert">Alert Active</mat-checkbox>
-        <mat-form-field>
-          <mat-label>Alert Quantity</mat-label>
-          <input autocomplete="off" formControlName="alertQuantity" matInput placeholder="Alert Quantity" required
-                 type="number">
-          <mat-error>Please provide a valid Barcode</mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="col-xs-12 col-md-6">
-      <mat-form-field>
-        <mat-label>Barcode Symbology</mat-label>
-        <input autocomplete="off" formControlName="barcodeSymbology" matInput placeholder="Barcode Symbology" required>
-        <mat-error>Please provide a valid Barcode</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="col-xs-12 col-md-6">
-      <mat-form-field>
-        <mat-label>Detail</mat-label>
-        <input autocomplete="off" formControlName="detail" matInput placeholder="Detail">
-        <mat-error>
-          Please provide a valid detail
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="col-xs-12 col-md-6">
-      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
-        <img style="border-radius: 20px; max-width: 200px;min-width: 200px;"
-        [src]="url">
-      </div>
-        <input #file type="file" accept="image/*" hidden (change)="onSelectFile($event)">
-        <button type="button" (click)="file.click()" mat-raised-button color="accent">
-          <span><span style="margin-right: 10px;" class="fas fa-upload"></span>Upload Image</span>
-        </button>
+
     </div>
 
   </mat-dialog-content>
