@@ -26,11 +26,17 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
         {
             app.UseMiddleware<GlobalExceptionHandler>();
             app.UseRouting();
+
+            string filesDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Files");
+            if (!Directory.Exists(filesDirectoryPath))
+            {
+                Directory.CreateDirectory(filesDirectoryPath);
+            }
+
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Files")
-                ), RequestPath = "/files"
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Files")),
+                RequestPath = "/files"
             });
             app.UseCors("CorsPolicy");
             app.UseAuthentication();
