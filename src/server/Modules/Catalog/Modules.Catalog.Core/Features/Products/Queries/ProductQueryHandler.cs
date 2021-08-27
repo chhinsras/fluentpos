@@ -53,7 +53,10 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
         public async Task<PaginatedResult<GetProductsResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-            var queryable = _context.Products.ProjectTo<GetProductsResponse>(_mapper.ConfigurationProvider).OrderBy(x => x.Id).AsQueryable();
+            var queryable = _context.Products.AsNoTracking()
+                .ProjectTo<GetProductsResponse>(_mapper.ConfigurationProvider)
+                .OrderBy(x => x.Id)
+                .AsQueryable();
 
             if (request.BrandIds.Any())
             {
@@ -86,16 +89,17 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
                 throw new CatalogException(_localizer["Products Not Found!"], HttpStatusCode.NotFound);
             }
 
-            var mappedProducts = _mapper.Map<PaginatedResult<GetProductsResponse>>(productList);
-
-            return mappedProducts;
+            return _mapper.Map<PaginatedResult<GetProductsResponse>>(productList);
         }
 
 #pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
         public async Task<Result<GetProductByIdResponse>> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-            var product = await _context.Products.Where(p => p.Id == query.Id).FirstOrDefaultAsync(cancellationToken);
+            var product = await _context.Products.AsNoTracking()
+                .Where(p => p.Id == query.Id)
+                .FirstOrDefaultAsync(cancellationToken);
+
             if (product == null)
             {
                 throw new CatalogException(_localizer["Product Not Found!"], HttpStatusCode.NotFound);
@@ -106,12 +110,15 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
         }
 
 #pragma warning disable RCS1046 // Asynchronous method name should end with 'Async'.
-
         public async Task<Result<string>> Handle(GetProductImageQuery query, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-            string data = await _context.Products.Where(p => p.Id == query.Id).Select(x => x.ImageUrl).FirstOrDefaultAsync(cancellationToken);
-            return await Result<string>.SuccessAsync(data: $"{_applicationSettings.ApiUrl}{data}");
+            string data = await _context.Products.AsNoTracking()
+                .Where(p => p.Id == query.Id)
+                .Select(x => x.ImageUrl)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return await Result<string>.SuccessAsync(data: $"{_applicationSettings.ApiUrl}{data.Replace(@"\", "/")}");
         }
     }
 }
