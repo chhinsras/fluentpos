@@ -44,16 +44,26 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        private static IServiceCollection AddApplicationLayer(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddExtendedAttributeDbContextsFromAssembly(this IServiceCollection services, Type implementationType, Assembly assembly)
         {
-            services.AddTransient<IUploadService, UploadService>();
-            services.AddTransient<IMailService, SmtpMailService>();
-            services.AddTransient<ISmsService, TwilioSmsService>();
-            services.AddScoped<IJobService, HangfireService>();
-            services.Configure<MailSettings>(config.GetSection(nameof(MailSettings)));
-            services.Configure<SmsSettings>(config.GetSection(nameof(SmsSettings)));
-            services.AddTransient<IEventLogService, EventLogService>();
-            services.AddTransient<IEntityReferenceService, EntityReferenceService>();
+            var extendedAttributeTypes = assembly
+                .GetExportedTypes()
+                .Where(t => t.IsClass && !t.IsAbstract && t.BaseType?.IsGenericType == true)
+                .Select(t => new
+                {
+                    BaseGenericType = t.BaseType,
+                    CurrentType = t
+                })
+                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(ExtendedAttribute<,>))
+                .ToList();
+
+            foreach (var extendedAttributeType in extendedAttributeTypes)
+            {
+                var extendedAttributeTypeGenericArguments = extendedAttributeType.BaseGenericType.GetGenericArguments().ToList();
+                var serviceType = typeof(IExtendedAttributeDbContext<,,>).MakeGenericType(extendedAttributeTypeGenericArguments[0], extendedAttributeTypeGenericArguments[1], extendedAttributeType.CurrentType);
+                services.AddScoped(serviceType, provider => provider.GetService(implementationType));
+            }
+
             return services;
         }
 
@@ -97,26 +107,16 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             return services;
         }
 
-        public static IServiceCollection AddExtendedAttributeDbContextsFromAssembly(this IServiceCollection services, Type implementationType, Assembly assembly)
+        private static IServiceCollection AddApplicationLayer(this IServiceCollection services, IConfiguration config)
         {
-            var extendedAttributeTypes = assembly
-                .GetExportedTypes()
-                .Where(t => t.IsClass && !t.IsAbstract && t.BaseType?.IsGenericType == true)
-                .Select(t => new
-                {
-                    BaseGenericType = t.BaseType,
-                    CurrentType = t
-                })
-                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(ExtendedAttribute<,>))
-                .ToList();
-
-            foreach (var extendedAttributeType in extendedAttributeTypes)
-            {
-                var extendedAttributeTypeGenericArguments = extendedAttributeType.BaseGenericType.GetGenericArguments().ToList();
-                var serviceType = typeof(IExtendedAttributeDbContext<,,>).MakeGenericType(extendedAttributeTypeGenericArguments[0], extendedAttributeTypeGenericArguments[1], extendedAttributeType.CurrentType);
-                services.AddScoped(serviceType, provider => provider.GetService(implementationType));
-            }
-
+            services.AddTransient<IUploadService, UploadService>();
+            services.AddTransient<IMailService, SmtpMailService>();
+            services.AddTransient<ISmsService, TwilioSmsService>();
+            services.AddScoped<IJobService, HangfireService>();
+            services.Configure<MailSettings>(config.GetSection(nameof(MailSettings)));
+            services.Configure<SmsSettings>(config.GetSection(nameof(SmsSettings)));
+            services.AddTransient<IEventLogService, EventLogService>();
+            services.AddTransient<IEntityReferenceService, EntityReferenceService>();
             return services;
         }
 

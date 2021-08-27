@@ -27,7 +27,7 @@ namespace FluentPOS.Shared.Infrastructure.Services
                 return Task.FromResult(string.Empty);
             }
 
-            string base64Data = Regex.Match(request.Data, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+            string base64Data = Regex.Match(request.Data, "data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
 
             var streamData = new MemoryStream(Convert.FromBase64String(base64Data));
             if (streamData.Length > 0)
@@ -35,7 +35,7 @@ namespace FluentPOS.Shared.Infrastructure.Services
                 string folder = request.UploadType.ToDescriptionString();
                 if (OperatingSystemHelper.GetOperatingSystem() == OSPlatform.OSX)
                 {
-                    folder = folder.Replace(@"\", @"/");
+                    folder = folder.Replace(@"\", "/");
                 }
 
                 string folderName = Path.Combine("Files", folder);
