@@ -80,7 +80,7 @@ export class ProductFormComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
       this.upload.fileName = event.target.files[0].name;
-      this.upload.extension = event.target.files[0].name.split('.').shift();
+      this.upload.extension = event.target.files[0].name.split('.').pop();
       this.upload.uploadType = UploadType.Product;
 
       reader.onloadend = (event) => { // called once readAsDataURL is completed
