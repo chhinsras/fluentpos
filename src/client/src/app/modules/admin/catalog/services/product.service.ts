@@ -39,6 +39,10 @@ export class ProductService {
     return this.api.getById(id).pipe(map((response: Result<Product>) => response));
   }
 
+  getProductImageById(id: string): Observable<Result<string>> {
+    return this.api.getImageById(id).pipe(map((response: Result<string>) => response));
+  }
+
   createProduct(product: Product, upload: Upload): Observable<IResult<Product>> {
     if (upload != undefined && upload.data != undefined) product.uploadRequest = upload;
     return this.api

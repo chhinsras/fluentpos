@@ -20,6 +20,10 @@ export class ProductApiService {
     return this.http.get<Result<Product>>(this.baseUrl + id);
   }
 
+  getImageById(id: string) {
+    return this.http.get(this.baseUrl + `image/${id}`);
+  }
+
   create(product: Product) {
     return this.http.post(this.baseUrl, product);
   }

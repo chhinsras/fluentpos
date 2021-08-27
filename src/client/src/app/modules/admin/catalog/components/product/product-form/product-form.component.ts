@@ -27,6 +27,7 @@ export class ProductFormComponent implements OnInit {
   categories: PaginatedResult<Category>;
   categoryParams = new CategoryParams();
 
+  url: any = [];
   upload = new Upload();
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: Product, private productService: ProductService, private brandService: BrandService, private categoryService: CategoryService,
@@ -39,6 +40,7 @@ export class ProductFormComponent implements OnInit {
     this.categoryParams.pageSize = 50;
     this.getBrands();
     this.getCategories();
+    this.loadProductImage();
   }
 
   initializeForm() {
@@ -72,6 +74,10 @@ export class ProductFormComponent implements OnInit {
     this.categoryService.getCategories(this.categoryParams).subscribe((response) => { this.categories = response; });
   }
 
+  loadProductImage() {
+    this.productService.getProductImageById(this.data.id).subscribe((response) => { this.url = response.data; });
+  }
+
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
@@ -82,6 +88,7 @@ export class ProductFormComponent implements OnInit {
       this.upload.uploadType = UploadType.Product;
 
       reader.onloadend = (event) => { // called once readAsDataURL is completed
+        this.url = event.target.result;
         this.upload.data = event.target.result;
       }
     }

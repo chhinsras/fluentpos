@@ -15,6 +15,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using FluentPOS.Modules.Catalog.Core.Abstractions;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
+using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Extensions;
 using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.Core.Wrapper;
@@ -102,7 +103,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Queries
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             string data = await _context.Products.Where(p => p.Id == query.Id).Select(x => x.ImageUrl).FirstOrDefaultAsync(cancellationToken);
-            return await Result<string>.SuccessAsync(data: data);
+            return await Result<string>.SuccessAsync(data: AppConstants.ApiUrl + data);
         }
     }
 }
