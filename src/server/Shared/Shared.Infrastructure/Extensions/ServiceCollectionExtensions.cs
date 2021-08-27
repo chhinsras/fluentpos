@@ -93,6 +93,7 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             services.AddSingleton<GlobalExceptionHandler>();
             services.AddSwaggerDocumentation();
             services.AddCorsPolicy();
+            services.AddApplicationSettings(config);
             return services;
         }
 
@@ -229,6 +230,15 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                     Url = new Uri("https://opensource.org/licenses/MIT")
                 }
             });
+        }
+
+        private static IServiceCollection AddApplicationSettings(this IServiceCollection services, IConfiguration configuration)
+        {
+            ApplicationSettings applicationSettings = new ApplicationSettings();
+            configuration.GetSection("ApplicationSettings").Bind(applicationSettings);
+            //Create singleton from instance
+            services.AddSingleton<ApplicationSettings>(applicationSettings);
+            return services;
         }
 
         private static IServiceCollection AddCorsPolicy(this IServiceCollection services)
