@@ -11,7 +11,6 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using FluentPOS.Shared.Core.Helpers;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.DTOs.Upload;
 using FluentPOS.Shared.Infrastructure.Extensions;
@@ -33,7 +32,7 @@ namespace FluentPOS.Shared.Infrastructure.Services
             if (streamData.Length > 0)
             {
                 string folder = request.UploadType.ToDescriptionString();
-                if (OperatingSystemHelper.GetOperatingSystem() == OSPlatform.OSX)
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
                     folder = folder.Replace(@"\", "/");
                 }
