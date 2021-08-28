@@ -40,6 +40,13 @@ namespace FluentPOS.Modules.Catalog.Controllers
             return Ok(product);
         }
 
+        [HttpGet("image/{id}")]
+        [Authorize(Policy = Permissions.Products.View)]
+        public async Task<IActionResult> GetImageByIdAsync(Guid id)
+        {
+            return Ok(await Mediator.Send(new GetProductImageQuery(id)));
+        }
+
         [HttpPost]
         [Authorize(Policy = Permissions.Products.Register)]
         public async Task<IActionResult> RegisterAsync(RegisterProductCommand command)

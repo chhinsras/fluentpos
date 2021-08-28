@@ -49,7 +49,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
         {
             Expression<Func<Category, GetCategoriesResponse>> expression = e => new GetCategoriesResponse(e.Id, e.Name, e.Detail);
 
-            var queryable = _context.Categories.AsQueryable();
+            var queryable = _context.Categories.AsNoTracking().AsQueryable();
 
             string ordering = new OrderByConverter().Convert(request.OrderBy);
             queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderBy(a => a.Id);
@@ -76,7 +76,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
         public async Task<Result<GetCategoryByIdResponse>> Handle(GetCategoryByIdQuery query, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-            var category = await _context.Categories.Where(c => c.Id == query.Id).FirstOrDefaultAsync(cancellationToken);
+            var category = await _context.Categories.AsNoTracking().Where(c => c.Id == query.Id).FirstOrDefaultAsync(cancellationToken);
             if (category == null)
             {
                 throw new CatalogException(_localizer["Category Not Found!"], HttpStatusCode.NotFound);
@@ -90,7 +90,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Categories.Queries
         public async Task<Result<string>> Handle(GetCategoryImageQuery request, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-            string data = await _context.Categories.Where(c => c.Id == request.Id).Select(a => a.ImageUrl).FirstOrDefaultAsync(cancellationToken);
+            string data = await _context.Categories.AsNoTracking().Where(c => c.Id == request.Id).Select(a => a.ImageUrl).FirstOrDefaultAsync(cancellationToken);
             return await Result<string>.SuccessAsync(data: data);
         }
     }

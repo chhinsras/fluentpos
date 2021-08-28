@@ -64,7 +64,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
             var uploadRequest = command.UploadRequest;
             if (uploadRequest != null)
             {
-                uploadRequest.FileName = $"P-{command.BarcodeSymbology}{uploadRequest.Extension}";
+                uploadRequest.FileName = $"P-{command.BarcodeSymbology}.{uploadRequest.Extension}";
                 product.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
             }
 
@@ -91,7 +91,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Products.Commands
                 var uploadRequest = command.UploadRequest;
                 if (uploadRequest != null)
                 {
-                    uploadRequest.FileName = $"P-{command.BarcodeSymbology}{uploadRequest.Extension}";
+                    uploadRequest.FileName = $"P-{command.BarcodeSymbology}.{uploadRequest.Extension}";
                     product.ImageUrl = await _uploadService.UploadAsync(uploadRequest);
                 }
 

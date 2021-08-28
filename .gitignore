@@ -368,3 +368,4 @@ FodyWeavers.xsd
 
 src/server/.idea/.idea.FluentPOS/.idea/
 .DS_Store
+src/server/API/Files/**

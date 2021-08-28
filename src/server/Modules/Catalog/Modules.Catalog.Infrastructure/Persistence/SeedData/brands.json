@@ -2,91 +2,91 @@
   {
     "Id": "ca43337c-c9bc-4c18-98e1-3bf8694f9fb7",
     "Name": "Razor",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "538f5ce7-9bd4-4309-8e62-6e566b01fdfe",
     "Name": "Samsung",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "d72ee823-f4e6-43c4-84b5-0e27f8c290f2",
     "Name": "MSI",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "5a1488ed-8e5c-40f9-ab48-6b73ecc1d6a0",
     "Name": "Huawei",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "6e84f5cc-5796-4957-8478-b9306656c5ed",
     "Name": "Apple",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "721317d0-481f-4e3b-b2ac-b6bb6c90941d",
     "Name": "Asus",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "309a4247-5df6-412d-90db-26117ea5e7f9",
     "Name": "HP",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "cdb4a5d4-e286-449c-9b46-f5dc57e0ea47",
     "Name": "Lenovo",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "74a83557-3705-4257-8728-0a3824507dde",
     "Name": "Acer",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "dd60f43e-aa94-4d61-b5d1-306e39e87c20",
     "Name": "Microsoft",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "7eabe928-5e72-4743-a40a-cbb54aac9885",
     "Name": "Dell",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "3a632051-2b2f-492f-b3b7-acfbb4113e3c",
     "Name": "WD",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "8fd2f58b-9434-4eb9-af9b-0559199233df",
     "Name": "Lacie",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "370b8ad8-dfb1-45a4-a04d-e60d0ca97060",
     "Name": "Seagate",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   },
   {
     "Id": "40bb50ba-1842-4b0e-9a49-9767c4d38923",
     "Name": "Synology",
-    "ImageUrl": "Images\\Catalog\\Brands\\default.png",
+    "ImageUrl": "Files\\Images\\Catalog\\Brands\\default.png",
     "Detail": "Sample Data"
   }
 ]

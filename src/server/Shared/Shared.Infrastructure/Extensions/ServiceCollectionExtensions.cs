@@ -44,20 +44,30 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddApplicationLayer(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddExtendedAttributeDbContextsFromAssembly(this IServiceCollection services, Type implementationType, Assembly assembly)
         {
-            services.AddTransient<IUploadService, UploadService>();
-            services.AddTransient<IMailService, SmtpMailService>();
-            services.AddTransient<ISmsService, TwilioSmsService>();
-            services.AddScoped<IJobService, HangfireService>();
-            services.Configure<MailSettings>(config.GetSection(nameof(MailSettings)));
-            services.Configure<SmsSettings>(config.GetSection(nameof(SmsSettings)));
-            services.AddTransient<IEventLogService, EventLogService>();
-            services.AddTransient<IEntityReferenceService, EntityReferenceService>();
+            var extendedAttributeTypes = assembly
+                .GetExportedTypes()
+                .Where(t => t.IsClass && !t.IsAbstract && t.BaseType?.IsGenericType == true)
+                .Select(t => new
+                {
+                    BaseGenericType = t.BaseType,
+                    CurrentType = t
+                })
+                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(ExtendedAttribute<,>))
+                .ToList();
+
+            foreach (var extendedAttributeType in extendedAttributeTypes)
+            {
+                var extendedAttributeTypeGenericArguments = extendedAttributeType.BaseGenericType.GetGenericArguments().ToList();
+                var serviceType = typeof(IExtendedAttributeDbContext<,,>).MakeGenericType(extendedAttributeTypeGenericArguments[0], extendedAttributeTypeGenericArguments[1], extendedAttributeType.CurrentType);
+                services.AddScoped(serviceType, provider => provider.GetService(implementationType));
+            }
+
             return services;
         }
 
-        public static IServiceCollection AddSharedInfrastructure(this IServiceCollection services, IConfiguration config)
+        internal static IServiceCollection AddSharedInfrastructure(this IServiceCollection services, IConfiguration config)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
@@ -93,29 +103,20 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
             services.AddSingleton<GlobalExceptionHandler>();
             services.AddSwaggerDocumentation();
             services.AddCorsPolicy();
+            services.AddApplicationSettings(config);
             return services;
         }
 
-        public static IServiceCollection AddExtendedAttributeDbContextsFromAssembly(this IServiceCollection services, Type implementationType, Assembly assembly)
+        private static IServiceCollection AddApplicationLayer(this IServiceCollection services, IConfiguration config)
         {
-            var extendedAttributeTypes = assembly
-                .GetExportedTypes()
-                .Where(t => t.IsClass && !t.IsAbstract && t.BaseType?.IsGenericType == true)
-                .Select(t => new
-                {
-                    BaseGenericType = t.BaseType,
-                    CurrentType = t
-                })
-                .Where(t => t.BaseGenericType?.GetGenericTypeDefinition() == typeof(ExtendedAttribute<,>))
-                .ToList();
-
-            foreach (var extendedAttributeType in extendedAttributeTypes)
-            {
-                var extendedAttributeTypeGenericArguments = extendedAttributeType.BaseGenericType.GetGenericArguments().ToList();
-                var serviceType = typeof(IExtendedAttributeDbContext<,,>).MakeGenericType(extendedAttributeTypeGenericArguments[0], extendedAttributeTypeGenericArguments[1], extendedAttributeType.CurrentType);
-                services.AddScoped(serviceType, provider => provider.GetService(implementationType));
-            }
-
+            services.AddTransient<IUploadService, UploadService>();
+            services.AddTransient<IMailService, SmtpMailService>();
+            services.AddTransient<ISmsService, TwilioSmsService>();
+            services.AddScoped<IJobService, HangfireService>();
+            services.Configure<MailSettings>(config.GetSection(nameof(MailSettings)));
+            services.Configure<SmsSettings>(config.GetSection(nameof(SmsSettings)));
+            services.AddTransient<IEventLogService, EventLogService>();
+            services.AddTransient<IEntityReferenceService, EntityReferenceService>();
             return services;
         }
 
@@ -229,6 +230,12 @@ namespace FluentPOS.Shared.Infrastructure.Extensions
                     Url = new Uri("https://opensource.org/licenses/MIT")
                 }
             });
+        }
+
+        private static IServiceCollection AddApplicationSettings(this IServiceCollection services, IConfiguration configuration)
+        {
+            return services
+                .Configure<ApplicationSettings>(configuration.GetSection(nameof(ApplicationSettings)));
         }
 
         private static IServiceCollection AddCorsPolicy(this IServiceCollection services)

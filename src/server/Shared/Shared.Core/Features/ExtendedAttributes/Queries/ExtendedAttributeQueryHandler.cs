@@ -57,7 +57,7 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
         {
             Expression<Func<TExtendedAttribute, GetExtendedAttributesResponse<TEntityId>>> expression = e => new GetExtendedAttributesResponse<TEntityId>(e.Id, e.EntityId, e.Type, e.Key, e.Decimal, e.Text, e.DateTime, e.Json, e.Boolean, e.Integer, e.ExternalId, e.Group, e.Description, e.IsActive);
 
-            var queryable = _context.ExtendedAttributes.OrderBy(x => x.Id).AsQueryable();
+            var queryable = _context.ExtendedAttributes.AsNoTracking().OrderBy(x => x.Id).AsQueryable();
 
             string ordering = new OrderByConverter().Convert(request.OrderBy);
             queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderBy(a => a.Id);
@@ -105,7 +105,10 @@ namespace FluentPOS.Shared.Core.Features.ExtendedAttributes.Queries
         public async Task<Result<GetExtendedAttributeByIdResponse<TEntityId>>> Handle(GetExtendedAttributeByIdQuery<TEntityId, TEntity> query, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-            var extendedAttribute = await _context.ExtendedAttributes.Where(b => b.Id == query.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+            var extendedAttribute = await _context.ExtendedAttributes.AsNoTracking()
+                .Where(b => b.Id == query.Id)
+                .FirstOrDefaultAsync(cancellationToken);
+
             if (extendedAttribute == null)
             {
                 throw new CustomException(string.Format(_localizer["{0} Extended Attribute Not Found!"], typeof(TEntity).GetGenericTypeName()), statusCode: HttpStatusCode.NotFound);

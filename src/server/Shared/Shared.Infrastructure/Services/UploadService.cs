@@ -6,8 +6,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------
 
+using System;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using FluentPOS.Shared.Core.Helpers;
 using FluentPOS.Shared.Core.Interfaces.Services;
 using FluentPOS.Shared.DTOs.Upload;
 using FluentPOS.Shared.Infrastructure.Extensions;
@@ -23,10 +27,17 @@ namespace FluentPOS.Shared.Infrastructure.Services
                 return Task.FromResult(string.Empty);
             }
 
-            var streamData = new MemoryStream(request.Data);
+            string base64Data = Regex.Match(request.Data, "data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+
+            var streamData = new MemoryStream(Convert.FromBase64String(base64Data));
             if (streamData.Length > 0)
             {
                 string folder = request.UploadType.ToDescriptionString();
+                if (OperatingSystemHelper.GetOperatingSystem() == OSPlatform.OSX)
+                {
+                    folder = folder.Replace(@"\", "/");
+                }
+
                 string folderName = Path.Combine("Files", folder);
                 string pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 bool exists = Directory.Exists(pathToSave);
@@ -67,7 +78,7 @@ namespace FluentPOS.Shared.Infrastructure.Services
             // If path has extension then insert the number pattern just before the extension and return next filename
             if (Path.HasExtension(path))
             {
-                return GetNextFilename(path.Insert(path.LastIndexOf(Path.GetExtension(path)), numberPattern));
+                return GetNextFilename(path.Insert(path.LastIndexOf(Path.GetExtension(path), StringComparison.Ordinal), numberPattern));
             }
 
             // Otherwise just append the pattern to the path and return next filename

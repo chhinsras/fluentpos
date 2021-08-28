@@ -1,3 +1,5 @@
+import { Upload } from "src/app/core/models/uploads/upload";
+
 export interface Product {
   id: string;
   name: string;
@@ -15,4 +17,5 @@ export interface Product {
   isAlert?: boolean;
   alertQuantity: number;
   detail: string;
+  uploadRequest?: Upload;
 }

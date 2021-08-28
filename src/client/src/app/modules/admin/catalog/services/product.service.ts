@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProductApiService } from 'src/app/core/api/catalog/product-api.service';
+import { Upload } from 'src/app/core/models/uploads/upload';
 import { IResult } from 'src/app/core/models/wrappers/IResult';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
 import { Result } from 'src/app/core/models/wrappers/Result';
@@ -38,13 +39,20 @@ export class ProductService {
     return this.api.getById(id).pipe(map((response: Result<Product>) => response));
   }
 
-  createProduct(product: Product): Observable<IResult<Product>> {
+  getProductImageById(id: string): Observable<Result<string>> {
+    return this.api.getImageById(id).pipe(map((response: Result<string>) => response));
+  }
+
+  createProduct(product: Product, upload: Upload): Observable<IResult<Product>> {
+    if (upload != undefined && upload.data != undefined) product.uploadRequest = upload;
     return this.api
       .create(product)
       .pipe(map((response: IResult<Product>) => response));
   }
 
-  updateProduct(product: Product): Observable<IResult<Product>> {
+  updateProduct(product: Product, upload: Upload): Observable<IResult<Product>> {
+    console.log(upload);
+    if (upload != undefined && upload.data != undefined) product.uploadRequest = upload;
     return this.api
       .update(product)
       .pipe(map((response: IResult<Product>) => response));

@@ -51,7 +51,7 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
             Expression<Func<Brand, GetBrandsResponse>> expression = e => new GetBrandsResponse(e.Id, e.Name, e.Detail);
-            var queryable = _context.Brands.AsQueryable();
+            var queryable = _context.Brands.AsNoTracking().AsQueryable();
 
             string ordering = new OrderByConverter().Convert(request.OrderBy);
             queryable = !string.IsNullOrWhiteSpace(ordering) ? queryable.OrderBy(ordering) : queryable.OrderBy(a => a.Id);
@@ -78,7 +78,10 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
         public async Task<Result<GetBrandByIdResponse>> Handle(GetBrandByIdQuery query, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-            var brand = await _context.Brands.Where(b => b.Id == query.Id).FirstOrDefaultAsync(cancellationToken);
+            var brand = await _context.Brands.AsNoTracking()
+                .Where(b => b.Id == query.Id)
+                .FirstOrDefaultAsync(cancellationToken);
+
             if (brand == null)
             {
                 throw new CatalogException(_localizer["Brand Not Found!"], HttpStatusCode.NotFound);
@@ -92,7 +95,11 @@ namespace FluentPOS.Modules.Catalog.Core.Features.Brands.Queries
         public async Task<Result<string>> Handle(GetBrandImageQuery request, CancellationToken cancellationToken)
 #pragma warning restore RCS1046 // Asynchronous method name should end with 'Async'.
         {
-            string data = await _context.Brands.Where(b => b.Id == request.Id).Select(a => a.ImageUrl).FirstOrDefaultAsync(cancellationToken);
+            string data = await _context.Brands.AsNoTracking()
+                .Where(b => b.Id == request.Id)
+                .Select(a => a.ImageUrl)
+                .FirstOrDefaultAsync(cancellationToken);
+
             return await Result<string>.SuccessAsync(data: data);
         }
     }

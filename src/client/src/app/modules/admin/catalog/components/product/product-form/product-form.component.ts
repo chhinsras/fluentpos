@@ -2,6 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ToastrService} from 'ngx-toastr';
+import { Upload } from 'src/app/core/models/uploads/upload';
+import { UploadType } from 'src/app/core/models/uploads/upload-type';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
 import { Brand } from '../../../models/brand';
 import { BrandParams } from '../../../models/brandParams';
@@ -25,6 +27,9 @@ export class ProductFormComponent implements OnInit {
   categories: PaginatedResult<Category>;
   categoryParams = new CategoryParams();
 
+  url: any = [];
+  upload = new Upload();
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: Product, private productService: ProductService, private brandService: BrandService, private categoryService: CategoryService,
         private toastr: ToastrService, private fb: FormBuilder) {
   }
@@ -35,6 +40,7 @@ export class ProductFormComponent implements OnInit {
     this.categoryParams.pageSize = 50;
     this.getBrands();
     this.getCategories();
+    this.loadProductImage();
   }
 
   initializeForm() {
@@ -68,15 +74,24 @@ export class ProductFormComponent implements OnInit {
     this.categoryService.getCategories(this.categoryParams).subscribe((response) => { this.categories = response; });
   }
 
+  loadProductImage() {
+    this.productService.getProductImageById(this.data.id).subscribe((response) => { this.url = response.data; });
+  }
+
+  onSelectFile($event) {
+    this.upload = $event;
+  }
+
   onSubmit() {
     // TODO after successful update/insert, refresh table view in component product.component.ts
+
     if (this.productForm.valid) {
       if (this.productForm.get('id').value === '' || this.productForm.get('id').value == null) {
-        this.productService.createProduct(this.productForm.value).subscribe(response => {
+        this.productService.createProduct(this.productForm.value, this.upload).subscribe(response => {
           this.toastr.success(response.messages[0]);
         });
       } else {
-        this.productService.updateProduct(this.productForm.value).subscribe(response => {
+        this.productService.updateProduct(this.productForm.value, this.upload).subscribe(response => {
           this.toastr.success(response.messages[0]);
         });
       }
