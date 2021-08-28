@@ -82,7 +82,7 @@ Clone this repository to your local machine.
 - Run `ng serve`
 - Navigate to localhost:4200 on your browser
 
-#### Notes for VS Code
+#### Notes for Visual Studio Code
 1. Open up workspace/fluentpos.code-workspace
 2. Make sure you have VS Code install and .NET and Angular related extensions
 3. Open terminal Session
