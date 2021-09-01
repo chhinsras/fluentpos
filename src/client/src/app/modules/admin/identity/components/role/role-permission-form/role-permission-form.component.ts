@@ -15,6 +15,7 @@ import { RoleService } from '../../../services/role.service';
 export class RolePermissionFormComponent implements OnInit {
   rolePermission: Permission;
   rolePermissionColumns: TableColumn[];
+  rolePermissionGroup: string[];
   searchString: string;
   rolePermissionActionData: CustomAction = new CustomAction('Update Permission', 'update', 'primary');
 
@@ -33,6 +34,7 @@ export class RolePermissionFormComponent implements OnInit {
   getPermissions(): void {
     this.roleService.getRolePermissionsByRoleId(this.data.id).subscribe((result) => {
       this.rolePermission = result.data;
+      this.rolePermissionGroup = [...new Set(result.data.roleClaims.map(item => item.group))];
     });
   }
 
