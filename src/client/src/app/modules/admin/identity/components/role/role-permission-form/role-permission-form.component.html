@@ -8,11 +8,16 @@
   <mat-tab-group mat-align-tabs="center">
     <mat-tab *ngFor="let group of rolePermissionGroup" label="{{group}}">
       <app-table [title]="'Role Permissions'" [subtitle]="'Manage Role Permission here.'"
-        [data]="groupRoleClaims[group]" [columns]="rolePermissionColumns"
-        [customActionData]="rolePermissionActionData" (onCustomAction)="submitRolePermission()"
-        [tabName]="group">
+        [data]="groupRoleClaims[group]" [columns]="rolePermissionColumns">
       </app-table>
     </mat-tab>
   </mat-tab-group>
+  <mat-dialog-actions align="end" class="mb-2">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial color="primary"
+      [disabled]="false" (click)="submitRolePermission()">
+      Save
+    </button>
+  </mat-dialog-actions>
 </div>
 
