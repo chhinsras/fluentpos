@@ -6,13 +6,13 @@
 </div>
 <div [hidden]="!rolePermission">
   <mat-tab-group mat-align-tabs="center">
-    <mat-tab *ngFor="let group of rolePermissionGroup" label="{{group}}"> {{group}} </mat-tab>
+    <mat-tab *ngFor="let group of rolePermissionGroup" label="{{group}}">
+      <app-table [title]="'Role Permissions'" [subtitle]="'Manage Role Permission here.'"
+        [data]="groupRoleClaims[group]" [columns]="rolePermissionColumns"
+        [customActionData]="rolePermissionActionData" (onCustomAction)="submitRolePermission()"
+        [tabName]="group">
+      </app-table>
+    </mat-tab>
   </mat-tab-group>
-
-  <app-table [title]="'Role Permissions'" [subtitle]="'Manage Role Permission here.'"
-      [data]="rolePermission && rolePermission.roleClaims" [columns]="rolePermissionColumns"
-      [customActionData]="rolePermissionActionData" (onCustomAction)="submitRolePermission($event)"
-    >
-  </app-table>
 </div>
 
