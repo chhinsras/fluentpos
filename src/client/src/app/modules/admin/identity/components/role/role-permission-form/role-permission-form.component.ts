@@ -58,6 +58,10 @@ export class RolePermissionFormComponent implements OnInit {
     ];
   }
 
+  getSelectedCount(roleClaims: RoleClaim[]): number{
+    return roleClaims.filter(claim => claim.selected).length;
+  }
+
   submitRolePermission(): void{
     var selectedRoleClaims = [];
     Object.entries(this.groupRoleClaims).forEach(([key, value]) => {
