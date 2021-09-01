@@ -7,6 +7,9 @@
 <div [hidden]="!rolePermission">
   <mat-tab-group mat-align-tabs="center">
     <mat-tab *ngFor="let group of rolePermissionGroup" label="{{group}}">
+      <ng-template matTabLabel>
+        <span matBadge="{{groupRoleClaims[group].length}}" matBadgeOverlap="false">{{group}}</span>
+      </ng-template>
       <app-table [title]="'Role Permissions'" [subtitle]="'Manage Role Permission here.'"
         [data]="groupRoleClaims[group]" [columns]="rolePermissionColumns">
       </app-table>
