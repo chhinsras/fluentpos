@@ -62,6 +62,14 @@ export class RolePermissionFormComponent implements OnInit {
     return roleClaims.filter(claim => claim.selected).length;
   }
 
+  getGroupBadgeColor(selected: number, all: number): string {
+    if (selected == 0)
+        return "warn";
+    if (selected == all)
+        return "accent";
+    return "primary";
+  }
+
   submitRolePermission(): void{
     var selectedRoleClaims = [];
     Object.entries(this.groupRoleClaims).forEach(([key, value]) => {

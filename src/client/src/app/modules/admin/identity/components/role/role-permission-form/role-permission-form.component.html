@@ -8,7 +8,7 @@
   <mat-tab-group mat-align-tabs="center">
     <mat-tab *ngFor="let group of rolePermissionGroup" label="{{group}}">
       <ng-template matTabLabel>
-        <span matBadge="{{getSelectedCount(groupRoleClaims[group])}}/{{groupRoleClaims[group].length}}" mat matBadgeOverlap="false">{{group}}</span>
+        <span matBadgeColor="{{getGroupBadgeColor(getSelectedCount(groupRoleClaims[group]), groupRoleClaims[group].length)}}" matBadge="{{getSelectedCount(groupRoleClaims[group])}}/{{groupRoleClaims[group].length}}" mat matBadgeOverlap="false">{{group}}</span>
         </ng-template>
       <app-table [title]="'Role Permissions'" [subtitle]="'Manage Role Permission here.'"
         [data]="groupRoleClaims[group]" [columns]="rolePermissionColumns">
