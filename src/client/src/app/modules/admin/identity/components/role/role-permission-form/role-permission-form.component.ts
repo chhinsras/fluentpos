@@ -73,15 +73,7 @@ export class RolePermissionFormComponent implements OnInit {
   }
 
   submitRolePermission(): void{
-    var selectedRoleClaims = [];
-    Object.entries(this.groupRoleClaims).forEach(([key, value]) => {
-      value.forEach(claim => {
-        if (claim.selected){
-          selectedRoleClaims.push(claim);
-        }
-      });
-    });
-    this.roleService.updateRolePermissions({roleId: this.data.id, roleClaims: selectedRoleClaims}).subscribe((result) => {
+    this.roleService.updateRolePermissions({roleId: this.data.id, roleClaims: this.groupRoleClaims['All Permissions']}).subscribe((result) => {
       this.toastr.success(result.messages[0]);
       this.dialogRef.closeAll();
     });

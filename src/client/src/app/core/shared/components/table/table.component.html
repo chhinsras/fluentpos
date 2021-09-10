@@ -40,14 +40,27 @@
                     <th mat-header-cell *matHeaderCellDef [mat-sort-header]="tableColumn.name" [arrowPosition]="
               tableColumn.position === 'right' ? 'before' : 'after'
             ">
-                        {{ tableColumn.name }}
+                  <ng-container *ngIf="tableColumn.dataKey !== 'selected'" >{{ tableColumn.name }}</ng-container>
+                  <ng-container *ngIf="tableColumn.dataKey === 'selected'">
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                                  [checked]="isAllSelected()"
+                                  [indeterminate]="!isAllSelected()">
+                    </mat-checkbox>
+                  </ng-container>
                     </th>
                 </ng-container>
                 <!-- else not sortable -->
                 <ng-template #notSortable>
                     <th mat-header-cell *matHeaderCellDef [class.text-right]="tableColumn.position == 'right'">
-                        {{ tableColumn.name }}
+                      <ng-container *ngIf="tableColumn.dataKey !== 'selected'" >{{ tableColumn.name }}</ng-container>
+                      <ng-container *ngIf="tableColumn.dataKey === 'selected'">
+                        <mat-checkbox (change)="$event ? masterToggle() : null"
+                                      [checked]="isAllSelected()"
+                                      [indeterminate]="!isAllSelected()">
+                        </mat-checkbox>
+                      </ng-container>
                     </th>
+
                 </ng-template>
             </ng-container>
 
@@ -73,13 +86,6 @@
                     </ng-container>
 
                     <ng-container *ngIf="tableColumn.dataKey === 'selected'">
-                        <!-- <mat-header-cell *matHeaderCellDef>
-                          <mat-checkbox (change)="$event ? masterToggle() : null"
-                                        [checked]="selection.hasValue() && isAllSelected()"
-                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
-                                        [aria-label]="checkboxLabel()">
-                          </mat-checkbox>
-                        </mat-header-cell> -->
                           <mat-checkbox (click)="$event.stopPropagation()"
                                         (change)="element.selected = !element.selected"
                                         [checked]="element.selected"

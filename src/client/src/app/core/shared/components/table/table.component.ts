@@ -125,4 +125,23 @@ export class TableComponent implements OnInit, AfterViewInit {
     };
     this.onPageChanged.emit(event);
   }
+
+  isAllSelected() {
+    var result = true;
+    this.tableDataSource.data.forEach(element => {
+      if (element.selected === false) result = false;
+    });
+    return result;
+  }
+
+  toggleTableDataSourceChecking(condition: boolean) {
+    this.tableDataSource.data.forEach(element => {
+      element.selected = condition;
+    });
+  }
+
+  masterToggle() {
+    console.log(this.isAllSelected());
+    this.isAllSelected() ? this.toggleTableDataSourceChecking(false) : this.toggleTableDataSourceChecking(true);
+  }
 }
