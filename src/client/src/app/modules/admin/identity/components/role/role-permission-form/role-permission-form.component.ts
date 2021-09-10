@@ -37,6 +37,8 @@ export class RolePermissionFormComponent implements OnInit {
     this.roleService.getRolePermissionsByRoleId(this.data.id).subscribe((result) => {
       this.rolePermission = result.data;
       this.rolePermissionGroup = [...new Set(result.data.roleClaims.map(item => item.group))];
+      this.rolePermissionGroup.unshift('All Permissions');
+      this.groupRoleClaims['All Permissions'] = result.data.roleClaims;
       this.rolePermission.roleClaims.forEach(claim => {
         if (Object.keys(this.groupRoleClaims).find(key => key === claim.group)){
           this.groupRoleClaims[claim.group].push(claim);
