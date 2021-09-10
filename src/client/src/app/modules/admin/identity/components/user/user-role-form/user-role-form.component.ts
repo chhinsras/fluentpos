@@ -44,8 +44,8 @@ export class UserRoleFormComponent implements OnInit {
     ];
   }
 
-  submitUserRoles($event): void{
-    this.userService.updateUserRoles(this.data.id, { userRoles: $event}).subscribe((result) => {
+  submitUserRoles(): void{
+    this.userService.updateUserRoles(this.data.id, { userRoles: this.userRoles}).subscribe((result) => {
       this.toastr.success(result.messages[0]);
       this.dialogRef.closeAll();
     });
