@@ -247,5 +247,6 @@ table {
 .mat-dialog-container-no-padding {
   mat-dialog-container {
     padding: 0;
+    overflow: hidden;
   }
 }
