@@ -16,35 +16,35 @@
         <div class="col-xs-12 col-md-9">
   <div class="row">
     <div class="col-xs-12 col-md-6">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
         <input autocomplete="off" formControlName="name" matInput placeholder="Name" required>
         <mat-error>Please provide a valid name</mat-error>
       </mat-form-field>
     </div>
     <div class="col-xs-12 col-md-6">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Locale Name</mat-label>
         <input autocomplete="off" formControlName="localeName" matInput placeholder="Locale Name" required>
         <mat-error>Please provide a valid locale name</mat-error>
       </mat-form-field>
     </div>
     <div class="col-xs-12 col-md-6">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Cost</mat-label>
         <input autocomplete="off" formControlName="cost" matInput placeholder="Cost" required type="number">
         <mat-error>Please provide a valid Cost value</mat-error>
       </mat-form-field>
     </div>
     <div class="col-xs-12 col-md-6">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Price</mat-label>
         <input autocomplete="off" formControlName="price" matInput placeholder="Price" required type="number">
         <mat-error>Please provide a valid Price value</mat-error>
       </mat-form-field>
     </div>
     <div class="col-xs-12 col-md-6">
-      <mat-form-field  *ngIf="brands && brands.data">
+      <mat-form-field appearance="outline" *ngIf="brands && brands.data">
         <mat-select placeholder="Select Brand" [(value)]="data && data.brandId" formControlName="brandId">
           <mat-option *ngFor="let brand of brands.data" [value]="brand.id">
             {{ brand.name }}
@@ -53,7 +53,7 @@
       </mat-form-field>
     </div>
     <div class="col-xs-12 col-md-6">
-      <mat-form-field  *ngIf="categories && categories.data">
+      <mat-form-field appearance="outline" *ngIf="categories && categories.data">
         <mat-select placeholder="Select Category" [(value)]="data && data.categoryId" formControlName="categoryId">
           <mat-option *ngFor="let category of categories.data" [value]="category.id">
             {{ category.name }}
@@ -62,35 +62,43 @@
       </mat-form-field>
     </div>
     <div class="col-xs-12 col-md-6">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Tax</mat-label>
         <input autocomplete="off" formControlName="tax" matInput placeholder="Tax" required type="number">
         <mat-error>Please provide a valid Tax</mat-error>
       </mat-form-field>
-      <mat-form-field>
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <mat-form-field appearance="outline">
         <mat-label>Tax Method</mat-label>
         <input autocomplete="off" formControlName="taxMethod" matInput placeholder="Tax Method" required>
         <mat-error>Please provide a valid Tax Method</mat-error>
       </mat-form-field>
     </div>
     <div class="col-xs-12 col-md-6">
-      <mat-checkbox color="primary" formControlName="isAlert" id="isAlert">Alert Active</mat-checkbox>
-      <mat-form-field>
-        <mat-label>Alert Quantity</mat-label>
-        <input autocomplete="off" formControlName="alertQuantity" matInput placeholder="Alert Quantity" required
-               type="number">
-        <mat-error>Please provide a valid Barcode</mat-error>
-      </mat-form-field>
+      <div class="row">
+      <div class="col-md-3">
+        <mat-checkbox color="primary" formControlName="isAlert" id="isAlert">Alert Active</mat-checkbox>
+      </div>
+      <div class="col-md-9">
+        <mat-form-field appearance="outline">
+          <mat-label>Alert Quantity</mat-label>
+          <input autocomplete="off" formControlName="alertQuantity" matInput placeholder="Alert Quantity" required
+                 type="number">
+          <mat-error>Please provide a valid Barcode</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
     </div>
     <div class="col-xs-12 col-md-6">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Barcode Symbology</mat-label>
         <input autocomplete="off" formControlName="barcodeSymbology" matInput placeholder="Barcode Symbology" required>
         <mat-error>Please provide a valid Barcode</mat-error>
       </mat-form-field>
     </div>
     <div class="col-xs-12 col-md-6">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Detail</mat-label>
         <input autocomplete="off" formControlName="detail" matInput placeholder="Detail">
         <mat-error>

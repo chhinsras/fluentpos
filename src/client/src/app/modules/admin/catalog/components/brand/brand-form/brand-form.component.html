@@ -2,13 +2,13 @@
 <form [formGroup]="brandForm" (ngSubmit)="onSubmit()">
   <mat-dialog-content class="mat-typography">
     <input mat type="hidden" formControlName="id" />
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
       <input matInput autocomplete="off" placeholder="Name" formControlName="name" required />
       <mat-error> Please provide a valid name </mat-error>
     </mat-form-field>
     <p></p>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Detail</mat-label>
       <input matInput autocomplete="off" placeholder="Detail" formControlName="detail" />
       <mat-error> Please provide a valid detail </mat-error>

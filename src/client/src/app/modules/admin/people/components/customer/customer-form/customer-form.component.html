@@ -2,23 +2,23 @@
 <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
   <mat-dialog-content class="mat-typography">
     <input mat type="hidden" formControlName="id" />
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
       <input matInput autocomplete="off" placeholder="Name" formControlName="name" required />
       <mat-error> Please provide a valid name </mat-error>
     </mat-form-field>
     <p></p>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Phone</mat-label>
       <input matInput autocomplete="off" placeholder="Phone" formControlName="phone" />
       <mat-error> Please provide a valid phone </mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
       <input matInput autocomplete="off" placeholder="Email" formControlName="email" />
       <mat-error> Please provide a valid email </mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
         <mat-label>Select Types</mat-label>
         <mat-select formControlName="type" required>
             <mat-option *ngFor="let item of customerTypes" [value]="item">
