@@ -4,6 +4,7 @@ export interface User {
     firstName: string
     lastName: string
     email: string
+    curentPassword: string
     password: string
     confirmPassword: string
     isActive: boolean

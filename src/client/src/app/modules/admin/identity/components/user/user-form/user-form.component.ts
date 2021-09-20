@@ -14,6 +14,7 @@ import { UserService } from '../../../services/user.service';
 export class UserFormComponent implements OnInit {
   userForm: FormGroup;
   formTitle: string;
+  editMode = false;
   constructor(@Inject(MAT_DIALOG_DATA) public data: User, private identityService: IdentityService, private userService: UserService, private toastr: ToastrService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -27,15 +28,18 @@ export class UserFormComponent implements OnInit {
       firstName: [this.data && this.data.firstName, Validators.required],
       lastName: [this.data && this.data.lastName, Validators.required],
       email: [this.data && this.data.email, Validators.required],
-      password: [this.data && this.data.password, Validators.required],
-      confirmPassword: [this.data && this.data.confirmPassword, Validators.required],
+      currentPassword: [this.data && this.data.curentPassword],
+      password: [this.data && this.data.password],
+      confirmPassword: [this.data && this.data.confirmPassword],
       phoneNumber: [this.data && this.data.phoneNumber, Validators.required]
     })
     if (this.userForm.get('id').value === "" || this.userForm.get('id').value == null) {
       this.formTitle = "Register User";
+      this.editMode = false;
     }
     else {
       this.formTitle = "Edit User";
+      this.editMode = true;
     }
   }
 
