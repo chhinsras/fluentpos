@@ -17,6 +17,7 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Mappings
         public UserProfile()
         {
             CreateMap<UserResponse, FluentUser>().ReverseMap();
+            CreateMap<UpdateUserRequest, FluentUser>().ReverseMap();
         }
     }
 }

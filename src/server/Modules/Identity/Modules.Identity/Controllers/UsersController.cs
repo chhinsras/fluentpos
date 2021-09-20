@@ -41,6 +41,14 @@ namespace FluentPOS.Modules.Identity.Controllers
             return Ok(user);
         }
 
+        [HttpPut]
+        [Authorize(Policy = Permissions.Users.Edit)]
+        public async Task<IActionResult> UpdateAsync(UpdateUserRequest request)
+        {
+            var user = await _userService.UpdateAsync(request);
+            return Ok(user);
+        }
+
         [HttpGet("roles/{id}")]
         [Authorize(Policy = Permissions.Users.View)]
         public async Task<IActionResult> GetRolesAsync(string id)

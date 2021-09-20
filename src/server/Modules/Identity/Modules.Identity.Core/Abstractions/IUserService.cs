@@ -20,7 +20,7 @@ namespace FluentPOS.Modules.Identity.Core.Abstractions
         Task<IResult<UserResponse>> GetAsync(string userId);
 
         Task<IResult<UserRolesResponse>> GetRolesAsync(string userId);
-
+        Task<IResult<string>> UpdateAsync(UpdateUserRequest request);
         Task<IResult<string>> UpdateUserRolesAsync(string userId, UserRolesRequest request);
     }
 }
