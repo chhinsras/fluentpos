@@ -28,10 +28,11 @@ export class UserFormComponent implements OnInit {
       firstName: [this.data && this.data.firstName, Validators.required],
       lastName: [this.data && this.data.lastName, Validators.required],
       email: [this.data && this.data.email, Validators.required],
-      currentPassword: [this.data && this.data.curentPassword],
+      emailConfirmed: [this.data && this.data.curentPassword],
       password: [this.data && this.data.password],
       confirmPassword: [this.data && this.data.confirmPassword],
-      phoneNumber: [this.data && this.data.phoneNumber, Validators.required]
+      phoneNumber: [this.data && this.data.phoneNumber, Validators.required],
+      phoneNumberConfirmed: [this.data && this.data.curentPassword],
     })
     if (this.userForm.get('id').value === "" || this.userForm.get('id').value == null) {
       this.formTitle = "Register User";
