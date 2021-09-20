@@ -22,6 +22,8 @@ namespace FluentPOS.Shared.DTOs.Identity
         [EmailAddress]
         public string Email { get; set; }
 
+        public bool EmailConfirmed { get; set; }
+
         [Required]
         [MinLength(6)]
         public string UserName { get; set; }
@@ -35,5 +37,8 @@ namespace FluentPOS.Shared.DTOs.Identity
         public string ConfirmPassword { get; set; }
 
         public string PhoneNumber { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
+
+
     }
 }

@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentPOS.Modules.Identity.Core.Abstractions;
 using FluentPOS.Modules.Identity.Core.Entities;
+using FluentPOS.Modules.Identity.Core.Exceptions;
+using FluentPOS.Modules.Identity.Core.Features.Users.Events;
 using FluentPOS.Shared.Core.Constants;
 using FluentPOS.Shared.Core.Wrapper;
 using FluentPOS.Shared.DTOs.Identity.Users;
@@ -80,6 +82,33 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
 
             var result = new UserRolesResponse { UserRoles = viewModel };
             return await Result<UserRolesResponse>.SuccessAsync(result);
+        }
+
+        public async Task<IResult<string>> UpdateAsync(UpdateUserRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(request.Id);
+
+            if (user == null) throw new IdentityException(string.Format(_localizer["User Id {0} is not found."], request.Id));
+
+            _mapper.Map<UpdateUserRequest, FluentUser>(request, user);
+
+            user.AddDomainEvent(new UserUpdatedEvent(user));
+
+            if (request.CurrentPassword != null && request.Password != null)
+            {
+                await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.Password);
+            }
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return await Result<string>.SuccessAsync(user.Id,  _localizer["User Updated Succesffully."]);
+            }
+            else
+            {
+                throw new IdentityException(_localizer["Validation Errors Occurred."], result.Errors.Select(a => _localizer[a.Description].ToString()).ToList());
+            }
         }
 
         public async Task<IResult<string>> UpdateUserRolesAsync(string userId, UserRolesRequest request)

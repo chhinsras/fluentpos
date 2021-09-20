@@ -76,6 +76,10 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 PhoneNumber = request.PhoneNumber,
                 IsActive = true
             };
+
+            if (request.EmailConfirmed) user.EmailConfirmed = true;
+            if (request.PhoneNumberConfirmed) user.PhoneNumberConfirmed = true;
+
             if (!string.IsNullOrWhiteSpace(request.PhoneNumber))
             {
                 var userWithSamePhoneNumber = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == request.PhoneNumber);
