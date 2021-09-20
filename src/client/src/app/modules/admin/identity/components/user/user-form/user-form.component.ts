@@ -19,6 +19,7 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+    console.log(this.userForm.value);
   }
 
   initializeForm() {
@@ -28,11 +29,11 @@ export class UserFormComponent implements OnInit {
       firstName: [this.data && this.data.firstName, Validators.required],
       lastName: [this.data && this.data.lastName, Validators.required],
       email: [this.data && this.data.email, Validators.required],
-      emailConfirmed: [this.data && this.data.curentPassword],
+      emailConfirmed: [this.data && this.data.emailConfirmed],
       password: [this.data && this.data.password],
       confirmPassword: [this.data && this.data.confirmPassword],
       phoneNumber: [this.data && this.data.phoneNumber, Validators.required],
-      phoneNumberConfirmed: [this.data && this.data.curentPassword],
+      phoneNumberConfirmed: [this.data && this.data.phoneNumberConfirmed],
     })
     if (this.userForm.get('id').value === "" || this.userForm.get('id').value == null) {
       this.formTitle = "Register User";
