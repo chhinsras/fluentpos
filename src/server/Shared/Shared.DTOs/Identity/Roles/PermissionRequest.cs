@@ -14,6 +14,6 @@ namespace FluentPOS.Shared.DTOs.Identity.Roles
     {
         public string RoleId { get; set; }
 
-        public IList<RoleClaimRequest> RoleClaims { get; set; }
+        public IList<RoleClaimModel> RoleClaims { get; set; }
     }
 }

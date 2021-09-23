@@ -155,9 +155,11 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
 
         public async Task<Result<PermissionResponse>> GetAllPermissionsAsync(string roleId)
         {
-            var response = new PermissionResponse();
-            var allPermissions = new List<RoleClaimResponse>();
-            allPermissions.GetAllPermissions();
+            var response = new PermissionResponse
+            {
+                RoleClaims = new()
+            };
+            response.RoleClaims.GetAllPermissions();
             var role = await _roleManager.FindByIdAsync(roleId);
             if (role != null)
             {
@@ -168,10 +170,10 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 if (roleClaimsResult.Succeeded)
                 {
                     var roleClaims = roleClaimsResult.Data;
-                    var allClaimValues = allPermissions.Select(a => a.Value).ToList();
+                    var allClaimValues = response.RoleClaims.Select(a => a.Value).ToList();
                     var roleClaimValues = roleClaims.Select(a => a.Value).ToList();
                     var authorizedClaims = allClaimValues.Intersect(roleClaimValues).ToList();
-                    foreach (var permission in allPermissions)
+                    foreach (var permission in response.RoleClaims)
                     {
                         permission.Id = allRoleClaims.Data?.SingleOrDefault(x => x.RoleId == roleId && x.Type == permission.Type && x.Value == permission.Value)?.Id ?? 0;
                         permission.RoleId = roleId;
@@ -193,12 +195,16 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                 }
                 else
                 {
-                    response.RoleClaims = new List<RoleClaimResponse>();
+                    response.RoleClaims = new();
                     return await Result<PermissionResponse>.FailAsync(roleClaimsResult.Messages);
                 }
             }
+            else
+            {
+                response.RoleClaims = new();
+                return await Result<PermissionResponse>.FailAsync(_localizer["Role does not exist."]);
+            }
 
-            response.RoleClaims = allPermissions;
             return await Result<PermissionResponse>.SuccessAsync(response);
         }
 
@@ -211,76 +217,78 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Services
                     return await Result<string>.FailAsync(_localizer["Role is required."]);
                 }
 
+                if (request.RoleClaims.Any(c => !c.Type.Equals(ApplicationClaimTypes.Permission)))
+                {
+                    return await Result<string>.FailAsync(string.Format(_localizer["All Role Claims Type values should be '{0}'."], ApplicationClaimTypes.Permission));
+                }
+
+                if (request.RoleClaims.Any(c => !c.RoleId.Equals(request.RoleId)))
+                {
+                    return await Result<string>.FailAsync(string.Format(_localizer["All Role Claims should contain the same Role Id as in the request."], ApplicationClaimTypes.Permission));
+                }
+
                 var errors = new List<string>();
                 var role = await _roleManager.FindByIdAsync(request.RoleId);
-                if (role.Name == RoleConstants.SuperAdmin)
+                if (role != null)
                 {
-                    var currentUser = await _userManager.Users.SingleAsync(x => x.Id == _currentUserService.GetUserId().ToString());
-                    if (!await _userManager.IsInRoleAsync(currentUser, RoleConstants.SuperAdmin))
+                    if (role.Name == RoleConstants.SuperAdmin)
                     {
-                        return await Result<string>.FailAsync(_localizer["Not allowed to modify Permissions for this Role."]);
-                    }
-                }
-
-                var selectedClaims = request.RoleClaims.Where(a => a.Selected).ToList();
-                if (role.Name == RoleConstants.SuperAdmin)
-                {
-                    if (selectedClaims.All(x => x.Value != Shared.Core.Constants.Permissions.Roles.View) ||
-                        selectedClaims.All(x => x.Value != Shared.Core.Constants.Permissions.RoleClaims.View) ||
-                        selectedClaims.All(x => x.Value != Shared.Core.Constants.Permissions.RoleClaims.Edit))
-                    {
-                        return await Result<string>.FailAsync(string.Format(
-                            _localizer["Not allowed to deselect {0} or {1} or {2} for this Role."],
-                            Shared.Core.Constants.Permissions.Roles.View,
-                            Shared.Core.Constants.Permissions.RoleClaims.View,
-                            Shared.Core.Constants.Permissions.RoleClaims.Edit));
-                    }
-                }
-
-                var claims = await _roleManager.GetClaimsAsync(role);
-                foreach (var claim in claims)
-                {
-                    await _roleManager.RemoveClaimAsync(role, claim);
-                }
-
-                foreach (var claim in selectedClaims)
-                {
-                    var addResult = await _roleManager.AddPermissionClaimAsync(role, claim.Value);
-                    if (!addResult.Succeeded)
-                    {
-                        errors.AddRange(addResult.Errors.Select(e => _localizer[e.Description].ToString()));
-                    }
-                }
-
-                var addedClaims = await GetAllByRoleIdAsync(role.Id);
-                if (addedClaims.Succeeded)
-                {
-                    foreach (var claim in selectedClaims)
-                    {
-                        var addedClaim = addedClaims.Data.SingleOrDefault(x => x.Type == claim.Type && x.Value == claim.Value);
-                        if (addedClaim != null)
+                        var currentUser = await _userManager.Users.SingleAsync(x => x.Id == _currentUserService.GetUserId().ToString());
+                        if (!await _userManager.IsInRoleAsync(currentUser, RoleConstants.SuperAdmin))
                         {
-                            claim.Id = addedClaim.Id;
-                            claim.RoleId = addedClaim.RoleId;
-                            var saveResult = await SaveAsync(claim);
-                            if (!saveResult.Succeeded)
+                            return await Result<string>.FailAsync(_localizer["Not allowed to modify Permissions for this Role."]);
+                        }
+                    }
+
+                    var deSelectedClaims = request.RoleClaims.Where(a => !a.Selected).ToList();
+                    if (role.Name == RoleConstants.SuperAdmin)
+                    {
+                        if (deSelectedClaims.Any(x => x.Value == Shared.Core.Constants.Permissions.Roles.View) ||
+                            deSelectedClaims.Any(x => x.Value == Shared.Core.Constants.Permissions.RoleClaims.View) ||
+                            deSelectedClaims.Any(x => x.Value == Shared.Core.Constants.Permissions.RoleClaims.Edit))
+                        {
+                            return await Result<string>.FailAsync(string.Format(
+                                _localizer["Not allowed to deselect {0} or {1} or {2} for this Role."],
+                                Shared.Core.Constants.Permissions.Roles.View,
+                                Shared.Core.Constants.Permissions.RoleClaims.View,
+                                Shared.Core.Constants.Permissions.RoleClaims.Edit));
+                        }
+                    }
+
+                    // delete deselected claims
+                    foreach (var claim in deSelectedClaims)
+                    {
+                        if (claim.Id != 0)
+                        {
+                            var removeResult = await DeleteAsync(claim.Id);
+                            if (!removeResult.Succeeded)
                             {
-                                errors.AddRange(saveResult.Messages);
+                                errors.AddRange(removeResult.Messages);
                             }
                         }
                     }
+
+                    // add or update selected claims
+                    foreach (var claim in request.RoleClaims.Where(a => a.Selected).ToList())
+                    {
+                        var saveResult = await SaveAsync(_mapper.Map<RoleClaimRequest>(claim));
+                        if (!saveResult.Succeeded)
+                        {
+                            errors.AddRange(saveResult.Messages);
+                        }
+                    }
+
+                    if (errors.Count > 0)
+                    {
+                        return await Result<string>.FailAsync(errors);
+                    }
+
+                    return await Result<string>.SuccessAsync(_localizer["Permissions Updated."]);
                 }
                 else
                 {
-                    errors.AddRange(addedClaims.Messages);
+                    return await Result<string>.FailAsync(_localizer["Role does not exist."]);
                 }
-
-                if (errors.Any())
-                {
-                    return await Result<string>.FailAsync(errors);
-                }
-
-                return await Result<string>.SuccessAsync(_localizer["Permissions Updated."]);
             }
             catch (Exception ex)
             {

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using FluentPOS.Modules.Identity.Core.Entities;
 using FluentPOS.Shared.Core.Constants;
@@ -21,11 +20,9 @@ namespace FluentPOS.Modules.Identity.Core.Helpers
 {
     public static class ClaimsHelper
     {
-        public static void GetAllPermissions(this List<RoleClaimResponse> allPermissions)
+        public static void GetAllPermissions(this List<RoleClaimModel> allPermissions)
         {
-            var modules = typeof(Permissions).GetNestedTypes();
-
-            foreach (var module in modules)
+            foreach (var module in typeof(Permissions).GetNestedTypes())
             {
                 string moduleName = string.Empty;
                 string moduleDescription = string.Empty;
@@ -42,15 +39,13 @@ namespace FluentPOS.Modules.Identity.Core.Helpers
                     moduleDescription = descriptionAttribute.Description;
                 }
 
-                var fields = module.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-
-                foreach (var fi in fields)
+                foreach (var fi in module.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy))
                 {
                     object propertyValue = fi.GetValue(null);
 
                     if (propertyValue is not null)
                     {
-                        allPermissions.Add(new RoleClaimResponse { Value = propertyValue.ToString(), Type = ApplicationClaimTypes.Permission, Group = moduleName, Description = moduleDescription });
+                        allPermissions.Add(new() { Value = propertyValue.ToString(), Type = ApplicationClaimTypes.Permission, Group = moduleName, Description = moduleDescription });
                     }
                 }
             }
@@ -61,7 +56,7 @@ namespace FluentPOS.Modules.Identity.Core.Helpers
             var allClaims = await roleManager.GetClaimsAsync(role);
             if (!allClaims.Any(a => a.Type == ApplicationClaimTypes.Permission && a.Value == permission))
             {
-                return await roleManager.AddClaimAsync(role, new Claim(ApplicationClaimTypes.Permission, permission));
+                return await roleManager.AddClaimAsync(role, new(ApplicationClaimTypes.Permission, permission));
             }
 
             return IdentityResult.Failed();
@@ -72,7 +67,7 @@ namespace FluentPOS.Modules.Identity.Core.Helpers
             var allClaims = await roleManager.GetClaimsAsync(role);
             if (!allClaims.Any(a => a.Type == ApplicationClaimTypes.Permission && a.Value == permission))
             {
-                await roleManager.AddClaimAsync(role, new Claim(ApplicationClaimTypes.Permission, permission));
+                await roleManager.AddClaimAsync(role, new(ApplicationClaimTypes.Permission, permission));
             }
         }
     }
