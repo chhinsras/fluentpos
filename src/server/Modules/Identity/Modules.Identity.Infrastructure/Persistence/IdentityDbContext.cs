@@ -76,6 +76,11 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
             ChangeTracker.DetectChanges();
             foreach (var entry in ChangeTracker.Entries())
             {
+                if (entry.State == EntityState.Unchanged)
+                {
+                    continue;
+                }
+
                 var previousData = new Dictionary<string, object>();
                 var currentData = new Dictionary<string, object>();
                 foreach (var property in entry.Properties)
@@ -84,12 +89,15 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Persistence
                     object originalValue = entry.GetDatabaseValues()?.GetValue<object>(propertyName);
                     switch (entry.State)
                     {
+                        case EntityState.Unchanged:
+                            break;
                         case EntityState.Added:
                             currentData[propertyName] = property.CurrentValue;
                             break;
                         case EntityState.Deleted:
                             previousData[propertyName] = originalValue;
                             break;
+
                         case EntityState.Modified:
                             if (property.IsModified && originalValue?.Equals(property.CurrentValue) == false)
                             {

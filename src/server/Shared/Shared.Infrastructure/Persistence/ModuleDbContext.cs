@@ -68,8 +68,7 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
         {
             var result = new List<(EntityEntry entityEntry, string oldValues, string newValues)>();
             ChangeTracker.DetectChanges();
-            var changedEntities = ChangeTracker.Entries();
-            foreach (var entry in changedEntities)
+            foreach (var entry in ChangeTracker.Entries())
             {
                 if (entry.State == EntityState.Unchanged)
                 {
@@ -94,7 +93,6 @@ namespace FluentPOS.Shared.Infrastructure.Persistence
                             break;
 
                         case EntityState.Modified:
-
                             if (property.IsModified && originalValue?.Equals(property.CurrentValue) == false)
                             {
                                 previousData[propertyName] = originalValue;
