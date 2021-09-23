@@ -25,6 +25,10 @@ namespace FluentPOS.Modules.Identity.Infrastructure.Mappings
                 .ForMember(nameof(FluentRoleClaim.ClaimType), opt => opt.MapFrom(c => c.Type))
                 .ForMember(nameof(FluentRoleClaim.ClaimValue), opt => opt.MapFrom(c => c.Value))
                 .ReverseMap();
+
+            CreateMap<RoleClaimModel, RoleClaimRequest>();
+            CreateMap<RoleClaimModel, FluentRoleClaim>().ReverseMap();
+            CreateMap<RoleClaimModel, RoleClaimResponse>().ReverseMap();
         }
     }
 }

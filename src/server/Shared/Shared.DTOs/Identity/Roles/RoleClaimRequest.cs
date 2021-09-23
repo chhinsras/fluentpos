@@ -21,7 +21,5 @@ namespace FluentPOS.Shared.DTOs.Identity.Roles
         public string Description { get; set; }
 
         public string Group { get; set; }
-
-        public bool Selected { get; set; }
     }
 }

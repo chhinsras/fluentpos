@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------
-// <copyright file="RoleClaimResponse.cs" company="FluentPOS">
+// <copyright file="RoleClaimModel.cs" company="FluentPOS">
 // Copyright (c) FluentPOS. All rights reserved.
 // The core team: Mukesh Murugan (iammukeshm), Chhin Sras (chhinsras), Nikolay Chebotov (unchase).
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
@@ -8,7 +8,7 @@
 
 namespace FluentPOS.Shared.DTOs.Identity.Roles
 {
-    public class RoleClaimResponse
+    public class RoleClaimModel
     {
         public int Id { get; set; }
 
@@ -21,5 +21,7 @@ namespace FluentPOS.Shared.DTOs.Identity.Roles
         public string Description { get; set; }
 
         public string Group { get; set; }
+
+        public bool Selected { get; set; }
     }
 }
