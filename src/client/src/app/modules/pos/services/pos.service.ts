@@ -58,6 +58,11 @@ export class PosService {
         params = params.append('brandIds', productParams.brandIds[i]);
       }
     }
+    if (productParams.categoryIds.length > 0) {
+      for (let i = 0; i < productParams.categoryIds.length; i++) {
+        params = params.append('categoryIds', productParams.categoryIds[i]);
+      }
+    }
     return this.productApi
       .getAlls(params)
       .pipe(map((response: PaginatedResult<Product>) => response));
