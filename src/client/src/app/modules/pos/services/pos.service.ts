@@ -1,3 +1,4 @@
+import { CategoryParams } from './../models/categoryParams';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -14,6 +15,8 @@ import { Customer } from '../models/customer';
 import { CustomerParams } from '../models/customerParams';
 import { Product } from '../models/product';
 import { ProductParams } from '../models/productParams';
+import { Category } from '../models/category';
+import { CategoryApiService } from 'src/app/core/api/catalog/category-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +24,8 @@ import { ProductParams } from '../models/productParams';
 export class PosService {
 
   public isCustomerLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  constructor(private customerApi: CustomerApiService,private productApi :ProductApiService, private brandService:BrandApiService ) { }
+  constructor(private customerApi: CustomerApiService,private productApi :ProductApiService,
+    private brandService:BrandApiService, private categoryService: CategoryApiService ) { }
 
   getCustomers(CustomerParams: CustomerParams): Observable<PaginatedResult<Customer>> {
     let params = new HttpParams();
@@ -78,4 +82,18 @@ export class PosService {
       .pipe(map((response: PaginatedResult<Brand>) => response));
   }
 
+  getCategories(categoryParams: CategoryParams): Observable<PaginatedResult<Category>> {
+    let params = new HttpParams();
+    if (categoryParams.searchString)
+      params = params.append('searchString', categoryParams.searchString);
+    if (categoryParams.pageNumber)
+      params = params.append('pageNumber', categoryParams.pageNumber.toString());
+    if (categoryParams.pageSize)
+      params = params.append('pageSize', categoryParams.pageSize.toString());
+    if (categoryParams.orderBy)
+      params = params.append('orderBy', categoryParams.orderBy.toString());
+    return this.categoryService
+      .getAlls(params)
+      .pipe(map((response: PaginatedResult<Brand>) => response));
+  }
 }

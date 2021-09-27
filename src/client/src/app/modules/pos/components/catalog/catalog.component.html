@@ -24,14 +24,16 @@
             </div>
             <div class="col-md-3 col-xl-3">
                 <form>
-                    <mat-form-field *ngIf="brands && brands.data" appearance="outline">
-                        <mat-label>Filter Categories</mat-label>
-                        <input type="text" placeholder="Category Selection" aria-label="Filter Categories" matInput [matAutocomplete]="auto">
-                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                            <mat-option *ngFor="let brand of brands.data" [value]="brand.name">
-                                {{brand.name}}
-                            </mat-option>
-                        </mat-autocomplete>
+                    <mat-form-field *ngIf="categories && categories.data" appearance="outline">
+                      <mat-label>Filter Categories</mat-label>
+                      <input type="text" placeholder="Category Selection" aria-label="Filter Category" matInput [matAutocomplete]="auto" [formControl]="categoryAutoComplete">
+                      <mat-autocomplete #auto="matAutocomplete" [displayWith]="getCategoryName.bind(this)" >
+                          <mat-option *ngFor="let category of categories.data" [value]="productParams.categoryIds">
+                            <mat-checkbox [checked]="isCheckedCategory(category)" (change)="toggleCategorySelection($event, category)" (click)="$event.stopPropagation()">
+                              {{category.name}}
+                            </mat-checkbox>
+                          </mat-option>
+                      </mat-autocomplete>
                     </mat-form-field>
                 </form>
             </div>
