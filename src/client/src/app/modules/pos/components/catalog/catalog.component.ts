@@ -29,13 +29,19 @@ export class CatalogComponent implements OnInit {
   constructor(private posService: PosService, private toastr: ToastrService, public cartService: CartService, public busyService: BusyService) { }
 
   ngOnInit(): void {
+    this.productParams.brandIds = [];
+    this.productParams.categoryIds = [];
     this.productParams.pageSize = 16;
     this.brandParams.pageSize = 5;
     this.getProducts();
     this.getBrands();
     this.brandAutoComplete.valueChanges.subscribe((value) => this._filterBrand(value));
   }
-  getProducts() {
+  getProducts(brandId?: string) {
+    console.log(brandId);
+    this.productParams.brandIds = [];
+    if (brandId != null) this.productParams.brandIds.push(brandId);
+    console.log(this.productParams);
     this.hasProductsLoaded = false;
     this.posService.getProducts(this.productParams).subscribe((res) => { this.products = res, this.hasProductsLoaded = true });
   }
@@ -48,6 +54,7 @@ export class CatalogComponent implements OnInit {
     this.brandParams.searchString = filterValue;
     this.getBrands();
   }
+
   public doFilter(): void {
     this.productParams.searchString = this.searchString.trim().toLocaleLowerCase();
     this.getProducts();
@@ -74,4 +81,5 @@ export class CatalogComponent implements OnInit {
   toggleImage() {
     this.showImage = !this.showImage;
   }
+
 }

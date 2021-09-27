@@ -49,6 +49,9 @@ export class PosService {
     if (productParams.pageSize) {
       params = params.append('pageSize', productParams.pageSize.toString());
     }
+    if (productParams.brandIds.length > 0) {
+      params = params.append('brandIds', productParams.brandIds.join(', '))
+    }
     return this.productApi
       .getAlls(params)
       .pipe(map((response: PaginatedResult<Product>) => response));

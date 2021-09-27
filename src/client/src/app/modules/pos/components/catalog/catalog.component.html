@@ -12,7 +12,7 @@
                     <mat-form-field appearance="outline" *ngIf="brands && brands.data">
                         <mat-label>Filter Brands</mat-label>
                         <input type="text" placeholder="Brand Selection" aria-label="Filter Brands" matInput [matAutocomplete]="auto" [formControl]="brandAutoComplete">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="getBrandName.bind(this)">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="getBrandName.bind(this)" (optionSelected)='getProducts($event.option.value)'>
                             <mat-option *ngFor="let brand of brands.data" [value]="brand.id">
                                 {{brand.name}}
                             </mat-option>
