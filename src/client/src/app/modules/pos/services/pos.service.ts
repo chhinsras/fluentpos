@@ -50,7 +50,9 @@ export class PosService {
       params = params.append('pageSize', productParams.pageSize.toString());
     }
     if (productParams.brandIds.length > 0) {
-      params = params.append('brandIds', productParams.brandIds.join(', '))
+      for (let i = 0; i < productParams.brandIds.length; i++) {
+        params = params.append('brandIds', productParams.brandIds[i]);
+      }
     }
     return this.productApi
       .getAlls(params)

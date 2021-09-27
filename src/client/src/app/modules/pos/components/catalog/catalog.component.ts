@@ -38,15 +38,26 @@ export class CatalogComponent implements OnInit {
     this.brandAutoComplete.valueChanges.subscribe((value) => this._filterBrand(value));
   }
   getProducts(brandId?: string) {
-    console.log(brandId);
-    this.productParams.brandIds = [];
-    if (brandId != null) this.productParams.brandIds.push(brandId);
-    console.log(this.productParams);
     this.hasProductsLoaded = false;
     this.posService.getProducts(this.productParams).subscribe((res) => { this.products = res, this.hasProductsLoaded = true });
   }
   getBrands() {
     this.posService.getBrands(this.brandParams).subscribe((res) => { this.brands = res; });
+  }
+
+  isCheckedBrand(brand: Brand): boolean {
+    if (this.productParams.brandIds.includes(brand.id)) return true;
+    return false;
+  }
+
+  toggleBrandSelection($event, brand: Brand) {
+    if ($event.checked) {
+      if (!this.productParams.brandIds.includes(brand.id)) this.productParams.brandIds.push(brand.id);
+    } else {
+      if (this.productParams.brandIds.includes(brand.id)) this.productParams.brandIds = this.productParams.brandIds.filter(item => item !== brand.id);
+    }
+
+    this.getProducts();
   }
 
   private _filterBrand(value: string) {

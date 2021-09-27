@@ -12,9 +12,11 @@
                     <mat-form-field appearance="outline" *ngIf="brands && brands.data">
                         <mat-label>Filter Brands</mat-label>
                         <input type="text" placeholder="Brand Selection" aria-label="Filter Brands" matInput [matAutocomplete]="auto" [formControl]="brandAutoComplete">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="getBrandName.bind(this)" (optionSelected)='getProducts($event.option.value)'>
-                            <mat-option *ngFor="let brand of brands.data" [value]="brand.id">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="getBrandName.bind(this)" >
+                            <mat-option *ngFor="let brand of brands.data" [value]="productParams.brandIds">
+                              <mat-checkbox [checked]="isCheckedBrand(brand)" (change)="toggleBrandSelection($event, brand)" (click)="$event.stopPropagation()">
                                 {{brand.name}}
+                              </mat-checkbox>
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
