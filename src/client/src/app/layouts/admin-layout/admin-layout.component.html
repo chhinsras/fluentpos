@@ -47,6 +47,12 @@
           <mat-icon style="padding-right: 10px;">access_time</mat-icon> {{'layouts.admin.eventLogs'|translate}}
         </a>
         <div class="nav-subheading">
+          {{'layouts.admin.salesSubhead'|translate}}</div>
+        <a *appHasPermission='["Permissions.Sales.View"]' mat-list-item routerLink="sales/orders"
+          (click)="sidenav.close()">
+          <mat-icon style="padding-right: 10px;">attach_money</mat-icon> {{'layouts.admin.orders'|translate}}
+        </a>
+        <div class="nav-subheading">
           {{'layouts.admin.appSubhead'|translate}}</div>
 
         <a mat-list-item routerLink="/admin/about" (click)="sidenav.close()">

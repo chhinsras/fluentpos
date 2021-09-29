@@ -1,0 +1,8 @@
+<div [hidden]="!orders">
+  <app-table [title]="'Orders'" [subtitle]="'Manage, Register, Update or Remove Orders here.'"
+      [data]="orders && orders.data" [columns]="orderColumns" (onFilter)="filter($event)"
+      (onReload)="reload()" (onSort)="sort($event)"
+      [totalCount]="orders && orders.totalCount" [pageSize]="orders && orders.pageSize"
+      (onPageChanged)="pageChanged($event)">
+  </app-table>
+</div>
