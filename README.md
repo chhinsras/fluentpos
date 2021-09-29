@@ -86,7 +86,7 @@ Clone this repository to your local machine.
 1. Open up `fluentpos.code-workspace` inside fluentpos\workspace
 2. Make sure you have Visual Studio Code installed as well as .NET and Angular related extensions
 3. Open terminal session
-4. Running API with CLI command: `dotnet watch watch`
+4. Running API with CLI command: `dotnet watch run`
 
 https://user-images.githubusercontent.com/31455818/126076884-47989b52-368e-4714-b90b-093779a7607f.mp4
 
