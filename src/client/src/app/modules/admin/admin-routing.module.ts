@@ -1,3 +1,4 @@
+import { SalesComponent } from './sales/sales.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -50,6 +51,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: PeopleComponent,
     loadChildren: () => import('./people/people.module').then(mod => mod.PeopleModule),
+  },
+  {
+    path: 'sales',
+    canActivate: [AuthGuard],
+    component: SalesComponent,
+    loadChildren: () => import('./sales/sales.module').then(mod => mod.SalesModule),
   }
 ];
 

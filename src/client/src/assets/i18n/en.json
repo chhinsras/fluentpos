@@ -17,7 +17,9 @@
       "roles": "Roles",
       "users": "Users",
       "accSubhead": "Access Management",
-      "eventLogs": "Event Logs"
+      "eventLogs": "Event Logs",
+      "salesSubhead": "Sales Management",
+      "sales": "Sales"
     }
   },
   "dashboard": {
