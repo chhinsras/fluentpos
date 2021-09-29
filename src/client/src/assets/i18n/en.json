@@ -19,7 +19,7 @@
       "accSubhead": "Access Management",
       "eventLogs": "Event Logs",
       "salesSubhead": "Sales Management",
-      "sales": "Sales"
+      "orders": "Orders"
     }
   },
   "dashboard": {

@@ -1,12 +1,11 @@
-import { SalesListComponent } from './components/sales-list/sales-list.component';
+import { OrderComponent } from './components/order/order.component';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'list',
-    component: SalesListComponent
+    path: 'orders',
+    component: OrderComponent
   }
 ];
 
