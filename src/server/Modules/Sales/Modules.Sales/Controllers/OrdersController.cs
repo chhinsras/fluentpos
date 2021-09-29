@@ -8,7 +8,9 @@
 
 using System.Threading.Tasks;
 using FluentPOS.Modules.Sales.Core.Features.Sales.Commands;
+using FluentPOS.Modules.Sales.Core.Features.Sales.Queries;
 using FluentPOS.Shared.Core.Constants;
+using FluentPOS.Shared.DTOs.Sales.Orders;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +19,16 @@ namespace FluentPOS.Modules.Sales.Controllers
     [ApiVersion("1")]
     internal sealed class OrdersController : BaseController
     {
+
+        [HttpGet]
+        [Authorize(Policy = Permissions.Sales.ViewAll)]
+        public async Task<IActionResult> GetAllAsync([FromQuery] PaginatedSalesFilter filter)
+        {
+            var request = Mapper.Map<GetSalesQuery>(filter);
+            var sales = await Mediator.Send(request);
+            return Ok(sales);
+        }
+
         [HttpPost]
         [Authorize(Policy = Permissions.Sales.Register)]
         public async Task<IActionResult> RegisterAsync(RegisterSaleCommand command)
