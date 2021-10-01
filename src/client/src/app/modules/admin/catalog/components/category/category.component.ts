@@ -28,11 +28,11 @@ export class CategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCategorys();
+    this.getCategories();
     this.initColumns();
   }
 
-  getCategorys(): void {
+  getCategories(): void {
     this.categoryService
       .getCategories(this.categoryParams)
       .subscribe((result) => {
@@ -52,7 +52,7 @@ export class CategoryComponent implements OnInit {
   pageChanged(event: PaginatedFilter): void {
     this.categoryParams.pageNumber = event.pageNumber;
     this.categoryParams.pageSize = event.pageSize;
-    this.getCategorys();
+    this.getCategories();
   }
 
   openForm(category?: Category): void {
@@ -61,14 +61,14 @@ export class CategoryComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.getCategorys();
+        this.getCategories();
       }
     });
   }
 
   remove($event: string): void {
     this.categoryService.deleteCategory($event).subscribe(() => {
-      this.getCategorys();
+      this.getCategories();
       this.toastr.info('Category Removed');
     });
   }
@@ -76,20 +76,20 @@ export class CategoryComponent implements OnInit {
   sort($event: Sort): void {
     this.categoryParams.orderBy = $event.active + ' ' + $event.direction;
     console.log(this.categoryParams.orderBy);
-    this.getCategorys();
+    this.getCategories();
   }
 
   filter($event: string): void {
     this.categoryParams.searchString = $event.trim().toLocaleLowerCase();
     this.categoryParams.pageNumber = 0;
     this.categoryParams.pageSize = 0;
-    this.getCategorys();
+    this.getCategories();
   }
 
   reload(): void {
     this.categoryParams.searchString = '';
     this.categoryParams.pageNumber = 0;
     this.categoryParams.pageSize = 0;
-    this.getCategorys();
+    this.getCategories();
   }
 }
