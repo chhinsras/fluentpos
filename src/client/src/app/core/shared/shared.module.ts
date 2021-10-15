@@ -55,6 +55,7 @@ import { UploaderComponent } from './components/uploader/uploader.component';
     ReactiveFormsModule,
     FormsModule,
     TableComponent,
+    TranslateModule,
     HasPermissionDirective,
     HasRoleDirective,
     UploaderComponent
