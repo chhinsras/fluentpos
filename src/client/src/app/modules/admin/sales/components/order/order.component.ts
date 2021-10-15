@@ -15,10 +15,12 @@ import { SalesService } from '../../services/sales.service';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
-  orders: PaginatedResult<Order>;
   orderColumns: TableColumn[];
   orderParams = new OrderParams();
   searchString: string;
+
+  displayedColumns: string[] = ['id', 'referenceNumber', 'timeStamp', 'customerName', 'total', 'isPaid', 'action'];
+  dataSource: PaginatedResult<Order>;
 
   constructor(
     public saleService: SalesService,
@@ -28,25 +30,12 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrders();
-    this.initColumns();
   }
 
   getOrders(): void {
     this.saleService.getSales(this.orderParams).subscribe((result) => {
-      this.orders = result;
+      this.dataSource = result;
     });
-  }
-
-  initColumns(): void {
-    this.orderColumns = [
-      { name: 'Id', dataKey: 'id', isSortable: true, isShowable: true },
-      { name: 'ReferenceNumber', dataKey: 'referenceNumber', isSortable: true, isShowable: true },
-      { name: 'TimeStamp', dataKey: 'timeStamp', isSortable: true, isShowable: true },
-      { name: 'CustomerName', dataKey: 'customerName', isSortable: true, isShowable: true },
-      { name: 'Total', dataKey: 'total', isSortable: true, isShowable: true },
-      { name: 'IsPaid', dataKey: 'isPaid', isSortable: true, isShowable: true },
-      { name: 'Action', dataKey: 'action', position: 'right' },
-    ];
   }
 
   pageChanged(event: PaginatedFilter): void {

@@ -1,8 +1,71 @@
-<div [hidden]="!orders">
-  <app-table [title]="'Orders'" [subtitle]="'Manage, Register, Update or Remove Orders here.'"
-      [data]="orders && orders.data" [columns]="orderColumns" (onFilter)="filter($event)"
-      (onReload)="reload()" (onSort)="sort($event)"
-      [totalCount]="orders && orders.totalCount" [pageSize]="orders && orders.pageSize"
-      (onPageChanged)="pageChanged($event)">
-  </app-table>
+<div [hidden]="!dataSource">
+  <mat-card class="module-card" style="margin-bottom: 0px!important;padding-bottom: 4px!important;">
+    <mat-card-header>
+        <mat-card-title>
+            Order
+        </mat-card-title>
+        <mat-card-subtitle>Manage, Register, Update or Remove Brands here.</mat-card-subtitle>
+    </mat-card-header>
+    <div style="margin: 0 26px 0 16px">
+        <div class="left">
+            <a mat-raised-button color="primary" >
+                <mat-icon>add</mat-icon> Register
+            </a>
+            <a mat-raised-button color="accent">
+                <mat-icon>refresh</mat-icon> Reload
+            </a>
+        </div>
+        <div class="right">
+            <mat-form-field>
+                <input matInput [(ngModel)]="searchString" name="searchString" type="text" autocomplete="off"
+                    (keyup)="filter($event)" placeholder="Filter" />
+            </mat-form-field>
+        </div>
+    </div>
+  <table mat-table [dataSource]="dataSource.data">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id. </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="referenceNumber">
+      <th mat-header-cell *matHeaderCellDef> Reference Number </th>
+      <td mat-cell *matCellDef="let element"> {{element.referenceNumber}} </td>
+    </ng-container>
+    <ng-container matColumnDef="timeStamp">
+      <th mat-header-cell *matHeaderCellDef> TimeStamp </th>
+      <td mat-cell *matCellDef="let element"> {{element.timeStamp}} </td>
+    </ng-container>
+    <ng-container matColumnDef="customerName">
+      <th mat-header-cell *matHeaderCellDef> Cutomer Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef> Total </th>
+      <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+    </ng-container>
+    <ng-container matColumnDef="isPaid">
+      <th mat-header-cell *matHeaderCellDef> IsPaid </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox [checked]="element.isPaid"></mat-checkbox>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary">
+          <mat-icon>remove_red_eye</mat-icon>
+        </button>
+        <button matTooltip="Edit" mat-raised-button color="accent">
+            <mat-icon>mode_edit</mat-icon>
+        </button>
+        <button matTooltip="Delete" mat-raised-button color="danger">
+            <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  </mat-card>
 </div>
