@@ -55,7 +55,7 @@
         <button mat-raised-button color="primary">
           <mat-icon>remove_red_eye</mat-icon>
         </button>
-        <button matTooltip="Edit" mat-raised-button color="accent">
+        <button matTooltip="Edit"  (click)="openEditPOS(element.id)" mat-raised-button color="accent">
             <mat-icon>mode_edit</mat-icon>
         </button>
         <button matTooltip="Delete" mat-raised-button color="danger">

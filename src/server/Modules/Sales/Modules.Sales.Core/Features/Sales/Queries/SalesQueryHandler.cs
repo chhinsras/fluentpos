@@ -19,7 +19,8 @@ using Microsoft.Extensions.Localization;
 namespace FluentPOS.Modules.Sales.Core.Features.Sales.Queries
 {
     internal class SalesQueryHandler :
-                IRequestHandler<GetSalesQuery, PaginatedResult<GetSalesResponse>>
+                IRequestHandler<GetSalesQuery, PaginatedResult<GetSalesResponse>>,
+                IRequestHandler<GetOrderByIdQuery, Result<GetOrderByIdResponse>>
     {
         private readonly ISalesDbContext _context;
         private readonly IMapper _mapper;
@@ -65,6 +66,21 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Queries
             }
 
             return _mapper.Map<PaginatedResult<GetSalesResponse>>(saleList);
+
+        }
+
+        public async Task<Result<GetOrderByIdResponse>> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
+        {
+            var order = await _context.Orders.AsNoTracking()
+                .OrderBy(x => x.TimeStamp)
+                .SingleOrDefaultAsync(x => x.Id == request.Id);
+
+            if (order == null)
+            {
+                throw new SalesException(_localizer["Order Not Found!"], HttpStatusCode.NotFound);
+            }
+
+            return _mapper.Map<Result<GetOrderByIdResponse>>(order);
 
         }
     }

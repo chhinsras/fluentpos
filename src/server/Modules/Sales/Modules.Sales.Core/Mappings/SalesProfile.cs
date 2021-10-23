@@ -15,6 +15,7 @@ namespace FluentPOS.Modules.Sales.Core.Mappings
         public SalesProfile()
         {
             CreateMap<GetSalesResponse, Order>().ReverseMap();
+            CreateMap<GetOrderByIdQuery, Order>().ReverseMap();
             CreateMap<PaginatedSalesFilter, GetSalesQuery>()
                 .ForMember(dest => dest.OrderBy, opt => opt.ConvertUsing<string>(new OrderByConverter()));
         }

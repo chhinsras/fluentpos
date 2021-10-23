@@ -63,4 +63,8 @@ export class OrderComponent implements OnInit {
     this.orderParams.pageSize = 0;
     this.getOrders();
   }
+
+  openEditPOS(orderId: string) {
+    console.log(orderId);
+  }
 }
