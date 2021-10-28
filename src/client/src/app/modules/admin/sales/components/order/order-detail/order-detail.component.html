@@ -1,51 +1,51 @@
 <h2 mat-dialog-title translate>orders.orderDetail.title</h2>
-<mat-dialog-content class="mat-typography" translate>
+<mat-dialog-content class="mat-typography" translate *ngIf="this.order">
   <div class="row" style="padding: 20px 0px 20px 0px;">
     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
       <mat-form-field appearance="outline">
         <mat-label>Customer</mat-label>
-        <input matInput autocomplete="off" type="text" autocomplete="off" readonly value="{{this.data.customerName}}" />
+        <input matInput autocomplete="off" type="text" autocomplete="off" readonly value="{{this.order.customerName}}" />
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Customer Email</mat-label>
-        <input matInput autocomplete="off" type="text" autocomplete="off" readonly value="{{this.data.customerEmail}}" />
+        <input matInput autocomplete="off" type="text" autocomplete="off" readonly value="{{this.order.customerEmail}}" />
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Customer Phone Number</mat-label>
-        <input matInput autocomplete="off" type="text" autocomplete="off" readonly value="{{this.data.customerPhone}}" />
+        <input matInput autocomplete="off" type="text" autocomplete="off" readonly value="{{this.order.customerPhone}}" />
       </mat-form-field>
 
     </div>
-    <!-- <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-      <div *ngIf="cartItems && cartItems.length !=0">
+    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+      <div *ngIf="this.order.products">
         <mat-card
           style="margin:0px!important;border-radius: 0px!important;padding: 30px;max-height: 300px;overflow: scroll;">
           <mat-card-content style="padding: 0!important;margin-bottom: 0px;">
-            <div *ngFor="let item of cartItems" class="row" style="margin:2px;padding:10px;border-radius: 5px;">
+            <div *ngFor="let item of this.order.products" class="row" style="margin:2px;padding:10px;border-radius: 5px;">
               <div class="col-2" style="font-size: large;align-self: center;">
                 X {{item.quantity}}
               </div>
               <div class="col-10" style="align-self: center;">
-                <h4 style="margin: 0px!important;">{{item.displayName}}</h4>
+                <h4 style="margin: 0px!important;">{{item.productId}}</h4>
               </div>
             </div>
           </mat-card-content>
         </mat-card>
-      </div> -->
+      </div>
       <div class="checkout">
         <mat-card style="border-radius: 0px!important;padding: 30px;">
           <mat-card-content style="padding: 0!important;margin-bottom: 0px;">
             <div class="row">
               <div class="col-6">Discount</div>
-              <div class="col-6" style="text-align: right;">${{this.data.discount}}</div>
+              <div class="col-6" style="text-align: right;">${{this.order.discount}}</div>
             </div>
             <div class="row">
               <div class="col-6">SubTotal</div>
-              <div class="col-6" style="text-align: right;">${{this.data.subTotal}}</div>
+              <div class="col-6" style="text-align: right;">${{this.order.subTotal}}</div>
             </div>
             <div class="row">
               <div class="col-6">Taxes</div>
-              <div class="col-6" style="text-align: right;">${{this.data.tax}}</div>
+              <div class="col-6" style="text-align: right;">${{this.order.tax}}</div>
             </div>
             <br>
             <div class="row">
@@ -53,13 +53,13 @@
                 <h1 style="margin: 0px;">Total Payable</h1>
               </div>
               <div class="col-6" style="text-align: right;">
-                <h2 style="margin: 0px;">${{this.data.total}}</h2>
+                <h2 style="margin: 0px;">${{this.order.total}}</h2>
               </div>
             </div>
           </mat-card-content>
         </mat-card>
       </div>
-    <!-- </div>-->
+    </div>
 
   </div>
 </mat-dialog-content>

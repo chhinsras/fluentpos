@@ -32,9 +32,9 @@ namespace FluentPOS.Modules.Sales.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Policy = Permissions.Sales.View)]
-        public async Task<IActionResult> GetByIdAsync(GetOrderByIdQuery command)
+        public async Task<IActionResult> GetByIdAsync(Guid id)
         {
-            return Ok(await Mediator.Send(command));
+            return Ok(await Mediator.Send(new GetOrderByIdQuery {Id = id }));
         }
 
         [HttpPost]

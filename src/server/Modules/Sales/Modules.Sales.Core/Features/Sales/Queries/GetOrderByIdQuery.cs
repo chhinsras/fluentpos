@@ -12,6 +12,5 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Queries
     {
         public Guid Id { get; set; }
 
-
     }
 }

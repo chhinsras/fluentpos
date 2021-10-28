@@ -9,6 +9,7 @@
 using AutoMapper;
 using FluentPOS.Modules.Sales.Core.Entities;
 using FluentPOS.Shared.DTOs.Catalogs.Products;
+using FluentPOS.Shared.DTOs.Sales.Orders;
 
 namespace FluentPOS.Modules.Sales.Core.Mappings
 {
@@ -17,6 +18,7 @@ namespace FluentPOS.Modules.Sales.Core.Mappings
         public ProductProfile()
         {
             CreateMap<GetProductByIdResponse, Product>().ReverseMap();
+            CreateMap<Product, ProductResponse>().ReverseMap();
         }
     }
 }

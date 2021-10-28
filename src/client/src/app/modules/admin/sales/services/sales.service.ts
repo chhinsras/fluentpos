@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { SalesApiService } from 'src/app/core/api/sales/sales-api.service';
 import { PaginatedResult } from 'src/app/core/models/wrappers/PaginatedResult';
 import { Order } from '../models/order';
+import { Result } from 'src/app/core/models/wrappers/Result';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,11 @@ export class SalesService {
     if (orderParams.orderBy) params = params.append('orderBy', orderParams.orderBy.toString());
     return this.api.getAlls(params)
       .pipe(map((response: PaginatedResult<Order>) => response));
+  }
+
+  getById(id: string): Observable<Result<Order>> {
+    return this.api.getById(id)
+      .pipe(map((response: Result<Order>) => response));
   }
 
 }
