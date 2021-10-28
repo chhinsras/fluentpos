@@ -26,6 +26,11 @@
     "title": "Dashboard",
     "subtitle": "Quick Overview of your Business."
   },
+  "orders": {
+    "orderDetail": {
+      "title":"Order Detail"
+    }
+  },
   "eventLogs": {
     "title": "Event Logs",
     "subtitle": "Monitor Events Logs of Users."
