@@ -30,7 +30,7 @@ namespace FluentPOS.Modules.Sales.Controllers
             return Ok(sales);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [Authorize(Policy = Permissions.Sales.View)]
         public async Task<IActionResult> GetByIdAsync(GetOrderByIdQuery command)
         {
