@@ -16,4 +16,8 @@ export class SalesApiService {
   getAlls(params: HttpParams) {
     return this.http.get(this.baseUrl, {params: params});
   }
+
+  getById(id: string) {
+    return this.http.get(this.baseUrl + id);
+  }
 }

@@ -6,6 +6,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using FluentPOS.Modules.Sales.Core.Features.Sales.Commands;
 using FluentPOS.Modules.Sales.Core.Features.Sales.Queries;
@@ -29,11 +30,20 @@ namespace FluentPOS.Modules.Sales.Controllers
             return Ok(sales);
         }
 
+        [HttpGet("{id}")]
+        [Authorize(Policy = Permissions.Sales.View)]
+        public async Task<IActionResult> GetByIdAsync(Guid id)
+        {
+            return Ok(await Mediator.Send(new GetOrderByIdQuery {Id = id }));
+        }
+
         [HttpPost]
         [Authorize(Policy = Permissions.Sales.Register)]
         public async Task<IActionResult> RegisterAsync(RegisterSaleCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
+
+
     }
 }

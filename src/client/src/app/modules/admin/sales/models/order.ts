@@ -1,3 +1,5 @@
+import { Product } from "./product";
+
 export interface Order {
   id: string;
   referenceNumber: string;
@@ -12,4 +14,5 @@ export interface Order {
   total: number;
   isPaid: boolean;
   note: string;
+  products: Product[]
 }

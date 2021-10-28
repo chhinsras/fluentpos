@@ -8,6 +8,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using FluentPOS.Modules.Catalog.Core.Exceptions;
 using FluentPOS.Modules.Sales.Core.Abstractions;
+using FluentPOS.Modules.Sales.Core.Entities;
 using FluentPOS.Shared.Core.Extensions;
 using FluentPOS.Shared.Core.Mappings.Converters;
 using FluentPOS.Shared.Core.Wrapper;
@@ -19,7 +20,8 @@ using Microsoft.Extensions.Localization;
 namespace FluentPOS.Modules.Sales.Core.Features.Sales.Queries
 {
     internal class SalesQueryHandler :
-                IRequestHandler<GetSalesQuery, PaginatedResult<GetSalesResponse>>
+                IRequestHandler<GetSalesQuery, PaginatedResult<GetSalesResponse>>,
+                IRequestHandler<GetOrderByIdQuery, Result<GetOrderByIdResponse>>
     {
         private readonly ISalesDbContext _context;
         private readonly IMapper _mapper;
@@ -65,6 +67,24 @@ namespace FluentPOS.Modules.Sales.Core.Features.Sales.Queries
             }
 
             return _mapper.Map<PaginatedResult<GetSalesResponse>>(saleList);
+
+        }
+
+        public async Task<Result<GetOrderByIdResponse>> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
+        {
+            var order = await _context.Orders.AsNoTracking()
+                .Include(x => x.Products)
+                .OrderBy(x => x.TimeStamp)
+                .SingleOrDefaultAsync(x => x.Id == request.Id);
+
+            if (order == null)
+            {
+                throw new SalesException(_localizer["Order Not Found!"], HttpStatusCode.NotFound);
+            }
+
+            var mappedData = _mapper.Map<Order, GetOrderByIdResponse>(order);
+
+            return await Result<GetOrderByIdResponse>.SuccessAsync(data: mappedData);
 
         }
     }

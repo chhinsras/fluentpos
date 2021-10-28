@@ -1,3 +1,4 @@
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PaginatedFilter } from 'src/app/core/models/Filters/PaginatedFilter';
@@ -62,5 +63,19 @@ export class OrderComponent implements OnInit {
     this.orderParams.pageNumber = 0;
     this.orderParams.pageSize = 0;
     this.getOrders();
+  }
+
+  openViewOrderDetail(order: Order): void {
+    const dialogRef = this.dialog.open(OrderDetailComponent, {
+      data: order,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+      }
+    });
+  }
+
+  openEditPOS(orderId: string) {
+    console.log(orderId);
   }
 }
