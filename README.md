@@ -8,6 +8,10 @@
   </p>
 </p>
 
+## Archived
+
+Archiving this REPO and will create new project using Microservice Architecture within this same handle.
+
 ### About fluentpos
 
 Having quite a lot of experience with POS & Inventory Management system, we set out to build out a full fledged open source system using our favorite tech stack and tools. Modular development was a prime requirement for us when we got started. Adapting to a Microservice architecture was the first choice we had. But given the complexities with the mentioned architecture, we decided to stay away from it atleast for the starting. 
